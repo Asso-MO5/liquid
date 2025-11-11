@@ -10,6 +10,11 @@ export class Player extends me.Renderable {
   dying: boolean;
   renderable: me.Renderable | null;
   onGround: boolean;
+  wasOnGround: boolean;
+  fallingSoundPlayed: boolean;
+  initialCameraY: number | undefined;
+  justLanded: boolean;
+  landedTimer: number;
 
   constructor(x: number, y: number, width: number, height: number) {
     super(x, y, width, height);
@@ -17,20 +22,12 @@ export class Player extends me.Renderable {
     this.projectDialCount = 0
     this.facingRight = true
 
-    // Ajuster la hitbox pour qu'elle soit centrée
-    // L'anchorPoint est à (0.5, 0.5), donc la position du Renderable est au centre
-    // Le Body utilise un Rect relatif au coin supérieur gauche du Renderable
-    // Pour centrer une hitbox de 32x32 : on commence à (-16, -16) par rapport au centre
-    // Vous pouvez ajuster ces valeurs pour une hitbox plus petite ou décalée
-    const hitboxWidth = width; // Largeur de la hitbox (32 par défaut, peut être réduite)
-    const hitboxHeight = height; // Hauteur de la hitbox (32 par défaut)
+    const hitboxWidth = width;
+    const hitboxHeight = height;
 
-    // Calculer l'offset pour centrer la hitbox
-    // Si anchorPoint est (0.5, 0.5), le coin supérieur gauche est à (-width/2, -height/2)
     const hitboxOffsetX = -hitboxWidth / 2;
     const hitboxOffsetY = -hitboxHeight / 2;
 
-    // Créer le Body avec une hitbox centrée
     this.body = new me.Body(this, new me.Rect(
       hitboxOffsetX,
       hitboxOffsetY,
@@ -41,9 +38,8 @@ export class Player extends me.Renderable {
     this.invincible = false
     this.body.collisionType = me.collision.types.PLAYER_OBJECT
 
-    // Activer les collisions
-    this.body.setStatic(false); // Le joueur n'est pas statique
-    this.body.ignoreGravity = false; // Le joueur est affecté par la gravité
+    this.body.setStatic(false);
+    this.body.ignoreGravity = false;
 
     this.alwaysUpdate = true
     this.body.setMaxVelocity(3, 15)
@@ -53,19 +49,25 @@ export class Player extends me.Renderable {
 
     this.dying = false
     this.onGround = false
+    this.wasOnGround = false
+    this.fallingSoundPlayed = false
+    this.initialCameraY = undefined
+    this.justLanded = false
+    this.landedTimer = 0
 
-    // Configuration de la caméra pour suivre le joueur
-    // Deadzone : zone où le joueur peut bouger sans que la caméra bouge
-    me.game.viewport.setDeadzone(16, 100)
+    me.game.viewport.setDeadzone(16, 200)
 
-    // Suivre le joueur sur les deux axes avec un léger délai (0.7 = smooth)
-    me.game.viewport.follow(this, me.game.viewport.AXIS.BOTH, 0.7)
+    me.game.viewport.follow(this, me.game.viewport.AXIS.HORIZONTAL, 0.7)
 
-    // Créer le sprite si la texture est disponible
     if (gameState.texture) {
       this.renderable = gameState.texture.createAnimationFromName() as me.Renderable;
       if (this.renderable) {
         this.renderable.anchorPoint.set(0.5, 0.5);
+        const renderableWithUpdate = this.renderable as me.Renderable & { alwaysUpdate?: boolean };
+        if (renderableWithUpdate.alwaysUpdate !== undefined) {
+          renderableWithUpdate.alwaysUpdate = true;
+        }
+        this.setupAnimationsWithDurations();
       }
     } else {
       this.renderable = null;
@@ -76,10 +78,42 @@ export class Player extends me.Renderable {
   }
 
   update(dt: number) {
-    // Réinitialiser l'état au sol (sera mis à jour par les collisions)
-    this.onGround = false;
+    this.wasOnGround = this.onGround;
 
-    // Gestion des mouvements
+    const vel = this.body.vel;
+
+    if (this.justLanded && this.onGround) {
+      const isMoving = this.body.force.x !== 0;
+      if (isMoving) {
+        this.justLanded = false;
+        this.landedTimer = 0;
+      } else {
+        this.landedTimer += dt;
+        if (this.landedTimer > 0.3) {
+          this.justLanded = false;
+          this.landedTimer = 0;
+        }
+      }
+    } else {
+      this.landedTimer = 0;
+    }
+    const isFalling = vel && vel.y !== undefined && vel.y > 0.1;
+
+    if (isFalling && !this.fallingSoundPlayed) {
+      this.playFallSound();
+      this.fallingSoundPlayed = true;
+    }
+
+    if (vel && vel.y !== undefined) {
+      if (vel.y < -0.5) {
+        this.onGround = false;
+      } else if (vel.y > 2) {
+        this.onGround = false;
+      }
+    } else {
+      this.onGround = false;
+    }
+
     const maxVel = this.body.maxVel;
     if (maxVel && maxVel.x !== undefined && maxVel.y !== undefined) {
       if (me.input.isKeyPressed('left')) {
@@ -92,76 +126,198 @@ export class Player extends me.Renderable {
         this.body.force.x = 0;
       }
 
-      // Saut uniquement si au sol
-      const vel = this.body.vel;
-      if (me.input.isKeyPressed('jump') && this.onGround && vel) {
-        vel.y = -maxVel.y;
-        this.onGround = false; // Ne plus être au sol après le saut
+      const canJump = this.onGround || (vel && vel.y !== undefined && vel.y <= 1 && vel.y >= -0.5);
+
+      if (me.input.isKeyPressed('jump') && canJump && vel) {
+        if (vel.y === undefined || vel.y <= 1) {
+          vel.y = -maxVel.y;
+          this.onGround = false;
+          this.playJumpSound();
+        }
       }
     }
 
-    // Le body met à jour automatiquement la position du Renderable
-    // Pas besoin de copier manuellement
+    this.updateAnimation();
+
+    if (this.renderable && typeof this.renderable.update === 'function') {
+      this.renderable.update(dt);
+    }
+
+    if (this.initialCameraY === undefined) {
+      const currentY = me.game.viewport.pos.y;
+      if (currentY !== undefined) {
+        this.initialCameraY = currentY;
+      }
+    }
 
     return super.update(dt);
   }
 
+  setupAnimationsWithDurations() {
+    if (!this.renderable || !gameState.spriteData || !gameState.texture) return;
+
+    const spriteData = gameState.spriteData as {
+      frames?: Array<{ filename?: string; duration?: number }>;
+      meta?: { frameTags?: Array<{ name: string; from: number; to: number }> };
+    };
+
+    if (!spriteData.frames || !spriteData.meta?.frameTags) return;
+
+    const spriteWithAnim = this.renderable as me.Renderable & {
+      addAnimation?: (name: string, frames: Array<{ name: string | number; delay: number }>) => void;
+    };
+
+    if (!spriteWithAnim.addAnimation) return;
+
+    for (const tag of spriteData.meta.frameTags) {
+      const animationFrames: Array<{ name: string | number; delay: number }> = [];
+
+      for (let i = tag.from; i <= tag.to; i++) {
+        const frame = spriteData.frames[i];
+        if (frame) {
+          const frameName = frame.filename || i.toString();
+          const delay = frame.duration || 100;
+          animationFrames.push({ name: frameName, delay });
+        }
+      }
+
+      if (animationFrames.length > 0) {
+        spriteWithAnim.addAnimation(tag.name, animationFrames);
+      }
+    }
+  }
+
+  updateAnimation() {
+    if (!this.renderable || !gameState.texture) return;
+
+    const vel = this.body.vel;
+    const isMoving = this.body.force.x !== 0;
+    const isInAir = !this.onGround && vel && vel.y !== undefined && (vel.y < -0.5 || vel.y > 0.1);
+
+    let animationName = "stand";
+
+    if (this.justLanded && this.onGround) {
+      animationName = "grounded";
+    } else if (isInAir) {
+      animationName = "jump";
+    } else if (isMoving && this.onGround) {
+      animationName = "walk";
+    } else {
+      animationName = "stand";
+    }
+
+    const spriteWithAnim = this.renderable as me.Renderable & {
+      name?: string;
+      setCurrentAnimation?: (name: string) => void;
+    };
+
+    if (spriteWithAnim.name !== animationName) {
+      if (spriteWithAnim.setCurrentAnimation) {
+        spriteWithAnim.setCurrentAnimation(animationName);
+      } else {
+        this.renderable = gameState.texture.createAnimationFromName([animationName]) as me.Renderable;
+        if (this.renderable) {
+          this.renderable.anchorPoint.set(0.5, 0.5);
+          const renderableWithUpdate = this.renderable as me.Renderable & { alwaysUpdate?: boolean };
+          if (renderableWithUpdate.alwaysUpdate !== undefined) {
+            renderableWithUpdate.alwaysUpdate = true;
+          }
+        }
+      }
+    }
+  }
+
+  playFallSound() {
+
+    try {
+      // me.audio.play() charge et joue automatiquement le son s'il existe
+      //  me.audio.play('spike', false);
+    } catch (e) {
+      // Ignorer les erreurs si le son n'est pas chargé
+      console.debug('Son de chute non disponible');
+    }
+  }
+
   /**
-   * Gestion des collisions
-   * @param response - Réponse de collision de melonJS (contient overlapV, etc.)
-   * @param other - L'autre objet en collision
-   * @returns true si la collision doit être résolue, false sinon
+   * Joue le son de saut
    */
+  playJumpSound() {
+
+    try {
+      // me.audio.play() charge et joue automatiquement le son s'il existe
+      me.audio.play('jump', false);
+    } catch (e) {
+      // Ignorer les erreurs si le son n'est pas chargé
+      console.debug('Son de saut non disponible');
+    }
+  }
+
   onCollision(response: { overlapV?: { x?: number; y?: number } }, other: me.Renderable): boolean {
-    // Collision avec le sol/plateformes
     if (other.body && other.body.collisionType === me.collision.types.WORLD_SHAPE) {
-      // Si on tombe sur le dessus d'une plateforme
       if (response.overlapV && response.overlapV.y !== undefined && response.overlapV.y > 0 &&
         this.body.vel && this.body.vel.y !== undefined && this.body.vel.y > 0) {
+        if (!this.wasOnGround) {
+          this.justLanded = true;
+        }
         this.onGround = true;
-        // Arrêter la chute
         if (this.body.vel) {
           this.body.vel.y = 0;
         }
+        if (this.body.force) {
+          this.body.force.y = 0;
+        }
+        this.fallingSoundPlayed = false;
         return true;
       }
-      // Collision latérale ou par le dessous
-      return true;
-    }
 
-    // Collision avec des objets collectables
-    if (other.body && other.body.collisionType === me.collision.types.COLLECTABLE_OBJECT) {
-      // Gérer la collecte d'objets ici si nécessaire
-      return false; // Ne pas bloquer le mouvement
-    }
-
-    // Collision avec des ennemis
-    if (other.body && other.body.collisionType === me.collision.types.ENEMY_OBJECT) {
-      if (!this.invincible && !this.dying) {
-        // Gérer les dégâts ici
-        console.log('Collision avec ennemi');
-        // Vous pouvez ajouter la logique de dégâts ici
+      if (response.overlapV && response.overlapV.y !== undefined && response.overlapV.y > 0) {
+        const vel = this.body.vel;
+        if (!vel || vel.y === undefined || vel.y <= 0.5) {
+          this.onGround = true;
+          if (this.body.vel && this.body.vel.y !== undefined && this.body.vel.y > 0) {
+            this.body.vel.y = 0;
+          }
+        }
       }
       return true;
     }
 
-    // Par défaut, résoudre la collision
+    if (other.body && other.body.collisionType === me.collision.types.COLLECTABLE_OBJECT) {
+      return false;
+    }
+
+    if (other.body && other.body.collisionType === me.collision.types.ENEMY_OBJECT) {
+      if (!this.invincible && !this.dying) {
+        console.log('Collision avec ennemi');
+      }
+      return true;
+    }
+
     return true;
   }
 
   draw(renderer: me.CanvasRenderer) {
-    // Si le sprite est chargé, le dessiner
     if (this.renderable) {
       this.renderable.pos.copy(this.pos);
-      this.renderable.flipX(!this.facingRight);
+
+      renderer.save();
+
+      if (!this.facingRight) {
+        const x = this.pos.x ?? 0;
+        renderer.translate(x + (this.width ?? 32) / 2, this.pos.y ?? 0);
+        renderer.scale(-1, 1);
+        renderer.translate(-(x + (this.width ?? 32) / 2), -(this.pos.y ?? 0));
+      }
+
       this.renderable.draw(renderer);
+
+      renderer.restore();
     } else {
-      // Fallback : dessiner un rectangle pour debug
       const x = this.pos.x ?? 0;
       const y = this.pos.y ?? 0;
       const w = this.width ?? 32;
       const h = this.height ?? 32;
-      renderer.setColor('#ff2a83'); // Rose fuchsia de votre palette
+      renderer.setColor('#ff2a83');
       renderer.fillRect(x - w / 2, y - h / 2, w, h);
     }
     super.draw(renderer);

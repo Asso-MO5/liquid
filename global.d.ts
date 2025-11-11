@@ -1,4 +1,4 @@
-import type { SumUpCardConfig, SumUpCardInstance } from "~/features/editor/sumup/sumup.types";
+import type { SumUpCardConfig, SumUpCardInstance } from "~/features/sumup/sumup.types";
 
 declare global {
   interface Window {

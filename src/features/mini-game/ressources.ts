@@ -17,13 +17,14 @@ export const ressources = [
   // { name: 'dialog', type: 'image', src: 'entities/dialog.png' },
 
   //SOUNDS ========================================================
-  { name: 'jump', type: 'audio', src: 'game/sounds/' },
-  { name: 'spike', type: 'audio', src: 'game/sounds/' },
+  //WARNING: user "/" only for sound
+  { name: 'jump', type: 'audio', src: '/game/sounds/' },
+  { name: 'spike', type: 'audio', src: '/game/sounds/' },
 
   // LEVELS ========================================================
-  { name: 'start', type: 'tmx', src: 'game/tiles/dream.tmx' },
-  { name: 'dream', type: 'image', src: 'game/img/dream.png' },
-  { name: 'dreamTileset', type: 'tsx', src: 'game/tiles/dreamTileset.tsx' },
+  { name: 'start', type: 'tmx', src: 'game/tiles/start.tmx' },
+  { name: 'start', type: 'image', src: 'game/tiles/start.png' },
+  { name: 'museum', type: 'tsx', src: 'game/tiles/museum.tsx' },
   // { name: 'final', type: 'tmx', src: 'tiles/final.tmx' },
 
 

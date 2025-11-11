@@ -5,6 +5,7 @@ export const gameState: MiniGameState = {
   lives: 3,
   level: 1,
   texture: undefined,
+  spriteData: undefined,
   isGameOver: false,
   isGameWon: false,
   isGamePaused: false,

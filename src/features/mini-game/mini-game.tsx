@@ -5,6 +5,7 @@ import { Player } from './entities/player';
 import { gameState } from './game-state';
 import { ressources } from './ressources';
 import { StartScreen } from './screens/start';
+import { LoadingScreen } from './screens/loading';
 
 export const MiniGame: VoidComponent = () => {
   let containerRef: HTMLDivElement | undefined;
@@ -41,6 +42,9 @@ export const MiniGame: VoidComponent = () => {
           return;
         }
 
+        // Remplacer l'écran de chargement par défaut par un écran vide
+        me.state.set(me.state.LOADING, new LoadingScreen());
+
         const canvas = containerRef?.querySelector('canvas') as HTMLCanvasElement | null;
         if (canvas) {
           canvas.style.maxWidth = '100%';
@@ -71,43 +75,63 @@ export const MiniGame: VoidComponent = () => {
         // Permettre cross-origin pour le chargement d'images/textures
         me.loader.setOptions({ crossOrigin: "anonymous" });
 
-        me.loader.preload(ressources, () => {
+        // Utiliser les ressources avec des chemins absolus depuis la racine
+        // Les fichiers dans public/ sont servis depuis la racine en production
+        // On utilise des chemins absolus (commençant par /) qui fonctionnent en dev et prod
+        const rsrcs = ressources.map(r => {
+          const src = `${window.location.protocol}//${window.location.host}/${r.src}`;
+
+
+          return { ...r, src };
+        });
+
+        console.log('Chargement des ressources MelonJS:', rsrcs);
+        console.log('URL actuelle:', window.location.href);
+
+        me.loader.preload(rsrcs, () => {
+          console.log('✅ Toutes les ressources sont chargées');
 
           me.state.set(me.state.PLAY, new StartScreen())
-          // register the entities
           me.pool.register('lulu', Player)
 
-          /*
-          gameState.hud = new me.TextureAtlas(
-            me.loader.getJSON('tileset'),
-            me.loader.getImage('tileset')
-          )
-          */
+          const luluJSON = me.loader.getJSON('lulu');
+          if (!luluJSON) {
+            console.error('❌ Erreur: lulu.json non chargé');
+            console.error('Ressources disponibles:', Object.keys(me.loader.getJSON || {}));
+            return;
+          }
+
+          const luluImage = me.loader.getImage('lulu');
+          if (!luluImage) {
+            console.error('❌ Erreur: lulu.png non chargé');
+            return;
+          }
+
+          gameState.spriteData = luluJSON;
           gameState.texture = new me.TextureAtlas(
-            me.loader.getJSON('lulu'),
-            me.loader.getImage('lulu')
+            luluJSON,
+            luluImage
           )
+
+          console.log('✅ Texture du joueur créée');
           me.state.change(me.state.PLAY, false)
-          //  me.state.change(me.state.USER + 2, false)
         })
 
 
       });
     };
 
-    setTimeout(initGame, 1000);
+    initGame()
   });
 
-  onCleanup(async () => {
+  onCleanup(() => {
     // Nettoyer melonJS si nécessaire (uniquement côté client)
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && me && me.state) {
       try {
-        const me = await import('melonjs');
-        if (me.state) {
-          me.state.change(me.state.DEFAULT, true);
-        }
+        me.state.change(me.state.DEFAULT, true);
       } catch (e) {
         // Ignorer les erreurs de nettoyage
+        console.warn('Erreur lors du nettoyage de melonJS:', e);
       }
     }
   });
@@ -117,7 +141,7 @@ export const MiniGame: VoidComponent = () => {
       id="mini-game-container"
       ref={containerRef}
       class="w-full h-full relative overflow-hidden"
-      style={{ "max-height": "100%", "max-width": "100%" }}
+
     />
   );
 };

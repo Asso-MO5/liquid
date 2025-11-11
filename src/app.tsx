@@ -4,7 +4,6 @@ import { Router } from '@solidjs/router'
 import { FileRoutes } from '@solidjs/start/router'
 import { Suspense } from 'solid-js'
 import './app.css'
-import { Layout } from '~/ui/Layout/Layout'
 import { Modal } from '~/ui/Modal/Modal'
 
 export default function App() {
@@ -14,9 +13,7 @@ export default function App() {
         <MetaProvider>
           <Title>Le musée du jeu vidéo</Title>
           <Suspense>
-            <Layout>
-              {props.children}
-            </Layout>
+            {props.children}
             <Modal />
           </Suspense>
         </MetaProvider>

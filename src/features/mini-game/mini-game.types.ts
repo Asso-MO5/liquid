@@ -5,6 +5,7 @@ export interface MiniGameState {
   lives: number;
   level: number;
   texture: me.TextureAtlas | undefined;
+  spriteData: JSON | undefined;
   isGameOver: boolean;
   isGameWon: boolean;
   isGamePaused: boolean;

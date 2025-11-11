@@ -29,7 +29,7 @@
   /* Polices */
   --font-family-sans: 'Silkscreen', monospace;
   --font-family-display: 'Bebas Neue', sans-serif;
-  /* Palette de couleurs inspirée de l'affiche rétro du musée du jeu vidéo */
+
   --color-bg: #000000; /* Noir */
   --color-primary: #ff2a83; /* Rose fuchsia (coins supérieurs du logo) */
   --color-white: #ffffff; /* Blanc (contours/texte) */
@@ -47,7 +47,6 @@
   --color-discord: #5468ff;
   --color-discord-hover: #656c85cc;
 
-  /* Couleurs supplémentaires de l'affiche */
   --color-yellow-neon: #f2a900; /* Jaune-orangé inspiré du logo */
   --color-orange-bright: #f26d21; /* Orange vif */
   --color-red-bright: #e83f36; /* Rouge du logo */

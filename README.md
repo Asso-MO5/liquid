@@ -26,28 +26,66 @@ MO5 est un **espace membre complet** avec plusieurs niveaux d'accès et de nombr
 
 ### Prérequis
 
-- Node.js 22+
-- Yarn
-- MySQL
-- Serveur Discord de l'association
+- **Node.js 22+** : [Télécharger Node.js](https://nodejs.org/)
+  - Sur Windows : Télécharger l'installateur `.msi` depuis le site officiel
+  - Sur macOS : Utiliser Homebrew (`brew install node@22`) ou télécharger l'installateur
+  - Sur Linux : Utiliser le gestionnaire de paquets de votre distribution
+  - Vérifier l'installation : `node --version` (doit afficher v22.x.x ou supérieur)
+- **Yarn** : Installer après Node.js avec `npm install -g yarn`
+- **MySQL** : Base de données requise pour le backend
+- **Serveur Discord de l'association** : Pour l'authentification
 
-### Installation
+### Installation et lancement en local
+
+#### 1. Installer Node.js
+
+1. Rendez-vous sur [nodejs.org](https://nodejs.org/)
+2. Téléchargez la version **LTS (Long Term Support)** recommandée (22.x ou supérieur)
+3. Lancez l'installateur et suivez les instructions
+4. Vérifiez l'installation en ouvrant un terminal :
+   ```bash
+   node --version
+   npm --version
+   ```
+
+#### 2. Installer Yarn (gestionnaire de paquets)
+
+```bash
+npm install -g yarn
+```
+
+Vérifiez l'installation :
+
+```bash
+yarn --version
+```
+
+#### 3. Cloner et configurer le projet
 
 ```bash
 # Cloner le projet
 git clone <repository-url>
-cd mo5-solid
+cd liquid
 
 # Installer les dépendances
 yarn install
 
 # Configurer les variables d'environnement
 cp env.example .env
-# Éditer .env avec vos valeurs
+# Éditer .env avec vos valeurs (base de données, Discord, etc.)
+```
 
-# Démarrer en développement
+#### 4. Démarrer le serveur de développement
+
+```bash
 yarn dev
 ```
+
+L'application sera accessible sur `http://localhost:5173` (ou le port indiqué dans la console).
+
+#### 5. Accéder au mini-jeu
+
+Le mini-jeu est accessible via la route `/game` une fois l'application lancée.
 
 ## 🏗️ Architecture
 
@@ -159,6 +197,104 @@ yarn db:studio    # Interface Drizzle Studio
 - `docs/` : Documentation technique
 - `docs/features/` : Documentation des features
 - `docs/architecture/` : Architecture et tech stack
+
+## 🎮 Mini-Jeu Pixel Art
+
+Le projet inclut un mini-jeu développé avec **MelonJS**, un moteur de jeu JavaScript pour jeux 2D en pixel art.
+
+### 📁 Fichiers sources du jeu
+
+Les fichiers sources du jeu se trouvent dans les dossiers suivants :
+
+#### Code source du jeu
+
+- **`src/features/mini-game/`** : Code source principal du mini-jeu
+  - `mini-game.tsx` : Composant principal et initialisation MelonJS
+  - `entities/player.ts` : Logique du joueur (mouvement, collisions, animations)
+  - `screens/start.ts` : Écran de démarrage et chargement des niveaux
+  - `screens/loading.ts` : Écran de chargement personnalisé
+  - `ressources.ts` : Liste des ressources à charger (sprites, sons, niveaux)
+  - `game-state.ts` : État global du jeu
+
+#### Assets du jeu (sprites, tilesets, sons)
+
+- **`public/game/entities/`** : Sprites du joueur
+  - `lulu.aseprite` : Fichier source Aseprite du personnage
+  - `lulu.png` : Sprite sheet exportée
+  - `lulu.json` : Métadonnées des animations (frame tags, durées)
+- **`public/game/tiles/`** : Tilesets et niveaux
+
+  - `tileset.png` : Tileset principal (8x8 pixels par tile)
+  - `tileset.tsx` / `tileset.json` : Définitions du tileset
+  - `start.tmx` : Niveau de départ (format Tiled)
+  - `start.aseprite` : Fichier source Aseprite du niveau
+  - `start.png` : Image exportée du niveau
+  - Autres niveaux : `home.tmx`, `interlude.tmx`, `final.tmx`, etc.
+
+- **`public/game/sounds/`** : Sons et effets sonores
+
+  - `jump.mp3` : Son de saut
+  - `spike.mp3` : Son de chute/impact
+  - Autres sons : `hurt.mp3`, `explosion.mp3`, etc.
+
+- **`public/game/fnt/`** : Polices bitmap
+  - `PressStart2P.*` : Police pixel art pour l'interface
+
+### 🛠️ Outils nécessaires pour modifier le jeu
+
+Pour modifier les assets du jeu, vous aurez besoin de :
+
+1. **Aseprite** (recommandé) : [aseprite.org](https://www.aseprite.org/)
+
+   - Pour éditer les sprites du joueur (`lulu.aseprite`)
+   - Pour créer/modifier les tilesets
+   - Export en PNG avec métadonnées JSON pour les animations
+   - Alternative gratuite : [Piskel](https://www.piskelapp.com/) (en ligne)
+
+2. **Tiled Map Editor** : [mapeditor.org](https://www.mapeditor.org/)
+
+   - Pour créer et éditer les niveaux (fichiers `.tmx`)
+   - Format utilisé : TMX (Tiled Map XML)
+   - Les tilesets doivent être configurés dans Tiled
+
+3. **Éditeur de texte** : Pour modifier les fichiers JSON de configuration
+   - Les animations sont définies dans `lulu.json`
+   - Les ressources sont listées dans `ressources.ts`
+
+### 📝 Workflow de développement du jeu
+
+1. **Modifier les sprites** :
+
+   - Ouvrir `public/game/entities/lulu.aseprite` dans Aseprite
+   - Modifier les animations (stand, walk, jump, grounded)
+   - Exporter en PNG et JSON depuis Aseprite
+   - Les frame tags définissent les animations dans `lulu.json`
+
+2. **Créer/modifier un niveau** :
+
+   - Ouvrir `public/game/tiles/start.tmx` dans Tiled
+   - Utiliser le tileset `tileset.png` (8x8 pixels)
+   - Dessiner le niveau avec les tiles
+   - Sauvegarder en `.tmx`
+   - Exporter l'image de prévisualisation si nécessaire
+
+3. **Ajouter des ressources** :
+
+   - Ajouter les fichiers dans `public/game/`
+   - Déclarer les ressources dans `src/features/mini-game/ressources.ts`
+   - Format : `{ name: 'nom', type: 'image|json|audio|tmx', src: 'chemin' }`
+
+4. **Tester les modifications** :
+   - Lancer `yarn dev`
+   - Accéder à `/game` dans le navigateur
+   - Les ressources sont rechargées automatiquement en développement
+
+### 🎨 Format des assets
+
+- **Sprites** : Format PNG avec sprite sheet (toutes les frames sur une image)
+- **Animations** : Définies dans JSON avec frame tags et durées personnalisées
+- **Niveaux** : Format TMX (Tiled Map XML) avec tilesets PNG
+- **Sons** : Format MP3/OGG pour compatibilité navigateur
 
 ## 🎯 Features à implémenter
 
