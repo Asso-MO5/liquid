@@ -25,7 +25,6 @@ export const ressources = [
   { name: 'start', type: 'tmx', src: 'game/tiles/start.tmx' },
   { name: 'start', type: 'image', src: 'game/tiles/start.png' },
   { name: 'museum', type: 'tsx', src: 'game/tiles/museum.tsx' },
-  // { name: 'final', type: 'tmx', src: 'tiles/final.tmx' },
 
 
   /* Bitmap Font
