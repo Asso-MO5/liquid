@@ -1,26 +1,28 @@
-# 🏛️ MO5 - Espace Membre d'Association
+# 🏛️ MO5 Liquid - Frontend Public
 
-Application de gestion complète pour l'association MO5, construite avec SolidJS et une architecture DDD pragmatique. Ce système permet de gérer les membres, les événements, la billeterie, les cotisations et tous les aspects organisationnels de l'association.
+Frontend public pour l'association MO5, construit avec **SolidJS**. Ce projet gère la partie publique du site (billeterie, événements publics, mini-jeu).
+
+> **Note** : Ce projet est le frontend public. Pour le backend, voir [Ocelot](https://github.com/Asso-MO5/ocelot). Pour l'interface d'administration, voir [Solid](https://github.com/Asso-MO5/solid).
 
 ## 🎯 Vision du Projet
 
-MO5 est un **espace membre complet** avec plusieurs niveaux d'accès et de nombreuses fonctionnalités :
+**Liquid** est le **frontend public** du système MO5. Il s'adresse à tous les visiteurs du site de l'association, sans authentification requise.
 
-### 🏗️ **Niveaux d'accès :**
+### 🎯 **Objectifs :**
 
-- **Public** : Billeterie pour les expositions
-- **Membres** : Inscription aux événements (système Doodle-like)
-- **Bureau** : Gestion administrative complète
-- **Pôles** : Outils spécialisés (Live/Vidéo, etc.)
+- **Accessibilité** : Site public accessible à tous
+- **Billeterie** : Achat de billets pour les expositions
+- **Information** : Présentation de l'association et des événements
+- **Divertissement** : Mini-jeu pixel art intégré
 
 ### 🔧 **Fonctionnalités principales :**
 
 - **Billeterie publique** pour les expositions
-- **Gestion d'événements** (organisation + inscriptions membres)
-- **Outils pôle Live/Vidéo** (scripts, planning)
-- **Gestion des cotisations**
-- **Gestion de la collection**
-- **Authentification Discord** (intégration serveur asso)
+- **Affichage des événements publics**
+- **Mini-jeu pixel art** intégré
+- **Informations pratiques** sur l'association
+
+> L'authentification, la gestion des membres, les cotisations et l'administration sont gérées par d'autres applications (voir [Architecture](#-architecture-du-système-mo5)).
 
 ## 🚀 Démarrage rapide
 
@@ -32,8 +34,7 @@ MO5 est un **espace membre complet** avec plusieurs niveaux d'accès et de nombr
   - Sur Linux : Utiliser le gestionnaire de paquets de votre distribution
   - Vérifier l'installation : `node --version` (doit afficher v22.x.x ou supérieur)
 - **Yarn** : Installer après Node.js avec `npm install -g yarn`
-- **MySQL** : Base de données requise pour le backend
-- **Serveur Discord de l'association** : Pour l'authentification
+- **Backend Ocelot** : Le backend doit être lancé séparément (voir [Ocelot](https://github.com/Asso-MO5/ocelot))
 
 ### Installation et lancement en local
 
@@ -72,7 +73,7 @@ yarn install
 
 # Configurer les variables d'environnement
 cp env.example .env
-# Éditer .env avec vos valeurs (base de données, Discord, etc.)
+# Éditer .env avec l'URL du backend Ocelot
 ```
 
 #### 4. Démarrer le serveur de développement
@@ -89,36 +90,47 @@ Le mini-jeu est accessible via la route `/game` une fois l'application lancée.
 
 ## 🏗️ Architecture
 
+### Architecture du système MO5
+
+Le système MO5 est composé de **trois applications distinctes** :
+
+1. **Liquid** (ce projet) : Frontend public
+
+   - Billeterie publique
+   - Affichage des événements
+   - Mini-jeu
+   - Informations pratiques
+
+2. **[Ocelot](https://github.com/Asso-MO5/ocelot)** : Backend API
+
+   - Authentification Discord OAuth2
+   - Gestion des paiements (SumUp)
+   - Base de données PostgreSQL
+   - API REST pour les applications frontend
+
+3. **[Solid](https://github.com/Asso-MO5/solid)** : Interface d'administration
+   - Gestion des membres
+   - Gestion des événements
+   - Gestion des cotisations
+   - Outils administratifs
+
 ### Structure Features-Based
 
 ```
 src/
 ├── features/                   # Features métier
-│   ├── auth/                   # Authentification Discord
-│   │   ├── auth.api.ts         # Routes API
-│   │   ├── auth.feature        # Documentation feature
-│   │   ├── auth.profile.tsx    # Profil utilisateur
-│   │   ├── auth.signin.tsx     # Connexion
-│   │   └── auth.signout.tsx    # Déconnexion
-│   ├── events/                 # Gestion des événements
 │   ├── ticketing/              # Billeterie publique
-│   ├── members/                # Gestion des membres
-│   ├── subscriptions/          # Gestion des cotisations
-│   ├── collection/             # Gestion de la collection
-│   └── live-video/             # Outils pôle Live/Vidéo
-├── database/                   # Configuration Drizzle
+│   ├── events/                 # Affichage des événements publics
+│   └── mini-game/              # Mini-jeu pixel art
+├── routes/                     # Routes de l'application
 ├── ui/                         # Composants réutilisables
 ├── utils/                      # Utilitaires
 └── types/                      # Types TypeScript globaux
 ```
 
-### Principes DDD Pragmatique
+### Communication avec le backend
 
-- **Colocation** : Tests à côté du code
-- **Isolation** : Features indépendantes
-- **Namespaces** : Préfixes clairs (xxx.store.ts)
-- **Scope** : Feature trop grosse = mal découpée
-- **Shared** : Ce qui n'est pas dans features est partagé
+Le frontend communique avec **Ocelot** via des appels API REST. L'authentification est gérée par Ocelot via Discord OAuth2.
 
 ## 🧪 Tests
 
@@ -150,32 +162,6 @@ Le projet utilise **Tailwind CSS v4** avec des couleurs personnalisées définie
 }
 ```
 
-## 🔐 Authentification et Rôles Discord
-
-L'authentification utilise **Auth.js** avec Discord comme provider :
-
-- Configuration dans `src/features/auth/auth.api.ts`
-- Variables d'environnement requises dans `.env`
-- Hooks et composants dans `src/features/auth/`
-
-### Rôles Discord
-
-Le système utilise les rôles Discord pour gérer les permissions :
-
-- **`@everyone`** : Accès public (billeterie)
-- **`Membre`** : Accès espace membre (inscriptions événements)
-- **`Bureau`** : Gestion administrative complète
-- **`Pôle Live`** : Outils spécialisés Live/Vidéo
-- **`Pôle Vidéo`** : Outils spécialisés Vidéo
-- **`Admin`** : Accès complet au système
-
-## 📊 Base de données
-
-- **ORM** : Drizzle ORM
-- **Base** : MySQL
-- **Configuration** : `src/database/`
-- **URL** : `DATABASE_URL` dans `.env`
-
 ## 🚀 Scripts disponibles
 
 ```bash
@@ -186,10 +172,6 @@ yarn lint         # Linting
 yarn test         # Tests
 yarn test:ui      # Tests avec UI
 yarn test:coverage # Tests avec couverture
-yarn db:generate  # Générer migrations
-yarn db:migrate   # Appliquer migrations
-yarn db:push      # Push schema
-yarn db:studio    # Interface Drizzle Studio
 ```
 
 ## 📁 Documentation
@@ -209,12 +191,15 @@ Les fichiers sources du jeu se trouvent dans les dossiers suivants :
 #### Code source du jeu
 
 - **`src/features/mini-game/`** : Code source principal du mini-jeu
-  - `mini-game.tsx` : Composant principal et initialisation MelonJS
+  - `mini-game.tsx` : Composant React/SolidJS minimal qui gère le conteneur du jeu
+  - `game.init.ts` : **Initialisation centralisée de MelonJS** (logique principale du jeu)
   - `entities/player.ts` : Logique du joueur (mouvement, collisions, animations)
+  - `entities/HUD.ts` : Interface utilisateur du jeu
   - `screens/start.ts` : Écran de démarrage et chargement des niveaux
   - `screens/loading.ts` : Écran de chargement personnalisé
   - `ressources.ts` : Liste des ressources à charger (sprites, sons, niveaux)
   - `game-state.ts` : État global du jeu
+  - `mini-game.types.ts` : Types TypeScript pour le jeu
 
 #### Assets du jeu (sprites, tilesets, sons)
 
@@ -239,6 +224,48 @@ Les fichiers sources du jeu se trouvent dans les dossiers suivants :
 
 - **`public/game/fnt/`** : Polices bitmap
   - `PressStart2P.*` : Police pixel art pour l'interface
+
+### 🏗️ Architecture du code du jeu
+
+Le code du jeu a été structuré pour **éviter les problèmes de nettoyage et de réinitialisation** avec MelonJS :
+
+#### Stratégie de garde en vie (Keep-Alive)
+
+**Pourquoi garder le jeu en vie ?**
+
+MelonJS est une bibliothèque complexe qui gère de nombreux états internes (game loop, ressources, événements, etc.). Lors du changement de page ou du démontage du composant, tenter de nettoyer complètement MelonJS peut causer :
+
+- **Erreurs de référence** : `Cannot read properties of undefined (reading 'length')`
+- **Fuites mémoire** : Références circulaires non résolues
+- **Problèmes de réinitialisation** : Conflits lors de la réinitialisation après nettoyage
+
+**Solution adoptée :**
+
+1. **Initialisation unique** : Le jeu est initialisé **une seule fois** dans `game.init.ts` avec un garde `gameInitialized`
+2. **Pas de nettoyage agressif** : Le composant `mini-game.tsx` ne nettoie **pas** MelonJS lors du démontage
+3. **Réutilisation** : Si le composant est remonté, MelonJS réutilise l'instance existante au lieu de créer une nouvelle
+4. **Séparation des responsabilités** :
+   - `mini-game.tsx` : Gère uniquement le conteneur DOM et la prop `init`
+   - `game.init.ts` : Contient toute la logique d'initialisation MelonJS (une seule fois)
+
+Cette approche garantit une **stabilité maximale** et évite les bugs liés au cycle de vie des composants React/SolidJS.
+
+#### Structure des fichiers
+
+```
+src/features/mini-game/
+├── mini-game.tsx          # Composant minimal (conteneur + prop init)
+├── game.init.ts          # Initialisation MelonJS (singleton)
+├── game-state.ts         # État global partagé
+├── ressources.ts         # Définition des ressources
+├── mini-game.types.ts    # Types TypeScript
+├── entities/
+│   ├── player.ts         # Logique du joueur
+│   └── HUD.ts           # Interface utilisateur
+└── screens/
+    ├── start.ts          # Écran de jeu
+    └── loading.ts       # Écran de chargement
+```
 
 ### 🛠️ Outils nécessaires pour modifier le jeu
 
@@ -288,6 +315,7 @@ Pour modifier les assets du jeu, vous aurez besoin de :
    - Lancer `yarn dev`
    - Accéder à `/game` dans le navigateur
    - Les ressources sont rechargées automatiquement en développement
+   - **Note** : Si vous modifiez `game.init.ts`, vous devrez peut-être recharger complètement la page (F5) car l'initialisation est en singleton
 
 ### 🎨 Format des assets
 
@@ -296,63 +324,72 @@ Pour modifier les assets du jeu, vous aurez besoin de :
 - **Niveaux** : Format TMX (Tiled Map XML) avec tilesets PNG
 - **Sons** : Format MP3/OGG pour compatibilité navigateur
 
+### ⚠️ Notes importantes sur le développement
+
+#### Réinitialisation du jeu
+
+Si vous devez **forcer une réinitialisation complète** du jeu (par exemple après des modifications majeures dans `game.init.ts`), vous pouvez :
+
+1. **Recharger complètement la page** (F5 ou Ctrl+R)
+2. **Modifier temporairement** `game.init.ts` pour réinitialiser le garde :
+   ```typescript
+   // Dans game.init.ts, ligne 8
+   let gameInitialized = false // Forcer la réinitialisation
+   ```
+
+#### Débogage
+
+- Les logs de MelonJS apparaissent dans la console du navigateur
+- Utilisez les DevTools pour inspecter le canvas et les ressources chargées
+- En cas d'erreur, vérifiez que `game.init.ts` n'a été appelé qu'une seule fois
+
 ## 🎯 Features à implémenter
 
-### Phase 1 - Base
+### Phase 1 - Base publique
 
-- ✅ **Auth** : Authentification Discord complète avec rôles
-- 🔄 **Events** : Gestion des événements (création, modification, inscriptions)
-- 🔄 **Members** : Gestion des membres et profils
-
-### Phase 2 - Fonctionnalités publiques
-
-- ⏳ **Ticketing** : Billeterie publique pour expositions
+- ⏳ **Ticketing** : Billeterie publique pour expositions (intégration avec Ocelot)
 - ⏳ **Public Events** : Affichage public des événements
+- ✅ **Mini-jeu** : Jeu pixel art intégré
 
-### Phase 3 - Gestion administrative
+### Phase 2 - Améliorations
 
-- ⏳ **Subscriptions** : Gestion des cotisations
-- ⏳ **Collection** : Gestion de la collection
-- ⏳ **Reports** : Tableaux de bord et rapports
+- ⏳ **Informations pratiques** : Horaires, accès, contact
+- ⏳ **Galerie** : Photos des expositions
+- ⏳ **Actualités** : Blog/actualités de l'association
 
-### Phase 4 - Outils spécialisés
-
-- ⏳ **Live Video Tools** : Scripts, planning pour pôle Live/Vidéo
-- ⏳ **Advanced Features** : Fonctionnalités avancées selon besoins
+> **Note** : Les fonctionnalités d'authentification, de gestion des membres, d'administration et de cotisations sont gérées par les autres applications du système MO5.
 
 ## 🎯 Architecture du Système MO5
 
-### 🏠 Page d'accueil publique
+### 🏠 Liquid (ce projet) - Frontend Public
 
 - **Billeterie** pour les expositions
 - **Événements publics** à venir
 - **Informations** sur l'association
+- **Mini-jeu** pixel art
 
-### 👥 Espace membre
+### 🔧 Ocelot - Backend API
 
-- **Tableau de bord** personnel
-- **Inscription aux événements** (système Doodle-like)
-- **Historique** des participations
-- **Gestion du profil**
+- **Authentification Discord** OAuth2
+- **API REST** pour les applications frontend
+- **Gestion des paiements** (SumUp)
+- **Base de données** PostgreSQL
+- Voir : [github.com/Asso-MO5/ocelot](https://github.com/Asso-MO5/ocelot)
 
-### 🏢 Interface administrative
+### 👥 Solid - Interface d'Administration
 
 - **Gestion des événements** (création, modification)
 - **Gestion des membres** et rôles
 - **Gestion des cotisations**
 - **Rapports** et statistiques
-
-### 🎬 Outils pôles spécialisés
-
-- **Pôle Live/Vidéo** : Scripts, planning, ressources
-- **Autres pôles** : Outils selon besoins spécifiques
+- Voir : [github.com/Asso-MO5/solid](https://github.com/Asso-MO5/solid)
 
 ## 🔒 Sécurité et Confidentialité
 
-- **Authentification Discord** pour tous les accès
-- **Rôles granulaires** selon les responsabilités
-- **Chiffrement** des données sensibles
-- **Traçabilité** des actions importantes
+- **Authentification** gérée par Ocelot (Discord OAuth2)
+- **API sécurisée** avec validation et CORS
+- **Cookies HTTP-only** pour les sessions
+- **Communication HTTPS** en production
 
 ## 🤝 Contribution
 
@@ -368,4 +405,11 @@ Ce projet est sous licence MIT.
 
 ---
 
-**MO5** - Espace membre d'association moderne et complet 🏛️
+**MO5 Liquid** - Frontend public pour l'association MO5 🏛️
+
+---
+
+> **Repositories liés :**
+>
+> - [Ocelot](https://github.com/Asso-MO5/ocelot) - Backend API
+> - [Solid](https://github.com/Asso-MO5/solid) - Interface d'administration
