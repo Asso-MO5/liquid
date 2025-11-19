@@ -4,15 +4,15 @@ import { CalDay } from "./CalDay"
 import { CalControls } from "./CalControls"
 
 interface CalProps {
-  onDayClick?: (day: Date) => void
+  onDayClick?: (day: Date) => Promise<void>
+  selectedDate?: string
 }
 
 export function Cal(props: CalProps) {
   const calendar = CalCtrl();
 
-
   return (
-    <div class="flex flex-col items-center justify-baseline gap-4">
+    <div class="flex flex-col items-center justify-baseline gap-4" id="calendar">
       <CalControls />
       <div
         class="grid gap-3 grid-cols-7"
@@ -28,6 +28,7 @@ export function Cal(props: CalProps) {
           {(day) => (
             <CalDay
               day={day}
+              selectedDate={props.selectedDate}
               view={calendar.view()}
               onDayClick={(day) => props.onDayClick?.(day)}
               formatDate={calendar.formatDate}

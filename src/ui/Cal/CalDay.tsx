@@ -4,6 +4,17 @@ import type { CalDayProps } from "./CalDay.types"
 export const CalDay = (props: CalDayProps) => {
   const [isMobile, setIsMobile] = createSignal(false)
 
+  const isSameDate = (date: Date) => {
+    if (!props.selectedDate || typeof props.selectedDate !== 'string') return false
+
+    // format YYYY-MM-DD
+    const selectedDate = new Date(props.selectedDate)
+    const day = date.getDate()
+    const month = date.getMonth()
+    const year = date.getFullYear()
+
+    return selectedDate.getDate() === day && selectedDate.getMonth() === month && selectedDate.getFullYear() === year
+  }
   onMount(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768) // md breakpoint
@@ -15,9 +26,6 @@ export const CalDay = (props: CalDayProps) => {
     return () => window.removeEventListener('resize', checkMobile)
   })
 
-  const handleDayClick = () => {
-    props.onDayClick(props.day.date)
-  }
 
   return (
     <Show
@@ -35,11 +43,10 @@ export const CalDay = (props: CalDayProps) => {
              data-[open=false]:opacity-30
             "
           data-current-month={props.day.isCurrentMonth}
-
+          data-selected={isSameDate(props.day.date)}
           data-open={props.day.isDayOpen}
           data-today={props.day.isToday}
-          data-selected={false}
-          onClick={handleDayClick}
+          onClick={() => props.onDayClick(props.day.date)}
         >
           <div class="text-lg font-medium mb-1 flex items-center justify-center">
             {props.formatDate(props.day.date)}
@@ -59,8 +66,8 @@ export const CalDay = (props: CalDayProps) => {
         data-current-month={props.day.isCurrentMonth}
         data-today={props.day.isToday}
         data-open={props.day.isDayOpen}
-        data-selected={false}
-        onClick={handleDayClick}
+        data-selected={isSameDate(props.day.date)}
+        onClick={() => props.onDayClick(props.day.date)}
       >
         {/* Numéro du jour */}
         <div class="text-sm font-medium mb-1">

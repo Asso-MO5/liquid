@@ -1,16 +1,22 @@
-import { type VoidComponent } from "solid-js";
+import { type VoidComponent, Show } from "solid-js";
 import { SumUpCtrl } from "./sumup.ctrl";
 
-export const SumUp: VoidComponent = () => {
+type SumUpProps = {
+  checkoutId: string | null;
+  checkoutReference: string | null;
+}
 
-  const { setCardContainer, paymentStatus } = SumUpCtrl();
+export const SumUp: VoidComponent<SumUpProps> = (props) => {
+  const { setCardContainer, paymentStatus } = SumUpCtrl(props);
 
   return (
     <div class="flex flex-col items-center gap-4 p-8">
-      <div id="sumup-card" ref={setCardContainer} />
-      {paymentStatus() && (
-        <div class="text-sm text-gray-600">{paymentStatus()}</div>
-      )}
+      <Show when={props.checkoutId}>
+        <div id="sumup-card" ref={setCardContainer} />
+        {paymentStatus() && (
+          <div class="text-sm text-gray-600">{paymentStatus()}</div>
+        )}
+      </Show>
     </div>
   );
 };

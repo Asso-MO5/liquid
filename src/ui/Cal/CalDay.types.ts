@@ -2,6 +2,7 @@ import type { CalendarEvent, CalendarView } from "./Cal.types"
 import type { JSX } from "solid-js"
 
 export interface CalDayProps {
+  selectedDate?: string
   day: {
     date: Date
     isCurrentMonth: boolean

@@ -67,6 +67,20 @@
     font-family: 'Silkscreen', monospace;
   }
 
+  /* ==== SCROLLBAR ==== */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-secondary);
+    border-radius: 4px;
+  }
   button {
     @apply py-1 px-2 cursor-pointer outline-none bg-primary rounded p-1 text-black border-2 border-black font-bold;
   }
@@ -180,18 +194,15 @@
   }
 
   h1 {
-    @apply text-2xl font-bold mb-6 mt-4 text-primary;
-    font-family: 'Bebas Neue', sans-serif;
+    @apply text-xl font-bold mb-6 mt-4 text-primary;
   }
 
   h2 {
-    @apply text-xl font-bold mb-6 mt-4;
-    font-family: 'Bebas Neue', sans-serif;
+    @apply text-lg font-bold mb-6 mt-4 text-primary;
   }
 
   h3 {
-    @apply text-lg font-bold mb-6 mt-4;
-    font-family: 'Bebas Neue', sans-serif;
+    @apply text-base font-bold mb-6 mt-4 text-primary;
   }
 
   h4 {

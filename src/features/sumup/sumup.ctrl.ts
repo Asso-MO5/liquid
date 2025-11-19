@@ -1,10 +1,21 @@
-import { createEffect, createSignal, onMount } from "solid-js";
+import { createEffect, createSignal, onMount, createMemo } from "solid-js";
 import type { SumUpCardInstance, SumUpResponseBody } from "./sumup.types";
 import { clientEnv } from "~/env/client";
+import { scrollTo } from "~/utils/scroll-to";
 
-export const SumUpCtrl = () => {
+type SumUpCtrlProps = {
+  checkoutId: string | null;
+  checkoutReference: string | null;
+}
 
-  const [checkoutId, setCheckoutId] = createSignal<string | null>(null);
+export const SumUpCtrl = (props: SumUpCtrlProps) => {
+  const checkoutId = createMemo(() => props.checkoutId);
+  const checkoutReference = createMemo(() => props.checkoutReference);
+
+  createEffect(() => {
+    checkoutReference();
+  });
+
   const [paymentStatus, setPaymentStatus] = createSignal<string | null>(null);
   const [sdkLoaded, setSdkLoaded] = createSignal<boolean>(false);
   let sumupCardInstance: SumUpCardInstance | null = null;
@@ -14,45 +25,11 @@ export const SumUpCtrl = () => {
     cardContainer = el;
   };
 
-  const pay = async () => {
-    try {
-      const response = await fetch(`${clientEnv.VITE_API_URL}/pay/checkout`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          amount: 12,
-          currency: 'EUR',
-          description: 'Test de paiement',
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error(`Erreur HTTP: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log('Checkout créé:', data);
-
-      if (data.id) {
-        setCheckoutId(data.id);
-        setPaymentStatus(null);
-      } else {
-        console.error('Erreur: pas d\'ID de checkout reçu');
-        alert('Erreur lors de la création du paiement. Veuillez réessayer.');
-      }
-    } catch (error) {
-      console.error('Erreur lors du paiement:', error);
-    }
-  }
 
   onMount(() => {
+
     if (window.SumUpCard) {
       setSdkLoaded(true);
-
-      // pay();
       return;
     }
 
@@ -61,7 +38,6 @@ export const SumUpCtrl = () => {
         if (window.SumUpCard) {
           setSdkLoaded(true);
           clearInterval(checkSdk);
-          // pay();
         }
       }, 100);
       return;
@@ -73,10 +49,10 @@ export const SumUpCtrl = () => {
     script.onload = () => {
       console.log('SDK SumUp chargé');
       setSdkLoaded(true);
-      // pay();
     };
     script.onerror = () => {
       console.error('Erreur lors du chargement du SDK SumUp');
+      setPaymentStatus('Erreur lors du chargement du SDK de paiement.');
     };
     document.head.appendChild(script);
   });
@@ -92,6 +68,7 @@ export const SumUpCtrl = () => {
       if (cardContainer) {
         cardContainer.innerHTML = '';
       }
+      setPaymentStatus(null);
       return;
     }
 
@@ -116,9 +93,6 @@ export const SumUpCtrl = () => {
           id: 'sumup-card',
           checkoutId: id,
           onResponse: (type: string, body: SumUpResponseBody) => {
-            console.log('Type:', type);
-            console.log('Body:', body);
-
             switch (type) {
               case 'sent':
                 setPaymentStatus('Envoi en cours...');
@@ -133,16 +107,20 @@ export const SumUpCtrl = () => {
                 setPaymentStatus(`Erreur: ${body?.message || 'Une erreur est survenue'}`);
                 break;
               case 'success':
+                // TODO ici ajouter la logique pour rediriger vers la page de réussite et envoyer à l'api
                 setPaymentStatus('Paiement réussi !');
                 verifyCheckoutStatus(id);
                 break;
               case 'fail':
                 setPaymentStatus('Paiement échoué ou annulé.');
                 break;
+              default:
+                console.log('Type de réponse non géré:', type);
             }
           },
         });
-        console.log('Widget SumUp monté avec succès');
+        setPaymentStatus(null);
+        scrollTo('ticket', 'step-5');// Réinitialiser le statut lors du montage
       } catch (error) {
         console.error('Erreur lors du montage du widget SumUp:', error);
         setPaymentStatus('Erreur lors du chargement du widget de paiement.');
@@ -154,42 +132,33 @@ export const SumUpCtrl = () => {
 
   const verifyCheckoutStatus = async (id: string) => {
     try {
-      const response = await fetch(`${clientEnv.VITE_API_URL}/pay/checkout/${id}`, {
+      const response = await fetch(`${clientEnv.VITE_API_URL}/museum/tickets/checkout/${id}`, {
         method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
 
       if (response.ok) {
         const checkoutData = await response.json();
 
-        if (checkoutData.status === 'PAID') {
+        if (checkoutData.status === 'PAID' || checkoutData.status === 'SUCCESS') {
           setPaymentStatus('Paiement confirmé avec succès !');
         } else {
           setPaymentStatus(`Statut: ${checkoutData.status}`);
         }
+      } else {
+        console.error('Erreur lors de la vérification du statut:', response.status);
       }
     } catch (error) {
       console.error('Erreur lors de la vérification du statut:', error);
+      setPaymentStatus('Erreur lors de la vérification du paiement.');
     }
-  }
-
-  const closePaymentWidget = () => {
-    if (sumupCardInstance) {
-      sumupCardInstance.unmount();
-      sumupCardInstance = null;
-    }
-    if (cardContainer) {
-      cardContainer.innerHTML = '';
-    }
-    setCheckoutId(null);
-    setPaymentStatus(null);
   }
 
   return {
-    checkoutId,
     paymentStatus,
-    pay,
     verifyCheckoutStatus,
-    closePaymentWidget,
     setCardContainer
   }
 }

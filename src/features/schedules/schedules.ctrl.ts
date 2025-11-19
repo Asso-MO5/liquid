@@ -7,7 +7,6 @@ import { setSchedules } from "./schedules.store";
 export default function schedulesCtrl() {
   const [isLoading, setIsLoading] = createSignal(false);
 
-
   const getSchedules = async () => {
     setIsLoading(true);
     try {

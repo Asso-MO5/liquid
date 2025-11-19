@@ -1,11 +1,67 @@
+import { Show } from "solid-js";
+import { Slots } from "~/features/ticket/slots";
+import { TicketCtrl } from "~/features/ticket/ticket.ctrl";
+import { ticketStore } from "~/features/ticket/ticket.store";
 import { Cal } from "~/ui/Cal";
+import { useParams } from "@solidjs/router";
+import type { LANGS } from "~/features/lang-selector/lang-selector.const";
+import { ticketTxt } from "~/features/ticket/ticket.txt";
+import { PersonalInfos } from "~/features/ticket/personal-infos";
+import { Prices } from "~/features/price/prices";
+import { Donation } from "~/features/ticket/donation";
+import { paymentCtrl } from "~/features/ticket/payment.ctrl";
+import { SumUp } from "~/features/sumup/sumup";
 
 export default function Ticket() {
+  const ticketCtrl = TicketCtrl();
+  const params = useParams()
+  const payment = paymentCtrl();
+  const lang = () => params.lang as keyof typeof LANGS
+
   return (
-    <main class="flex flex-col items-center justify-center relative h-full text-white">
-      <div class="absolute inset-0 flex flex-col items-center justify-baseline">
-        <Cal onDayClick={(day) => console.log(day)} />
-      </div>
+    <main
+      class="flex flex-col items-center justify-center relative h-full overflow-hidden text-white">
+      <div id="ticket" class="absolute inset-0 overflow-y-auto flex flex-col gap-4">
+        <div id="step-1">
+          <Cal onDayClick={ticketCtrl.onDayClick} selectedDate={ticketStore.reservation_date} />
+        </div>
+        <Show when={ticketStore.reservation_date && ticketCtrl.slots()}>
+          <div id="step-2" class="max-w-sm mx-auto">
+            <h3 class="text-center font-bold">{ticketTxt.available_slots[lang() as keyof typeof ticketTxt.available_slots]}</h3>
+            <Slots
+              isFetching={ticketCtrl.isFetching()}
+              slots={ticketCtrl.slots()}
+              onSlotClick={ticketCtrl.onSlotClick}
+              currentSlot={ticketStore.slot_start_time}
+            />
+          </div>
+          <div id="step-3" class="max-w-sm mx-auto">
+            <h3 class="text-center font-bold">{ticketTxt.available_slots[lang() as keyof typeof ticketTxt.prices]}</h3>
+            <Prices />
+            <Show when={ticketStore.tickets.length > 0}>
+              <div class="mt-4">
+                <h3 class="text-center font-bold">{ticketTxt.donation[lang() as keyof typeof ticketTxt.donation]}</h3>
+                <Donation />
+              </div>
+            </Show>
+          </div>
+          <div id="step-4" class="max-w-sm mx-auto">
+            <Show when={ticketStore.slot_start_time}>
+              <h3 class="font-bold">
+                {ticketTxt.personal_infos[lang() as keyof typeof ticketTxt.personal_infos]}
+              </h3>
+              <PersonalInfos onPayment={payment.preparePayment} />
+
+
+            </Show>
+          </div>
+          <div id="step-5">
+            <Show when={payment.checkoutId()}>
+              <SumUp checkoutId={payment.checkoutId()} checkoutReference={payment.checkoutReference()} />
+            </Show>
+          </div>
+        </Show>
+      </div >
     </main >
   )
 }
