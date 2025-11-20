@@ -57,7 +57,7 @@ export default function Ticket() {
           </div>
           <div id="step-5">
             <Show when={payment.checkoutId()}>
-              <SumUp checkoutId={payment.checkoutId()} checkoutReference={payment.checkoutReference()} />
+              <SumUp checkoutId={payment.checkoutId()} checkoutReference={payment.checkoutReference()} language={lang() as string} />
             </Show>
           </div>
         </Show>

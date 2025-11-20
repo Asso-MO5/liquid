@@ -4,18 +4,16 @@ import { SumUpCtrl } from "./sumup.ctrl";
 type SumUpProps = {
   checkoutId: string | null;
   checkoutReference: string | null;
+  language?: string;
 }
 
 export const SumUp: VoidComponent<SumUpProps> = (props) => {
-  const { setCardContainer, paymentStatus } = SumUpCtrl(props);
+  const { setCardContainer } = SumUpCtrl(props);
 
   return (
     <div class="flex flex-col items-center gap-4 p-8">
       <Show when={props.checkoutId}>
         <div id="sumup-card" ref={setCardContainer} />
-        {paymentStatus() && (
-          <div class="text-sm text-gray-600">{paymentStatus()}</div>
-        )}
       </Show>
     </div>
   );
