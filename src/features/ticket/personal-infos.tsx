@@ -6,6 +6,7 @@ import { createMemo } from "solid-js";
 
 type PersonalInfosProps = {
   onPayment: () => void;
+  isLoading: boolean;
 }
 export const PersonalInfos = (props: PersonalInfosProps) => {
   const params = useParams()
@@ -31,9 +32,10 @@ export const PersonalInfos = (props: PersonalInfosProps) => {
         <input type="email" value={ticketStore.email} onInput={(e) => setTicketStore('email', e.currentTarget.value)} />
       </div>
       <button
-        disabled={disabled()}
+        disabled={disabled() || props.isLoading}
+        data-loading={props.isLoading}
         class="btn mt-4 disabled:opacity-50 disabled:cursor-not-allowed" onClick={() => props.onPayment()}>
-        {ticketTxt.proceed_to_payment[lang() as keyof typeof ticketTxt.proceed_to_payment]}
+        {ticketTxt[props.isLoading ? 'loading' : 'proceed_to_payment'][lang() as keyof typeof ticketTxt.proceed_to_payment]}
       </button>
     </div>
   )

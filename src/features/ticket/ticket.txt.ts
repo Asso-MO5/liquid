@@ -3,6 +3,10 @@ export const ticketTxt = {
     fr: "Horaires disponibles",
     en: "Available hours",
   },
+  loading: {
+    fr: "Chargement...",
+    en: "Loading...",
+  },
   no_slots: {
     fr: "Aucun horaire disponible",
     en: "No hours available",

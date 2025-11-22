@@ -4,6 +4,8 @@ import { clientEnv } from "~/env/client";
 import { scrollTo } from "~/utils/scroll-to";
 import { locales } from "~/utils/langs";
 import { useNavigate, useParams } from "@solidjs/router";
+import { toast } from "~/ui/Toast";
+import { ticketStore } from "../ticket/ticket.store";
 
 type SumUpCtrlProps = {
   checkoutId: string | null;
@@ -14,15 +16,20 @@ type SumUpCtrlProps = {
 export const SumUpCtrl = (props: SumUpCtrlProps) => {
   const navigate = useNavigate();
   const params = useParams();
-  const lang = () => params.lang as keyof typeof locales;
+  const lang = () => params.lang;
 
   const checkoutId = createMemo(() => props.checkoutId);
   const checkoutReference = createMemo(() => props.checkoutReference);
   const language = createMemo(() => props.language || 'fr');
 
   createEffect(() => {
+    void ticketStore.donation_amount;
+    void ticketStore.total_amount;
+    void ticketStore.tickets;
     checkoutReference();
   });
+
+
 
   const [sdkLoaded, setSdkLoaded] = createSignal<boolean>(false);
   let sumupCardInstance: SumUpCardInstance | null = null;
@@ -53,11 +60,15 @@ export const SumUpCtrl = (props: SumUpCtrlProps) => {
     script.src = 'https://gateway.sumup.com/gateway/ecom/card/v2/sdk.js';
     script.async = true;
     script.onload = () => {
-      console.log('SDK SumUp chargé');
       setSdkLoaded(true);
     };
     script.onerror = () => {
-      console.error('Erreur lors du chargement du SDK SumUp');
+
+      const err = {
+        fr: 'Erreur lors du chargement du SDK SumUp',
+        en: 'Error loading SumUp SDK',
+      }
+      toast.error(err[lang() as keyof typeof err]);
     };
     document.head.appendChild(script);
   });
@@ -66,6 +77,7 @@ export const SumUpCtrl = (props: SumUpCtrlProps) => {
   createEffect(() => {
     const id = checkoutId();
     const loaded = sdkLoaded();
+
 
     if (!id && sumupCardInstance) {
       sumupCardInstance.unmount();
@@ -104,8 +116,15 @@ export const SumUpCtrl = (props: SumUpCtrlProps) => {
                 navigate(`/${lang()}/ticket/error`);
               });
             } else if (type.match(/success/)) {
-              sendWebhook(type, body, id, ref).then(() => {
-                navigate(`/${lang()}/ticket/thanks`);
+              sendWebhook(type, body, id, ref).then((data) => {
+
+                const langStr = String(lang() as 'fr' | 'en');
+
+                const params = new URLSearchParams();
+                params.set('qr', data.qr_codes.join(','));
+                params.set('email', ticketStore.email ?? '');
+                navigate(`/${langStr}/ticket/thanks?${params.toString()}`);
+
               });
             }
           },
@@ -158,12 +177,17 @@ export const SumUpCtrl = (props: SumUpCtrlProps) => {
         body: JSON.stringify(webhookData),
       });
 
-      if (!response.ok) {
-        console.error('Erreur lors de l\'envoi du webhook:', response.status);
+      const data = await response.json()
+
+      if (response.status !== 200) {
+        throw new Error(data?.error || 'Une erreur est survenue lors de l\'envoi du webhook');
       }
+      return data;
+
     } catch (error) {
-      console.error('Erreur lors de l\'envoi du webhook:', error);
+      return error
     }
+
   };
 
 

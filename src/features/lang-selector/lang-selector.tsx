@@ -17,14 +17,14 @@ export const LangSelector = () => {
   });
 
   return <> <Show when={selectedLang()}>
-    <select value={selectedLang() || "fr"} onInput={(e) => changeLang(e.currentTarget?.value as "fr" | "en")}>
+    <select id="lang-selector" value={selectedLang() || "fr"} onInput={(e) => changeLang(e.currentTarget?.value as "fr" | "en")}>
       <For each={LANGS}>
         {(lang) => <option value={lang.value}>{lang.label[lang.value as "fr" | "en"]}</option>}
       </For>
     </select>
   </Show>
     <Show when={!selectedLang()}>
-      <select value={selectedLang() || "fr"} onInput={(e) => changeLang(e.currentTarget?.value as "fr" | "en")}>
+      <select id="lang-selector" value={selectedLang() || "fr"} onInput={(e) => changeLang(e.currentTarget?.value as "fr" | "en")}>
         <option value="fr">FR</option>
       </select>
     </Show>

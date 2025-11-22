@@ -1,3 +1,5 @@
+import { Price } from "../price/price.type";
+
 export interface PreparePaymentBody {
   ticket_id: string;
   amount: number;
@@ -16,4 +18,10 @@ export interface PreparePaymentTicket {
   ticket_price: number;
   donation_amount: number;
   notes: string;
+  pricing_info: Price & {
+    price_amount: number;
+    price_name: string;
+    price_description: string;
+    applied_at: string;
+  };
 }

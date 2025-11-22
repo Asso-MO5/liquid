@@ -1,4 +1,6 @@
 import { useParams } from "@solidjs/router";
+import { setTicketStore } from "~/features/ticket/ticket.store";
+import { onMount } from "solid-js";
 
 const errorTxt = {
   fr: {
@@ -15,6 +17,14 @@ export default function Error() {
   const params = useParams();
   const lang = () => params.lang as keyof typeof errorTxt;
 
+  onMount(() => {
+    // vider le store
+    setTicketStore('reservation_date', '');
+    setTicketStore('slot_start_time', '');
+    setTicketStore('slot_end_time', '');
+    setTicketStore('tickets', []);
+    setTicketStore('donation_amount', 3);
+  });
 
   return (
     <div class="flex flex-col gap-2 items-center justify-center">

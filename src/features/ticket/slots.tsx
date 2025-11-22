@@ -10,7 +10,6 @@ type SlotsProps = {
 }
 export const Slots = (props: SlotsProps) => {
 
-
   return (
     <div class="p-3 gap-4 grid grid-cols-2  mx-auto">
       <For each={props.slots}>
@@ -25,17 +24,18 @@ export const Slots = (props: SlotsProps) => {
               data-[available=false]:cursor-not-allowed
               data-[available=true]:cursor-pointer      
               data-[available=true]:hover:bg-green-500/10
-              data-[current=true]:bg-green-500/10
+              data-[current=true]:bg-green-500/30
             "
             onClick={() => props.onSlotClick(slot)}
           >
             <div class="text-sm text-center">
               {slot.start_time.split(':').slice(0, 2).join(':')} - {slot.end_time.split(':').slice(0, 2).join(':')}
             </div>
-            <div class="h-4 rounded-full border border-white relative">
-              <div class="absolute inset-1 bg-white rounded-full"
-                style={{ width: `${slot.occupancy_percentage}%` }}
+            <div class="h-4 rounded-full border border-white relative overflow-hidden">
+              <div class="absolute inset-0 bg-white"
+                style={{ width: `${Math.min(slot.occupancy_percentage, 100)}%` }}
               />
+              <div class="absolute inset-0 border-4 border-black rounded-full" />
             </div>
           </div>
         )}

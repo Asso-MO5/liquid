@@ -58,8 +58,9 @@ export const CalDay = (props: CalDayProps) => {
       <div
         class="
           aspect-square rounded-full flex flex-col items-center justify-center cursor-pointer data-[open=true]:cursor-pointer data-[open=true]:hover:bg-primary 
+          border border-transparent
         data-[current-month=false]:text-gray-400 data-[current-month=false]:bg-bg 
-        data-[today=true]:bg-secondary data-[today=true]:border-secondary
+        data-[today=true]:border-secondary
         data-[selected=true]:bg-primary data-[selected=true]:border-primary
           data-[open=false]:cursor-not-allowed data-[open=false]:opacity-30 data-[open=false]:text-gray-400
         "
