@@ -58,12 +58,13 @@ export const Header = (props: HeaderProps) => {
             transition-all duration-500
             data-[visible=false]:-translate-y-full
             data-[visible=true]:translate-y-0
-            fixed 
+            fixed h-18
             left-0 right-0
             flex justify-between items-center p-2
             ease-in-out top-0 z-50 bg-bg"
+          style={{ 'touch-action': 'pan-y', 'pointer-events': 'auto' }}
         >
-          <div class="flex items-center gap-4">
+          <div class="flex items-center gap-4" style={{ 'pointer-events': 'auto' }}>
             <A href="/">
               <Logo />
             </A>
