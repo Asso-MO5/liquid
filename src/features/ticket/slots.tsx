@@ -33,7 +33,7 @@ export const Slots = (props: SlotsProps) => {
             </div>
             <div class="h-4 rounded-full border border-white relative overflow-hidden">
               <div class="absolute inset-0 bg-white"
-                style={{ width: `${Math.min(slot.occupancy_percentage, 100)}%` }}
+                style={{ width: `${Math.min(slot.occupancy_percentage > 0 && slot.occupancy_percentage < 5 ? 5 : slot.occupancy_percentage, 100)}%` }}
               />
               <div class="absolute inset-0 border-4 border-black rounded-full" />
             </div>

@@ -50,7 +50,7 @@ export const Header = (props: HeaderProps) => {
       data-with-game={props.withGame}
       class="grid grid-rows-[auto_1fr] data-[with-game=true]:h-[100dvh] data-[with-game=false]:grid-rows-[auto]">
       <Show when={props.page !== 'game'}>
-        <div class="h-18" />
+        <div class="mt-20 borde w-full" />
         <header
           id="header"
           data-visible="true"
@@ -62,9 +62,8 @@ export const Header = (props: HeaderProps) => {
             left-0 right-0
             flex justify-between items-center p-2
             ease-in-out top-0 z-50 bg-bg"
-          style={{ 'touch-action': 'pan-y', 'pointer-events': 'auto' }}
         >
-          <div class="flex items-center gap-4" style={{ 'pointer-events': 'auto' }}>
+          <div class="flex items-center gap-4">
             <A href="/">
               <Logo />
             </A>
@@ -80,11 +79,9 @@ export const Header = (props: HeaderProps) => {
         </header>
       </Show>
 
-      <div class="h-full w-full data-[with-game=false]:hidden" data-with-game={props.withGame}>
-        <MiniGame withGame={!!props.withGame} />
+      <div class="h-full w-full " data-with-game={props.withGame}>
+        {props.withGame && <MiniGame />}
       </div>
-
-
     </div >
   )
 }

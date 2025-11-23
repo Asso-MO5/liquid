@@ -40,7 +40,7 @@
     "@tailwindcss/vite": "^4.1.13",
     "autoprefixer": "^10.4.19",
     "dotenv": "^17.2.2",
-    "melonjs": "^17.4.0",
+    "kaplay": "^3001.0.19",
     "postcss": "^8.4.40",
     "solid-js": "^1.9.5",
     "tailwindcss": "^4.1.13",

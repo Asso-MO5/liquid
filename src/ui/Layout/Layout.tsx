@@ -8,7 +8,6 @@ type LayoutProps = {
   children: JSX.Element
 }
 
-
 export const Layout = (props: LayoutProps) => {
 
   const location = useLocation()
