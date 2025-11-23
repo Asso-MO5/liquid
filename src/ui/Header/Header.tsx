@@ -50,6 +50,7 @@ export const Header = (props: HeaderProps) => {
       data-with-game={props.withGame}
       class="grid grid-rows-[auto_1fr] data-[with-game=true]:h-[100dvh] data-[with-game=false]:grid-rows-[auto]">
       <Show when={props.page !== 'game'}>
+        <div class="h-18" />
         <header
           id="header"
           data-visible="true"
@@ -57,7 +58,7 @@ export const Header = (props: HeaderProps) => {
             transition-all duration-500
             data-[visible=false]:-translate-y-full
             data-[visible=true]:translate-y-0
-            fixed
+            fixed 
             left-0 right-0
             flex justify-between items-center p-2
             ease-in-out top-0 z-50 bg-bg"

@@ -23,7 +23,6 @@ export default function Ticket() {
       id="ticket"
       class="items-center justify-center relative overflow-y-auto flex flex-col gap-4 text-white"
     >
-
       <div id="step-1">
         <Cal onDayClick={ticketCtrl.onDayClick} selectedDate={ticketStore.reservation_date} />
       </div>
@@ -38,7 +37,7 @@ export default function Ticket() {
           />
         </div>
         <div id="step-3" class="max-w-sm mx-auto">
-          <h3 class="text-center font-bold">{ticketTxt.available_slots[lang() as keyof typeof ticketTxt.prices]}</h3>
+          <h3 class="text-center font-bold">{ticketTxt.prices[lang() as keyof typeof ticketTxt.prices]}</h3>
           <Prices />
           <Show when={ticketStore.tickets.length > 0}>
             <div class="mt-4">
