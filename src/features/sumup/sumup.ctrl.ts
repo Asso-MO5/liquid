@@ -3,9 +3,10 @@ import type { SumUpCardInstance, SumUpResponseBody, PaymentApiWebhook } from "./
 import { clientEnv } from "~/env/client";
 import { scrollTo } from "~/utils/scroll-to";
 import { locales } from "~/utils/langs";
-import { useNavigate, useParams } from "@solidjs/router";
+import { useNavigate } from "@solidjs/router";
 import { toast } from "~/ui/Toast";
 import { ticketStore } from "../ticket/ticket.store";
+import { langCtrl } from "../lang-selector/lang.ctrl";
 
 type SumUpCtrlProps = {
   checkoutId: string | null;
@@ -15,8 +16,7 @@ type SumUpCtrlProps = {
 
 export const SumUpCtrl = (props: SumUpCtrlProps) => {
   const navigate = useNavigate();
-  const params = useParams();
-  const lang = () => params.lang;
+  const lang = langCtrl()
 
   const checkoutId = createMemo(() => props.checkoutId);
   const checkoutReference = createMemo(() => props.checkoutReference);

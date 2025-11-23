@@ -1,6 +1,7 @@
 import { serverScheme } from "./schema";
 import type { ZodFormattedError } from "zod";
 
+
 export const formatErrors = (
   errors: ZodFormattedError<Map<string, string>, string>
 ) =>
@@ -10,6 +11,7 @@ export const formatErrors = (
         return `${name}: ${value._errors.join(", ")}\n`;
     })
     .filter(Boolean);
+
 
 const env = serverScheme.safeParse(process.env);
 

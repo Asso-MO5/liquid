@@ -1,14 +1,12 @@
 import { For } from "solid-js"
 import { prices } from "./price.store"
-import type { LANGS } from "~/features/lang-selector/lang-selector.const"
-import { useParams } from "@solidjs/router"
+
 import { ticketCreate } from "../ticket/ticket-create"
+import { langCtrl } from "../lang-selector/lang.ctrl"
 
 
 export const Prices = () => {
-  const params = useParams()
-  const lang = () => params.lang as keyof typeof LANGS
-
+  const lang = langCtrl()
   const ticketCreateCtrl = ticketCreate();
 
   return (

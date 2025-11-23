@@ -1,16 +1,14 @@
-import { useParams } from "@solidjs/router"
-import type { LANGS } from "../lang-selector/lang-selector.const"
 import { ticketTxt } from "./ticket.txt"
 import { setTicketStore, ticketStore } from "./ticket.store"
 import { createMemo } from "solid-js";
+import { langCtrl } from "../lang-selector/lang.ctrl";
 
 type PersonalInfosProps = {
   onPayment: () => void;
   isLoading: boolean;
 }
 export const PersonalInfos = (props: PersonalInfosProps) => {
-  const params = useParams()
-  const lang = () => params.lang as keyof typeof LANGS
+  const lang = langCtrl()
 
   const disabled = createMemo(() => {
     const testEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ticketStore.email);

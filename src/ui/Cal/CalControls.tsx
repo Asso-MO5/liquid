@@ -22,6 +22,7 @@ export const CalControls = () => {
         onClick={calendar.goToNext}
         class="headless"
         title="Mois suivant"
+        disabled={calendar.canGoToNext()}
       >
         <Chevron direction="right" size={40} />
       </button>

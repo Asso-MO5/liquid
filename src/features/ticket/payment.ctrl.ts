@@ -4,15 +4,13 @@ import { toast } from "~/ui/Toast";
 import { setTicketStore, ticketStore } from "./ticket.store";
 import type { PreparePaymentTicket } from "./payment.type";
 import type { Ticket } from "./ticket.type";
-import { useParams } from "@solidjs/router";
 import { locales } from "~/utils/langs";
-import type { LANGS } from "../lang-selector/lang-selector.const";
 import { useNavigate } from "@solidjs/router";
+import { langCtrl } from "../lang-selector/lang.ctrl";
 
 export const paymentCtrl = () => {
   const navigate = useNavigate();
-  const params = useParams();
-  const lang = () => params.lang as keyof typeof LANGS;
+  const lang = langCtrl();
   const [isLoading, setIsLoading] = createSignal(false);
   const [checkoutId, setCheckoutId] = createSignal<string | null>(null)
   const [checkoutReference, setCheckoutReference] = createSignal<string | null>(null)

@@ -1,49 +1,18 @@
-import { A, useParams } from "@solidjs/router"
+import { A } from "@solidjs/router"
 import { LangSelector } from "~/features/lang-selector/lang-selector"
 import { MiniGame } from "~/features/mini-game/mini-game"
-import { For, Show } from "solid-js"
+import { Show } from "solid-js"
 import { Logo } from "../Logo"
-import type { DAYS_TEXT } from "../Cal/Cal.const"
+import { MenuMobile } from "../Menu/menu-mobile"
+import { MenuDesktop } from "../Menu/menu-desktop"
 
-const menuEntries: { label: { fr: string; en: string }; href: string }[] = [
-  {
-    label:
-    {
-      fr: "Accueil",
-      en: "Home"
-    },
-    href: "/"
-  },
-  {
-    label: {
-      fr: "Billeterie",
-      en: "Ticket"
-    }, href: "/ticket"
-  },
-  /*
-  {
-    label: {
-      fr: "Infos pratiques",
-      en: "Practical information"
-    }, href: "/about"
-  },
-  {
-    label: {
-      fr: "Évènements",
-      en: "Events"
-    }, href: "/about"
-  },
-  */
-]
+
 
 type HeaderProps = {
   withGame?: boolean
   page?: string
 }
 export const Header = (props: HeaderProps) => {
-
-  const params = useParams();
-  const lang = () => params.lang as keyof typeof DAYS_TEXT
 
   return (
     <div
@@ -67,14 +36,9 @@ export const Header = (props: HeaderProps) => {
             <A href="/">
               <Logo />
             </A>
-            <nav class="sm:flex hidden items-center gap-4 text-text">
-              <For each={menuEntries}>
-                {(entry) => {
-                  return <A href={`/${lang()}${entry.href}`} class="hover:text-primary text-text">{entry.label[lang() as "fr" | "en"]}</A>;
-                }}
-              </For>
-            </nav>
+            <MenuDesktop />
           </div>
+          <MenuMobile />
           <LangSelector />
         </header>
       </Show>

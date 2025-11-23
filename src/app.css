@@ -66,6 +66,7 @@
   body {
     font-family: 'Silkscreen', monospace;
     background-color: var(--color-bg);
+    color: var(--color-text);
   }
 
   /* ==== SCROLLBAR ==== */
@@ -82,35 +83,43 @@
     background: var(--color-secondary);
     border-radius: 4px;
   }
-  button {
+  button,
+  .btn {
     @apply py-1 px-2 cursor-pointer outline-none bg-primary rounded p-1 text-black border-2 border-black font-bold;
   }
 
-  button:hover {
+  button:hover,
+  .btn:hover {
     @apply bg-[#ff5aa1] text-black border-black;
   }
 
-  button:disabled {
+  button:disabled,
+  .btn:disabled {
     @apply cursor-not-allowed opacity-50;
   }
 
-  button.secondary {
+  button.secondary,
+  .btn[data-theme='secondary'] {
     @apply bg-secondary hover:bg-[#c22d26] text-white border-2 border-black font-bold;
   }
 
-  button.secondary:disabled {
+  button.secondary:disabled,
+  .btn[data-theme='secondary']:disabled {
     @apply cursor-not-allowed opacity-50 bg-secondary;
   }
 
-  button.cancel {
+  button.cancel,
+  .btn[data-theme='cancel'] {
     @apply border-2 border-black bg-bg hover:border-secondary text-white hover:text-secondary font-bold;
   }
 
-  button.cancel:disabled {
+  button.cancel:disabled,
+  .btn[data-theme='cancel']:disabled {
     @apply cursor-not-allowed opacity-50 bg-gray-500;
   }
 
-  button.headless {
+  button.headless,
+  .btn[data-theme='headless'] {
     @apply border-none bg-transparent p-0 text-primary;
   }
 
@@ -219,4 +228,48 @@
   .font-display {
     font-family: 'Bebas Neue', sans-serif;
   }
+}
+
+/* Animation pour le bouton avec bordure qui tourne */
+@keyframes border-rotate {
+  0% {
+    border-color: #e83f36; /* secondary */
+    color: #e83f36; /* secondary */
+  }
+  25% {
+    border-color: #ff2a83; /* primary */
+    color: #ff2a83; /* primary */
+  }
+  50% {
+    border-color: #e83f36; /* secondary */
+    color: #e83f36; /* secondary */
+  }
+  75% {
+    border-color: #ff2a83; /* primary */
+    color: #ff2a83; /* primary */
+  }
+  100% {
+    border-color: #e83f36; /* secondary */
+    color: #e83f36; /* secondary */
+  }
+}
+
+@keyframes gradient-x {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-border-rotate {
+  animation: border-rotate 5s ease-in-out infinite;
+}
+
+.animate-gradient-x {
+  animation: gradient-x 3s ease infinite;
 }

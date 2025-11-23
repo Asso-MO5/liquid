@@ -1,6 +1,6 @@
-import { useParams } from "@solidjs/router";
 import { setTicketStore } from "~/features/ticket/ticket.store";
 import { onMount } from "solid-js";
+import { langCtrl } from "~/features/lang-selector/lang.ctrl";
 
 const errorTxt = {
   fr: {
@@ -14,8 +14,7 @@ const errorTxt = {
 }
 
 export default function Error() {
-  const params = useParams();
-  const lang = () => params.lang as keyof typeof errorTxt;
+  const lang = langCtrl();
 
   onMount(() => {
     // vider le store

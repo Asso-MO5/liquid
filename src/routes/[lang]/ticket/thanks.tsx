@@ -1,7 +1,8 @@
-import { useParams, useSearchParams } from "@solidjs/router"
+import { useSearchParams } from "@solidjs/router"
 import { For, onMount } from "solid-js"
 import { clientEnv } from "~/env/client"
 import { setTicketStore } from "~/features/ticket/ticket.store"
+import { langCtrl } from "~/features/lang-selector/lang.ctrl"
 
 const thanksTxt = {
   fr: {
@@ -19,10 +20,9 @@ const thanksTxt = {
 }
 
 export default function Thanks() {
-  const params = useParams()
   const [searchParams] = useSearchParams()
   const qr = searchParams.qr as string
-  const lang = () => params.lang as keyof typeof thanksTxt
+  const lang = langCtrl()
 
 
   onMount(() => {

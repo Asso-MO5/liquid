@@ -44,7 +44,7 @@ export interface CalendarCtrlReturn {
   goToNext: () => void
   goToToday: () => void
   canGoToPrevious: Accessor<boolean>
-
+  canGoToNext: Accessor<boolean>
   calendarDays: Accessor<CalendarDay[]>
   currentMonthName: Accessor<string>
   currentYear: Accessor<number>

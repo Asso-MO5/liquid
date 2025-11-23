@@ -1,9 +1,9 @@
 import { createSignal, createMemo, onMount, onCleanup, createEffect } from "solid-js"
-import { useParams } from "@solidjs/router"
 import type { CalendarView, CalendarDay, CalendarEvent, CalendarCtrlReturn } from "./Cal.types"
 import { langs } from "~/utils/langs"
 import { DAYS_TEXT } from "./Cal.const"
 import { schedules } from "~/features/schedules/schedules.store"
+import { langCtrl } from "~/features/lang-selector/lang.ctrl"
 const [view, setView] = createSignal<CalendarView>('month')
 const [selectedDate, setSelectedDate] = createSignal<Date>(new Date())
 const [items, setItems] = createSignal<CalendarEvent[]>([])
@@ -49,13 +49,11 @@ const initializeFromURL = () => {
 }
 
 export function CalCtrl(): CalendarCtrlReturn {
-  const params = useParams()
-  const lang = () => params.lang as keyof typeof DAYS_TEXT
+  const lang = langCtrl()
 
 
   onMount(() => {
     initializeFromURL()
-
     const handlePopState = () => {
       initializeFromURL()
     }
@@ -76,11 +74,8 @@ export function CalCtrl(): CalendarCtrlReturn {
   }
 
   const setSelectedDateWithURL = (newDate: Date) => {
-
-
     newDate.setDate(1)
     setSelectedDate(newDate)
-
     updateQueryParams(view(), newDate)
   }
 
@@ -98,6 +93,7 @@ export function CalCtrl(): CalendarCtrlReturn {
     const current = selectedDate()
     const newDate = new Date(current)
     newDate.setMonth(current.getMonth() + 1)
+
     setSelectedDateWithURL(newDate)
   }
 
@@ -116,12 +112,21 @@ export function CalCtrl(): CalendarCtrlReturn {
     const days: CalendarDay[] = []
 
     const museumSchedule = schedules()
+    const maxDate = new Date()
+    maxDate.setMonth(maxDate.getMonth() + 2)
+
     for (let i = 0; i < 42; i++) {
       const date = new Date(startDate)
       date.setDate(startDate.getDate() + i)
 
       const isOpen = () => {
+        if (new Date(date) < new Date()) {
+          return false
+        }
         if (date < selectedDate()) {
+          return false
+        }
+        if (date.getTime() > maxDate.getTime()) {
           return false
         }
         let isOpen = false
@@ -167,6 +172,13 @@ export function CalCtrl(): CalendarCtrlReturn {
     return selectedDate() < new Date()
   })
 
+
+  const canGoToNext = createMemo(() => {
+    const today = new Date()
+    today.setMonth(today.getMonth() + 2)
+    const isMoreThan3Months = selectedDate().getTime() > today.getTime()
+    return isMoreThan3Months
+  })
 
   const calendarDays = createMemo((): CalendarDay[] => {
     const current = selectedDate()
@@ -218,6 +230,7 @@ export function CalCtrl(): CalendarCtrlReturn {
     currentYear,
     weekDays,
     canGoToPrevious,
+    canGoToNext,
 
     // Utilitaires
     formatDate

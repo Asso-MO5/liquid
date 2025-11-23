@@ -3,7 +3,7 @@ import { LANGS } from "./lang-selector.const";
 import { createSignal, For, onMount, Show } from "solid-js";
 
 export const LangSelector = () => {
-  const { lang: langParams } = useParams();
+  const { lang: langParams = "fr" } = useParams();
   const navigate = useNavigate();
   const path = useLocation();
   const [selectedLang, setSelectedLang] = createSignal('');
