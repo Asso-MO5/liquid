@@ -26,8 +26,6 @@ export const initGame = () => {
 
   me.device.onReady(() => {
 
-    console.log('onReady')
-
     const initialized = me.video.init(containerWidth, containerHeight, {
       parent: "mini-game-container",
       scale: "auto",
@@ -50,6 +48,14 @@ export const initGame = () => {
       canvas.style.height = '100%';
       canvas.style.display = 'block';
       canvas.style.margin = '0 auto';
+
+      // Empêcher le canvas d'intercepter les événements en dehors de lui
+      // et éviter le scroll involontaire sur mobile
+      canvas.style.touchAction = 'none';
+      canvas.style.pointerEvents = 'auto';
+
+      // Empêcher le scroll sur le container quand on interagit avec le canvas
+      containerRef.style.touchAction = 'pan-y';
     }
 
     // === CONTROLS ===
@@ -66,9 +72,6 @@ export const initGame = () => {
     me.input.bindKey(me.input.KEY.D, 'right')
     me.input.bindKey(me.input.KEY.Z, 'jump', true)
     me.input.bindKey(me.input.KEY.S, 'down')
-
-
-
 
 
     // Initialiser l'audio
