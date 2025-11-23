@@ -65,17 +65,12 @@ export const MiniGame: VoidComponent<MiniGameProps> = (props) => {
     setMe(meInstance)
   });
 
-
-
   return (
     <div
       id="mini-game-container"
       ref={containerRef}
-      class="w-full h-full relative overflow-hidden"
-      style={{
-        'pointer-events': props.withGame ? 'auto' : 'none',
-        'touch-action': props.withGame ? 'none' : 'auto'
-      }}
+      data-with-game={props.withGame}
+      class="w-full h-full relative overflow-hidden data-[with-game=true]:touch-none data-[with-game=false]:touch-auto data-[with-game=true]:pointer-events-auto data-[with-game=false]:pointer-events-none"
     />
   );
 };

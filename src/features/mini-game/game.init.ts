@@ -30,7 +30,8 @@ export const initGame = () => {
       parent: "mini-game-container",
       scale: "auto",
       antiAlias: false,
-      scaleMethod: "fit"
+      scaleMethod: "fit",
+
     });
 
     if (!initialized) {
