@@ -1,6 +1,5 @@
 export { Cal } from './Cal'
 export { CalDay } from './CalDay'
-export { CalViewSelector } from './CalView.selector'
 export { CalControls } from './CalControls'
 export { CalTodayBtn } from './CalToday.btn'
 export { CalDateDisplay } from './CalDate.display'

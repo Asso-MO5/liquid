@@ -7,26 +7,26 @@ import { LoadingScreen } from './screens/loading';
 
 let gameInitialized = false;
 
-
 export const initGame = () => {
   if (gameInitialized) return me
-
-  gameInitialized = true;
-
-  const containerRef = document.getElementById('mini-game-container') as HTMLDivElement | null;
-
-  if (!containerRef) return;
-
-  const containerWidth = containerRef.clientWidth || 800;
-  const containerHeight = containerRef.clientHeight || 600;
-
 
   if (!me || !me.video) {
     console.error('melonJS not loaded');
     return;
   }
 
+  gameInitialized = true;
+
+  const containerRef = document.getElementById('mini-game-container') as HTMLDivElement | null;
+
+  if (!containerRef) return me;
+
+  const containerWidth = containerRef.clientWidth || 800;
+  const containerHeight = containerRef.clientHeight || 600;
+
   me.device.onReady(() => {
+
+    console.log('onReady')
 
     const initialized = me.video.init(containerWidth, containerHeight, {
       parent: "mini-game-container",
@@ -67,6 +67,10 @@ export const initGame = () => {
     me.input.bindKey(me.input.KEY.Z, 'jump', true)
     me.input.bindKey(me.input.KEY.S, 'down')
 
+
+
+
+
     // Initialiser l'audio
     me.audio.init("mp3,ogg");
 
@@ -78,8 +82,6 @@ export const initGame = () => {
     // On utilise des chemins absolus (commençant par /) qui fonctionnent en dev et prod
     const rsrcs = ressources.map(r => {
       const src = `${window.location.protocol}//${window.location.host}/${r.src}`;
-
-
       return { ...r, src };
     });
 
@@ -111,4 +113,6 @@ export const initGame = () => {
     })
 
   });
+
+  return me;
 };

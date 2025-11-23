@@ -121,16 +121,55 @@ src/
 ├── features/                   # Features métier
 │   ├── ticketing/              # Billeterie publique
 │   ├── events/                 # Affichage des événements publics
-│   └── mini-game/              # Mini-jeu pixel art
+│   ├── mini-game/              # Mini-jeu pixel art
+│   └── lang-selector/          # Sélecteur de langue
 ├── routes/                     # Routes de l'application
+│   ├── [lang]/                 # Routes avec paramètre de langue
+│   └── index.tsx               # Redirection initiale
 ├── ui/                         # Composants réutilisables
 ├── utils/                      # Utilitaires
+│   └── get-browser-lang.ts     # Détection langue navigateur
 └── types/                      # Types TypeScript globaux
 ```
 
 ### Communication avec le backend
 
 Le frontend communique avec **Ocelot** via des appels API REST. L'authentification est gérée par Ocelot via Discord OAuth2.
+
+### 🌐 Gestion multilingue
+
+Le site supporte plusieurs langues (français et anglais) avec une gestion basée sur les routes.
+
+#### Structure des routes
+
+Les routes sont organisées avec un paramètre de langue dans l'URL :
+
+```
+/                    → Redirection automatique vers /fr ou /en
+/[lang]              → Page d'accueil (ex: /fr, /en)
+/[lang]/game         → Mini-jeu (ex: /fr/game, /en/game)
+/[lang]/ticket       → Billeterie (ex: /fr/ticket, /en/ticket)
+```
+
+#### Détection automatique de la langue
+
+1. **À la première visite** (`/`) :
+
+   - La langue est détectée automatiquement depuis les préférences du navigateur (`navigator.language`)
+   - Redirection vers `/fr` ou `/en` selon la langue détectée
+   - Par défaut : `/fr` si la langue du navigateur n'est pas l'anglais
+
+2. **Navigation** :
+   - La langue est stockée dans le localStorage après sélection
+   - Le sélecteur de langue dans le header permet de changer de langue
+   - Le changement de langue met à jour l'URL et le localStorage
+
+#### Fichiers liés
+
+- `src/routes/[lang]/` : Routes avec paramètre de langue
+- `src/routes/index.tsx` : Redirection initiale basée sur la langue du navigateur
+- `src/features/lang-selector/` : Composant et logique de sélection de langue
+- `src/utils/get-browser-lang.ts` : Utilitaire pour détecter la langue du navigateur
 
 ## 🧪 Tests
 

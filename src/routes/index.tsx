@@ -1,14 +1,7 @@
+import { Navigate } from "@solidjs/router";
 import { type VoidComponent } from "solid-js";
+import { getBrowserLang } from "~/utils/get-browser-lang";
 
-const Home: VoidComponent = () => {
-
-  return (
-    <main class="flex flex-col items-center justify-center relative h-full ">
-      <div class="absolute inset-0 overflow-y-auto flex flex-col items-center">
-        content
-      </div>
-    </main >
-  );
-};
+const Home: VoidComponent = () => (<Navigate href={`/${getBrowserLang()}`} />)
 
 export default Home;

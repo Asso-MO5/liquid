@@ -1,33 +1,71 @@
 import type { VoidComponent } from 'solid-js';
-import { createEffect, createSignal, onCleanup, onMount } from 'solid-js';
-
+import type * as Me from 'melonjs';
+import { createEffect, createSignal, onMount } from 'solid-js';
 
 import { initGame } from './game.init';
 
 
 type MiniGameProps = {
-  init: boolean
+  withGame: boolean
 }
+
+
+const [me, setMe] = createSignal<typeof Me | undefined>(undefined);
+
 export const MiniGame: VoidComponent<MiniGameProps> = (props) => {
   let containerRef: HTMLDivElement | undefined;
   const [initialized, setInitialized] = createSignal(false)
 
   createEffect(() => {
-    if (props.init && !initialized()) {
+    if (!initialized()) {
       setInitialized(true)
     }
   })
 
+  createEffect(() => {
+
+    const meInstance = me()
+
+    if (!meInstance) return;
+
+    if (!props.withGame) {
+      meInstance.input.unbindKey(meInstance.input.KEY.LEFT)
+      meInstance.input.unbindKey(meInstance.input.KEY.RIGHT)
+      meInstance.input.unbindKey(meInstance.input.KEY.X)
+      meInstance.input.unbindKey(meInstance.input.KEY.UP)
+      meInstance.input.unbindKey(meInstance.input.KEY.SPACE)
+      meInstance.input.unbindKey(meInstance.input.KEY.DOWN)
+      meInstance.input.unbindKey(meInstance.input.KEY.CTRL)
+      meInstance.input.unbindKey(meInstance.input.KEY.Q)
+      meInstance.input.unbindKey(meInstance.input.KEY.D)
+      meInstance.input.unbindKey(meInstance.input.KEY.Z)
+      meInstance.input.unbindKey(meInstance.input.KEY.S)
+    } else {
+      meInstance.input.bindKey(meInstance.input.KEY.LEFT, 'left')
+      meInstance.input.bindKey(meInstance.input.KEY.RIGHT, 'right')
+      meInstance.input.bindKey(meInstance.input.KEY.X, 'jump', true)
+      meInstance.input.bindKey(meInstance.input.KEY.UP, 'jump', true)
+      meInstance.input.bindKey(meInstance.input.KEY.SPACE, 'jump', true)
+      meInstance.input.bindKey(meInstance.input.KEY.DOWN, 'down')
+      meInstance.input.bindKey(meInstance.input.KEY.CTRL, 'interact', true)
+      meInstance.input.bindKey(meInstance.input.KEY.Q, 'left')
+      meInstance.input.bindKey(meInstance.input.KEY.D, 'right')
+      meInstance.input.bindKey(meInstance.input.KEY.Z, 'jump', true)
+      meInstance.input.bindKey(meInstance.input.KEY.S, 'down')
+    }
+
+  })
+
   onMount(async () => {
-    if (typeof window === 'undefined' || !initialized) {
+    if (typeof window === 'undefined' || !initialized()) {
       return;
     }
-    const me = initGame()
-    if (!me || !containerRef) return;
+    const meInstance = initGame()
+    if (!meInstance) return;
+    setMe(meInstance)
   });
-  onCleanup(() => {
-    if (typeof window === 'undefined') return;
-  });
+
+
 
   return (
     <div
