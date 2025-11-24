@@ -11,10 +11,21 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
 
   // ====== VARIABLES ========================================================
 
+  const ANIMS = {
+    STAND: 'stand',
+    WALK: 'walk',
+    FALL: 'fall',
+    JUMP: 'jump',
+    GROUNDED: 'grounded',
+  }
+
   let
     canJump = true,
+    isJumping = false,
     moveLeft = false,
-    moveRight = false;
+    moveRight = false,
+    isPlayingGroundedAnim = false,
+    wasGrounded = false;
 
   // ====== CONTROLS ========================================================
 
@@ -22,7 +33,7 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
 
   const player = gameInstance!.add([
     gameInstance!.sprite('lulu', {
-      anim: 'stand',
+      anim: ANIMS.STAND,
     }),
     gameInstance!.pos(Math.round(30), Math.round(140)),
     gameInstance!.body({
@@ -51,36 +62,62 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     moveRight = false;
   });
 
-  gameInstance!.onKeyPress(['space', 'up', 'w', 'z', 'x'], () => {
-    if (player.isGrounded() && canJump) {
-      canJump = false;
-      player.jump(400);
-      try {
-        gameInstance!.play('jump');
-      } catch (e) {
 
-      }
-      try {
-        player.play('grounded');
-      } catch (e) {
-      }
+  // JUMP
+  gameInstance!.onKeyPress(['space', 'up', 'w', 'z', 'x'], () => {
+
+    if (player.isGrounded() && canJump) {
+      isJumping = true;
+      canJump = false;
+      player.play(ANIMS.JUMP, {
+        loop: false,
+        onEnd() {
+          player.jump(400);
+          try {
+            gameInstance!.play('jump');
+          } catch (e) {
+          }
+        },
+      });
+
     }
   });
 
 
   player.onUpdate(() => {
-    if (player.isGrounded()) {
+    const isGrounded = player.isGrounded();
+
+    if (isGrounded && !wasGrounded && !isPlayingGroundedAnim) {
+      // Touche le sol
+
+      try {
+        player.play(ANIMS.GROUNDED, {
+          loop: false,
+          onEnd() {
+            isJumping = false;
+            isPlayingGroundedAnim = false;
+          },
+        });
+        isPlayingGroundedAnim = true;
+      } catch (e) {
+        isPlayingGroundedAnim = false;
+      }
+    }
+
+    if (isGrounded && !isJumping) {
       canJump = true;
     }
 
+    wasGrounded = isGrounded;
+
     if (moveLeft) {
-      if (player.isGrounded()) {
+      if (isGrounded) {
         player.vel.x = -150;
       } else {
         player.vel.x = -100;
       }
     } else if (moveRight) {
-      if (player.isGrounded()) {
+      if (isGrounded) {
         player.vel.x = 150;
       } else {
         player.vel.x = 100;
@@ -90,20 +127,26 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     }
 
     try {
-      const isActuallyMoving = Math.abs(player.vel.x) > 10;
+      if (!isPlayingGroundedAnim) {
+        const isActuallyMoving = Math.abs(player.vel.x) > 10;
 
-      let targetAnim: string | null = null;
+        let targetAnim: string | null = null;
 
-      if (!player.isGrounded() && player.vel.y !== 0) {
-        targetAnim = 'grounded';
-      } else if (player.isGrounded() && !isActuallyMoving) {
-        targetAnim = 'stand';
-      } else if (player.isGrounded() && isActuallyMoving) {
-        targetAnim = 'walk';
-      }
+        if (!isGrounded && player.vel.y > 0) {
+          // Tombe
+          targetAnim = ANIMS.FALL;
+        } else if (!isGrounded && player.vel.y < 0) {
+          // Saute 
+          //  targetAnim = ANIMS.JUMP;
+        } else if (isGrounded && !isActuallyMoving && !isJumping) {
+          targetAnim = ANIMS.STAND;
+        } else if (isGrounded && isActuallyMoving && !isJumping) {
+          targetAnim = ANIMS.WALK;
+        }
 
-      if (targetAnim && player.curAnim() !== targetAnim) {
-        player.play(targetAnim);
+        if (targetAnim && player.curAnim() !== targetAnim) {
+          player.play(targetAnim);
+        }
       }
     } catch (e) {
     }

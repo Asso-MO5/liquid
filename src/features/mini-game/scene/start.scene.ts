@@ -8,7 +8,16 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
 
   // ============================== LOAD RESOURCES ==============================
 
+  const FONTS = {
+    SILKSCREEN: "Silkscreen",
+    SILKSCREEN_BOLD: "Silkscreen-Bold",
+  }
+
   gameInstance.loadSprite('background', `${BASE_URL}/tiles/start.png`);
+
+  gameInstance.loadFont(FONTS.SILKSCREEN, `${BASE_URL}/fonts/Silkscreen/Silkscreen-Regular.ttf`);
+  gameInstance.loadFont(FONTS.SILKSCREEN_BOLD, `${BASE_URL}/fonts/Silkscreen/Silkscreen-Bold.ttf`);
+
 
   // ============================== STATE ==============================
 
@@ -64,12 +73,36 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
     'ground',
   ]);
 
+
+
+  gameInstance.add([
+    gameInstance.pos(50, 50),
+    // Render text with the text() component
+    gameInstance.text("Type! And try arrow keys!", {
+      // What font to use
+      font: FONTS.SILKSCREEN,
+      // It'll wrap to next line if the text width exceeds the width option specified here
+
+      size: 10,
+      // The height of character
+      //  size: curSize,
+      // Text alignment ("left", "center", "right", default "left")
+      align: "center",
+      lineSpacing: 8,
+      letterSpacing: 4,
+
+    }),
+  ]);
+
+
   // ============================== ENTITIES ==============================
   createPlayer(gameInstance, {
     levelWidth,
     levelHeight,
     BASE_URL,
   });
+
+
 
 
 }
