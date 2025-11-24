@@ -1,5 +1,6 @@
 import kaplay from "kaplay";
 import { gameState } from './game-state';
+import { BASE_URL } from "./mini-game.const";
 
 let gameInstance: ReturnType<typeof kaplay> | null = null;
 
@@ -53,34 +54,69 @@ export const initGame = () => {
     canvas.style.touchAction = 'pan-y';
     canvas.style.pointerEvents = 'auto';
 
+    // Gestion du scroll desktop (wheel)
     canvas.addEventListener('wheel', (e) => {
       //FOR WINDOW SCROLL
       if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
         window.scrollBy({
           top: e.deltaY,
-
         });
         return;
       }
     }, { passive: true });
+
+
+    let touchStartY = 0;
+    let touchStartX = 0;
+    let isScrolling = false;
+
+    canvas.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        touchStartY = e.touches[0].clientY;
+        touchStartX = e.touches[0].clientX;
+        isScrolling = false;
+      }
+    }, { passive: true });
+
+    canvas.addEventListener('touchmove', (e) => {
+      if (e.touches.length === 1 && !isScrolling) {
+        const touchY = e.touches[0].clientY;
+        const touchX = e.touches[0].clientX;
+        const deltaY = touchStartY - touchY;
+        const deltaX = touchStartX - touchX;
+
+        if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 10) {
+          isScrolling = true;
+          // Permettre le scroll de la fenêtre
+          window.scrollBy({
+            top: deltaY * 10,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }, { passive: true });
+
+    canvas.addEventListener('touchend', () => {
+      isScrolling = false;
+      touchStartY = 0;
+      touchStartX = 0;
+    }, { passive: true });
   }
 
-  const baseUrl = `${window.location.protocol}//${window.location.host}/`;
-
-  gameInstance.loadAseprite("lulu", `${baseUrl}game/entities/lulu.png`, `${baseUrl}game/entities/lulu.json`);
+  gameInstance.loadAseprite("lulu", `${BASE_URL}/entities/lulu.png`, `${BASE_URL}/entities/lulu.json`);
 
 
-  gameInstance.loadSprite('tileset', `${baseUrl}game/tiles/start.png`, {
+  gameInstance.loadSprite('tileset', `${BASE_URL}/tiles/start.png`, {
     sliceX: 8,  // Largeur de chaque tile
     sliceY: 8,  // Hauteur de chaque tile
   });
 
-  gameInstance.loadSprite('background', `${baseUrl}game/tiles/test.png`);
+  gameInstance.loadSprite('background', `${BASE_URL}/tiles/test.png`);
 
-  gameInstance.loadSound('jump', `${baseUrl}game/sounds/jump.mp3`).catch(() => {
+  gameInstance.loadSound('jump', `${BASE_URL}/sounds/jump.mp3`).catch(() => {
     console.debug('Son jump non disponible');
   });
-  gameInstance.loadSound('spike', `${baseUrl}game/sounds/spike.mp3`).catch(() => {
+  gameInstance.loadSound('spike', `${BASE_URL}/sounds/spike.mp3`).catch(() => {
     console.debug('Son spike non disponible');
   });
 
