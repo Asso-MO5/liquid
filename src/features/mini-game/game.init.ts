@@ -1,6 +1,6 @@
 import kaplay from "kaplay";
 import { gameState } from './game-state';
-import { BASE_URL } from "./mini-game.const";
+
 
 let gameInstance: ReturnType<typeof kaplay> | null = null;
 
@@ -19,6 +19,7 @@ export const cleanupGame = () => {
 };
 
 export const initGame = () => {
+  const BASE_URL = `${window.location.protocol}//${window.location.host}/game`;
   if (gameInstance) {
     return gameInstance;
   }

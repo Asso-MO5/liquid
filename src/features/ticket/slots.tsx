@@ -11,7 +11,7 @@ type SlotsProps = {
 export const Slots = (props: SlotsProps) => {
 
   return (
-    <div class="p-3 gap-4 grid grid-cols-2  mx-auto">
+    <div class="p-3 gap-4 md:flex grid grid-cols-2 flex-wrap justify-center mx-auto">
       <For each={props.slots}>
         {(slot) => (
           <div
@@ -28,7 +28,7 @@ export const Slots = (props: SlotsProps) => {
             "
             onClick={() => props.onSlotClick(slot)}
           >
-            <div class="text-sm text-center">
+            <div class="text-sm text-center whitespace-nowrap">
               {slot.start_time.split(':').slice(0, 2).join(':')} - {slot.end_time.split(':').slice(0, 2).join(':')}
             </div>
             <div class="h-4 rounded-full border border-white relative overflow-hidden">

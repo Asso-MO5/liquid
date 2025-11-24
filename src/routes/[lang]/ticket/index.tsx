@@ -21,13 +21,13 @@ export default function Ticket() {
   return (
     <main
       id="ticket"
-      class="items-center justify-center relative overflow-y-auto flex flex-col gap-4 p-4 text-white"
+      class="items-center justify-center relative overflow-y-auto flex flex-col lg:grid lg:grid-cols-2 gap-4 p-6 text-white"
     >
       <div id="step-1">
         <Cal onDayClick={ticketCtrl.onDayClick} selectedDate={ticketStore.reservation_date} />
       </div>
       <Show when={ticketStore.reservation_date && ticketCtrl.slots()}>
-        <div id="step-2" class="max-w-sm mx-auto">
+        <div id="step-2">
           <h3 class="text-center font-bold">{ticketTxt.available_slots[lang() as keyof typeof ticketTxt.available_slots]}</h3>
           <Slots
             isFetching={ticketCtrl.isFetching()}
@@ -36,7 +36,7 @@ export default function Ticket() {
             currentSlot={ticketStore.slot_start_time}
           />
         </div>
-        <div id="step-3" class="max-w-sm mx-auto">
+        <div id="step-3" class="mx-auto">
           <h3 class="text-center font-bold">{ticketTxt.prices[lang() as keyof typeof ticketTxt.prices]}</h3>
           <Prices />
           <Show when={ticketStore.tickets.length > 0}>
@@ -46,7 +46,7 @@ export default function Ticket() {
             </div>
           </Show>
         </div>
-        <div id="step-4" class="max-w-sm mx-auto">
+        <div id="step-4" class="max-w-sm mx-auto lg:self-start">
           <Show when={ticketStore.slot_start_time}>
             <h3 class="font-bold">
               {ticketTxt.personal_infos[lang() as keyof typeof ticketTxt.personal_infos]}
@@ -54,7 +54,7 @@ export default function Ticket() {
             <PersonalInfos onPayment={payment.preparePayment} isLoading={payment.isLoading()} />
           </Show>
         </div>
-        <div id="step-5">
+        <div id="step-5" class="md:col-span-2">
           <Show when={payment.checkoutId()}>
             <SumUp checkoutId={payment.checkoutId()} checkoutReference={payment.checkoutReference()} language={lang() as string} />
           </Show>

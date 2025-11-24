@@ -10,10 +10,10 @@ export const Prices = () => {
   const ticketCreateCtrl = ticketCreate();
 
   return (
-    <div class="flex flex-col gap-2 w-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
       <For each={prices()}>
         {(price) => (
-          <div class="flex items-center gap-2 border border-primary p-2 rounded-md w-full">
+          <div class="flex items-center justify-between gap-2 border border-primary p-2 rounded-md w-full">
             <div class="flex flex-col gap-2">
               <div class="text-xl font-bold w-full flex justify-between gap-2">
                 <p>{price.translations[lang() as keyof typeof price.translations].name}</p>
