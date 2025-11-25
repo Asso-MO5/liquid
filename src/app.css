@@ -2,16 +2,27 @@
 
 /* Définition des polices */
 @font-face {
-  font-family: 'Silkscreen';
-  src: url('/fonts/Silkscreen/Silkscreen-Regular.ttf') format('truetype');
+  font-family: 'Stack Sans Text';
+  src: url('/fonts/Stack_Sans_Text/StackSansText-VariableFont_wght.ttf')
+    format('truetype');
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Stack Sans Text';
+  src: url('/fonts/Stack_Sans_Text/static/StackSansText-Regular.ttf')
+    format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Silkscreen';
-  src: url('/fonts/Silkscreen/Silkscreen-Bold.ttf') format('truetype');
+  font-family: 'Stack Sans Text';
+  src: url('/fonts/Stack_Sans_Text/static/StackSansText-Bold.ttf')
+    format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -27,7 +38,7 @@
 
 @theme {
   /* Polices */
-  --font-family-sans: 'Silkscreen', monospace;
+  --font-family-sans: 'Stack Sans Text', sans-serif;
   --font-family-display: 'Bebas Neue', sans-serif;
 
   --color-bg: #000000; /* Noir */
@@ -60,11 +71,11 @@
 @layer base {
   html {
     font-size: 16px;
-    font-family: 'Silkscreen', monospace;
+    font-family: 'Stack Sans Text', sans-serif;
   }
 
   body {
-    font-family: 'Silkscreen', monospace;
+    font-family: 'Stack Sans Text', sans-serif;
     background-color: var(--color-bg);
     color: var(--color-text);
   }
@@ -204,15 +215,18 @@
   }
 
   h1 {
-    @apply text-xl font-bold mb-6 mt-4 text-primary;
+    @apply text-2xl font-bold mb-6 mt-4 text-primary;
+    font-family: 'Bebas Neue', sans-serif;
   }
 
   h2 {
-    @apply text-lg font-bold mb-6 mt-4 text-primary;
+    @apply text-xl font-bold mb-6 mt-4 text-primary;
+    font-family: 'Bebas Neue', sans-serif;
   }
 
   h3 {
-    @apply text-base font-bold mb-6 mt-4 text-primary;
+    @apply text-3xl  mb-6 mt-4 text-primary;
+    font-family: 'Bebas Neue', sans-serif;
   }
 
   h4 {

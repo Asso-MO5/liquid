@@ -23,7 +23,7 @@ const Home: VoidComponent = () => {
     <main class="flex flex-col gap-4 p-4">
       <div class="grid grid-rows-2 md:grid-cols-2 flex-wrap gap-2 w-full md:justify-between justify-center items-center">
         <div class="flex flex-col h-full justify-center items-center rounded-sm p-4">
-          <h2 class="text-xl font-bold text-center">{infoTxt[lang() as keyof typeof infoTxt].Title}</h2>
+          <h2 class="text-4xl font-bold text-center">{infoTxt[lang() as keyof typeof infoTxt].Title}</h2>
           <For each={infoTxt[lang() as keyof typeof infoTxt].address}>
             {(address) => <p class="text-center line-clamp-1 p-0 m-0">{address}</p>}
           </For>

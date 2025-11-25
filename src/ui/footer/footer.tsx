@@ -10,7 +10,7 @@ export const Footer = () => {
     <footer class="grid grid-cols-1 md:grid-cols-3 gap-8 p-8 mt-16 pt-4 border-t border-white/10">
       {/* Liens légaux */}
       <div>
-        <h3 class="text-sm font-semibold mb-4 text-text/80">
+        <h3 class="text-xl mb-4 text-text/80">
           {lang() === 'fr' ? 'Informations légales' : 'Legal information'}
         </h3>
         <ul class="flex flex-col gap-2">
@@ -31,7 +31,7 @@ export const Footer = () => {
 
       {/* Ressources */}
       <div>
-        <h3 class="text-sm font-semibold mb-4 text-text/80">
+        <h3 class="text-xl mb-4 text-text/80">
           {lang() === 'fr' ? 'Ressources' : 'Resources'}
         </h3>
         <ul class="flex flex-col gap-2">
@@ -52,7 +52,7 @@ export const Footer = () => {
 
       {/* Réseaux sociaux */}
       <div>
-        <h3 class="text-sm font-semibold mb-4 text-text/80">
+        <h3 class="text-xl mb-4 text-text/80">
           {lang() === 'fr' ? 'Suivez-nous' : 'Follow us'}
         </h3>
         <ul class="flex flex-col gap-2">

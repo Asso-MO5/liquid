@@ -28,7 +28,7 @@ export default function Ticket() {
       </div>
       <Show when={ticketStore.reservation_date && ticketCtrl.slots()}>
         <div id="step-2">
-          <h3 class="text-center font-bold">{ticketTxt.available_slots[lang() as keyof typeof ticketTxt.available_slots]}</h3>
+          <h3 class="text-center">{ticketTxt.available_slots[lang() as keyof typeof ticketTxt.available_slots]}</h3>
           <Slots
             isFetching={ticketCtrl.isFetching()}
             slots={ticketCtrl.slots()}
@@ -37,18 +37,18 @@ export default function Ticket() {
           />
         </div>
         <div id="step-3" class="mx-auto">
-          <h3 class="text-center font-bold">{ticketTxt.prices[lang() as keyof typeof ticketTxt.prices]}</h3>
+          <h3 class="text-center">{ticketTxt.prices[lang() as keyof typeof ticketTxt.prices]}</h3>
           <Prices />
           <Show when={ticketStore.tickets.length > 0}>
             <div class="mt-4">
-              <h3 class="text-center font-bold">{ticketTxt.donation[lang() as keyof typeof ticketTxt.donation]}</h3>
+              <h3 class="text-center">{ticketTxt.donation[lang() as keyof typeof ticketTxt.donation]}</h3>
               <Donation />
             </div>
           </Show>
         </div>
         <div id="step-4" class="max-w-sm mx-auto lg:self-start">
           <Show when={ticketStore.slot_start_time}>
-            <h3 class="font-bold">
+            <h3 class="text-center">
               {ticketTxt.personal_infos[lang() as keyof typeof ticketTxt.personal_infos]}
             </h3>
             <PersonalInfos onPayment={payment.preparePayment} isLoading={payment.isLoading()} />
