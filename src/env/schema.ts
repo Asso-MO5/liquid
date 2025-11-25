@@ -9,4 +9,5 @@ export const clientScheme = z.object({
   MODE: z.enum(['development', 'production', 'test']).default('development'),
   VITE_API_URL: z.string(),
   VITE_BLOG_URL: z.string(),
+  VITE_CAVE_URL: z.string(),
 });

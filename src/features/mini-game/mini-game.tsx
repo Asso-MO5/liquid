@@ -3,6 +3,7 @@ import { onMount, onCleanup } from 'solid-js';
 import { initGame, cleanupGame } from './game.init';
 import { CANVAS_ID } from './mini-game.const';
 import { langCtrl } from '~/features/lang-selector/lang.ctrl';
+import { GamePanelInfo } from './game-panel-info';
 
 
 const miniGameTxt = {
@@ -28,16 +29,21 @@ export const MiniGame: VoidComponent = () => {
   });
 
   return (
-    <div
-      id={CANVAS_ID}
-      ref={containerRef}
-      aria-label={miniGameTxt.alt[lang() as keyof typeof miniGameTxt.alt]}
-      class="w-full h-full relative overflow-hidden"
-      style={{
-        'image-rendering': 'pixelated',
-        'touch-action': 'pan-y',
-        'pointer-events': 'auto',
-      }}
-    />
+    <div class="w-full h-full relative">
+      <div
+        id={CANVAS_ID}
+        ref={containerRef}
+        aria-label={miniGameTxt.alt[lang() as keyof typeof miniGameTxt.alt]}
+        class="w-full h-full relative overflow-hidden"
+        style={{
+          'image-rendering': 'pixelated',
+          'touch-action': 'pan-y',
+          'pointer-events': 'auto',
+        }}
+      />
+      <GamePanelInfo />
+    </div>
+
+
   );
 };

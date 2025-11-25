@@ -1,5 +1,6 @@
 import type kaplay from "kaplay";
 import { CONTROLS } from "../mini-game.const";
+import { openGamePanelInfo } from "../game-panel-info.ctrl";
 
 export function createComputerSpace(gameInstance: ReturnType<typeof kaplay>, { position, BASE_URL }: { position: { x: number, y: number }, BASE_URL: string }) {
   if (!gameInstance) return;
@@ -54,6 +55,8 @@ export function createComputerSpace(gameInstance: ReturnType<typeof kaplay>, { p
 
   gameInstance.onKeyPress(CONTROLS.INTERACT as unknown as string[], () => {
     if (isPlayerNearby) {
+
+      openGamePanelInfo('11517969-f1f4-49ab-bf5f-8862b1f4db76')
       console.log('Interaction avec computer-space !');
     }
   });

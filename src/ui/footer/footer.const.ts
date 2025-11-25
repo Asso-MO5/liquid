@@ -87,10 +87,10 @@ export const socialLinks = [
   },
   {
     label: {
-      fr: 'Youtube',
-      en: 'Youtube'
+      fr: 'TikTok',
+      en: 'TikTok'
     },
-    href: 'https://www.youtube.com/channel/UCRncMsBo89C9u_8gpWnsOVw/featured'
+    href: 'https://www.tiktok.com/@mo5asso'
   },
   {
     label: {

@@ -60,7 +60,7 @@ export const Footer = () => {
             {(link) => (
               <li>
                 <A
-                  href={`/${lang()}${link.href}`}
+                  href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
                   class="text-sm text-text/70 hover:text-text transition-colors"
