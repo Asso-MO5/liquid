@@ -1,10 +1,20 @@
+import { langCtrl } from "~/features/lang-selector/lang.ctrl"
+
+const logoTxt = {
+  alt: {
+    fr: 'Logo du Musée du Jeu Vidéo',
+    en: 'Logo of the Video Game Museum',
+  },
+}
 
 export const Logo = () => {
+
+  const lang = langCtrl()
   return (
     <svg
       viewBox="0 0 14.6685 8.8132715"
       role="img"
-      aria-label="Musée du Jeu Vidéo"
+      aria-label={logoTxt.alt[lang() as keyof typeof logoTxt.alt]}
       width="100"
       style={{ display: 'block', height: 'auto' }}
     >

@@ -9,7 +9,7 @@ export const menuEntries: { label: { fr: string; en: string }; href: string; hig
   },
   {
     label: {
-      fr: "Billeterie",
+      fr: "Billetterie",
       en: "Ticket"
     },
     href: "/ticket",
