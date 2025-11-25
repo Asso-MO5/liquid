@@ -1,6 +1,7 @@
 import type kaplay from "kaplay";
 import { gameState } from "../game-state";
 import { createPlayer } from "../entities/player";
+import { createComputerSpace } from "../entities/computer-space";
 
 export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null, { BASE_URL }: { BASE_URL: string }) {
 
@@ -27,11 +28,14 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
   const levelWidth = 3376;
   const levelHeight = 480;
 
+  const GROUND_Y = 156;
+
   // ============================== LEVEL ==============================
+
 
   gameInstance!.add([
     gameInstance!.sprite('background'),
-    gameInstance!.pos(0, -100),
+    gameInstance!.pos(0, -84),
     gameInstance!.anchor('topleft'),
     gameInstance!.z(-100),
   ]);
@@ -64,7 +68,7 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
   // Sol statique
   gameInstance!.add([
     gameInstance!.rect(levelWidth, 1),
-    gameInstance!.pos(0, 156),
+    gameInstance!.pos(0, GROUND_Y),
     gameInstance!.area(),
     gameInstance!.body({ isStatic: true }),
     gameInstance!.color(255, 0, 0),
@@ -74,33 +78,35 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
   ]);
 
 
+  const lang = window.location.pathname.split('/')[1] || 'fr';
+
+  const texts = {
+    welcome: {
+      fr: "Bienvenue\nau Musée du jeu vidéo",
+      en: "Welcome\nto the Video Game Museum",
+    },
+  }
 
   gameInstance.add([
-    gameInstance.pos(50, 50),
+    gameInstance.pos(152, 60),
     // Render text with the text() component
-    gameInstance.text("Type! And try arrow keys!", {
-      // What font to use
+    gameInstance.text(texts.welcome[lang as keyof typeof texts.welcome], {
       font: FONTS.SILKSCREEN,
-      // It'll wrap to next line if the text width exceeds the width option specified here
-
-      size: 10,
-      // The height of character
-      //  size: curSize,
-      // Text alignment ("left", "center", "right", default "left")
+      size: 7,
       align: "center",
-      lineSpacing: 8,
-      letterSpacing: 4,
-
+      lineSpacing: 2,
     }),
   ]);
 
+  const isPortrait = window.innerWidth < window.innerHeight;
+
+  const startPosition = isPortrait ? { x: 170, y: 140 } : { x: 170, y: 140 };
 
   // ============================== ENTITIES ==============================
-  createPlayer(gameInstance, {
-    levelWidth,
-    levelHeight,
-    BASE_URL,
-  });
+  createPlayer(gameInstance, { levelWidth, levelHeight, BASE_URL, startPosition });
+
+
+  createComputerSpace(gameInstance, { position: { x: 200, y: GROUND_Y - 32 }, BASE_URL });
 
 
 

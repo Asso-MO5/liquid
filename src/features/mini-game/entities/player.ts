@@ -1,5 +1,5 @@
 import type Kaplay from 'kaplay';
-export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWidth, levelHeight, BASE_URL }: { levelWidth: number, levelHeight: number, BASE_URL: string }) {
+export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWidth, levelHeight, BASE_URL, startPosition }: { levelWidth: number, levelHeight: number, BASE_URL: string, startPosition: { x: number, y: number } }) {
 
 
   // ====== RESOURCES ========================================================
@@ -35,7 +35,7 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     gameInstance!.sprite('lulu', {
       anim: ANIMS.STAND,
     }),
-    gameInstance!.pos(Math.round(30), Math.round(140)),
+    gameInstance!.pos(Math.round(startPosition.x), Math.round(startPosition.y)),
     gameInstance!.body({
       jumpForce: 100,
     }),
@@ -112,15 +112,15 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
 
     if (moveLeft) {
       if (isGrounded) {
-        player.vel.x = -150;
+        player.vel.x = -164;
       } else {
-        player.vel.x = -100;
+        player.vel.x = -164;
       }
     } else if (moveRight) {
       if (isGrounded) {
-        player.vel.x = 150;
+        player.vel.x = 164;
       } else {
-        player.vel.x = 100;
+        player.vel.x = 164;
       }
     } else {
       player.vel.x = 0;
