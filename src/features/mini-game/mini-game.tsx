@@ -4,6 +4,7 @@ import { initGame, cleanupGame } from './game.init';
 import { CANVAS_ID } from './mini-game.const';
 import { langCtrl } from '~/features/lang-selector/lang.ctrl';
 import { GamePanelInfo } from './game-panel-info';
+import { HUD } from './hud';
 
 
 const miniGameTxt = {
@@ -42,8 +43,7 @@ export const MiniGame: VoidComponent = () => {
         }}
       />
       <GamePanelInfo />
+      <HUD />
     </div>
-
-
   );
 };

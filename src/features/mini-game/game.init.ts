@@ -5,6 +5,8 @@ import { createStartScene } from "./scene/start.scene";
 
 let gameInstance: ReturnType<typeof kaplay> | null = null;
 
+export const getGameInstance = () => gameInstance;
+
 export const cleanupGame = () => {
   if (gameInstance) {
     try {
