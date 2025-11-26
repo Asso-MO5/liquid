@@ -9,7 +9,7 @@ import { HUD } from './hud';
 
 const miniGameTxt = {
   alt: {
-    fr: 'Controlez Lulu pour explorer le musée',
+    fr: 'Contrôlez Lulu pour explorer le musée',
     en: 'Control Lulu to explore the museum',
   },
 }

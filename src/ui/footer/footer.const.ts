@@ -2,11 +2,19 @@
 export const legalLinks = [
   {
     label: {
+      fr: 'Contact',
+      en: 'Contact'
+    },
+    href: '/contact',
+    id: 24
+  },
+  {
+    label: {
       fr: 'Mentions légales',
       en: 'Legal notice'
     },
     href: '/legal-notice',
-    id: 58
+    id: 26
   },
   {
     label: {
@@ -14,7 +22,7 @@ export const legalLinks = [
       en: 'Terms of service'
     },
     href: '/cgv',
-    id: 60
+    id: 28
   },
   {
     label: {
@@ -30,19 +38,19 @@ export const legalLinks = [
 export const resourcesLinks = [
   {
     label: {
+      fr: 'Qui sommes-nous ?',
+      en: 'Who are we ?'
+    },
+    href: '/about-us',
+    id: 22
+  },
+  {
+    label: {
       fr: 'Kit presse',
       en: 'Press kit'
     },
     href: '/press-kit',
-    id: 120
-  },
-  {
-    label: {
-      fr: 'Médias',
-      en: 'Media'
-    },
-    href: '/medias',
-    id: 122
+    id: 138
   },
   {
     label: {
@@ -50,7 +58,7 @@ export const resourcesLinks = [
       en: 'Partners'
     },
     href: '/partners',
-    id: 37
+    id: 135
   }
 ]
 
@@ -58,8 +66,8 @@ export const resourcesLinks = [
 export const socialLinks = [
   {
     label: {
-      fr: 'X',
-      en: 'X'
+      fr: 'X (Twitter)',
+      en: 'X (Twitter)'
     },
     href: 'https://x.com/assomo5'
   },
@@ -80,8 +88,8 @@ export const socialLinks = [
 
   {
     label: {
-      fr: 'Youtube',
-      en: 'Youtube'
+      fr: 'YouTube',
+      en: 'YouTube'
     },
     href: 'https://www.youtube.com/channel/UCRncMsBo89C9u_8gpWnsOVw/featured'
   },

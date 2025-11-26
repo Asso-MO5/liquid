@@ -2,23 +2,14 @@ import type kaplay from "kaplay";
 import { gameState } from "../game-state";
 import { createPlayer } from "../entities/player";
 import { createComputerSpace } from "../entities/computer-space";
+import { FONTS } from "../mini-game.const";
 
 export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null, { BASE_URL }: { BASE_URL: string }) {
 
   if (!gameInstance) return;
 
   // ============================== LOAD RESOURCES ==============================
-
-  const FONTS = {
-    SILKSCREEN: "Silkscreen",
-    SILKSCREEN_BOLD: "Silkscreen-Bold",
-  }
-
   gameInstance.loadSprite('background', `${BASE_URL}/tiles/start.png`);
-
-  gameInstance.loadFont(FONTS.SILKSCREEN, `${BASE_URL}/fonts/Silkscreen/Silkscreen-Regular.ttf`);
-  gameInstance.loadFont(FONTS.SILKSCREEN_BOLD, `${BASE_URL}/fonts/Silkscreen/Silkscreen-Bold.ttf`);
-
 
   // ============================== STATE ==============================
 
@@ -32,14 +23,12 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
 
   // ============================== LEVEL ==============================
 
-
   gameInstance!.add([
     gameInstance!.sprite('background'),
     gameInstance!.pos(0, -84),
     gameInstance!.anchor('topleft'),
     gameInstance!.z(-100),
   ]);
-
 
   // MUR GAUCHE
   gameInstance!.add([
@@ -87,28 +76,29 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
     },
   }
 
-  gameInstance.add([
-    gameInstance.pos(152, 60),
-    // Render text with the text() component
-    gameInstance.text(texts.welcome[lang as keyof typeof texts.welcome], {
-      font: FONTS.SILKSCREEN,
-      size: 7,
-      align: "center",
-      lineSpacing: 2,
-    }),
-  ]);
 
   const isPortrait = window.innerWidth < window.innerHeight;
 
   const startPosition = isPortrait ? { x: 170, y: 140 } : { x: 170, y: 140 };
 
   // ============================== ENTITIES ==============================
+
   createPlayer(gameInstance, { levelWidth, levelHeight, BASE_URL, startPosition });
+
+  gameInstance.add([
+    gameInstance.text(texts.welcome[lang as keyof typeof texts.welcome], {
+      font: FONTS.SILKSCREEN,
+      size: 8,
+      align: "center",
+      lineSpacing: 2,
+      letterSpacing: 2,
+      width: 100
+    }),
+    gameInstance.z(-50),
+    gameInstance.pos(152, 60),
+  ]);
 
 
   createComputerSpace(gameInstance, { position: { x: 200, y: GROUND_Y - 32 }, BASE_URL });
-
-
-
 
 }

@@ -5,14 +5,21 @@ import { Show } from "solid-js"
 import { Logo } from "../Logo"
 import { MenuMobile } from "../Menu/menu-mobile"
 import { MenuDesktop } from "../Menu/menu-desktop"
-
-
+import { langCtrl } from "~/features/lang-selector/lang.ctrl"
 
 type HeaderProps = {
   withGame?: boolean
   page?: string
 }
+
 export const Header = (props: HeaderProps) => {
+
+  const lang = langCtrl()
+
+  const homeLink = () => {
+    window.history.pushState({}, '', `/${lang()}`)
+    window.location.reload()
+  }
 
   return (
     <div
@@ -33,9 +40,9 @@ export const Header = (props: HeaderProps) => {
             ease-in-out top-0 z-50 bg-bg"
         >
           <div class="flex items-center gap-4">
-            <A href="/">
+            <div onClick={homeLink} class="cursor-pointer">
               <Logo />
-            </A>
+            </div>
             <MenuDesktop />
           </div>
           <MenuMobile />

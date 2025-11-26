@@ -26,7 +26,7 @@ export default function Ticket() {
       <div id="step-1">
         <Cal onDayClick={ticketCtrl.onDayClick} selectedDate={ticketStore.reservation_date} />
       </div>
-      <Show when={ticketStore.reservation_date && ticketCtrl.slots()}>
+      <Show when={ticketStore.reservation_date && ticketCtrl.slots()?.length > 0}>
         <div id="step-2">
           <h3 class="text-center">{ticketTxt.available_slots[lang() as keyof typeof ticketTxt.available_slots]}</h3>
           <Slots

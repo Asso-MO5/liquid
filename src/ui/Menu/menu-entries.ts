@@ -1,12 +1,5 @@
 export const menuEntries: { label: { fr: string; en: string }; href: string; highlighted?: boolean }[] = [
-  {
-    label:
-    {
-      fr: "Accueil",
-      en: "Home"
-    },
-    href: "/"
-  },
+
   {
     label: {
       fr: "Billetterie",
@@ -14,6 +7,14 @@ export const menuEntries: { label: { fr: string; en: string }; href: string; hig
     },
     href: "/ticket",
     highlighted: true
+  },
+  {
+    label:
+    {
+      fr: "Votre visite",
+      en: "Your visit"
+    },
+    href: "/your-visit"
   },
   /*
   {

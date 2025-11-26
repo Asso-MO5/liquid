@@ -11,3 +11,9 @@ export const CONTROLS = {
   JUMP: ['space', 'up', 'w', 'z', 'x'],
   INTERACT: ['e', 'f', 'interact'],
 } as const;
+
+
+export const FONTS = {
+  SILKSCREEN: "Silkscreen",
+  SILKSCREEN_BOLD: "Silkscreen-Bold",
+}

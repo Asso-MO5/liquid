@@ -57,7 +57,7 @@ export const MenuMobile = () => {
             {(entry) => {
               return (
                 <a
-                  href={entry.href}
+                  href={`/${lang()}${entry.href}`}
                   data-highlighted={entry.highlighted}
                   class="
                   hover:text-primary text-text text-center

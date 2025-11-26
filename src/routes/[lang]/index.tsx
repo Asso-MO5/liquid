@@ -1,6 +1,7 @@
 import { A } from "@solidjs/router";
 import { For, type VoidComponent } from "solid-js";
 import { langCtrl } from "~/features/lang-selector/lang.ctrl";
+import { Supports } from "~/features/supports/supports";
 
 
 const infoTxt = {
@@ -20,8 +21,8 @@ const Home: VoidComponent = () => {
 
   const lang = langCtrl()
   return (
-    <main class="flex flex-col gap-4 p-4">
-      <div class="grid grid-rows-2 md:grid-cols-2 flex-wrap gap-2 w-full md:justify-between justify-center items-center">
+    <main class="flex flex-col gap-12 p-4">
+      <div class="grid grid-rows-1 md:grid-cols-2 flex-wrap gap-2 w-full md:justify-between justify-center items-center">
         <div class="flex flex-col h-full justify-center items-center rounded-sm p-4">
           <h2 class="text-4xl font-bold text-center">{infoTxt[lang() as keyof typeof infoTxt].Title}</h2>
           <For each={infoTxt[lang() as keyof typeof infoTxt].address}>
@@ -39,6 +40,8 @@ const Home: VoidComponent = () => {
           </A>
         </div>
       </div>
+
+      <Supports />
     </main >
   );
 };

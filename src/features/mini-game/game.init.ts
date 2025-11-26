@@ -1,7 +1,6 @@
 import kaplay from "kaplay";
-import { CANVAS_ID, LEVEL_NAMES } from './mini-game.const';
+import { CANVAS_ID, FONTS, LEVEL_NAMES } from './mini-game.const';
 import { createStartScene } from "./scene/start.scene";
-
 
 let gameInstance: ReturnType<typeof kaplay> | null = null;
 
@@ -11,6 +10,7 @@ export const cleanupGame = () => {
   if (gameInstance) {
     try {
       const containerRef = document.getElementById(CANVAS_ID) as HTMLDivElement | null;
+      gameInstance.quit();
       if (containerRef) {
         containerRef.innerHTML = '';
       }
@@ -112,6 +112,9 @@ export const initGame = () => {
   }
 
   if (!gameInstance) return null;
+
+  gameInstance.loadFont(FONTS.SILKSCREEN, `${BASE_URL}/fonts/Silkscreen/Silkscreen-Regular.ttf`);
+  gameInstance.loadFont(FONTS.SILKSCREEN_BOLD, `${BASE_URL}/fonts/Silkscreen/Silkscreen-Bold.ttf`);
 
   gameInstance!.setGravity(1500);
 

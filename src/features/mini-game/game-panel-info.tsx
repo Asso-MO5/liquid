@@ -15,11 +15,8 @@ export const GamePanelInfo = () => {
     <Show when={item()}>
       <div
         ref={(el) => gamePanelInfo.setPanelRef(el)}
-        class="fixed bg-white rounded-lg shadow-2xl border-2 border-primary max-w-sm w-full max-h-[80vh] flex flex-col z-50 transition-shadow"
-        classList={{
-          'shadow-2xl': !gamePanelInfo.isDragging(),
-          'shadow-4xl': gamePanelInfo.isDragging(),
-        }}
+        class="fixed bg-white rounded-lg shadow-2xl border-2 border-primary max-w-sm w-full max-h-[80vh] flex flex-col z-50 transition-shadow data-[is-dragging=true]:shadow-4xl data-[is-dragging=false]:shadow-2xl"
+        data-is-dragging={gamePanelInfo.isDragging()}
         style={{
           left: `${gamePanelInfo.position().x}px`,
           top: `${gamePanelInfo.position().y}px`,

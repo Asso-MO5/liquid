@@ -7,6 +7,7 @@ import { legalLinks, resourcesLinks } from "~/ui/footer/footer.const";
 const getPage = query(async (lang: string, slug: string) => {
   'use server'
   const blogUrl = process.env.BLOG_URL || import.meta.env.VITE_BLOG_URL;
+
   if (!blogUrl) {
     throw new Error('BLOG_URL is not defined in environment variables');
   }
@@ -17,11 +18,13 @@ const getPage = query(async (lang: string, slug: string) => {
     throw new Error(`Page slug "${slug}" not found`);
   }
   const response = await fetch(`${blogUrl}/pages/${pageConfig.id}?lang=${lang}`);
+
   if (!response.ok) {
     throw new Error(`Failed to fetch page: ${response.statusText}`);
   }
 
-  return await response.json();
+  const data = await response.json();
+  return data;
 }, "lang");
 
 export const route = {
@@ -52,7 +55,7 @@ export const Page = () => {
               {page()?.keywords && <Meta name="keywords" content={page().keywords.join(', ')} />}
               <article class="prose prose-invert max-w-none">
                 {page()?.title?.rendered && (
-                  <h1 class="text-2xl font-bold text-center">{page().title.rendered}</h1>
+                  <h1 class="text-5xl text-tertiary text-center font-display">{page().title.rendered}</h1>
                 )}
                 {page()?.content?.rendered && (
                   // eslint-disable-next-line solid/no-innerhtml

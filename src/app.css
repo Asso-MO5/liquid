@@ -179,6 +179,30 @@
   a {
     @apply text-primary;
   }
+
+  h1 {
+    @apply text-4xl mb-6 mt-4 text-primary;
+    font-family: 'Bebas Neue', sans-serif;
+  }
+
+  h2 {
+    @apply text-3xl mb-6 mt-4 text-primary;
+    font-family: 'Bebas Neue', sans-serif;
+  }
+
+  h3 {
+    @apply text-3xl  mb-6 mt-4 text-secondary;
+    font-family: 'Bebas Neue', sans-serif;
+  }
+
+  h4 {
+    @apply text-base mb-6 mt-4;
+    font-family: 'Bebas Neue', sans-serif;
+  }
+
+  p {
+    @apply mb-6;
+  }
 }
 
 @layer components {
@@ -214,28 +238,8 @@
     @apply max-w-[500px] h-auto mx-auto m-2;
   }
 
-  h1 {
-    @apply text-2xl font-bold mb-6 mt-4 text-primary;
-    font-family: 'Bebas Neue', sans-serif;
-  }
-
-  h2 {
-    @apply text-xl font-bold mb-6 mt-4 text-primary;
-    font-family: 'Bebas Neue', sans-serif;
-  }
-
-  h3 {
-    @apply text-3xl  mb-6 mt-4 text-primary;
-    font-family: 'Bebas Neue', sans-serif;
-  }
-
-  h4 {
-    @apply text-base font-bold mb-6 mt-4;
-    font-family: 'Bebas Neue', sans-serif;
-  }
-
-  p {
-    @apply mb-6;
+  .wp-block-separator {
+    @apply pb-4;
   }
 
   /* Classe utilitaire pour Bebas Neue */
@@ -286,4 +290,10 @@
 
 .animate-gradient-x {
   animation: gradient-x 3s ease infinite;
+}
+
+.ff_landing_page_body
+  .ff_landing_wrapper.ff_landing_design_modern
+  .ff_landing_form {
+  background-color: transparent !important;
 }
