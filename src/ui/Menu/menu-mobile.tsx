@@ -12,7 +12,7 @@ export const MenuMobile = () => {
 
   return (
     <div class="sm:hidden">
-      <div class="fixed top-0 left-0 w-full h-18 flex items-center justify-center">
+      <div class="fixed top-0 left-[50%] -translate-x-1/2 h-18 flex items-center justify-center">
         <button
           onClick={toggleMenu}
           class="flex flex-col gap-1.5 p-2 z-50 relative bg-transparent border-none"
