@@ -30,5 +30,12 @@ export const supportsTestimonials = [
       en: 'I am happy that there is finally a national museum of video games. A big thank you to @assomo5 for actively preserving our heritage for several decades. And I am very happy that their beautiful collection is part of the museum!',
     },
     image: '/supports/eric-chahi.webp',
+  }, {
+    name: 'Pierre Esteve',
+    quote: {
+      fr: 'Félicitations à l’équipe de MO5 pour l’ouverture prochaine du musée du jeu vidéo ! Le travail de préservation du patrimoine vidéoludique fourni par l’association est exemplaire et unique en son genre. Grâce à la persévérance de MO5, c’est tout un pan de notre culture qui pourra passer à la postérité et nourrir l’imaginaire des générations futures. Il y a encore beaucoup à faire, mais pouvoir s’appuyer sur une structure muséale pérenne constitue un socle solide indispensable pour la suite. Merci et tous mes vœux de réussite !',
+      en: 'Congratulations to the MO5 team for the opening of the video game museum! The work of preserving the video game heritage provided by the association is exemplary and unique in its genre. Thanks to the persistence of MO5, it is a whole part of our culture that will pass to posterity and feed the imagination of future generations. There is still a lot to do, but being able to rely on a permanent museum structure constitutes a solid foundation indispensable for the next steps. Thank you and all my best wishes for success!',
+    },
+    image: '/supports/pierre-esteve.webp',
   }
 ]

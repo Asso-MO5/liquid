@@ -3,6 +3,7 @@ import { gameState } from "../game-state";
 import { createPlayer } from "../entities/player";
 import { createComputerSpace } from "../entities/computer-space";
 import { FONTS } from "../mini-game.const";
+import { createFurniture } from "../entities/furniture";
 
 export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null, { BASE_URL }: { BASE_URL: string }) {
 
@@ -66,7 +67,6 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
     'ground',
   ]);
 
-
   const lang = window.location.pathname.split('/')[1] || 'fr';
 
   const texts = {
@@ -75,7 +75,6 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
       en: "Welcome\nto the Video Game Museum",
     },
   }
-
 
   const isPortrait = window.innerWidth < window.innerHeight;
 
@@ -98,6 +97,17 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
     gameInstance.pos(152, 60),
   ]);
 
+
+  const furniturePositions = [
+    { x: 100, y: GROUND_Y - 40 },
+    { x: 150, y: GROUND_Y - 40 },
+    { x: 250, y: GROUND_Y - 40 },
+    { x: 280, y: GROUND_Y - 40 },
+  ];
+
+  for (const position of furniturePositions) {
+    createFurniture(gameInstance, { position, BASE_URL });
+  }
 
   createComputerSpace(gameInstance, { position: { x: 200, y: GROUND_Y - 32 }, BASE_URL });
 

@@ -1,4 +1,4 @@
-import { For } from "solid-js"
+import { For, createMemo } from "solid-js"
 import { supportsTestimonials } from "./supports.const"
 import { langCtrl } from "../lang-selector/lang.ctrl"
 
@@ -11,12 +11,26 @@ const texts = {
     title: 'They support us',
   }
 }
+
+const shuffleArray = <T,>(array: T[]): T[] => {
+  const shuffled = [...array]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
+}
+
 export const Supports = () => {
   const lang = langCtrl()
+  const randomTestimonials = createMemo(() => {
+    return shuffleArray(supportsTestimonials).slice(0, 3)
+  })
+
   return (
     <div class="flex flex-col gap-12 max-w-4xl mx-auto p-6">
       <h2 class="text-4xl text-center">{texts[lang()].title}</h2>
-      <For each={supportsTestimonials}>
+      <For each={randomTestimonials()}>
         {(testimonial, index) => (
           <div class="flex flex-col gap-4 items-center">
             <div
