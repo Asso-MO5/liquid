@@ -113,6 +113,14 @@ export const initGame = () => {
 
   if (!gameInstance) return null;
 
+  // ====== RESOURCES ========================================================
+  gameInstance.loadAseprite("computer-space", `${BASE_URL}/entities/computer-space.png`, `${BASE_URL}/entities/computer-space.json`);
+  gameInstance.loadAseprite('furniture', `${BASE_URL}/entities/furniture.png`, `${BASE_URL}/entities/furniture.json`);
+  gameInstance.loadAseprite('games', `${BASE_URL}/entities/games.png`, `${BASE_URL}/entities/games.json`);
+
+
+  // ====== FONTS ========================================================
+
   gameInstance.loadFont(FONTS.SILKSCREEN, `${BASE_URL}/fonts/Silkscreen/Silkscreen-Regular.ttf`);
   gameInstance.loadFont(FONTS.SILKSCREEN_BOLD, `${BASE_URL}/fonts/Silkscreen/Silkscreen-Bold.ttf`);
 

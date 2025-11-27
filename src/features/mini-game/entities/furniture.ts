@@ -1,11 +1,8 @@
 import type kaplay from "kaplay";
 
-export function createFurniture(gameInstance: ReturnType<typeof kaplay>, { position, BASE_URL }: { position: { x: number, y: number }, BASE_URL: string }) {
+export function createFurniture(gameInstance: ReturnType<typeof kaplay>, { position }: { position: { x: number, y: number } }) {
   if (!gameInstance) return;
 
-  gameInstance.loadAseprite('furniture', `${BASE_URL}/entities/furniture.png`, `${BASE_URL}/entities/furniture.json`);
-
-  gameInstance.loadAseprite('games', `${BASE_URL}/entities/games.png`, `${BASE_URL}/entities/games.json`);
 
 
   const GAMES = ['invaders', 'tetris', 'pacman', 'et', 'rtype']

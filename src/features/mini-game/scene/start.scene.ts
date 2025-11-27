@@ -1,9 +1,9 @@
 import type kaplay from "kaplay";
 import { gameState } from "../game-state";
 import { createPlayer } from "../entities/player";
-import { createComputerSpace } from "../entities/computer-space";
 import { FONTS } from "../mini-game.const";
 import { createFurniture } from "../entities/furniture";
+import { createMachine } from "../entities/machine";
 
 export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null, { BASE_URL }: { BASE_URL: string }) {
 
@@ -106,9 +106,9 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
   ];
 
   for (const position of furniturePositions) {
-    createFurniture(gameInstance, { position, BASE_URL });
+    createFurniture(gameInstance, { position });
   }
 
-  createComputerSpace(gameInstance, { position: { x: 200, y: GROUND_Y - 32 }, BASE_URL });
+  createMachine(gameInstance, { position: { x: 200, y: GROUND_Y - 32 }, spriteName: 'computer-space', idPanel: '11517969-f1f4-49ab-bf5f-8862b1f4db76' });
 
 }
