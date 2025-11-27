@@ -5,9 +5,10 @@ export function createFurniture(gameInstance: ReturnType<typeof kaplay>, { posit
 
   gameInstance.loadAseprite('furniture', `${BASE_URL}/entities/furniture.png`, `${BASE_URL}/entities/furniture.json`);
 
-  const ANIMS = {
-    START: 'start',
-  }
+  gameInstance.loadAseprite('games', `${BASE_URL}/entities/games.png`, `${BASE_URL}/entities/games.json`);
+
+
+  const GAMES = ['invaders', 'tetris', 'pacman', 'et', 'rtype']
 
   const furniture = gameInstance.add([
     gameInstance.sprite('furniture'),
@@ -18,13 +19,17 @@ export function createFurniture(gameInstance: ReturnType<typeof kaplay>, { posit
     'game',
   ]);
 
+  const game = gameInstance.add([
+    gameInstance.sprite('games'),
+    gameInstance.pos(position.x + 6, position.y + 8),
+    gameInstance.area(),
+    gameInstance.z(-99),
+    'gamepad',
+    'game',
+  ]);
 
-
-  const timeoutAnimValue = Math.random() * 1000 + Math.random() * 10;
-  setTimeout(() => {
-    if (!gameInstance || !furniture) return;
-    furniture.play(ANIMS.START);
-  }, timeoutAnimValue);
+  const randomGame = GAMES[Math.floor(Math.random() * GAMES.length)];
+  game.play(randomGame);
 
   return furniture;
 }

@@ -2,6 +2,7 @@ import type kaplay from "kaplay";
 import { CONTROLS } from "../mini-game.const";
 import { openGamePanelInfo } from "../game-panel-info.ctrl";
 
+
 export function createComputerSpace(gameInstance: ReturnType<typeof kaplay>, { position, BASE_URL }: { position: { x: number, y: number }, BASE_URL: string }) {
   if (!gameInstance) return;
 
@@ -42,15 +43,13 @@ export function createComputerSpace(gameInstance: ReturnType<typeof kaplay>, { p
 
   computerSpace.play(ANIMS.START);
 
-
   computerSpace.onCollide('player', () => {
     isPlayerNearby = true;
-    console.log('Joueur près de la borne computer-space');
   });
 
   computerSpace.onCollideEnd('player', () => {
     isPlayerNearby = false;
-    console.log('Joueur quitte la borne computer-space');
+
   });
 
   gameInstance.onKeyPress(CONTROLS.INTERACT as unknown as string[], () => {
@@ -60,8 +59,6 @@ export function createComputerSpace(gameInstance: ReturnType<typeof kaplay>, { p
       console.log('Interaction avec computer-space !');
     }
   });
-
-
 
   return computerSpace;
 }

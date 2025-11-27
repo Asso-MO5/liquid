@@ -30,7 +30,7 @@ export const GamePanelInfo = () => {
           onMouseDown={gamePanelInfo.handleMouseDown}
           onTouchStart={gamePanelInfo.handleTouchStart}
         >
-          <h3 class="text-sm font-bold m-0">{item()?.name || 'Information'}</h3>
+          <h3 class="text-base m-0 text-white">{item()?.name || 'Information'}</h3>
           <button
             onClick={closeGamePanelInfo}
             class="text-white hover:text-secondary transition-colors p-1 rounded"

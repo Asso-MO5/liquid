@@ -100,9 +100,9 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
 
   const furniturePositions = [
     { x: 100, y: GROUND_Y - 40 },
-    { x: 150, y: GROUND_Y - 40 },
-    { x: 250, y: GROUND_Y - 40 },
-    { x: 280, y: GROUND_Y - 40 },
+    { x: 130, y: GROUND_Y - 40 },
+    { x: 260, y: GROUND_Y - 40 },
+    { x: 290, y: GROUND_Y - 40 },
   ];
 
   for (const position of furniturePositions) {
