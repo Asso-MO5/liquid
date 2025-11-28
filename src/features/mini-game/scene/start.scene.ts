@@ -78,7 +78,7 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
 
   const isPortrait = window.innerWidth < window.innerHeight;
 
-  const startPosition = isPortrait ? { x: 170, y: 140 } : { x: 570, y: 140 };
+  const startPosition = isPortrait ? { x: 170, y: 140 } : { x: 200, y: 140 };
 
   // ============================== ENTITIES ==============================
 
