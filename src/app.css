@@ -75,10 +75,27 @@
     background-color: var(--color-bg);
   }
 
+  #app {
+    background-color: var(--color-bg);
+  }
+
   body {
     font-family: 'Stack Sans Text', sans-serif;
     background-color: var(--color-bg);
     color: var(--color-text);
+    min-height: 100dvh;
+  }
+
+  body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg);
+    z-index: -1;
+    pointer-events: none;
   }
 
   main {
