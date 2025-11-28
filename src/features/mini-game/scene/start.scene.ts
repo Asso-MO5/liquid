@@ -2,8 +2,8 @@ import type kaplay from "kaplay";
 import { gameState } from "../game-state";
 import { createPlayer } from "../entities/player";
 import { FONTS } from "../mini-game.const";
-import { createFurniture } from "../entities/furniture";
 import { createMachine } from "../entities/machine";
+import { createScreen } from "../entities/screen";
 
 export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null, { BASE_URL }: { BASE_URL: string }) {
 
@@ -78,7 +78,7 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
 
   const isPortrait = window.innerWidth < window.innerHeight;
 
-  const startPosition = isPortrait ? { x: 170, y: 140 } : { x: 170, y: 140 };
+  const startPosition = isPortrait ? { x: 170, y: 140 } : { x: 570, y: 140 };
 
   // ============================== ENTITIES ==============================
 
@@ -99,14 +99,22 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
 
 
   const furniturePositions = [
-    { x: 100, y: GROUND_Y - 40 },
-    { x: 130, y: GROUND_Y - 40 },
-    { x: 260, y: GROUND_Y - 40 },
-    { x: 290, y: GROUND_Y - 40 },
+    { x: 232, y: GROUND_Y - 40 },
+    { x: 281, y: GROUND_Y - 40 },
+    { x: 325, y: GROUND_Y - 40 },
+    { x: 379, y: GROUND_Y - 40 },
+    { x: 424, y: GROUND_Y - 40 },
+    { x: 473, y: GROUND_Y - 40 },
+    { x: 517, y: GROUND_Y - 40 },
+    { x: 571, y: GROUND_Y - 40 },
+    { x: 616, y: GROUND_Y - 40 },
+    { x: 665, y: GROUND_Y - 40 },
+    { x: 709, y: GROUND_Y - 40 },
+    { x: 763, y: GROUND_Y - 40 },
   ];
 
   for (const position of furniturePositions) {
-    createFurniture(gameInstance, { position });
+    createScreen(gameInstance, { position });
   }
 
   createMachine(gameInstance, { position: { x: 200, y: GROUND_Y - 32 }, spriteName: 'computer-space', idPanel: '11517969-f1f4-49ab-bf5f-8862b1f4db76' });

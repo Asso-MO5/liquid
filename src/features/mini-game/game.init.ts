@@ -2,7 +2,7 @@ import kaplay from "kaplay";
 import { CANVAS_ID, FONTS, LEVEL_NAMES } from './mini-game.const';
 import { createStartScene } from "./scene/start.scene";
 
-let gameInstance: ReturnType<typeof kaplay> | null = null;
+export let gameInstance: ReturnType<typeof kaplay> | null = null;
 
 export const getGameInstance = () => gameInstance;
 
@@ -32,7 +32,6 @@ export const initGame = () => {
     console.error(`Container ${CANVAS_ID} non trouvé`);
     return null;
   }
-
 
   const containerWidth = containerRef.clientWidth || 800;
   const containerHeight = containerRef.clientHeight || 600;
