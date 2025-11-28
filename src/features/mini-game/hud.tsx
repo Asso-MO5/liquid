@@ -1,7 +1,33 @@
 import { Show, createSignal, onMount, onCleanup } from "solid-js"
 import { CONTROLS, CANVAS_ID } from "./mini-game.const"
+import { langCtrl } from "~/features/lang-selector/lang.ctrl"
+
+const hudTxt = {
+  fr: {
+    left: '(Q / ←)',
+    right: '(D / →)',
+    jump: '(Espace / Up / Z)',
+    action: '(E / F)',
+    altLeft: '(Q)',
+    altRight: '(D)',
+    altJump: '(Espace)',
+    altAction: '(E)',
+  },
+  en: {
+    left: '(Q / ←)',
+    right: '(D / →)',
+    jump: '(Space / Up / Z)',
+    action: '(E / F)',
+    altLeft: 'Q',
+    altRight: '(D)',
+    altJump: '(Space)',
+    altAction: '(E)',
+  },
+}
 
 export const HUD = () => {
+
+  const lang = langCtrl()
   const [isPortrait, setIsPortrait] = createSignal(false)
 
   const checkOrientation = () => {
@@ -75,11 +101,8 @@ export const HUD = () => {
   }
 
   const handleJump = () => {
-    // Simuler keypress avec keydown puis keyup rapidement
-    // Kaplay onKeyPress détecte keydown suivi de keyup rapidement
     CONTROLS.JUMP.forEach(key => {
       triggerKeyEvent(key, 'keydown')
-      // Utiliser requestAnimationFrame pour s'assurer que keydown est traité avant keyup
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           triggerKeyEvent(key, 'keyup')
@@ -101,89 +124,181 @@ export const HUD = () => {
   }
 
   return (
-    <Show when={isPortrait()}>
-      <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between pointer-events-none z-40 md:hidden">
-        {/* Boutons gauche/droite en bas à gauche (discrets) */}
-        <div class="flex gap-6 pointer-events-auto opacity-30">
-          <button
-            class="bg-black/20 hover:bg-black/40 text-white rounded-full w-10 h-10 flex items-center justify-center border border-white/20 backdrop-blur-sm transition-all active:scale-95 opacity-70"
-            onTouchStart={handleLeftDown}
-            onTouchEnd={handleLeftUp}
-            onMouseDown={handleLeftDown}
-            onMouseUp={handleLeftUp}
-            onMouseLeave={handleLeftUp}
-            aria-label="Gauche"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+    <>
+      {/* Version Mobile (Portrait) */}
+      <Show when={isPortrait()}>
+        <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between pointer-events-none z-40 md:hidden">
+          {/* Boutons gauche/droite en bas à gauche (discrets) */}
+          <div class="flex gap-6 pointer-events-auto opacity-30">
+            <button
+              class="bg-black/20 hover:bg-black/40 text-white rounded-full w-10 h-10 flex items-center justify-center border border-white/20 backdrop-blur-sm transition-all active:scale-95 opacity-70"
+              onTouchStart={handleLeftDown}
+              onTouchEnd={handleLeftUp}
+              onMouseDown={handleLeftDown}
+              onMouseUp={handleLeftUp}
+              onMouseLeave={handleLeftUp}
+              title={hudTxt[lang()].altLeft}
+              aria-label={hudTxt[lang()].altLeft}
             >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            class="bg-black/20 hover:bg-black/40 text-white rounded-full w-10 h-10 flex items-center justify-center border border-white/20 backdrop-blur-sm transition-all active:scale-95 opacity-70"
-            onTouchStart={handleRightDown}
-            onTouchEnd={handleRightUp}
-            onMouseDown={handleRightDown}
-            onMouseUp={handleRightUp}
-            onMouseLeave={handleRightUp}
-            aria-label="Droite"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              class="bg-black/20 hover:bg-black/40 text-white rounded-full w-10 h-10 flex items-center justify-center border border-white/20 backdrop-blur-sm transition-all active:scale-95 opacity-70"
+              onTouchStart={handleRightDown}
+              onTouchEnd={handleRightUp}
+              onMouseDown={handleRightDown}
+              onMouseUp={handleRightUp}
+              onMouseLeave={handleRightUp}
+              title={hudTxt[lang()].altRight}
+              aria-label={hudTxt[lang()].altRight}
             >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
 
-        {/* Bouton saut à gauche du centre */}
-        <div class="flex gap-6">
-          <button
-            class="bg-primary/80 hover:bg-primary text-white rounded-full w-14 h-14 flex items-center justify-center border-2 border-white/50 backdrop-blur-sm transition-all active:scale-95 pointer-events-auto opacity-10"
-            onTouchStart={handleJump}
-            onMouseDown={handleJump}
-            aria-label="Sauter"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-7 w-7"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          {/* Bouton saut à gauche du centre */}
+          <div class="flex gap-6 ">
+            <button
+              class="bg-primary/80 hover:bg-primary text-white rounded-full w-14 h-14 flex items-center justify-center border-2 border-white/50 backdrop-blur-sm transition-all active:scale-95 pointer-events-auto opacity-10"
+              onTouchStart={handleJump}
+              onMouseDown={handleJump}
+              title={hudTxt[lang()].altJump}
+              aria-label={hudTxt[lang()].altJump}
             >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-            </svg>
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-7 w-7"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+              </svg>
+            </button>
 
-          {/* Bouton action à droite */}
-          <button
-            class="bg-secondary/80 hover:bg-secondary text-white rounded-full w-14 h-14 flex items-center justify-center border-2 border-white/50 backdrop-blur-sm transition-all active:scale-95 pointer-events-auto opacity-10"
-            onTouchStart={handleAction}
-            onMouseDown={handleAction}
-            aria-label="Action"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-7 w-7"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+            {/* Bouton action à droite */}
+            <button
+              class="bg-secondary/80 hover:bg-secondary text-white rounded-full w-14 h-14 flex items-center justify-center border-2 border-white/50 backdrop-blur-sm transition-all active:scale-95 pointer-events-auto opacity-10"
+              onTouchStart={handleAction}
+              onMouseDown={handleAction}
+              title={hudTxt[lang()].altAction}
+              aria-label={hudTxt[lang()].altAction}
             >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-7 w-7"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </button>
+          </div>
         </div>
-      </div>
-    </Show>
+      </Show>
+
+      {/* Version Desktop */}
+      <Show when={!isPortrait()}>
+        <div class="absolute bottom-6 right-6 flex flex-col gap-3 pointer-events-none z-40 opacity-30">
+          {/* Contrôles de mouvement */}
+          <div class="flex gap-2 pointer-events-auto">
+            <button
+              class="bg-black/30 hover:bg-black/50 text-white rounded-lg px-3 py-2 flex items-center gap-2 border border-white/20 backdrop-blur-sm transition-all active:scale-95 text-sm font-mono"
+              onMouseDown={handleLeftDown}
+              onMouseUp={handleLeftUp}
+              onMouseLeave={handleLeftUp}
+              title={hudTxt[lang()].altLeft}
+              aria-label={hudTxt[lang()].altLeft}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+              <span class="text-xs opacity-70">{hudTxt[lang()].left}</span>
+            </button>
+            <button
+              class="bg-black/30 hover:bg-black/50 text-white rounded-lg px-3 py-2 flex items-center gap-2 border border-white/20 backdrop-blur-sm transition-all active:scale-95 text-sm font-mono"
+              onMouseDown={handleRightDown}
+              onMouseUp={handleRightUp}
+              onMouseLeave={handleRightUp}
+              title={hudTxt[lang()].altRight}
+              aria-label={hudTxt[lang()].altRight}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+              <span class="text-xs opacity-70">{hudTxt[lang()].right}</span>
+            </button>
+          </div>
+
+          {/* Contrôles d'action */}
+          <div class="flex gap-2 pointer-events-auto">
+            <button
+              class="bg-transparent text-white rounded-lg px-3 py-2 flex items-center gap-2 border border-white/30 backdrop-blur-sm transition-all active:scale-95 text-sm font-mono"
+              onMouseDown={handleJump}
+              title={hudTxt[lang()].altJump}
+              aria-label={hudTxt[lang()].altJump}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+              </svg>
+              <span class="text-xs opacity-70">{hudTxt[lang()].jump}</span>
+            </button>
+            <button
+              class="bg-transparent text-white rounded-lg px-3 py-2 flex items-center gap-2 border border-white/30 backdrop-blur-sm transition-all active:scale-95 text-sm font-mono"
+              onMouseDown={handleAction}
+              title={hudTxt[lang()].altAction}
+              aria-label={hudTxt[lang()].altAction}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              <span class="text-xs opacity-70">{hudTxt[lang()].action}</span>
+            </button>
+          </div>
+        </div>
+      </Show>
+    </>
   )
 }
 
