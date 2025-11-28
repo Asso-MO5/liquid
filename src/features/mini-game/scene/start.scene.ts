@@ -98,20 +98,21 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
   ]);
 
 
-  const furniturePositions = [
-    { x: 232, y: GROUND_Y - 40 },
-    { x: 281, y: GROUND_Y - 40 },
-    { x: 325, y: GROUND_Y - 40 },
-    { x: 379, y: GROUND_Y - 40 },
-    { x: 424, y: GROUND_Y - 40 },
-    { x: 473, y: GROUND_Y - 40 },
-    { x: 517, y: GROUND_Y - 40 },
-    { x: 571, y: GROUND_Y - 40 },
-    { x: 616, y: GROUND_Y - 40 },
-    { x: 665, y: GROUND_Y - 40 },
-    { x: 709, y: GROUND_Y - 40 },
-    { x: 763, y: GROUND_Y - 40 },
-  ];
+  // Pattern d'écarts qui se répète : 49, 44, 54, 45
+  const spacingPattern = [49, 44, 54, 45];
+  const startX = 232;
+  const numberOfFurniture = 64;
+
+  const furniturePositions = Array.from({ length: numberOfFurniture }, (_, index) => {
+    if (index === 0) {
+      return { x: startX, y: GROUND_Y - 40 };
+    }
+    let x = startX;
+    for (let i = 0; i < index; i++) {
+      x += spacingPattern[i % spacingPattern.length];
+    }
+    return { x, y: GROUND_Y - 40 };
+  });
 
   for (const position of furniturePositions) {
     createScreen(gameInstance, { position });
