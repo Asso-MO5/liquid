@@ -113,10 +113,33 @@ export const initGame = () => {
   if (!gameInstance) return null;
 
   // ====== RESOURCES ========================================================
-  gameInstance.loadAseprite("computer-space", `${BASE_URL}/entities/computer-space.png`, `${BASE_URL}/entities/computer-space.json`);
-  gameInstance.loadAseprite('furniture', `${BASE_URL}/entities/furniture.png`, `${BASE_URL}/entities/furniture.json`);
-  gameInstance.loadAseprite('games', `${BASE_URL}/entities/games.png`, `${BASE_URL}/entities/games.json`);
 
+  const entities = [
+    {
+      name: 'computer-space',
+      url: `${BASE_URL}/entities/computer-space.png`,
+      json: `${BASE_URL}/entities/computer-space.json`
+    },
+    {
+      name: 'vectrex',
+      url: `${BASE_URL}/entities/vectrex.png`,
+      json: `${BASE_URL}/entities/vectrex.json`
+    },
+    {
+      name: 'furniture',
+      url: `${BASE_URL}/entities/furniture.png`,
+      json: `${BASE_URL}/entities/furniture.json`
+    },
+    {
+      name: 'games',
+      url: `${BASE_URL}/entities/games.png`,
+      json: `${BASE_URL}/entities/games.json`
+    }
+  ]
+
+  for (const entity of entities) {
+    gameInstance.loadAseprite(entity.name, entity.url, entity.json);
+  }
 
   // ====== FONTS ========================================================
 

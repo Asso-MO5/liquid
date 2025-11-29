@@ -114,10 +114,30 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
     return { x, y: GROUND_Y - 40 };
   });
 
-  for (const position of furniturePositions) {
+
+
+  const indexToSkip = [2, 3]
+
+  for (const position of furniturePositions.filter((_, index) => !indexToSkip.includes(index))) {
     createScreen(gameInstance, { position });
   }
 
-  createMachine(gameInstance, { position: { x: 200, y: GROUND_Y - 32 }, spriteName: 'computer-space', idPanel: '11517969-f1f4-49ab-bf5f-8862b1f4db76' });
 
+  const machines = [{
+    position: { x: 328, y: GROUND_Y - 32 },
+    spriteName: 'computer-space',
+    idPanel: '11517969-f1f4-49ab-bf5f-8862b1f4db76'
+
+  },
+
+  {
+    position: { x: 379, y: GROUND_Y - 40 },
+    spriteName: 'vectrex',
+    idPanel: 'f0e4ea9e-105a-4aae-81f3-96ea82107481'
+  }
+  ]
+
+  for (const machine of machines) {
+    createMachine(gameInstance, machine);
+  }
 }

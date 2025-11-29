@@ -27,7 +27,7 @@ export function createMachine(gameInstance: ReturnType<typeof kaplay>, { positio
   );
 
   const computerSpace = gameInstance.add([
-    gameInstance.sprite("computer-space"),
+    gameInstance.sprite(spriteName),
     gameInstance.pos(position.x, position.y),
     gameInstance.area(),
     gameInstance.z(-100),
