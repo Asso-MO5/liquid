@@ -69,7 +69,6 @@ export const HUD = () => {
 
     const keyInfo = keyMap[key.toLowerCase()] || { key: key.toLowerCase(), code: key }
 
-    // Dispatcher sur plusieurs cibles pour s'assurer que Kaplay reçoit l'événement
     const canvas = document.getElementById(CANVAS_ID)?.querySelector('canvas')
     const targets = [canvas, document, window].filter(Boolean) as (HTMLElement | Document | Window)[]
 
@@ -112,7 +111,6 @@ export const HUD = () => {
   }
 
   const handleAction = () => {
-    // Simuler keypress avec keydown puis keyup rapidement
     CONTROLS.INTERACT.forEach(key => {
       triggerKeyEvent(key, 'keydown')
       requestAnimationFrame(() => {
@@ -129,9 +127,9 @@ export const HUD = () => {
       <Show when={isPortrait()}>
         <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between pointer-events-none z-40 md:hidden">
           {/* Boutons gauche/droite en bas à gauche (discrets) */}
-          <div class="flex gap-6 pointer-events-auto opacity-30">
+          <div class="flex gap-6 pointer-events-auto">
             <button
-              class="bg-black/20 hover:bg-black/40 text-white rounded-full w-10 h-10 flex items-center justify-center border border-white/20 backdrop-blur-sm transition-all active:scale-95 opacity-70"
+              class="bg-black/20 hover:bg-black/40 text-text rounded-full w-10 h-10 flex items-center justify-center border border-white/20 backdrop-blur-sm transition-all active:scale-95"
               onTouchStart={handleLeftDown}
               onTouchEnd={handleLeftUp}
               onMouseDown={handleLeftDown}
@@ -151,7 +149,7 @@ export const HUD = () => {
               </svg>
             </button>
             <button
-              class="bg-black/20 hover:bg-black/40 text-white rounded-full w-10 h-10 flex items-center justify-center border border-white/20 backdrop-blur-sm transition-all active:scale-95 opacity-70"
+              class="bg-black/20 hover:bg-black/40 text-white rounded-full w-10 h-10 flex items-center justify-center border border-white/20 backdrop-blur-sm transition-all active:scale-95"
               onTouchStart={handleRightDown}
               onTouchEnd={handleRightUp}
               onMouseDown={handleRightDown}
@@ -175,7 +173,7 @@ export const HUD = () => {
           {/* Bouton saut à gauche du centre */}
           <div class="flex gap-6 ">
             <button
-              class="bg-primary/80 hover:bg-primary text-white rounded-full w-14 h-14 flex items-center justify-center border-2 border-white/50 backdrop-blur-sm transition-all active:scale-95 pointer-events-auto opacity-10"
+              class="bg-primary hover:bg-primary text-white rounded-full w-14 h-14 flex items-center justify-center border-2 border-white/50 backdrop-blur-sm transition-all active:scale-95 pointer-events-auto"
               onTouchStart={handleJump}
               onMouseDown={handleJump}
               title={hudTxt[lang()].altJump}
@@ -194,7 +192,7 @@ export const HUD = () => {
 
             {/* Bouton action à droite */}
             <button
-              class="bg-secondary/80 hover:bg-secondary text-white rounded-full w-14 h-14 flex items-center justify-center border-2 border-white/50 backdrop-blur-sm transition-all active:scale-95 pointer-events-auto opacity-10"
+              class="bg-secondary hover:bg-secondary text-white rounded-full w-14 h-14 flex items-center justify-center border-2 border-white/50 backdrop-blur-sm transition-all active:scale-95 pointer-events-auto"
               onTouchStart={handleAction}
               onMouseDown={handleAction}
               title={hudTxt[lang()].altAction}
@@ -216,7 +214,7 @@ export const HUD = () => {
 
       {/* Version Desktop */}
       <Show when={!isPortrait()}>
-        <div class="absolute bottom-6 right-6 flex flex-col gap-3 pointer-events-none z-40 opacity-30">
+        <div class="absolute bottom-6 right-6 flex flex-col gap-3 pointer-events-none z-40">
           {/* Contrôles de mouvement */}
           <div class="flex gap-2 pointer-events-auto">
             <button
