@@ -1,32 +1,51 @@
-import { useLocation, useNavigate, useParams } from "@solidjs/router";
-import { LANGS } from "./lang-selector.const";
-import { createSignal, For, onMount, Show } from "solid-js";
+import { useLocation, useNavigate, useParams } from '@solidjs/router'
+import { LANGS } from './lang-selector.const'
+import { createSignal, For, onMount, Show } from 'solid-js'
 
 export const LangSelector = () => {
-  const { lang: langParams = "fr" } = useParams();
-  const navigate = useNavigate();
-  const path = useLocation();
-  const [selectedLang, setSelectedLang] = createSignal('');
+  const { lang: langParams = 'fr' } = useParams()
+  const navigate = useNavigate()
+  const path = useLocation()
+  const [selectedLang, setSelectedLang] = createSignal('')
 
-  const changeLang = (lang: "fr" | "en") => {
-    navigate(path.pathname.replace(selectedLang() || '', lang) + window.location.search);
-    setSelectedLang(lang);
+  const changeLang = (lang: 'fr' | 'en') => {
+    navigate(
+      path.pathname.replace(selectedLang() || '', lang) + window.location.search
+    )
+    setSelectedLang(lang)
   }
   onMount(() => {
-    setSelectedLang(langParams);
-  });
+    setSelectedLang(langParams)
+  })
 
-  return <> <Show when={selectedLang()}>
-    <select id="lang-selector" value={selectedLang() || "fr"} onInput={(e) => changeLang(e.currentTarget?.value as "fr" | "en")}>
-      <For each={LANGS}>
-        {(lang) => <option value={lang.value}>{lang.label[lang.value as "fr" | "en"]}</option>}
-      </For>
-    </select>
-  </Show>
-    <Show when={!selectedLang()}>
-      <select id="lang-selector" value={selectedLang() || "fr"} onInput={(e) => changeLang(e.currentTarget?.value as "fr" | "en")}>
-        <option value="fr">FR</option>
-      </select>
-    </Show>
-  </>
+  return (
+    <>
+      <Show when={selectedLang()}>
+        <select
+          class="text-text"
+          id="lang-selector"
+          value={selectedLang() || 'fr'}
+          onInput={(e) => changeLang(e.currentTarget?.value as 'fr' | 'en')}
+        >
+          <For each={LANGS}>
+            {(lang) => (
+              <option value={lang.value} class="text-text">
+                {lang.label[lang.value as 'fr' | 'en']}
+              </option>
+            )}
+          </For>
+        </select>
+      </Show>
+      <Show when={!selectedLang()}>
+        <select
+          class="text-text"
+          id="lang-selector"
+          value={selectedLang() || 'fr'}
+          onInput={(e) => changeLang(e.currentTarget?.value as 'fr' | 'en')}
+        >
+          <option value="fr" class="text-text">FR</option>
+        </select>
+      </Show>
+    </>
+  )
 }

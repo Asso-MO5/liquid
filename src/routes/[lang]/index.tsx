@@ -34,10 +34,10 @@ const Home: VoidComponent = () => {
         <div class="flex justify-center items-center h-full">
           <A
             href={`/${lang()}/ticket`}
-            class="relative border-2 text-secondary rounded-sm px-3 py-2 text-lg hover:text-white transition-all duration-300 overflow-hidden group animate-border-rotate group-hover:text-white"
+            class="relative border-2 text-secondary rounded-sm px-3 py-2 text-lg hover:text-text transition-all duration-300 overflow-hidden group animate-border-rotate group-hover:text-text"
           >
             <span class="relative z-10">{infoTxt[lang() as keyof typeof infoTxt].button}</span>
-            <span class="absolute inset-0 opacity-0 group-hover:opacity-100 z-20 h-full w-full flex items-center justify-center text-white">{infoTxt[lang() as keyof typeof infoTxt].button}</span>
+            <span class="absolute inset-0 opacity-0 group-hover:opacity-100 z-20 h-full w-full flex items-center justify-center text-text">{infoTxt[lang() as keyof typeof infoTxt].button}</span>
             <span class="absolute inset-0 bg-gradient-to-r from-secondary via-primary to-secondary bg-[length:200%_100%] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 
             animate-gradient-x" />
           </A>

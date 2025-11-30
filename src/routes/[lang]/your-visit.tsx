@@ -71,7 +71,7 @@ export const Page = () => {
   const lang = () => params.lang as 'fr' | 'en';
 
   return (
-    <div class="container max-w-xl mx-auto px-4 py-8 text-white">
+    <div class="container max-w-xl mx-auto px-4 py-8 text-text">
 
       <ErrorBoundary fallback={<div>Une erreur est survenue lors du chargement de la page.</div>}>
         <Suspense fallback={<div>Chargement...</div>}>
@@ -80,6 +80,14 @@ export const Page = () => {
               <Title>{title}</Title>
               <Meta name="description" content={description} />
               {page()?.keywords && <Meta name="keywords" content={page().keywords.join(', ')} />}
+
+              <article class="prose prose-invert max-w-none">
+
+                {page()?.content?.rendered && (
+                  // eslint-disable-next-line solid/no-innerhtml
+                  <div innerHTML={page().content.rendered} />
+                )}
+              </article>
 
               <div class="flex flex-col gap-8">
                 {/* Section Horaires */}
@@ -137,13 +145,6 @@ export const Page = () => {
                   </section>
                 </Show>
               </div>
-              <article class="prose prose-invert max-w-none">
-
-                {page()?.content?.rendered && (
-                  // eslint-disable-next-line solid/no-innerhtml
-                  <div innerHTML={page().content.rendered} />
-                )}
-              </article>
             </>
           }
         </Suspense>

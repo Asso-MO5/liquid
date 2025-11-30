@@ -10,7 +10,7 @@ export const Prices = () => {
   const ticketCreateCtrl = ticketCreate();
 
   return (
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full text-text">
       <For each={prices()}>
         {(price) => (
           <div class="flex items-center justify-between gap-2 border border-primary p-2 rounded-md w-full">

@@ -21,7 +21,7 @@ export default function Ticket() {
   return (
     <main
       id="ticket"
-      class="items-center justify-center relative overflow-y-auto flex flex-col lg:grid lg:grid-cols-2 gap-4 p-6 text-white"
+      class="items-center justify-center relative overflow-y-auto flex flex-col lg:grid lg:grid-cols-2 gap-4 p-6 text-text"
     >
       <div id="step-1">
         <Cal onDayClick={ticketCtrl.onDayClick} selectedDate={ticketStore.reservation_date} />

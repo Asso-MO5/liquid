@@ -5,7 +5,7 @@ export const CalControls = () => {
   const calendar = CalCtrl()
 
   return (
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 text-text">
       <button
         onClick={calendar.goToPrevious}
         class="headless"

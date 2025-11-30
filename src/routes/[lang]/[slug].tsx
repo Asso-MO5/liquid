@@ -44,7 +44,7 @@ export const Page = () => {
   const description = page()?.excerpt?.rendered || ''
 
   return (
-    <div class="container max-w-xl mx-auto px-4 py-8 text-white">
+    <div class="container max-w-xl mx-auto px-4 py-8 text-text">
 
       <ErrorBoundary fallback={<div>Une erreur est survenue lors du chargement de la page.</div>}>
         <Suspense fallback={<div>Chargement...</div>}>
@@ -59,7 +59,7 @@ export const Page = () => {
                 )}
                 {page()?.content?.rendered && (
                   // eslint-disable-next-line solid/no-innerhtml
-                  <div innerHTML={page().content.rendered} />
+                  <div innerHTML={page().content.rendered} class="text-text" />
                 )}
               </article>
             </>

@@ -12,7 +12,7 @@ export function Cal(props: CalProps) {
   const calendar = CalCtrl();
 
   return (
-    <div class="flex flex-col items-center justify-baseline gap-4" id="calendar">
+    <div class="flex flex-col items-center justify-baseline gap-4 text-text" id="calendar">
       <CalControls />
       <div
         class="grid gap-3 grid-cols-7"
