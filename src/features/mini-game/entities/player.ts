@@ -69,10 +69,13 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     if (player.isGrounded() && canJump) {
       isJumping = true;
       canJump = false;
+      if (isPlayingGroundedAnim) {
+        isPlayingGroundedAnim = false;
+      }
+      player.jump(400);
       player.play(ANIMS.JUMP, {
         loop: false,
         onEnd() {
-          player.jump(400);
           try {
             gameInstance!.play('jump');
           } catch (e) {
@@ -89,7 +92,7 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
 
     if (isGrounded && !wasGrounded && !isPlayingGroundedAnim) {
       // Touche le sol
-
+      canJump = true;
       try {
         player.play(ANIMS.GROUNDED, {
           loop: false,
@@ -105,7 +108,7 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     }
 
     if (isGrounded && !isJumping) {
-      canJump = true;
+
     }
 
     wasGrounded = isGrounded;
