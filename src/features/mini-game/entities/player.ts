@@ -1,15 +1,19 @@
 import type Kaplay from 'kaplay';
+import { CONTROLS } from '../mini-game.const';
+import { openGamePanelInfo } from '../game-panel-info.ctrl';
+
+type MachineEntity = {
+  pos: { x: number; y: number };
+  tags: string[];
+};
+
 export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWidth, levelHeight, BASE_URL, startPosition }: { levelWidth: number, levelHeight: number, BASE_URL: string, startPosition: { x: number, y: number } }) {
 
-
-  // ====== RESOURCES ========================================================
   gameInstance.loadAseprite("lulu", `${BASE_URL}/entities/lulu.png`, `${BASE_URL}/entities/lulu.json`);
-
   gameInstance.loadSound('jump', `${BASE_URL}/sounds/jump.mp3`).catch(() => {
     console.debug('Son jump non disponible');
   });
 
-  // ====== VARIABLES ========================================================
 
   const ANIMS = {
     STAND: 'stand',
@@ -17,19 +21,21 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     FALL: 'fall',
     JUMP: 'jump',
     GROUNDED: 'grounded',
+    INTERACT: 'interact',
   }
 
   let
     canJump = true,
     isJumping = false,
+    isInteracting = false,
+    isInteractingAnim = false,
     moveLeft = false,
     moveRight = false,
     isPlayingGroundedAnim = false,
-    wasGrounded = false;
+    wasGrounded = false,
+    currentMachine: MachineEntity | null = null;
 
-  // ====== CONTROLS ========================================================
-
-  // ====== ENTITIES ========================================================
+  const machinesInCollision = new Set<MachineEntity>();
 
   const player = gameInstance!.add([
     gameInstance!.sprite('lulu', {
@@ -43,7 +49,6 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     gameInstance!.anchor('bot'),
     'player',
   ]);
-
 
   gameInstance!.onKeyDown(['left', 'a', 'q'], () => {
     moveLeft = true;
@@ -62,11 +67,55 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     moveRight = false;
   });
 
+  // Gestion des collisions avec les machines
+  player.onCollide('machine', (machine) => {
+    const machineEntity = machine as unknown as MachineEntity;
+    machinesInCollision.add(machineEntity);
+  });
+
+  player.onCollideEnd('machine', (machine) => {
+    const machineEntity = machine as unknown as MachineEntity;
+    machinesInCollision.delete(machineEntity);
+
+    if (currentMachine === machineEntity) {
+      currentMachine = null;
+      if (isInteracting) {
+        isInteracting = false;
+        isInteractingAnim = false;
+      }
+    }
+  });
+
+  gameInstance!.onKeyPress(CONTROLS.INTERACT as unknown as string[], () => {
+    if (isInteractingAnim || !currentMachine) return;
+
+    const distanceX = Math.abs(currentMachine.pos.x - player.pos.x);
+    const maxDistance = (currentMachine as unknown as { width: number }).width || 8;
+
+    if (distanceX > maxDistance) return;
+
+    isInteracting = true;
+    isInteractingAnim = true;
+
+    const idPanel = currentMachine.tags.find((tag: string) => tag.startsWith('id-'))?.replace('id-', '');
+
+    if (idPanel) {
+      openGamePanelInfo(idPanel);
+    }
+
+    player.play(ANIMS.INTERACT, {
+      loop: false,
+      onEnd() {
+        isInteractingAnim = false;
+        isInteracting = false;
+      },
+    });
+  });
 
   // JUMP
   gameInstance!.onKeyPress(['space', 'up', 'w', 'z', 'x'], () => {
 
-    if (player.isGrounded() && canJump) {
+    if (player.isGrounded() && canJump && !isInteracting) {
       isJumping = true;
       canJump = false;
       if (isPlayingGroundedAnim) {
@@ -82,15 +131,30 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
           }
         },
       });
-
     }
   });
 
-
   player.onUpdate(() => {
+    if (machinesInCollision.size > 0) {
+      let closestMachine: MachineEntity | null = null;
+      let closestDistance = Infinity;
+
+      machinesInCollision.forEach((machine) => {
+        const distance = Math.abs(machine.pos.x - player.pos.x);
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          closestMachine = machine;
+        }
+      });
+
+      currentMachine = closestMachine;
+    } else {
+      currentMachine = null;
+    }
+
     const isGrounded = player.isGrounded();
 
-    if (isGrounded && !wasGrounded && !isPlayingGroundedAnim) {
+    if (isGrounded && !wasGrounded && !isPlayingGroundedAnim && !isInteractingAnim) {
       // Touche le sol
       canJump = true;
       try {
@@ -105,10 +169,6 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
       } catch (e) {
         isPlayingGroundedAnim = false;
       }
-    }
-
-    if (isGrounded && !isJumping) {
-
     }
 
     wasGrounded = isGrounded;
@@ -130,17 +190,13 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     }
 
     try {
-      if (!isPlayingGroundedAnim) {
+      if (!isPlayingGroundedAnim && !isInteractingAnim) {
         const isActuallyMoving = Math.abs(player.vel.x) > 10;
 
         let targetAnim: string | null = null;
 
         if (!isGrounded && player.vel.y > 0) {
-          // Tombe
           targetAnim = ANIMS.FALL;
-        } else if (!isGrounded && player.vel.y < 0) {
-          // Saute 
-          //  targetAnim = ANIMS.JUMP;
         } else if (isGrounded && !isActuallyMoving && !isJumping) {
           targetAnim = ANIMS.STAND;
         } else if (isGrounded && isActuallyMoving && !isJumping) {
@@ -152,6 +208,7 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
         }
       }
     } catch (e) {
+      // no break the loop
     }
 
     const gameWidth = gameInstance!.width?.() || 0;
@@ -178,8 +235,5 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     gameInstance!.setCamPos(camX, camY);
   });
 
-
   return player;
-
-
 }

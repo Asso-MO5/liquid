@@ -3,8 +3,6 @@ import type kaplay from "kaplay";
 export function createFurniture(gameInstance: ReturnType<typeof kaplay>, { position }: { position: { x: number, y: number } }) {
   if (!gameInstance) return;
 
-
-
   const GAMES = ['invaders', 'tetris', 'pacman', 'et', 'rtype']
 
   const furniture = gameInstance.add([
@@ -12,8 +10,7 @@ export function createFurniture(gameInstance: ReturnType<typeof kaplay>, { posit
     gameInstance.pos(position.x, position.y),
     gameInstance.area(),
     gameInstance.z(-100),
-    'furniture',
-    'game',
+    'shadow',
   ]);
 
   const game = gameInstance.add([
@@ -21,8 +18,7 @@ export function createFurniture(gameInstance: ReturnType<typeof kaplay>, { posit
     gameInstance.pos(position.x + 6, position.y + 8),
     gameInstance.area(),
     gameInstance.z(-99),
-    'gamepad',
-    'game',
+    'furniture',
   ]);
 
   const randomGame = GAMES[Math.floor(Math.random() * GAMES.length)];
