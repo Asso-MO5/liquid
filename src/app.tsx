@@ -8,6 +8,7 @@ import { Modal } from '~/ui/Modal/Modal'
 import { Layout } from '~/ui/Layout/Layout'
 import schedulesCtrl from '~/features/schedules/schedules.ctrl'
 import { priceCtrl } from '~/features/price/price.ctrl'
+import { Loader } from './ui/loader'
 
 export default function App() {
   schedulesCtrl()
@@ -20,7 +21,7 @@ export default function App() {
           <Meta name="description" content="Le musée du jeu vidéo" />
           <Meta name="keywords" content="musée, jeu vidéo, jeux, jeux vidéo, jeux de société, jeux de sociétés, jeux de sociétés en ligne, jeux de sociétés en ligne gratuit, jeux de sociétés en ligne gratuitement, jeux de sociétés en ligne gratuitement sans inscription, jeux de sociétés en ligne gratuitement sans inscription, jeux de sociétés en ligne gratuitement sans inscription, jeux de sociétés en ligne gratuitement sans inscription" />
           <Meta name="viewport" content="width=device-width, initial-scale=1" />
-          <Suspense>
+          <Suspense fallback={<div class="flex items-center justify-center p-3 h-screen"><Loader /></div>}>
             <Layout>
               {props.children}
             </Layout>

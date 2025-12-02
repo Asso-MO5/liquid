@@ -40,16 +40,20 @@ export const initGame = () => {
 
   // ============================== GAME INSTANCE ==============================
 
+  const isDarkMode = localStorage.getItem('darkMode')
+
   gameInstance = kaplay({
     width: Math.floor(containerWidth / pixelHeight),
     height: Math.floor(containerHeight / pixelHeight),
     root: containerRef,
     scale: pixelHeight,
-    background: [109, 135, 183],
+    background: isDarkMode === 'dark' ? [0, 0, 0] : [242, 242, 242],
     touchToMouse: true,
     crisp: true,
     pixelDensity: 1,
   });
+
+
 
   // ============================== CANVAS ==============================
   const canvas = containerRef.querySelector('canvas');

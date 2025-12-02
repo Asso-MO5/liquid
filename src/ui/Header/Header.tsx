@@ -1,4 +1,3 @@
-import { A } from "@solidjs/router"
 import { LangSelector } from "~/features/lang-selector/lang-selector"
 import { MiniGame } from "~/features/mini-game/mini-game"
 import { Show } from "solid-js"
@@ -6,6 +5,7 @@ import { Logo } from "../Logo"
 import { MenuMobile } from "../Menu/menu-mobile"
 import { MenuDesktop } from "../Menu/menu-desktop"
 import { langCtrl } from "~/features/lang-selector/lang.ctrl"
+import { DarkMode } from "~/features/dark-mode/dark-mode"
 
 type HeaderProps = {
   withGame?: boolean
@@ -46,7 +46,10 @@ export const Header = (props: HeaderProps) => {
             <MenuDesktop />
           </div>
           <MenuMobile />
-          <LangSelector />
+          <div class="flex items-center gap-4">
+            <DarkMode />
+            <LangSelector />
+          </div>
         </header>
       </Show>
 

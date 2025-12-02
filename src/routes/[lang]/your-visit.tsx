@@ -3,6 +3,7 @@ import { query, createAsync, useParams, type RouteDefinition } from "@solidjs/ro
 import { Suspense, ErrorBoundary, createMemo, For, Show } from "solid-js";
 import { prices } from "~/features/price/price.store";
 import { schedules } from "~/features/schedules/schedules.store";
+import { Loader } from "~/ui/loader";
 
 
 const DAYS_FULL = {
@@ -74,7 +75,7 @@ export const Page = () => {
     <div class="container max-w-xl mx-auto px-4 py-8 text-text">
 
       <ErrorBoundary fallback={<div>Une erreur est survenue lors du chargement de la page.</div>}>
-        <Suspense fallback={<div>Chargement...</div>}>
+        <Suspense fallback={<div class="flex items-center justify-center p-3"><Loader /></div>}>
           {
             <>
               <Title>{title}</Title>

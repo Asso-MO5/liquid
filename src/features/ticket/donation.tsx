@@ -13,10 +13,15 @@ export const Donation = () => {
             data-selected={donation === ticketStore.donation_amount}
             class="
               border border-primary rounded-md p-2
-              bg-transparent text-primary
-              data-[selected=true]:bg-primary data-[selected=true]:text-white
+              bg-transparent dark:text-text text-primary
+              data-[selected=true]:bg-primary dark:data-[selected=true]:text-black data-[selected=true]:text-white
           "
-            onClick={() => donations.setDonation(donation)}>{donation}<span class="text-white">€</span></button>
+            onClick={() => donations.setDonation(donation)}>{donation}
+            <span
+              data-selected={donation === ticketStore.donation_amount}
+              class="dark:text-secondary  hover:text-white text-primary
+              data-[selected=true]:text-white
+              dark:data-[selected=true]:text-black">€</span></button>
         )}
       </For>
     </div>

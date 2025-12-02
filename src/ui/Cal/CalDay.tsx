@@ -37,7 +37,7 @@ export const CalDay = (props: CalDayProps) => {
             p-2 border border-primary rounded-sm cursor-pointer data-[open=true]:hover:bg-primary
             data-[current-month=false]:opacity-30
             data-[today=true]:text-accent data-[today=true]:border-accent data-[today=true]:bg-transparent 
-            data-[selected=true]:bg-primary data-[selected=true]:border-primary
+            data-[selected=true]:bg-primary data-[selected=true]:border-primary data-[selected=true]:text-white
             data-[disabled=true]:opacity-50 data-[disabled=true]:cursor-not-allowed
              data-[open=false]:border-transparent data-[open=false]:cursor-not-allowed
              data-[open=false]:opacity-30
@@ -61,7 +61,7 @@ export const CalDay = (props: CalDayProps) => {
           border border-transparent
         data-[current-month=false]:text-gray-400 data-[current-month=false]:bg-bg 
         data-[today=true]:border-secondary
-        data-[selected=true]:bg-primary data-[selected=true]:border-primary
+        data-[selected=true]:bg-primary data-[selected=true]:border-primary data-[selected=true]:text-white
           data-[open=false]:cursor-not-allowed data-[open=false]:opacity-30 data-[open=false]:text-gray-400
         "
         data-current-month={props.day.isCurrentMonth}

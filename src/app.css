@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Définition des polices */
 @font-face {
   font-family: 'Stack Sans Text';
@@ -41,31 +43,31 @@
   --font-family-sans: 'Stack Sans Text', sans-serif;
   --font-family-display: 'Bebas Neue', sans-serif;
 
-  --color-bg: #000000; /* Noir */
-  --color-primary: #ff2a83; /* Rose fuchsia (coins supérieurs du logo) */
-  --color-white: #ffffff; /* Blanc (contours/texte) */
-  --color-border: white; /* Bordures noires comme le logo */
-  --color-secondary: #e83f36; /* Rouge brique (rangée rouge) */
-  --color-tertiary: #16b6e0; /* Cyan/bleu clair (case en bas à droite) */
-  --color-text: #c9c9c9; /* Texte par défaut sur fond sombre */
-  --color-accent: #f26d21; /* Orange vif (rangée orange) */
-  --color-valid: #16b6e0; /* Utiliser le cyan pour le succès/validation */
-  --color-brain: #f2a900; /* Jaune-orangé (transition vers le cyan) */
-  --color-error: #e83f36; /* Rouge */
-  --color-success: #16b6e0; /* Cyan */
-  --color-info: #16b6e0; /* Cyan */
-  --color-warning: #f2a900; /* Jaune-orangé */
+  --color-bg: #f2f2f2;
+  --color-primary: rgb(64, 136, 207);
+  --color-white: #ffffff;
+  --color-border: rgb(94, 143, 193);
+  --color-secondary: rgb(217, 83, 79);
+  --color-tertiary: #16b6e0;
+  --color-text: #000;
+  --color-accent: #f26d21;
+  --color-valid: #16b6e0;
+  --color-brain: #f2a900;
+  --color-error: #e83f36;
+  --color-success: #16b6e0;
+  --color-info: #16b6e0;
+  --color-warning: #f2a900;
   --color-discord: #5468ff;
   --color-discord-hover: #656c85cc;
 
-  --color-yellow-neon: #f2a900; /* Jaune-orangé inspiré du logo */
-  --color-orange-bright: #f26d21; /* Orange vif */
-  --color-red-bright: #e83f36; /* Rouge du logo */
-  --color-green-bright: #27d17c; /* Vert optionnel pour états, discret */
-  --color-blue-dark: #0e0e10; /* Noir bleuté pour fonds alternatifs */
-  --color-gray-light: #d3d3d3; /* Gris clair pour fonds */
-  --color-gray-dark: #696969; /* Gris foncé */
-  --color-brown: #8b4513; /* Réserve (non utilisé dans le logo) */
+  --color-yellow-neon: #f2a900;
+  --color-orange-bright: #f26d21;
+  --color-red-bright: #e83f36;
+  --color-green-bright: #0b9650;
+  --color-blue-dark: #0e0e10;
+  --color-gray-light: #d3d3d3;
+  --color-gray-dark: #696969;
+  --color-brown: #8b4513;
 }
 
 @layer base {
@@ -74,6 +76,34 @@
     font-family: 'Stack Sans Text', sans-serif;
     background-color: var(--color-bg);
     color: var(--color-text);
+  }
+
+  html.dark {
+    --color-bg: #000000;
+    --color-primary: #ff2a83;
+    --color-white: #ffffff;
+    --color-border: white;
+    --color-secondary: #e83f36;
+    --color-tertiary: #16b6e0;
+    --color-text: #c9c9c9;
+    --color-accent: #f26d21;
+    --color-valid: #16b6e0;
+    --color-brain: #f2a900;
+    --color-error: #e83f36;
+    --color-success: #16b6e0;
+    --color-info: #16b6e0;
+    --color-warning: #f2a900;
+    --color-discord: #5468ff;
+    --color-discord-hover: #656c85cc;
+
+    --color-yellow-neon: #f2a900;
+    --color-orange-bright: #f26d21;
+    --color-red-bright: #e83f36;
+    --color-green-bright: #27d17c;
+    --color-blue-dark: #0e0e10;
+    --color-gray-light: #d3d3d3;
+    --color-gray-dark: #696969;
+    --color-brown: #8b4513;
   }
 
   #app {
@@ -120,12 +150,12 @@
   }
   button,
   .btn {
-    @apply py-1 px-2 cursor-pointer outline-none bg-primary rounded p-1 text-black border-2 border-black font-bold;
+    @apply py-1 px-2 cursor-pointer outline-none bg-bg rounded p-1 text-primary hover:text-black border-2 border-primary font-bold;
   }
 
   button:hover,
   .btn:hover {
-    @apply bg-[#ff5aa1] text-black border-black;
+    @apply bg-primary text-white border-primary;
   }
 
   button:disabled,

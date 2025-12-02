@@ -14,6 +14,7 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     console.debug('Son jump non disponible');
   });
 
+  const IDLE_DELAY = 10;
 
   const ANIMS = {
     STAND: 'stand',
@@ -22,6 +23,8 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     JUMP: 'jump',
     GROUNDED: 'grounded',
     INTERACT: 'interact',
+    BEFORE_WAIT: 'before-wait',
+    WAIT: 'wait',
   }
 
   let
@@ -33,7 +36,10 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     moveRight = false,
     isPlayingGroundedAnim = false,
     wasGrounded = false,
-    currentMachine: MachineEntity | null = null;
+    currentMachine: MachineEntity | null = null,
+    idleTimer = 0,
+    isInIdleAnim = false,
+    isPlayingWaitAnim = false;
 
   const machinesInCollision = new Set<MachineEntity>();
 
@@ -50,14 +56,24 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     'player',
   ]);
 
+  const resetIdleTimer = () => {
+    idleTimer = 0;
+    if (isInIdleAnim || isPlayingWaitAnim) {
+      isInIdleAnim = false;
+      isPlayingWaitAnim = false;
+    }
+  };
+
   gameInstance!.onKeyDown(['left', 'a', 'q'], () => {
     moveLeft = true;
     player.flipX = true;
+    resetIdleTimer();
   });
 
   gameInstance!.onKeyDown(['right', 'd'], () => {
     moveRight = true;
     player.flipX = false;
+    resetIdleTimer();
   });
   gameInstance!.onKeyRelease(['left', 'a', 'q'], () => {
     moveLeft = false;
@@ -121,6 +137,7 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
       if (isPlayingGroundedAnim) {
         isPlayingGroundedAnim = false;
       }
+      resetIdleTimer();
       player.jump(400);
       player.play(ANIMS.JUMP, {
         loop: false,
@@ -135,6 +152,8 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
   });
 
   player.onUpdate(() => {
+    const dt = gameInstance!.dt();
+
     if (machinesInCollision.size > 0) {
       let closestMachine: MachineEntity | null = null;
       let closestDistance = Infinity;
@@ -189,10 +208,62 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
       player.vel.x = 0;
     }
 
-    try {
-      if (!isPlayingGroundedAnim && !isInteractingAnim) {
-        const isActuallyMoving = Math.abs(player.vel.x) > 10;
+    const isActuallyMoving = Math.abs(player.vel.x) > 10;
 
+    if (isActuallyMoving || !isGrounded || isJumping || isInteractingAnim || moveLeft || moveRight) {
+      resetIdleTimer();
+    } else if (isGrounded && !isActuallyMoving && !isJumping && !isInteractingAnim) {
+      if (!isInIdleAnim && !isPlayingWaitAnim) {
+        // Incrémenter le timer d'inactivité
+        idleTimer += dt;
+
+        // Après 10 secondes, lancer l'animation before-wait
+        if (idleTimer >= IDLE_DELAY) {
+          isInIdleAnim = true;
+          try {
+            player.play(ANIMS.BEFORE_WAIT, {
+              loop: false,
+              onEnd() {
+                isInIdleAnim = false;
+                isPlayingWaitAnim = true;
+
+                const playWaitLoop = () => {
+                  try {
+                    player.play(ANIMS.WAIT, {
+                      loop: false,
+                      onEnd() {
+                        if (isPlayingWaitAnim) {
+                          playWaitLoop();
+                        }
+                      },
+                    });
+                  } catch (e) {
+                    isPlayingWaitAnim = false;
+                  }
+                };
+                playWaitLoop();
+              },
+            });
+          } catch (e) {
+            isInIdleAnim = false;
+          }
+        }
+      } else if (isPlayingWaitAnim) {
+        // S'assurer que l'animation wait continue à jouer
+        try {
+          if (player.curAnim() !== ANIMS.WAIT) {
+            player.play(ANIMS.WAIT, {
+              loop: true,
+            });
+          }
+        } catch (e) {
+          isPlayingWaitAnim = false;
+        }
+      }
+    }
+
+    try {
+      if (!isPlayingGroundedAnim && !isInteractingAnim && !isInIdleAnim && !isPlayingWaitAnim) {
         let targetAnim: string | null = null;
 
         if (!isGrounded && player.vel.y > 0) {

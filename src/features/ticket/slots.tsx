@@ -31,11 +31,11 @@ export const Slots = (props: SlotsProps) => {
             <div class="text-sm text-center whitespace-nowrap">
               {slot.start_time.split(':').slice(0, 2).join(':')} - {slot.end_time.split(':').slice(0, 2).join(':')}
             </div>
-            <div class="h-4 rounded-full border border-white relative overflow-hidden">
-              <div class="absolute inset-0 bg-white"
-                style={{ width: `${Math.min(slot.occupancy_percentage > 0 && slot.occupancy_percentage < 5 ? 5 : slot.occupancy_percentage, 100)}%` }}
+            <div class="h-4 rounded-full border dark:border-white border-primary relative overflow-hidden">
+              <div class="absolute inset-0 dark:bg-white bg-primary"
+                style={{ width: `${Math.min(slot.occupancy_percentage > 0 && slot.occupancy_percentage < 5 ? 5 : slot.occupancy_percentage + 20, 100)}%` }}
               />
-              <div class="absolute inset-0 border-4 border-black rounded-full" />
+              <div class="absolute inset-0 border-4  border-bg rounded-full" />
             </div>
           </div>
         )}

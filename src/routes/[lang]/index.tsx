@@ -1,5 +1,6 @@
 import { A } from "@solidjs/router";
 import { For, type VoidComponent } from "solid-js";
+import { Asso } from "~/features/asso/asso";
 import { langCtrl } from "~/features/lang-selector/lang.ctrl";
 import { Pictures } from "~/features/pictures/pictures";
 import { Supports } from "~/features/supports/supports";
@@ -34,15 +35,16 @@ const Home: VoidComponent = () => {
         <div class="flex justify-center items-center h-full">
           <A
             href={`/${lang()}/ticket`}
-            class="relative border-2 text-secondary rounded-sm px-3 py-2 text-lg hover:text-text transition-all duration-300 overflow-hidden group animate-border-rotate group-hover:text-text"
+            class="relative border-2 border-secondary text-secondary dark:text-secondary rounded-sm px-3 py-2 text-lg hover:text-text dark:hover:text-text transition-all duration-300 overflow-hidden group animate-border-rotate group-hover:text-text dark:group-hover:text-text bg-transparent dark:bg-transparent"
           >
             <span class="relative z-10">{infoTxt[lang() as keyof typeof infoTxt].button}</span>
-            <span class="absolute inset-0 opacity-0 group-hover:opacity-100 z-20 h-full w-full flex items-center justify-center text-text">{infoTxt[lang() as keyof typeof infoTxt].button}</span>
+            <span class="absolute inset-0 opacity-0 group-hover:opacity-100 z-20 h-full w-full flex items-center justify-center text-text hover:text-white dark:text-text">{infoTxt[lang() as keyof typeof infoTxt].button}</span>
             <span class="absolute inset-0 bg-gradient-to-r from-secondary via-primary to-secondary bg-[length:200%_100%] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 
             animate-gradient-x" />
           </A>
         </div>
       </div>
+      <Asso />
       <Supports />
       <Pictures />
     </main >

@@ -33,7 +33,7 @@ export const GamePanelInfo = () => {
           <h3 class="text-base m-0 text-white">{item()?.name || 'Information'}</h3>
           <button
             onClick={closeGamePanelInfo}
-            class="text-white hover:text-secondary transition-colors p-1 rounded"
+            class="text-white transition-colors p-1 rounded border-transparent hover:border-secondary "
             title="Fermer"
             aria-label="Fermer le panneau"
           >

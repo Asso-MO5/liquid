@@ -129,7 +129,7 @@ export const HUD = () => {
           {/* Boutons gauche/droite en bas à gauche (discrets) */}
           <div class="flex gap-6 pointer-events-auto">
             <button
-              class="bg-black/20 hover:bg-black/40 text-text rounded-full w-10 h-10 flex items-center justify-center border border-white/20 backdrop-blur-sm transition-all active:scale-95"
+              class="bg-bg hover:border-primary hover:text-primary text-text rounded-full w-10 h-10 flex items-center justify-center border border-text backdrop-blur-sm transition-all active:scale-95"
               onTouchStart={handleLeftDown}
               onTouchEnd={handleLeftUp}
               onMouseDown={handleLeftDown}
@@ -149,7 +149,7 @@ export const HUD = () => {
               </svg>
             </button>
             <button
-              class="bg-black/20 hover:bg-black/40 text-white rounded-full w-10 h-10 flex items-center justify-center border border-white/20 backdrop-blur-sm transition-all active:scale-95"
+              class="bg-bg hover:border-primary hover:text-primary text-text rounded-full w-10 h-10 flex items-center justify-center border border-text backdrop-blur-sm transition-all active:scale-95"
               onTouchStart={handleRightDown}
               onTouchEnd={handleRightUp}
               onMouseDown={handleRightDown}
@@ -218,7 +218,7 @@ export const HUD = () => {
           {/* Contrôles de mouvement */}
           <div class="flex gap-2 pointer-events-auto">
             <button
-              class="bg-black/30 hover:bg-black/50 text-white rounded-lg px-3 py-2 flex items-center gap-2 border border-white/20 backdrop-blur-sm transition-all active:scale-95 text-sm font-mono"
+              class="bg-bg hover:border-primary hover:text-primary text-text rounded-lg px-3 py-2 flex items-center gap-2 border border-text backdrop-blur-sm transition-all active:scale-95 text-sm font-mono"
               onMouseDown={handleLeftDown}
               onMouseUp={handleLeftUp}
               onMouseLeave={handleLeftUp}
@@ -237,7 +237,7 @@ export const HUD = () => {
               <span class="text-xs opacity-70">{hudTxt[lang()].left}</span>
             </button>
             <button
-              class="bg-black/30 hover:bg-black/50 text-white rounded-lg px-3 py-2 flex items-center gap-2 border border-white/20 backdrop-blur-sm transition-all active:scale-95 text-sm font-mono"
+              class="bg-bg hover:border-primary hover:text-primary text-text rounded-lg px-3 py-2 flex items-center gap-2 border border-text backdrop-blur-sm transition-all active:scale-95 text-sm font-mono"
               onMouseDown={handleRightDown}
               onMouseUp={handleRightUp}
               onMouseLeave={handleRightUp}
@@ -260,7 +260,7 @@ export const HUD = () => {
           {/* Contrôles d'action */}
           <div class="flex gap-2 pointer-events-auto">
             <button
-              class="bg-transparent text-white rounded-lg px-3 py-2 flex items-center gap-2 border border-white/30 backdrop-blur-sm transition-all active:scale-95 text-sm font-mono"
+              class="bg-bg hover:border-primary hover:text-primary text-text rounded-lg px-3 py-2 flex items-center gap-2 border border-text backdrop-blur-sm transition-all active:scale-95 text-sm font-mono"
               onMouseDown={handleJump}
               title={hudTxt[lang()].altJump}
               aria-label={hudTxt[lang()].altJump}
@@ -277,7 +277,7 @@ export const HUD = () => {
               <span class="text-xs opacity-70">{hudTxt[lang()].jump}</span>
             </button>
             <button
-              class="bg-transparent text-white rounded-lg px-3 py-2 flex items-center gap-2 border border-white/30 backdrop-blur-sm transition-all active:scale-95 text-sm font-mono"
+              class="bg-bg hover:border-primary hover:text-primary text-text rounded-lg px-3 py-2 flex items-center gap-2 border border-text backdrop-blur-sm transition-all active:scale-95 text-sm font-mono"
               onMouseDown={handleAction}
               title={hudTxt[lang()].altAction}
               aria-label={hudTxt[lang()].altAction}

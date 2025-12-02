@@ -2,6 +2,7 @@ import { A } from "@solidjs/router"
 import { For } from "solid-js"
 import { legalLinks, resourcesLinks, socialLinks } from "./footer.const"
 import { langCtrl } from "~/features/lang-selector/lang.ctrl"
+import { PowerBy } from "~/features/power-by/power-by"
 
 export const Footer = () => {
   const lang = langCtrl()
@@ -71,6 +72,9 @@ export const Footer = () => {
             )}
           </For>
         </ul>
+      </div>
+      <div class="col-span-3 flex justify-center items-center">
+        <PowerBy />
       </div>
     </footer>
   )
