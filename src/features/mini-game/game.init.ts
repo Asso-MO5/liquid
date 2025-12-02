@@ -40,7 +40,7 @@ export const initGame = () => {
 
   // ============================== GAME INSTANCE ==============================
 
-  const isDarkMode = localStorage.getItem('darkMode')
+  const isDarkMode = localStorage.getItem('darkMode') || window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 
   gameInstance = kaplay({
     width: Math.floor(containerWidth / pixelHeight),

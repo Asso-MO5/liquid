@@ -8,7 +8,7 @@ export const Footer = () => {
   const lang = langCtrl()
 
   return (
-    <footer class="grid grid-cols-1 md:grid-cols-3 gap-8 p-8 mt-16 pt-4 border-t border-white/10">
+    <footer class="grid grid-cols-1 sm:grid-cols-3 gap-8 p-8 mt-16 pt-4 border-t dark:border-white/10">
       {/* Liens légaux */}
       <div>
         <h3 class="text-xl mb-4 text-text/80">
@@ -73,7 +73,7 @@ export const Footer = () => {
           </For>
         </ul>
       </div>
-      <div class="col-span-3 flex justify-center items-center">
+      <div class="sm:col-span-3 flex justify-center items-center">
         <PowerBy />
       </div>
     </footer>
