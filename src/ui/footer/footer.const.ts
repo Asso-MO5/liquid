@@ -64,13 +64,7 @@ export const resourcesLinks = [
 
 // Réseaux sociaux
 export const socialLinks = [
-  {
-    label: {
-      fr: 'X (Twitter)',
-      en: 'X (Twitter)'
-    },
-    href: 'https://x.com/assomo5'
-  },
+
   {
     label: {
       fr: 'Facebook',
@@ -106,5 +100,12 @@ export const socialLinks = [
       en: 'BlueSky'
     },
     href: 'https://bsky.app/profile/assomo5.bsky.social'
-  }
+  },
+  {
+    label: {
+      fr: 'X (Twitter)',
+      en: 'X (Twitter)'
+    },
+    href: 'https://x.com/assomo5'
+  },
 ]
