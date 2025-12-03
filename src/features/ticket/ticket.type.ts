@@ -40,6 +40,7 @@ export interface TicketStore {
   total_amount: number;
   status: TicketStatus;
   tickets: Price[];
+  gift_codes: string[];
 }
 export interface Slot {
   id: string;

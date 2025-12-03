@@ -2,6 +2,7 @@ import { ticketTxt } from "./ticket.txt"
 import { setTicketStore, ticketStore } from "./ticket.store"
 import { createMemo } from "solid-js";
 import { langCtrl } from "../lang-selector/lang.ctrl";
+import { GiftCodes } from "./gift-codes";
 
 type PersonalInfosProps = {
   onPayment: () => void;
@@ -29,6 +30,7 @@ export const PersonalInfos = (props: PersonalInfosProps) => {
         <label>{ticketTxt.email[lang() as keyof typeof ticketTxt.email]}</label>
         <input type="email" class="bg-white/10 text-text" value={ticketStore.email} onInput={(e) => setTicketStore('email', e.currentTarget.value)} />
       </div>
+      <GiftCodes />
       <button
         disabled={disabled() || props.isLoading}
         data-loading={props.isLoading}

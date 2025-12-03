@@ -16,4 +16,5 @@ export const [ticketStore, setTicketStore] = createStore<TicketStore>({
   total_amount: 0,
   status: 'pending',
   tickets: [],
+  gift_codes: [],
 });

@@ -52,12 +52,11 @@ export const TicketCtrl = () => {
     }
   }
 
-
   return {
     onDayClick,
     isFetching,
     isLoading,
     slots,
-    onSlotClick
+    onSlotClick,
   }
 }

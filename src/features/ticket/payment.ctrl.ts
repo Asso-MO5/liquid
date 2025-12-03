@@ -28,6 +28,7 @@ export const paymentCtrl = () => {
       currency: 'EUR',
       description: 'Tickets for the museum',
       language: locales[lang() as keyof typeof locales],
+      gift_codes: ticketStore.gift_codes,
     }
 
     ticketStore.tickets.forEach((ticket, idx) => {
@@ -45,6 +46,7 @@ export const paymentCtrl = () => {
           applied_at: new Date().toISOString(),
 
         },
+
         notes: '',
       });
     });
