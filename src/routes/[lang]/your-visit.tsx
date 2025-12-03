@@ -3,6 +3,7 @@ import { query, createAsync, useParams, type RouteDefinition } from "@solidjs/ro
 import { Suspense, ErrorBoundary, createMemo, For, Show } from "solid-js";
 import { prices } from "~/features/price/price.store";
 import { schedules } from "~/features/schedules/schedules.store";
+import { TakeATicket } from "~/features/ticket/take-a-ticket";
 import { Loader } from "~/ui/loader";
 
 
@@ -146,12 +147,12 @@ export const Page = () => {
                   </section>
                 </Show>
               </div>
+              <TakeATicket />
             </>
           }
         </Suspense>
       </ErrorBoundary>
     </div>
-
   );
 };
 

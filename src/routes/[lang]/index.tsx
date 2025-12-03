@@ -4,6 +4,7 @@ import { Asso } from "~/features/asso/asso";
 import { langCtrl } from "~/features/lang-selector/lang.ctrl";
 import { Pictures } from "~/features/pictures/pictures";
 import { Supports } from "~/features/supports/supports";
+import { TakeATicket } from "~/features/ticket/take-a-ticket";
 
 
 const infoTxt = {
@@ -47,6 +48,7 @@ const Home: VoidComponent = () => {
       <Asso />
       <Supports />
       <Pictures />
+      <TakeATicket />
     </main >
   );
 };
