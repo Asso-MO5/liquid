@@ -4,6 +4,13 @@ import { langs } from "~/utils/langs"
 import { DAYS_TEXT } from "./Cal.const"
 import { schedules } from "~/features/schedules/schedules.store"
 import { langCtrl } from "~/features/lang-selector/lang.ctrl"
+
+type Period = {
+  id: string
+  name: string
+  start_date?: string | null
+  end_date?: string | null
+}
 const [view, setView] = createSignal<CalendarView>('month')
 const [selectedDate, setSelectedDate] = createSignal<Date>(new Date())
 const [items, setItems] = createSignal<CalendarEvent[]>([])
@@ -101,6 +108,20 @@ export function CalCtrl(): CalendarCtrlReturn {
     setSelectedDateWithURL(new Date())
   }
 
+  // Vérifie si une date est dans une période (closure ou holiday)
+  const isDateInPeriod = (date: Date, period: Period): boolean => {
+    if (!period.start_date || !period.end_date) {
+      return false
+    }
+    const startDate = new Date(period.start_date)
+    const endDate = new Date(period.end_date)
+    // Normaliser les dates pour comparer seulement les jours (sans heures)
+    const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate())
+    const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate())
+    const check = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+    return check >= start && check <= end
+  }
+
   const generateMonthDays = (current: Date, today: Date): CalendarDay[] => {
     const year = current.getFullYear()
     const month = current.getMonth()
@@ -120,6 +141,7 @@ export function CalCtrl(): CalendarCtrlReturn {
       date.setDate(startDate.getDate() + i)
 
       const isOpen = () => {
+        // Vérifications de base
         if (new Date(date) < new Date()) {
           return false
         }
@@ -129,22 +151,66 @@ export function CalCtrl(): CalendarCtrlReturn {
         if (date.getTime() > maxDate.getTime()) {
           return false
         }
-        let isOpen = false
-        isOpen = museumSchedule.some(schedule => isSameDay(new Date(schedule.start_date), date))
-        if (isOpen) {
-          return true
-        }
-        isOpen = museumSchedule.some(schedule => isSameDay(new Date(schedule.end_date), date))
-        if (isOpen) {
-          return true
-        }
-        isOpen = museumSchedule.some(schedule => !schedule.is_exception && schedule.day_of_week === date.getDay())
-        if (isOpen) {
-          return true
-        }
-        return false
-      }
 
+        // Vérifier d'abord les périodes de fermeture (closure_periods)
+        // Les périodes de fermeture s'appliquent à tous les jours
+        const isInClosurePeriod = museumSchedule.some(schedule => {
+          const closurePeriods = ((schedule as unknown) as { closure_periods?: Period[] }).closure_periods || []
+          return closurePeriods.some((period: Period) => isDateInPeriod(date, period))
+        })
+
+
+        if (isInClosurePeriod) {
+          return false
+        }
+
+        // Vérifier les jours avec audience_type: "holiday"
+        // Ils ne sont ouverts que si la date est dans une holiday_period ET que c'est le bon jour de la semaine
+        const holidaySchedules = museumSchedule.filter(schedule => schedule.audience_type === 'holiday')
+        if (holidaySchedules.length > 0) {
+          // Vérifier si c'est un jour holiday (même jour de la semaine)
+          const matchingHolidaySchedule = holidaySchedules.find(schedule =>
+            !schedule.is_exception && schedule.day_of_week === date.getDay()
+          )
+
+          if (matchingHolidaySchedule) {
+            // Si c'est un jour holiday, vérifier si la date est dans une holiday_period de ce schedule
+            const holidayPeriods = ((matchingHolidaySchedule as unknown) as { holiday_periods?: Period[] }).holiday_periods || []
+            const isInHolidayPeriod = holidayPeriods.some((period: Period) => isDateInPeriod(date, period))
+            // Les jours holiday ne sont ouverts QUE dans leurs périodes
+            return isInHolidayPeriod
+          }
+        }
+
+        // Vérifier les règles normales d'ouverture (pour les jours non-holiday)
+        // Vérifier si la date correspond à un start_date ou end_date
+        let isOpen = museumSchedule.some(schedule => {
+          // Ignorer les schedules holiday pour les règles normales
+          if (schedule.audience_type === 'holiday') {
+            return false
+          }
+          if (schedule.start_date && isSameDay(new Date(schedule.start_date), date)) {
+            return true
+          }
+          if (schedule.end_date && isSameDay(new Date(schedule.end_date), date)) {
+            return true
+          }
+          return false
+        })
+
+        if (isOpen) {
+          return true
+        }
+
+        // Vérifier les jours de la semaine réguliers (non exception, non holiday)
+        isOpen = museumSchedule.some(schedule =>
+          !schedule.is_exception &&
+          schedule.day_of_week === date.getDay() &&
+          schedule.audience_type !== 'holiday'
+        )
+
+        return isOpen
+      }
 
       days.push({
         date,
@@ -153,6 +219,7 @@ export function CalCtrl(): CalendarCtrlReturn {
         isDayOpen: isOpen(),
         items: []
       })
+
     }
 
     return days
