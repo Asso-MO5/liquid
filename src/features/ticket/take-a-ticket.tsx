@@ -16,7 +16,7 @@ export const TakeATicket = () => {
     <div class="flex justify-center items-center p-4">
       <A
         class="btn p-6"
-        href={`/ticket?lang=${lang()}`}>{txt[lang() as keyof typeof txt].title}</A>
+        href={`/${lang()}/ticket`}>{txt[lang() as keyof typeof txt].title}</A>
     </div>
   );
 };
