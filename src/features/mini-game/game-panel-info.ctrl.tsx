@@ -107,6 +107,15 @@ export const GamePanelInfoCtrl = () => {
     return audio?.url
   }
 
+  const getYouTubeVideo = (): string | undefined => {
+    const item = open()
+    if (!item?.medias) return undefined
+    const youtube = item.medias.find(media => media.type?.startsWith('youtube-video'))
+
+
+    return `https://www.youtube.com/embed/${youtube?.id}?autoplay=1&origin=https://museeedujeuvideo.org`
+  }
+
   return {
     open,
     setOpen,
@@ -117,6 +126,7 @@ export const GamePanelInfoCtrl = () => {
     getDescription,
     getCoverImage,
     getAudio,
+    getYouTubeVideo,
     setPanelRef: (ref: HTMLDivElement | null) => {
       panelRef = ref
     },

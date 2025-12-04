@@ -1,8 +1,8 @@
-import kaplay from "kaplay";
+import type Kaplay from "kaplay";
 import { CANVAS_ID, FONTS, LEVEL_NAMES } from './mini-game.const';
 import { createStartScene } from "./scene/start.scene";
 
-export let gameInstance: ReturnType<typeof kaplay> | null = null;
+export let gameInstance: ReturnType<typeof Kaplay> | null = null;
 
 export const getGameInstance = () => gameInstance;
 
@@ -21,7 +21,7 @@ export const cleanupGame = () => {
   }
 };
 
-export const initGame = () => {
+export const initGame = async () => {
 
   const BASE_URL = `${window.location.protocol}//${window.location.host}/game`;
 
@@ -41,6 +41,8 @@ export const initGame = () => {
   // ============================== GAME INSTANCE ==============================
 
   const isDarkMode = localStorage.getItem('darkMode') || window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+
+  const kaplay = (await import('kaplay')).default;
 
   gameInstance = kaplay({
     width: Math.floor(containerWidth / pixelHeight),
@@ -119,36 +121,35 @@ export const initGame = () => {
   // ====== RESOURCES ========================================================
 
   const entities = [
-    {
-      name: 'computer-space',
-      url: `${BASE_URL}/entities/computer-space.png`,
-      json: `${BASE_URL}/entities/computer-space.json`
-    },
-    {
-      name: 'vectrex',
-      url: `${BASE_URL}/entities/vectrex.png`,
-      json: `${BASE_URL}/entities/vectrex.json`
-    },
-    {
-      name: 'furniture',
-      url: `${BASE_URL}/entities/furniture.png`,
-      json: `${BASE_URL}/entities/furniture.json`
-    },
-    {
-      name: 'games',
-      url: `${BASE_URL}/entities/games.png`,
-      json: `${BASE_URL}/entities/games.json`
-    }, {
-      name: 'wonderswan',
-      url: `${BASE_URL}/entities/wonderswan.png`,
-      json: `${BASE_URL}/entities/wonderswan.json`
-    }
+    'computer-space',
+    'vectrex',
+    'furniture',
+    'games',
+    'wonderswan',
+    'virtualboy',
+    'bomberman'
   ]
 
-  for (const entity of entities) {
-    gameInstance.loadAseprite(entity.name, entity.url, entity.json);
+  // ====== SOUNDS ========================================================
+
+  const sounds = [
+    'jump',
+    'explosion',
+  ]
+
+  for (const sound of sounds) {
+    gameInstance.loadSound(sound, `${BASE_URL}/sounds/${sound}.mp3`).catch(() => {
+      console.debug(`Son ${sound} non disponible`);
+    });
   }
 
+  gameInstance.loadSound('jump', `${BASE_URL}/sounds/jump.mp3`).catch(() => {
+    console.debug('Son jump non disponible');
+  });
+
+  for (const entity of entities) {
+    gameInstance.loadAseprite(entity, `${BASE_URL}/entities/${entity}.png`, `${BASE_URL}/entities/${entity}.json`);
+  }
   // ====== FONTS ========================================================
 
   gameInstance.loadFont(FONTS.SILKSCREEN, `${BASE_URL}/fonts/Silkscreen/Silkscreen-Regular.ttf`);

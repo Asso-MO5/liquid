@@ -10,6 +10,7 @@ export const GamePanelInfo = () => {
   const description = createMemo(() => gamePanelInfo.getDescription(lang() === 'fr' ? 'fr' : 'en'))
   const coverImage = createMemo(() => gamePanelInfo.getCoverImage())
   const audioUrl = createMemo(() => gamePanelInfo.getAudio())
+  const youTubeVideoUrl = createMemo(() => gamePanelInfo.getYouTubeVideo())
 
   return (
     <Show when={item()}>
@@ -68,10 +69,17 @@ export const GamePanelInfo = () => {
           {/* Audio Player */}
           <Show when={audioUrl()}>
             <div class="w-full h-10 ">
-              <audio controls class="w-full h-10" src={audioUrl()}>
+              <audio controls class="w-full h-10" src={audioUrl()} autoplay>
                 <source src={audioUrl()} />
                 Votre navigateur ne supporte pas l'élément audio.
               </audio>
+            </div>
+          </Show>
+          <Show when={youTubeVideoUrl()}>
+            <div class="w-full">
+              <iframe id="ytplayer" width="340" height="
+              240" allowfullscreen class="w-full aspect-video"
+                src={youTubeVideoUrl()} />
             </div>
           </Show>
 

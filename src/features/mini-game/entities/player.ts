@@ -10,10 +10,6 @@ type MachineEntity = {
 export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWidth, levelHeight, BASE_URL, startPosition }: { levelWidth: number, levelHeight: number, BASE_URL: string, startPosition: { x: number, y: number } }) {
 
   gameInstance.loadAseprite("lulu", `${BASE_URL}/entities/lulu.png`, `${BASE_URL}/entities/lulu.json`);
-  gameInstance.loadSound('jump', `${BASE_URL}/sounds/jump.mp3`).catch(() => {
-    console.debug('Son jump non disponible');
-  });
-
   const IDLE_DELAY = 10;
 
   const ANIMS = {
@@ -114,6 +110,8 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     isInteractingAnim = true;
 
     const idPanel = currentMachine.tags.find((tag: string) => tag.startsWith('id-'))?.replace('id-', '');
+
+
 
     if (idPanel) {
       openGamePanelInfo(idPanel);

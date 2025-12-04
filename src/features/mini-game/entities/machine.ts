@@ -15,6 +15,7 @@ export function createMachine(gameInstance: ReturnType<typeof kaplay>, { positio
     gameInstance.sprite(spriteName),
     gameInstance.pos(position.x + 4, position.y),
     gameInstance.color(0, 0, 0),
+    gameInstance.offscreen({ hide: true }),
     gameInstance.z(-100),
     gameInstance.opacity(0.1),
     'shadow'
@@ -26,6 +27,7 @@ export function createMachine(gameInstance: ReturnType<typeof kaplay>, { positio
     gameInstance.sprite(spriteName),
     gameInstance.pos(position.x, position.y),
     gameInstance.area(),
+    gameInstance.offscreen({ hide: true }),
     gameInstance.z(-100),
     spriteName,
     `id-${idPanel}`,

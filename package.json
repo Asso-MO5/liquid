@@ -39,7 +39,7 @@
     "@solidjs/start": "^1.1.0",
     "@tailwindcss/vite": "^4.1.13",
     "autoprefixer": "^10.4.19",
-    "kaplay": "^3001.0.19",
+    "kaplay": "^4000.0.0-alpha.23",
     "postcss": "^8.4.40",
     "solid-js": "^1.9.5",
     "tailwindcss": "^4.1.13",
