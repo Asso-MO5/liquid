@@ -9,7 +9,15 @@ export const MenuDesktop = () => {
     <nav class="sm:flex hidden items-center gap-4 text-text">
       <For each={menuEntries}>
         {(entry) => {
-          return <A href={`/${lang()}${entry.href}`} data-highlighted={entry.highlighted} class="
+
+          if (entry.external) {
+            return <a href={entry.href} target="_blank" rel="noopener noreferrer" class="
+            secondary border-primary border px-2 py-2 rounded-sm transition-all duration-300 hover:bg-primary/10 hover:text-primary
+            ">{entry.label[lang() as "fr" | "en"]}</a>;
+          }
+
+          return <A href={`/${lang()}${entry.href}`} data-highlighted={entry.highlighted}
+            class="
           hover:text-primary text-text 
           data-[highlighted=true]:text-secondary 
           border border-transparent hover:bg-primary/10 

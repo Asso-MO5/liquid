@@ -55,6 +55,17 @@ export const MenuMobile = () => {
         <div class="py-4 px-4 flex flex-col gap-2">
           <For each={menuEntries}>
             {(entry) => {
+
+              if (entry.external) {
+                return <a href={entry.href} target="_blank" rel="noopener noreferrer"
+                  onClick={() => setIsOpen(false)}
+                  class="
+                  text-center secondary border-primary border px-2 py-2 
+                  rounded-sm transition-all duration-300 hover:bg-primary/10 hover:text-primary
+                ">
+                  {entry.label[lang() as "fr" | "en"]}
+                </a>;
+              }
               return (
                 <a
                   href={`/${lang()}${entry.href}`}

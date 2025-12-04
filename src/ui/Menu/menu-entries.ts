@@ -1,4 +1,4 @@
-export const menuEntries: { label: { fr: string; en: string }; href: string; highlighted?: boolean }[] = [
+export const menuEntries: { label: { fr: string; en: string }; href: string; highlighted?: boolean; external?: boolean }[] = [
 
   {
     label: {
@@ -7,6 +7,14 @@ export const menuEntries: { label: { fr: string; en: string }; href: string; hig
     },
     href: "/ticket",
     highlighted: true
+  },
+  {
+    label: {
+      fr: "Faire un don",
+      en: "Make a donation"
+    },
+    external: true,
+    href: "https://don.mo5.com"
   },
   {
     label:
