@@ -116,7 +116,13 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
 
 
 
-  const indexToSkip = [2, 3]
+  const indexToSkip = [
+
+    2, //computer space
+    3, //vectrex
+    6, //wonderswan
+
+  ]
 
   for (const position of furniturePositions.filter((_, index) => !indexToSkip.includes(index))) {
     createScreen(gameInstance, { position });
@@ -134,6 +140,10 @@ export function createStartScene(gameInstance: ReturnType<typeof kaplay> | null,
     position: { x: 379, y: GROUND_Y - 40 },
     spriteName: 'vectrex',
     idPanel: 'f0e4ea9e-105a-4aae-81f3-96ea82107481'
+  }, {
+    position: { x: 517, y: GROUND_Y - 40 },
+    spriteName: 'wonderswan',
+    idPanel: 'e64342fc-e087-4b28-a446-d33b31380cc3'
   }
   ]
 

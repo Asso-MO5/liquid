@@ -138,6 +138,10 @@ export const initGame = () => {
       name: 'games',
       url: `${BASE_URL}/entities/games.png`,
       json: `${BASE_URL}/entities/games.json`
+    }, {
+      name: 'wonderswan',
+      url: `${BASE_URL}/entities/wonderswan.png`,
+      json: `${BASE_URL}/entities/wonderswan.json`
     }
   ]
 

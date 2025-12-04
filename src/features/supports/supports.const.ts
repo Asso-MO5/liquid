@@ -37,5 +37,29 @@ export const supportsTestimonials = [
       en: 'Congratulations to the MO5 team for the opening of the video game museum! The work of preserving the video game heritage provided by the association is exemplary and unique in its genre. Thanks to the persistence of MO5, it is a whole part of our culture that will pass to posterity and feed the imagination of future generations. There is still a lot to do, but being able to rely on a permanent museum structure constitutes a solid foundation indispensable for the next steps. Thank you and all my best wishes for success!',
     },
     image: '/supports/pierre-esteve.webp',
+  }, {
+    name: 'Paul Cuisset',
+    quote: {
+      fr: 'Je me réjouis de voir naître ce musée qui rend hommage à tant de souvenirs, de passion et de créativité. Bravo à toute l’équipe pour ce beau projet!',
+      en: 'I am happy to see this museum being born which pays tribute to so many memories, passion and creativity. Congratulations to the team for this beautiful project!',
+    },
+    image: '/supports/paul-cuisset.webp',
+  },
+  {
+
+    name: 'Marcus',
+    quote: {
+      fr: 'J’ai eu le privilège d’assister à l’annonce de leur grand musée du jeu vidéo, qui ouvrira ses portes à Arcueil près de Paris en décembre! 1200m² de retrogaming et de véritables trésors archéologiques conservés religieusement par l’asso depuis plus de vingt ans seront enfin à la disposition du public de façon permanente ! Trop hâte d’y être !',
+      en: 'I had the privilege to attend the announcement of their great video game museum, which will open its doors in December in Arcueil near Paris! 1200m² of retro gaming and truly archaeological treasures conserved religiously by the association for more than twenty years will finally be at the disposal of the public in a permanent way! Too eager to be there!',
+    },
+    image: '/supports/marcus.webp',
+  },
+  {
+    name: 'Philippe Dessoly',
+    quote: {
+      fr: 'En tant que membre d’honneur de MO5, je suis profondément touché de voir s’ouvrir aujourd’hui un musée consacré à l’histoire du JV.Ce lieu n’est pas seulement un espace d’exposition : c’est un hommage à celles et ceux qui ont bâti, au fil des décennies, l’identité du JV français.',
+      en: 'As a honorary member of MO5, I am deeply touched to see today a museum dedicated to the history of the JV. This place is not only an exhibition space: it is a tribute to those who built, over the decades, the identity of the French JV.',
+    },
+    image: '/supports/philippe-dessoly.webp',
   }
 ]
