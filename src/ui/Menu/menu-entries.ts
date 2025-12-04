@@ -3,7 +3,7 @@ export const menuEntries: { label: { fr: string; en: string }; href: string; hig
   {
     label: {
       fr: "Acheter un billet",
-      en: "Take a ticket"
+      en: "Get a ticket"
     },
     href: "/ticket",
     highlighted: true

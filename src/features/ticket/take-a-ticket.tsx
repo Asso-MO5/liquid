@@ -6,7 +6,7 @@ const txt = {
     title: "Acheter un billet",
   },
   en: {
-    title: "Take a ticket",
+    title: "Get a ticket",
   },
 };
 

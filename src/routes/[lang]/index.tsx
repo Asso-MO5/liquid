@@ -14,7 +14,7 @@ const infoTxt = {
     address: ['10 Avenue Paul Doumer', ' 94110 Arcueil', 'France'],
   },
   en: {
-    button: 'Take a ticket',
+    button: 'Get a ticket',
     Title: 'The Video Game Museum',
     address: ['10 Avenue Paul Doumer', ' 94110 Arcueil', 'France'],
   }
