@@ -17,10 +17,12 @@ const texts = {
   fr: {
     openingHours: 'Horaires d\'ouverture',
     prices: 'Tarifs',
+    holiday: 'Vacances scolaires',
   },
   en: {
     openingHours: 'Opening Hours',
     prices: 'Prices',
+    holiday: 'School holidays',
   }
 }
 const getPage = query(async (lang: string) => {
@@ -102,8 +104,13 @@ export const Page = () => {
                       <For each={regularSchedules()}>
                         {(schedule) => (
                           <div class="flex justify-between items-center border-b border-primary/30 pb-2">
-                            <span class="font-medium">
+                            <span class="font-medium flex gap-2">
                               {DAYS_FULL[lang()][schedule.day_of_week]}
+                              <Show when={schedule.audience_type == 'holiday'}>
+                                <span class="text-secondary italic text-sm">
+                                  {`(${texts[lang()].holiday})`}
+                                </span>
+                              </Show>
                             </span>
                             <span class="text-primary">
                               {formatTime(schedule.start_time)} - {formatTime(schedule.end_time)}
@@ -150,9 +157,9 @@ export const Page = () => {
               <TakeATicket />
             </>
           }
-        </Suspense>
-      </ErrorBoundary>
-    </div>
+        </Suspense >
+      </ErrorBoundary >
+    </div >
   );
 };
 
