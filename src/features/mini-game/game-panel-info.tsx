@@ -69,7 +69,9 @@ export const GamePanelInfo = () => {
           {/* Audio Player */}
           <Show when={audioUrl()}>
             <div class="w-full h-10 ">
-              <audio controls class="w-full h-10" src={audioUrl()} autoplay>
+              <audio controls class="w-full h-10" src={audioUrl()} autoplay
+                muted={localStorage.getItem('mini-game-sound-muted') === 'true'}
+              >
                 <source src={audioUrl()} />
                 Votre navigateur ne supporte pas l'élément audio.
               </audio>

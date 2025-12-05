@@ -139,6 +139,11 @@ export const initGame = async () => {
 
   gameInstance!.setGravity(1500);
 
+  // ============================== SOUND ==============================
+  const savedMuted = localStorage.getItem('mini-game-sound-muted')
+  gameInstance.setVolume(savedMuted === 'true' ? 0 : 1)
+
+
   // ============================== SCENES ==============================
   gameInstance.scene(LEVEL_NAMES.START, () => createStartScene(gameInstance, { BASE_URL }));
 

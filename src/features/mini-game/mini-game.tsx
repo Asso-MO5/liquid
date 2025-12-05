@@ -81,10 +81,15 @@ export const MiniGame: VoidComponent = () => {
         if (container) {
           container.innerHTML = '';
         }
-        initGame();
-        setTimeout(() => {
-          checkGameHealth();
-        }, 500);
+        initGame().then(async () => {
+          // Réappliquer le volume après réinitialisation
+          const { getSoundCtrl } = await import('./sound.ctrl');
+          const soundCtrl = getSoundCtrl();
+          soundCtrl.applyMute(soundCtrl.isMuted());
+          setTimeout(() => {
+            checkGameHealth();
+          }, 500);
+        });
       }
     }, 200);
   };
