@@ -86,7 +86,7 @@ export function createStartScene(
 
 
   // 170, 140
-  const startPosition = isPortrait ? { x: 170, y: 140 } : { x: 500, y: 140 }
+  const startPosition = isPortrait ? { x: 170, y: 140 } : { x: 200, y: 140 }
 
   // ============================== ENTITIES ==============================
 
