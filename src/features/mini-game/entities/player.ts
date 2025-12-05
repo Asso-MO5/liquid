@@ -2,7 +2,6 @@ import type Kaplay from 'kaplay';
 import { CONTROLS } from '../mini-game.const';
 import { openGamePanelInfo } from '../game-panel-info.ctrl';
 
-
 type MachineEntity = {
   pos: { x: number; y: number };
   tags: string[];
@@ -11,7 +10,6 @@ type MachineEntity = {
 export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWidth, levelHeight, BASE_URL, startPosition }: { levelWidth: number, levelHeight: number, BASE_URL: string, startPosition: { x: number, y: number } }) {
 
   const { Rect } = gameInstance;
-
 
   gameInstance.loadAseprite("lulu", `${BASE_URL}/entities/lulu.png`, `${BASE_URL}/entities/lulu.json`);
   const IDLE_DELAY = 10;
@@ -85,7 +83,6 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     moveRight = false;
   });
 
-  // Gestion des collisions avec les machines
   player.onCollide('machine', (machine) => {
     const machineEntity = machine as unknown as MachineEntity;
     machinesInCollision.add(machineEntity);
@@ -117,8 +114,6 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
 
     const idPanel = currentMachine.tags.find((tag: string) => tag.startsWith('id-'))?.replace('id-', '');
 
-
-
     if (idPanel) {
       openGamePanelInfo(idPanel);
     }
@@ -132,7 +127,6 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     });
   });
 
-  // JUMP
   gameInstance!.onKeyPress(['space', 'up', 'w', 'z', 'x'], () => {
 
     if (player.isGrounded() && canJump && !isInteracting) {
@@ -143,14 +137,9 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
       }
       resetIdleTimer();
       player.jump(400);
+      gameInstance!.play('jump');
       player.play(ANIMS.JUMP, {
-        loop: false,
-        onEnd() {
-          try {
-            gameInstance!.play('jump');
-          } catch (e) {
-          }
-        },
+        loop: false
       });
     }
   });
@@ -218,10 +207,8 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
       resetIdleTimer();
     } else if (isGrounded && !isActuallyMoving && !isJumping && !isInteractingAnim) {
       if (!isInIdleAnim && !isPlayingWaitAnim) {
-        // Incrémenter le timer d'inactivité
         idleTimer += dt;
 
-        // Après 10 secondes, lancer l'animation before-wait
         if (idleTimer >= IDLE_DELAY) {
           isInIdleAnim = true;
           try {
@@ -253,7 +240,6 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
           }
         }
       } else if (isPlayingWaitAnim) {
-        // S'assurer que l'animation wait continue à jouer
         try {
           if (player.curAnim() !== ANIMS.WAIT) {
             player.play(ANIMS.WAIT, {

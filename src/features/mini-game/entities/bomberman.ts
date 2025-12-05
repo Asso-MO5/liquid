@@ -18,11 +18,13 @@ export const createBomberman = (gameInstance: ReturnType<typeof kaplay>, { posit
       offset: gameInstance!.vec2(40, 50),
       shape: new Rect(gameInstance!.vec2(0), 10, 16),
     }),
+    gameInstance.offscreen({ hide: true }),
     gameInstance.body({ isStatic: true }),
     gameInstance.platformEffector({ ignoreSides: [gameInstance!.LEFT, gameInstance!.RIGHT, gameInstance!.UP, gameInstance!.DOWN], }),
     'bomberman',
     `id-b4b2cb37-9ac7-4a0b-9416-d3b7cd6fc8ff`,
   ]
+
   let bomberman = gameInstance.add(params);
 
   bomberman.play('start');
@@ -44,15 +46,14 @@ export const createBomberman = (gameInstance: ReturnType<typeof kaplay>, { posit
     bomberman.play('explode', {
       loop: false,
       onEnd() {
-        bomberman.destroy();
         openGamePanelInfo("b4b2cb37-9ac7-4a0b-9416-d3b7cd6fc8ff");
+        bomberman.destroy();
         timeoutResetEntity = setTimeout(() => {
           onCollide = false;
           bomberman = gameInstance.add(params);
         }, 10000);
       }
     });
-
   });
 
 }

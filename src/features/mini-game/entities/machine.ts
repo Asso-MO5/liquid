@@ -3,27 +3,18 @@ import type kaplay from "kaplay";
 export function createMachine(gameInstance: ReturnType<typeof kaplay>, { position, spriteName, idPanel }: { position: { x: number, y: number }, spriteName: string, idPanel: string }) {
   if (!gameInstance) return;
 
-  // ====== VARIABLES ========================================================
-
-  const ANIMS = {
-    START: 'start',
-  }
-
-  // ====== ENTITIES ========================================================
-
   gameInstance.add([
     gameInstance.sprite(spriteName),
     gameInstance.pos(position.x + 4, position.y),
     gameInstance.color(0, 0, 0),
     gameInstance.offscreen({ hide: true }),
     gameInstance.z(-100),
-    gameInstance.opacity(0.1),
+    gameInstance.opacity(0.2),
     'shadow'
   ],
   );
 
-
-  const computerSpace = gameInstance.add([
+  const machine = gameInstance.add([
     gameInstance.sprite(spriteName),
     gameInstance.pos(position.x, position.y),
     gameInstance.area(),
@@ -34,7 +25,7 @@ export function createMachine(gameInstance: ReturnType<typeof kaplay>, { positio
     'machine'
   ]);
 
-  computerSpace.play(ANIMS.START);
+  machine.play('start');
 
-  return computerSpace;
+  return machine;
 }

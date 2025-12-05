@@ -3,7 +3,6 @@ import { CANVAS_ID, FONTS, LEVEL_NAMES } from './mini-game.const';
 import { createStartScene } from "./scene/start.scene";
 
 export let gameInstance: ReturnType<typeof Kaplay> | null = null;
-
 export const getGameInstance = () => gameInstance;
 
 export const cleanupGame = () => {
@@ -35,13 +34,13 @@ export const initGame = async () => {
 
   const containerWidth = containerRef.clientWidth || 800;
   const containerHeight = containerRef.clientHeight || 600;
-
   const pixelHeight = Math.round(containerHeight / (32 * 6));
 
   // ============================== GAME INSTANCE ==============================
 
   const isDarkMode = localStorage.getItem('darkMode') || window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 
+  // SSR fix
   const kaplay = (await import('kaplay')).default;
 
   gameInstance = kaplay({
@@ -54,8 +53,6 @@ export const initGame = async () => {
     crisp: true,
     pixelDensity: 1,
   });
-
-
 
   // ============================== CANVAS ==============================
   const canvas = containerRef.querySelector('canvas');
@@ -118,18 +115,6 @@ export const initGame = async () => {
 
   if (!gameInstance) return null;
 
-  // ====== RESOURCES ========================================================
-
-  const entities = [
-    'computer-space',
-    'vectrex',
-    'furniture',
-    'games',
-    'wonderswan',
-    'virtualboy',
-    'bomberman'
-  ]
-
   // ====== SOUNDS ========================================================
 
   const sounds = [
@@ -147,9 +132,6 @@ export const initGame = async () => {
     console.debug('Son jump non disponible');
   });
 
-  for (const entity of entities) {
-    gameInstance.loadAseprite(entity, `${BASE_URL}/entities/${entity}.png`, `${BASE_URL}/entities/${entity}.json`);
-  }
   // ====== FONTS ========================================================
 
   gameInstance.loadFont(FONTS.SILKSCREEN, `${BASE_URL}/fonts/Silkscreen/Silkscreen-Regular.ttf`);
