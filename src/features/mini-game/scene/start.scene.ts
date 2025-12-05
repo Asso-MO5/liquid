@@ -73,8 +73,11 @@ export function createStartScene(
 
   const lang = window.location.pathname.split('/')[1] || 'fr'
   const isPortrait = window.innerWidth < window.innerHeight
-  // 170, 140
-  const startPosition = isPortrait ? { x: 170, y: 140 } : { x: 500, y: 140 }
+
+  const startPosition = isPortrait ? { x: 170, y: 140 } : {
+    x: import.meta.env.DEV ? 500 : 170,
+    y: 140,
+  }
 
   // ============================== ENTITIES ==============================
 
