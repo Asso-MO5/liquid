@@ -2,12 +2,16 @@ import type Kaplay from 'kaplay';
 import { CONTROLS } from '../mini-game.const';
 import { openGamePanelInfo } from '../game-panel-info.ctrl';
 
+
 type MachineEntity = {
   pos: { x: number; y: number };
   tags: string[];
 };
 
 export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWidth, levelHeight, BASE_URL, startPosition }: { levelWidth: number, levelHeight: number, BASE_URL: string, startPosition: { x: number, y: number } }) {
+
+  const { Rect } = gameInstance;
+
 
   gameInstance.loadAseprite("lulu", `${BASE_URL}/entities/lulu.png`, `${BASE_URL}/entities/lulu.json`);
   const IDLE_DELAY = 10;
@@ -47,7 +51,9 @@ export function createPlayer(gameInstance: ReturnType<typeof Kaplay>, { levelWid
     gameInstance!.body({
       jumpForce: 100,
     }),
-    gameInstance!.area(),
+    gameInstance!.area({
+      shape: new Rect(gameInstance!.vec2(0), 15, 32),
+    }),
     gameInstance!.anchor('bot'),
     'player',
   ]);

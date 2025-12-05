@@ -163,5 +163,9 @@ export const initGame = async () => {
   // ============================== GO ==============================
   gameInstance.go(LEVEL_NAMES.START);
 
+  if (import.meta.env.DEV) {
+    gameInstance.debug.inspect = true;
+  }
+
   return gameInstance;
 };

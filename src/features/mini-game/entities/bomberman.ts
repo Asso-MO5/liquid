@@ -6,15 +6,20 @@ import { CONTROLS } from "../mini-game.const";
 export const createBomberman = (gameInstance: ReturnType<typeof kaplay>, { position, player }: { position: { x: number, y: number }, player: ReturnType<typeof createPlayer> }) => {
   if (!gameInstance || !player) return;
 
+  const { Rect } = gameInstance;
+
   let onCollide = false,
     timeoutResetEntity: ReturnType<typeof setTimeout> | null = null;
 
   const params = [
     gameInstance.sprite('bomberman'),
     gameInstance.pos(position.x, position.y),
-    gameInstance.area(),
+    gameInstance!.area({
+      offset: gameInstance!.vec2(40, 50),
+      shape: new Rect(gameInstance!.vec2(0), 10, 16),
+    }),
     gameInstance.body({ isStatic: true }),
-    gameInstance.platformEffector({ ignoreSides: [gameInstance!.LEFT, gameInstance!.RIGHT, gameInstance!.UP], }),
+    gameInstance.platformEffector({ ignoreSides: [gameInstance!.LEFT, gameInstance!.RIGHT, gameInstance!.UP, gameInstance!.DOWN], }),
     'bomberman',
     `id-b4b2cb37-9ac7-4a0b-9416-d3b7cd6fc8ff`,
   ]
