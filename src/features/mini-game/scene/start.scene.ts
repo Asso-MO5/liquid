@@ -180,6 +180,7 @@ export function createStartScene(
       gameInstance!.rect(18, 1),
       gameInstance!.pos(platform, GROUND_Y - 20),
       gameInstance!.area(),
+      gameInstance!.opacity(0),
       gameInstance!.body({ isStatic: true }),
       gameInstance!.offscreen({ hide: true }),
       gameInstance!.platformEffector({
