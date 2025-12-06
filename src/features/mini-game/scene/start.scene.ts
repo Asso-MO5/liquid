@@ -216,5 +216,5 @@ export function createStartScene(
   })
 
   createBomberman(gameInstance, { position: { x: 513, y: 50 }, player })
-  createBreakout(gameInstance, { position: { x: 795, y: GROUND_Y - 42 }, player })
+  createBreakout(gameInstance, { position: { x: 798, y: GROUND_Y - 42 }, player })
 }
