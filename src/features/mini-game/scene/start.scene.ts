@@ -5,6 +5,7 @@ import { FONTS } from '../mini-game.const'
 import { createMachine } from '../entities/machine'
 import { createScreen } from '../entities/screen'
 import { createBomberman } from '../entities/bomberman'
+import { createBreakout } from '../entities/breakout'
 
 const texts = {
   welcome: {
@@ -24,6 +25,7 @@ export function createStartScene(
   if (!gameInstance) return
 
   gameInstance.loadSprite('background', `${BASE_URL}/tiles/start.png`)
+  gameInstance.loadSound('hurt', `${BASE_URL}/sounds/hurt.mp3`);
 
   gameState.level = 1
   gameState.isGameStarted = true
@@ -75,7 +77,7 @@ export function createStartScene(
   const isPortrait = window.innerWidth < window.innerHeight
 
   const startPosition = isPortrait ? { x: 170, y: 140 } : {
-    x: import.meta.env.DEV ? 500 : 170,
+    x: import.meta.env.DEV ? 780 : 170,
     y: 140,
   }
 
@@ -125,6 +127,9 @@ export function createStartScene(
     3, //vectrex
     6, //wonderswan
     7, //virtualboy
+    10, //3do
+    12, // breakouts
+    13, // breakouts
   ]
 
   for (const position of furniturePositions.filter(
@@ -155,6 +160,11 @@ export function createStartScene(
       spriteName: 'virtualboy',
       idPanel: '971d32c8-2f40-48aa-ab0b-1035f8f1d0fd',
     },
+    {
+      position: { x: 709, y: GROUND_Y - 40 },
+      spriteName: '3do',
+      idPanel: 'b2194a8a-4a32-4403-9ec3-12be4412d7b3',
+    }
   ]
 
   const resources = [...machines.map(machine => machine.spriteName), 'bomberman', 'games'];
@@ -172,13 +182,16 @@ export function createStartScene(
   const furniturePlatformsSpecial = [
     382,
     520,
-    574
+    574,
+    [712, GROUND_Y - 26],
   ]
 
   for (const platform of furniturePlatformsSpecial) {
+
+    const [x, y] = Array.isArray(platform) ? platform : [platform, GROUND_Y - 20]
     gameInstance!.add([
       gameInstance!.rect(18, 1),
-      gameInstance!.pos(platform, GROUND_Y - 20),
+      gameInstance!.pos(x, y),
       gameInstance!.area(),
       gameInstance!.opacity(0),
       gameInstance!.body({ isStatic: true }),
@@ -203,4 +216,5 @@ export function createStartScene(
   })
 
   createBomberman(gameInstance, { position: { x: 513, y: 50 }, player })
+  createBreakout(gameInstance, { position: { x: 795, y: GROUND_Y - 42 }, player })
 }
