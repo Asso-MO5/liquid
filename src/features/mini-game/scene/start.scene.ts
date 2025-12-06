@@ -6,6 +6,7 @@ import { createMachine } from '../entities/machine'
 import { createScreen } from '../entities/screen'
 import { createBomberman } from '../entities/bomberman'
 import { createBreakout } from '../entities/breakout'
+import { createPortal } from '../entities/portal'
 
 const texts = {
   welcome: {
@@ -23,6 +24,7 @@ export function createStartScene(
   { BASE_URL }: { BASE_URL: string }
 ) {
   if (!gameInstance) return
+  gameInstance!.setGravity(1500);
 
   gameInstance.loadSprite('background', `${BASE_URL}/tiles/start.png`)
   gameInstance.loadSound('hurt', `${BASE_URL}/sounds/hurt.mp3`);
@@ -89,6 +91,8 @@ export function createStartScene(
     BASE_URL,
     startPosition,
   })
+
+  player.play('idle');
 
   gameInstance.add([
     gameInstance.text(texts.welcome[lang as keyof typeof texts.welcome], {
@@ -183,14 +187,20 @@ export function createStartScene(
     382,
     520,
     574,
-    [712, GROUND_Y - 26],
+    [712, GROUND_Y - 26, 18],
+    // Plateforme pour moon patrol
+    [849, 29, 22],
+    [801, 5, 22],
+    [737, 21, 22],
+    [673, -4, 22],
+    [577, -20, 62],
   ]
 
   for (const platform of furniturePlatformsSpecial) {
 
-    const [x, y] = Array.isArray(platform) ? platform : [platform, GROUND_Y - 20]
+    const [x, y, width] = Array.isArray(platform) ? platform : [platform, GROUND_Y - 20, 18]
     gameInstance!.add([
-      gameInstance!.rect(18, 1),
+      gameInstance!.rect(width, 1),
       gameInstance!.pos(x, y),
       gameInstance!.area(),
       gameInstance!.opacity(0),
@@ -217,4 +227,5 @@ export function createStartScene(
 
   createBomberman(gameInstance, { position: { x: 513, y: 50 }, player })
   createBreakout(gameInstance, { position: { x: 798, y: GROUND_Y - 42 }, player })
+  createPortal(gameInstance, { position: { x: 500, y: 28, rotation: -90, color: 'orange' }, player })
 }

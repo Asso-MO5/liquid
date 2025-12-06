@@ -1,6 +1,8 @@
 import type Kaplay from "kaplay";
 import { CANVAS_ID, FONTS, LEVEL_NAMES } from './mini-game.const';
 import { createStartScene } from "./scene/start.scene";
+import { createMoonPatrolScene } from "./scene/moon-patrol.scene";
+import { createGameOverScene } from "./scene/game-over.scene";
 
 export let gameInstance: ReturnType<typeof Kaplay> | null = null;
 export const getGameInstance = () => gameInstance;
@@ -132,6 +134,9 @@ export const initGame = async () => {
     console.debug('Son jump non disponible');
   });
 
+  gameInstance.loadAseprite('portal', `${BASE_URL}/entities/portal.png`, `${BASE_URL}/entities/portal.json`);
+
+
   // ====== FONTS ========================================================
 
   gameInstance.loadFont(FONTS.SILKSCREEN, `${BASE_URL}/fonts/Silkscreen/Silkscreen-Regular.ttf`);
@@ -146,12 +151,17 @@ export const initGame = async () => {
 
   // ============================== SCENES ==============================
   gameInstance.scene(LEVEL_NAMES.START, () => createStartScene(gameInstance, { BASE_URL }));
+  gameInstance.scene(LEVEL_NAMES.MOON_PATROL, () => createMoonPatrolScene(gameInstance, { BASE_URL }));
+  gameInstance.scene(LEVEL_NAMES.GAME_OVER, (args?: { score?: number }) => {
+    createGameOverScene(gameInstance, { BASE_URL, score: args?.score || 0 });
+  });
 
   // ============================== GO ==============================
   gameInstance.go(LEVEL_NAMES.START);
+  //gameInstance.go(LEVEL_NAMES.MOON_PATROL, { score: 100000 });
 
   if (import.meta.env.DEV) {
-    gameInstance.debug.inspect = true;
+    // gameInstance.debug.inspect = true;
   }
 
   return gameInstance;

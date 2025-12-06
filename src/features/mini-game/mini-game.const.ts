@@ -2,7 +2,8 @@ export const CANVAS_ID = "mini-game-container";
 
 export const LEVEL_NAMES = {
   START: 'start',
-  MUSEUM: 'museum',
+  MOON_PATROL: 'moon-patrol',
+  GAME_OVER: 'game-over',
 } as const;
 
 export const CONTROLS = {
