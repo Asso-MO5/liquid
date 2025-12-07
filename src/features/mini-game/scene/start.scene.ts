@@ -31,7 +31,14 @@ export function createStartScene(
   gameInstance.loadSound('bythepond', `${BASE_URL}/sounds/bythepond.mp3`);
 
   if (!import.meta.env.DEV) {
-    gameInstance.play('bythepond', { loop: true, volume: 0.3 });
+    //@ts-expect-error - musicSound is not defined in the type
+    if (gameInstance!.musicSound) {
+      //@ts-expect-error - musicSound is not defined in the type
+      gameInstance!.musicSound.paused = true
+    }
+    //@ts-expect-error - musicSound is not defined in the type
+    gameInstance!.musicSound = gameInstance.play('bythepond', { loop: true, volume: 0.3 });
+
   }
 
 

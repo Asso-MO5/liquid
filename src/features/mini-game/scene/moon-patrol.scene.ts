@@ -46,15 +46,24 @@ export function createMoonPatrolScene(gameInstance: ReturnType<typeof kaplay> | 
     'alien-hit',
   ]
 
+
   gameInstance.loadSound("escape", `${BASE_URL}/sounds/escape.mp3`);
+
+  if (!import.meta.env.DEV) {
+    //@ts-expect-error - musicSound is not defined in the type
+    if (gameInstance!.musicSound) {
+      //@ts-expect-error - musicSound is not defined in the type
+      gameInstance!.musicSound.paused = true
+    }
+    //@ts-expect-error - musicSound is not defined in the type
+    gameInstance!.musicSound = gameInstance.play("escape", { loop: true, volume: 0.3 });
+  }
+
 
   for (const sound of sounds) {
     gameInstance.loadSound(sound, `${BASE_URL}/sounds/${sound}.ogg`);
   }
 
-  if (!import.meta.env.DEV) {
-    gameInstance.play("escape", { loop: true, volume: 0.5 });
-  }
 
   const levelWidth = gameInstance.width() || 300;
   const levelHeight = gameInstance.height() || 200;

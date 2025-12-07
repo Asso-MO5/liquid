@@ -5,6 +5,7 @@ import { createMoonPatrolScene } from "./scene/moon-patrol.scene";
 import { createGameOverScene } from "./scene/game-over.scene";
 
 export let gameInstance: ReturnType<typeof Kaplay> | null = null;
+
 export const getGameInstance = () => gameInstance;
 
 export const cleanupGame = () => {
@@ -21,6 +22,8 @@ export const cleanupGame = () => {
     }
   }
 };
+
+
 
 export const initGame = async () => {
 
