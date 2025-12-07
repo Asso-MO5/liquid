@@ -28,6 +28,13 @@ export function createStartScene(
 
   gameInstance.loadSprite('background', `${BASE_URL}/tiles/start.png`)
   gameInstance.loadSound('hurt', `${BASE_URL}/sounds/hurt.mp3`);
+  gameInstance.loadSound('bythepond', `${BASE_URL}/sounds/bythepond.mp3`);
+
+  if (!import.meta.env.DEV) {
+    gameInstance.play('bythepond', { loop: true, volume: 0.3 });
+  }
+
+
 
   gameState.level = 1
   gameState.isGameStarted = true
@@ -106,6 +113,20 @@ export function createStartScene(
     gameInstance.z(-50),
     gameInstance.pos(152, 60),
   ])
+
+  // credit music
+  gameInstance!.add([
+    gameInstance!.text('music by: JustFreeGames', {
+      size: 4,
+      font: FONTS.SILKSCREEN,
+    }),
+    gameInstance.pos(172, 45),
+    gameInstance!.color(255, 255, 255),
+    gameInstance!.z(100),
+    gameInstance!.opacity(0.3),
+
+    'credit-music',
+  ]);
 
   // Pattern d'écarts qui se répète : 49, 44, 54, 45
   const spacingPattern = [49, 44, 54, 45]
