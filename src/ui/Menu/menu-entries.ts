@@ -2,8 +2,8 @@ export const menuEntries: { label: { fr: string; en: string }; href: string; hig
 
   {
     label: {
-      fr: "Acheter un billet",
-      en: "Get a ticket"
+      fr: "Réservation",
+      en: "Reservation"
     },
     href: "/ticket",
     highlighted: true

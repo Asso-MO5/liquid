@@ -3,10 +3,10 @@ import { langCtrl } from "../lang-selector/lang.ctrl";
 
 const txt = {
   fr: {
-    title: "Acheter un billet",
+    title: "Réservation",
   },
   en: {
-    title: "Get a ticket",
+    title: "Reservation",
   },
 };
 

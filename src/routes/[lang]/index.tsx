@@ -9,12 +9,12 @@ import { TakeATicket } from "~/features/ticket/take-a-ticket";
 
 const infoTxt = {
   fr: {
-    button: 'Acheter un billet',
+    button: 'Réservation',
     Title: 'Le Musée du jeu vidéo',
     address: ['10 Avenue Paul Doumer', ' 94110 Arcueil', 'France'],
   },
   en: {
-    button: 'Get a ticket',
+    button: 'Reservation',
     Title: 'The Video Game Museum',
     address: ['10 Avenue Paul Doumer', ' 94110 Arcueil', 'France'],
   }
