@@ -18,9 +18,14 @@ export function ticketCreate() {
     return ticketStore.tickets.filter((p) => p.id === price.id).length;
   }
 
+  const isMaxQuantity = () => {
+    return ticketStore.tickets.length >= 10;
+  }
+
   return {
     addToCart,
     removeFromCart,
     getQuantity,
+    isMaxQuantity,
   }
 }

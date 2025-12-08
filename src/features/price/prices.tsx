@@ -35,7 +35,7 @@ export const Prices = () => {
                     -
                   </button>
                   <div class="text-xl">{ticketCreateCtrl.getQuantity(price)}</div>
-                  <button onClick={() => ticketCreateCtrl.addToCart(price)}>
+                  <button onClick={() => ticketCreateCtrl.addToCart(price)} disabled={ticketCreateCtrl.isMaxQuantity()}>
                     +
                   </button>
                 </div>
@@ -43,8 +43,9 @@ export const Prices = () => {
               </div>
             </div>
           </div>
-        )}
-      </For>
+        )
+        }
+      </For >
     </div >
   )
 }
