@@ -32,8 +32,8 @@ export const closeGamePanelInfo = () => {
 const handleMouseMove = (e: MouseEvent) => {
   if (!isDragging() || !panelRef) return
   e.preventDefault()
-  const deltaX = e.clientX - dragStartPos.x
-  const deltaY = e.clientY - dragStartPos.y
+  const deltaX = (e?.clientX ?? 300) - dragStartPos.x
+  const deltaY = (e?.clientY ?? 600) - dragStartPos.y
   const newX = Math.max(0, Math.min(window.innerWidth - panelRef.offsetWidth, panelStartPos.x + deltaX))
   const newY = Math.max(0, Math.min(window.innerHeight - panelRef.offsetHeight, panelStartPos.y + deltaY))
   setPosition({ x: newX, y: newY })
@@ -43,8 +43,8 @@ const handleTouchMove = (e: TouchEvent) => {
   if (!isDragging() || !panelRef) return
   e.preventDefault()
   const touch = e.touches[0]
-  const deltaX = touch.clientX - dragStartPos.x
-  const deltaY = touch.clientY - dragStartPos.y
+  const deltaX = (touch?.clientX ?? 300) - dragStartPos.x
+  const deltaY = (touch?.clientY ?? 600) - dragStartPos.y
   const newX = Math.max(0, Math.min(window.innerWidth - panelRef.offsetWidth, panelStartPos.x + deltaX))
   const newY = Math.max(0, Math.min(window.innerHeight - panelRef.offsetHeight, panelStartPos.y + deltaY))
   setPosition({ x: newX, y: newY })
@@ -62,7 +62,7 @@ const handleMouseDown = (e: MouseEvent) => {
   if (!headerRef || !panelRef) return
   e.preventDefault()
   setIsDragging(true)
-  dragStartPos = { x: e.clientX, y: e.clientY }
+  dragStartPos = { x: e?.clientX ?? 300, y: e?.clientY ?? 600 }
   panelStartPos = position()
 }
 
@@ -71,7 +71,7 @@ const handleTouchStart = (e: TouchEvent) => {
   e.preventDefault()
   const touch = e.touches[0]
   setIsDragging(true)
-  dragStartPos = { x: touch.clientX, y: touch.clientY }
+  dragStartPos = { x: touch?.clientX ?? 300, y: touch?.clientY ?? 600 }
   panelStartPos = position()
 }
 
