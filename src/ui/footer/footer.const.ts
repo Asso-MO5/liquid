@@ -50,7 +50,7 @@ export const resourcesLinks = [
       en: 'Partners'
     },
     href: '/partners',
-    id: 135
+    id: 240
   }
 ]
 
