@@ -26,6 +26,7 @@ export const SumUpCtrl = (props: SumUpCtrlProps) => {
     void ticketStore.donation_amount;
     void ticketStore.total_amount;
     void ticketStore.tickets;
+    void ticketStore.is_half_price;
     checkoutReference();
   });
 

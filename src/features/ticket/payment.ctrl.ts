@@ -6,7 +6,8 @@ import type { PreparePaymentTicket } from "./payment.type";
 import type { Ticket } from "./ticket.type";
 import { locales } from "~/utils/langs";
 import { useNavigate } from "@solidjs/router";
-import { langCtrl } from "../lang-selector/lang.ctrl";
+import { langCtrl } from "~/features/lang-selector/lang.ctrl";
+import { guidedTourPrice } from "~/features/price/price.store";
 
 export const paymentCtrl = () => {
   const navigate = useNavigate();
@@ -29,6 +30,8 @@ export const paymentCtrl = () => {
       description: 'Tickets for the museum',
       language: locales[lang() as keyof typeof locales],
       gift_codes: ticketStore.gift_codes,
+      guided_tour: ticketStore.guided_tour,
+      guided_tour_price: guidedTourPrice(),
     }
 
     ticketStore.tickets.forEach((ticket, idx) => {

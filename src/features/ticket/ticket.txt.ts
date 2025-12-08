@@ -36,8 +36,8 @@ export const ticketTxt = {
     en: "Prices",
   },
   donation: {
-    fr: "Faire un don",
-    en: "Make a donation",
+    fr: "Soutenir le musée",
+    en: "Support the museum",
   },
   proceed_to_payment: {
     fr: "Passer au paiement",

@@ -32,6 +32,7 @@ export interface TicketStore {
   reservation_date: string;
   slot_start_time: string;
   slot_end_time: string;
+  is_half_price: boolean;
   checkout_id: string | null;
   checkout_reference: string | null;
   transaction_status: string | null;
@@ -41,6 +42,7 @@ export interface TicketStore {
   status: TicketStatus;
   tickets: Price[];
   gift_codes: string[];
+  guided_tour: boolean;
 }
 export interface Slot {
   id: string;
@@ -51,6 +53,7 @@ export interface Slot {
   created_at: string;
   updated_at: string;
   occupancy_percentage: number;
+  is_half_price: boolean;
 }
 
 export interface SlotsResponse {

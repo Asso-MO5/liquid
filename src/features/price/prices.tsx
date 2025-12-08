@@ -1,9 +1,20 @@
-import { For } from "solid-js"
+import { For, Show } from "solid-js"
 import { prices } from "./price.store"
 
 import { ticketCreate } from "../ticket/ticket-create"
 import { langCtrl } from "../lang-selector/lang.ctrl"
 
+
+const txt = {
+  fr: {
+    max_quantity: "Vous ne pouvez pas ajouter plus de 10 billets",
+    free: "Gratuit",
+  },
+  en: {
+    max_quantity: "You cannot add more than 10 tickets",
+    free: "Free",
+  },
+}
 
 export const Prices = () => {
   const lang = langCtrl()
@@ -17,11 +28,15 @@ export const Prices = () => {
 
             <div class="text-xl font-bold w-full flex justify-between gap-2">
               <p>{price.translations[lang() as keyof typeof price.translations].name}</p>
-              <div class="text-lg font-bold ">{price.amount}<span class="text-secondary">€</span></div>
+              <Show when={price.amount > 0}>
+                <div class="text-lg font-bold ">{ticketCreateCtrl.isHalfPrice() ? Math.floor(price.amount / 2) : price.amount}<span class="text-secondary">€</span></div>
+              </Show>
+              <Show when={price.amount === 0}>
+                <p>{txt[lang() as keyof typeof txt].free}</p>
+              </Show>
             </div>
 
             <div class="flex items-center justify-between gap-2 p-2 rounded-md w-full">
-
               <div class="flex flex-col gap-4 items-center justify-center">
                 <p class="text-sm italic p-0 m-0">
                   {price.translations[lang() as keyof typeof price.translations].description}
@@ -39,7 +54,6 @@ export const Prices = () => {
                     +
                   </button>
                 </div>
-
               </div>
             </div>
           </div>

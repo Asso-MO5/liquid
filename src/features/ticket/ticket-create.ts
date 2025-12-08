@@ -14,15 +14,15 @@ export function ticketCreate() {
     }
   }
 
-  const getQuantity = (price: Price) => {
-    return ticketStore.tickets.filter((p) => p.id === price.id).length;
-  }
+  const getQuantity = (price: Price) => ticketStore.tickets.filter((p) => p.id === price.id).length;
 
-  const isMaxQuantity = () => {
-    return ticketStore.tickets.length >= 10;
-  }
+  const isMaxQuantity = () => ticketStore.tickets.length >= 10;
+
+  const isHalfPrice = () => ticketStore.is_half_price
+
 
   return {
+    isHalfPrice,
     addToCart,
     removeFromCart,
     getQuantity,

@@ -12,6 +12,15 @@ type HeaderProps = {
   page?: string
 }
 
+const txt = {
+  fr: {
+    logoAlt: 'Logo de l\'association MO5',
+  },
+  en: {
+    logoAlt: 'Logo of the MO5 association',
+  }
+}
+
 export const Header = (props: HeaderProps) => {
 
   const lang = langCtrl()
@@ -47,6 +56,13 @@ export const Header = (props: HeaderProps) => {
           </div>
           <MenuMobile />
           <div class="flex items-center gap-4">
+            <a href="https://mo5.com/" target="_blank" rel="noopener noreferrer">
+              <img src="/logo.webp"
+                width={194}
+                height={60}
+                alt={txt[lang() as keyof typeof txt].logoAlt}
+                class="w-[120px] h-auto hidden md:block" />
+            </a>
             <DarkMode />
             <LangSelector />
           </div>

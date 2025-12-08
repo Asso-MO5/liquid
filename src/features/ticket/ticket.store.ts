@@ -8,6 +8,7 @@ export const [ticketStore, setTicketStore] = createStore<TicketStore>({
   reservation_date: '',
   slot_start_time: '',
   slot_end_time: '',
+  is_half_price: false,
   checkout_id: null,
   checkout_reference: null,
   transaction_status: null,
@@ -15,6 +16,7 @@ export const [ticketStore, setTicketStore] = createStore<TicketStore>({
   donation_amount: 3,
   total_amount: 0,
   status: 'pending',
+  guided_tour: false,
   tickets: [],
   gift_codes: [],
 });

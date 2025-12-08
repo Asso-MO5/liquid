@@ -134,7 +134,13 @@ export function CalCtrl(): CalendarCtrlReturn {
 
     const museumSchedule = schedules()
     const maxDate = new Date()
+
+
+    // ===> Plus classique Désactivé pour le moment
     maxDate.setMonth(maxDate.getMonth() + 2)
+    // ICI on force le mois de janvier
+    maxDate.setMonth(0)
+    maxDate.setDate(31)
 
     for (let i = 0; i < 42; i++) {
       const date = new Date(startDate)

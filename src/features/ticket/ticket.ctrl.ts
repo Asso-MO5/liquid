@@ -27,6 +27,7 @@ export const TicketCtrl = () => {
   const onSlotClick = (slot: Slot) => {
     setTicketStore('slot_start_time', slot.start_time);
     setTicketStore('slot_end_time', slot.end_time);
+    setTicketStore('is_half_price', slot.is_half_price);
     scrollTo('ticket', 'step-3');
   }
 
