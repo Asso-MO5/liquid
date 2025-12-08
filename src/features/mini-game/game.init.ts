@@ -24,7 +24,6 @@ export const cleanupGame = () => {
 };
 
 
-
 export const initGame = async () => {
 
   const BASE_URL = `${window.location.protocol}//${window.location.host}/game`;
@@ -164,7 +163,7 @@ export const initGame = async () => {
   //gameInstance.go(LEVEL_NAMES.MOON_PATROL, { score: 100000 });
 
   if (import.meta.env.DEV) {
-    // gameInstance.debug.inspect = true;
+    gameInstance.debug.inspect = true;
   }
 
   return gameInstance;

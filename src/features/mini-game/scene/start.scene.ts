@@ -41,8 +41,6 @@ export function createStartScene(
 
   }
 
-
-
   gameState.level = 1
   gameState.isGameStarted = true
 
@@ -131,7 +129,6 @@ export function createStartScene(
     gameInstance!.color(255, 255, 255),
     gameInstance!.z(100),
     gameInstance!.opacity(0.3),
-
     'credit-music',
   ]);
 
@@ -159,9 +156,11 @@ export function createStartScene(
     3, //vectrex
     6, //wonderswan
     7, //virtualboy
-    10, //3do
+    10, //3do 
+    11, //nes
     12, // breakouts
     13, // breakouts
+
   ]
 
   for (const position of furniturePositions.filter(
@@ -196,6 +195,11 @@ export function createStartScene(
       position: { x: 709, y: GROUND_Y - 40 },
       spriteName: '3do',
       idPanel: 'b2194a8a-4a32-4403-9ec3-12be4412d7b3',
+    },
+    {
+      position: { x: 763, y: GROUND_Y - 40 },
+      spriteName: 'nes',
+      idPanel: '236e00bb-8ba9-4f4b-83d9-abae3cc0a5d4',
     }
   ]
 
@@ -216,6 +220,7 @@ export function createStartScene(
     520,
     574,
     [712, GROUND_Y - 26, 18],
+    [765, GROUND_Y - 21, 19],
     // Plateforme pour moon patrol
     [849, 29, 22],
     [801, 5, 22],
