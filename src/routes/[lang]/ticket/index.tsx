@@ -3,7 +3,7 @@ import { Slots } from "~/features/ticket/slots";
 import { TicketCtrl } from "~/features/ticket/ticket.ctrl";
 import { ticketStore } from "~/features/ticket/ticket.store";
 import { Cal } from "~/ui/Cal";
-import { useParams } from "@solidjs/router";
+import { A, useParams } from "@solidjs/router";
 import { ticketTxt } from "~/features/ticket/ticket.txt";
 import { PersonalInfos } from "~/features/ticket/personal-infos";
 import { Prices } from "~/features/price/prices";
@@ -58,7 +58,7 @@ export default function Ticket() {
           <h3 class="text-center">{ticketTxt.prices[lang() as keyof typeof ticketTxt.prices]}</h3>
           <p class="text-center text-sm text-text italic">
             {txt[lang() as keyof typeof txt].for_group}
-            <a class="pl-2" href="mailto:contact@museedujeuvideo.org">{txt[lang() as keyof typeof txt].contact}</a>
+            <A class="pl-2" href={`/${lang() as string}/contact`}>{txt[lang() as keyof typeof txt].contact}</A>
           </p>
           <Prices />
           <GuidedTourPrice />
