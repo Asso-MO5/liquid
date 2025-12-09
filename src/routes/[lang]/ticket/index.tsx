@@ -3,7 +3,7 @@ import { Slots } from "~/features/ticket/slots";
 import { TicketCtrl } from "~/features/ticket/ticket.ctrl";
 import { ticketStore } from "~/features/ticket/ticket.store";
 import { Cal } from "~/ui/Cal";
-import { useParams } from "@solidjs/router";
+import { A, useParams } from "@solidjs/router";
 import { ticketTxt } from "~/features/ticket/ticket.txt";
 import { PersonalInfos } from "~/features/ticket/personal-infos";
 import { Prices } from "~/features/price/prices";
@@ -18,11 +18,15 @@ const txt = {
     total_amount: "Montant total: ",
     total_places: "Nombre de billet: ",
     total_places_plural: "Nombre de billets: ",
+    for_group: "Pour un groupe de plus de 10 personnes, veuillez nous contacter: ",
+    contact: "Formulaire de contact",
   },
   en: {
     total_amount: "Total amount: ",
     total_places: "Total ticket: ",
     total_places_plural: "Total tickets: ",
+    for_group: "For a group of more than 10 people, please contact us:",
+    contact: "Contact form",
   }
 }
 
@@ -52,6 +56,10 @@ export default function Ticket() {
         </div>
         <div id="step-3" class="mx-auto">
           <h3 class="text-center">{ticketTxt.prices[lang() as keyof typeof ticketTxt.prices]}</h3>
+          <p class="text-center text-sm text-text italic">
+            {txt[lang() as keyof typeof txt].for_group}
+            <A class="pl-2" href={`/${lang() as string}/contact`}>{txt[lang() as keyof typeof txt].contact}</A>
+          </p>
           <Prices />
           <GuidedTourPrice />
           <Show when={ticketStore.tickets.length > 0}>
