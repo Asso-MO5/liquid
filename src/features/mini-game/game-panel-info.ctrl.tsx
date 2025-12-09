@@ -112,8 +112,7 @@ export const GamePanelInfoCtrl = () => {
     if (!item?.medias) return undefined
     const youtube = item.medias.find(media => media.type?.startsWith('youtube-video'))
 
-
-    return `https://www.youtube.com/embed/${youtube?.id}?autoplay=1&origin=https://museeedujeuvideo.org`
+    return `https://www.youtube.com/embed/${youtube?.id}?autoplay=0&origin=https://museeedujeuvideo.org`
   }
 
   return {
