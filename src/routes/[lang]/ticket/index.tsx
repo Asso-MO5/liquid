@@ -11,7 +11,7 @@ import { Donation } from "~/features/ticket/donation";
 import { paymentCtrl } from "~/features/ticket/payment.ctrl";
 import { SumUp } from "~/features/sumup/sumup";
 import type { LANGS } from "~/features/lang-selector/lang-selector.const";
-import { GuidedTourPrice } from "~/features/ticket/guided-tour-price";
+// import { GuidedTourPrice } from "~/features/ticket/guided-tour-price";
 
 const txt = {
   fr: {
@@ -61,7 +61,7 @@ export default function Ticket() {
             <A class="pl-2" href={`/${lang() as string}/contact`}>{txt[lang() as keyof typeof txt].contact}</A>
           </p>
           <Prices />
-          <GuidedTourPrice />
+          {/* <GuidedTourPrice /> */}
           <Show when={ticketStore.tickets.length > 0}>
             <div class="mt-4">
               <h3 class="text-center">{ticketTxt.donation[lang() as keyof typeof ticketTxt.donation]}</h3>
