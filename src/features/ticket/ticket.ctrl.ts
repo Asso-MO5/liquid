@@ -53,11 +53,34 @@ export const TicketCtrl = () => {
     }
   }
 
+
+  const setGiftCodes = (value: string, index: number) => {
+    const newCodes = [...ticketStore.gift_codes];
+    if (index >= 0 && index < newCodes.length) {
+      newCodes[index] = value;
+    } else {
+      newCodes.push(value);
+    }
+    setTicketStore('gift_codes', newCodes);
+  }
+
+  const addGiftCode = () => {
+    setTicketStore('gift_codes', [...ticketStore.gift_codes, '']);
+  }
+
+  const removeGiftCode = (index: number) => {
+    const newCodes = ticketStore.gift_codes.filter((_, i) => i !== index);
+    setTicketStore('gift_codes', newCodes);
+  }
+  
   return {
     onDayClick,
     isFetching,
     isLoading,
     slots,
     onSlotClick,
+    setGiftCodes,
+    addGiftCode,
+    removeGiftCode,
   }
 }

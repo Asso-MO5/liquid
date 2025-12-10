@@ -1,7 +1,7 @@
 import { For } from "solid-js"
-import { createMutable } from "solid-js/store"
 import { langCtrl } from "../lang-selector/lang.ctrl"
 import { TicketCtrl } from "./ticket.ctrl"
+import { ticketStore } from "./ticket.store"
 
 const giftCodesTxt = {
   fr: {
@@ -16,37 +16,38 @@ const giftCodesTxt = {
   },
 }
 
-type CodeItem = {
-  value: string
-}
-
 export const GiftCodes = () => {
   const lang = langCtrl()
-  const codes = createMutable<CodeItem[]>([])
   const ticketCtrl = TicketCtrl()
-  const addGiftCode = () => {
-    codes.push({ value: '' })
-  }
 
   return (
     <div class="flex flex-col gap-4 mt-4">
-      <For each={codes}>
-        {(codeItem: CodeItem) => (
-          <div>
+      <For each={ticketStore.gift_codes}>
+        {(code, index) => (
+          <div class="flex gap-2">
             <input
               type="text"
-              class="bg-white/10 text-primary border border-primary rounded-md p-2"
+              class="bg-white/10 text-primary border border-primary rounded-md p-2 flex-1"
               placeholder={giftCodesTxt[lang() as keyof typeof giftCodesTxt].placeholder}
-              value={codeItem.value}
+              value={code}
               onInput={(e) => {
-                codeItem.value = e.currentTarget.value
-                ticketCtrl.setGiftCodes(codeItem.value, codes.indexOf(codeItem))
+                ticketCtrl.setGiftCodes(e.currentTarget.value, index())
               }}
             />
+            {ticketStore.gift_codes.length > 1 && (
+              <button
+                class="btn"
+                onClick={() => ticketCtrl.removeGiftCode(index())}
+              >
+                ×
+              </button>
+            )}
           </div>
         )}
       </For>
-      <button class="btn" onClick={addGiftCode}>{giftCodesTxt[lang() as keyof typeof giftCodesTxt].add}</button>
+      <button class="btn" onClick={() => ticketCtrl.addGiftCode()}>
+        {giftCodesTxt[lang() as keyof typeof giftCodesTxt].add}
+      </button>
     </div>
   )
 }
