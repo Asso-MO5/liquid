@@ -116,11 +116,11 @@ export const SumUpCtrl = (props: SumUpCtrlProps) => {
        
             if (body?.status?.match(/error|invalid|failed/i) ) {
               
-              sendWebhook(type, body, id, ref).then(() => {
+              sendWebhook(body.status, body, id, ref).then(() => {
                 navigate(`/${lang()}/ticket/error`);
               });
             } else if (body?.status?.match(/success/i)) {
-              sendWebhook(type, body, id, ref).then((data) => {
+              sendWebhook(body.status, body, id, ref).then((data) => {
 
                 const langStr = String(lang() as 'fr' | 'en');
 
