@@ -112,7 +112,10 @@ export const SumUpCtrl = (props: SumUpCtrlProps) => {
           locale: locales[language() as keyof typeof locales],
           onResponse: (type: string, body: SumUpResponseBody) => {
             const ref = checkoutReference();
-            if (type.match(/error|invalid|fail/)) {
+
+            console.log('type==========>', type, body);
+            if (body?.type?.match(/error|invalid|fail/i) ) {
+              
               sendWebhook(type, body, id, ref).then(() => {
                 navigate(`/${lang()}/ticket/error`);
               });
