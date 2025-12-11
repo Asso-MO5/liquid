@@ -113,8 +113,8 @@ export const SumUpCtrl = (props: SumUpCtrlProps) => {
           onResponse: (type: string, body: SumUpResponseBody) => {
             const ref = checkoutReference();
 
-            console.log('type==========>', type, body);
-            if (body?.type?.match(/error|invalid|fail/i) ) {
+       
+            if (body?.status?.match(/error|invalid|failed/i) ) {
               
               sendWebhook(type, body, id, ref).then(() => {
                 navigate(`/${lang()}/ticket/error`);

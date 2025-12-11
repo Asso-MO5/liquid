@@ -1,5 +1,6 @@
-export interface SumUpResponseBody {
+export interface  SumUpResponseBody {
   message?: string;
+
   [key: string]: unknown;
 }
 
