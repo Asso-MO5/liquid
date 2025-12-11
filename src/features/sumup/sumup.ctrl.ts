@@ -119,7 +119,7 @@ export const SumUpCtrl = (props: SumUpCtrlProps) => {
               sendWebhook(type, body, id, ref).then(() => {
                 navigate(`/${lang()}/ticket/error`);
               });
-            } else if (type.match(/success/)) {
+            } else if (body?.status?.match(/success/i)) {
               sendWebhook(type, body, id, ref).then((data) => {
 
                 const langStr = String(lang() as 'fr' | 'en');
