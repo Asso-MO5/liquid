@@ -40,7 +40,7 @@ export const ticketTxt = {
     en: "Support the museum",
   },
   proceed_to_payment: {
-    fr: "Passer au paiement",
-    en: "Proceed to payment",
+    fr: "Réserver",
+    en: "Book",
   },
 }
