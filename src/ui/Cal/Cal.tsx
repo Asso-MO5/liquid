@@ -1,5 +1,5 @@
 import { For } from "solid-js"
-import { CalCtrl } from "./Cal.ctrl"
+import { calCTRL } from "./Cal.ctrl"
 import { CalDay } from "./CalDay"
 import { CalControls } from "./CalControls"
 
@@ -9,7 +9,7 @@ interface CalProps {
 }
 
 export function Cal(props: CalProps) {
-  const calendar = CalCtrl();
+  const calendar = calCTRL();
 
   return (
     <div class="flex flex-col items-center justify-baseline gap-4 text-text" id="calendar">
@@ -29,9 +29,7 @@ export function Cal(props: CalProps) {
             <CalDay
               day={day}
               selectedDate={props.selectedDate}
-              view={calendar.view()}
               onDayClick={(day) => props.onDayClick?.(day)}
-              formatDate={calendar.formatDate}
             />
           )}
         </For>

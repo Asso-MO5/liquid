@@ -1,7 +1,7 @@
-import { For } from "solid-js"
-import { langCtrl } from "../lang-selector/lang.ctrl"
-import { TicketCtrl } from "./ticket.ctrl"
-import { ticketStore } from "./ticket.store"
+import { For, Show } from "solid-js"
+import { langCtrl } from "~/features/lang-selector/lang.ctrl"
+import { ticketStore } from "~/features/ticket/ticket.store"
+import { giftCodesCtrl } from "~/features/gift-codes/gift-codes.ctrl"
 
 const giftCodesTxt = {
   fr: {
@@ -18,7 +18,7 @@ const giftCodesTxt = {
 
 export const GiftCodes = () => {
   const lang = langCtrl()
-  const ticketCtrl = TicketCtrl()
+  const giftCodesCtrlStore = giftCodesCtrl();
 
   return (
     <div class="flex flex-col gap-4 mt-4">
@@ -31,13 +31,13 @@ export const GiftCodes = () => {
               placeholder={giftCodesTxt[lang() as keyof typeof giftCodesTxt].placeholder}
               value={code}
               onInput={(e) => {
-                ticketCtrl.setGiftCodes(e.currentTarget.value, index())
+                giftCodesCtrlStore.setGiftCodes(e.currentTarget.value, index())
               }}
             />
-            {ticketStore.gift_codes.length > 1 && (
+            {ticketStore.gift_codes.length > 0 && (
               <button
                 class="btn"
-                onClick={() => ticketCtrl.removeGiftCode(index())}
+                onClick={() => giftCodesCtrlStore.removeGiftCode(index())}
               >
                 ×
               </button>
@@ -45,9 +45,11 @@ export const GiftCodes = () => {
           </div>
         )}
       </For>
-      <button class="btn" onClick={() => ticketCtrl.addGiftCode()}>
-        {giftCodesTxt[lang() as keyof typeof giftCodesTxt].add}
-      </button>
+      <Show when={ticketStore.gift_codes.length < ticketStore.tickets.filter(ticket => ticket.amount > 0).length}>
+        <button class="btn" onClick={() => giftCodesCtrlStore.addGiftCode()}>
+          {giftCodesTxt[lang() as keyof typeof giftCodesTxt].add}
+        </button>
+      </Show>
     </div>
   )
 }

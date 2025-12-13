@@ -3,40 +3,31 @@ import { langCtrl } from "../lang-selector/lang.ctrl"
 
 const images = [
   {
-    src: '/img/gs.webp',
+    src: '/img/musee.webp',
     alt: {
       fr: 'Une exposition interactive avec des machines de jeux vidéo',
       en: 'An interactive exhibition with video game machines'
     }
   },
-  /*
   {
-    src: '/img/gs2.webp',
+    src: '/img/musee2.webp',
     alt: {
-      fr: 'Collection de consoles de jeux vidéo historiques',
-      en: 'Collection of historical video game consoles'
-    }
-  },
-  */
-  {
-    src: '/img/gs3.webp',
-    alt: {
-      fr: 'Une collection de consoles et d\'accessoires de jeux vidéo',
-      en: 'A collection of video game consoles and accessories'
+      fr: 'Ateliers de médiation et conférences pour apprendre et découvrir',
+      en: 'Mediation workshops and conferences to learn and discover'
     }
   },
   {
-    src: '/img/gs4.webp',
+    src: '/img/musee3.webp',
     alt: {
       fr: 'Partagez votre passion pour le jeu vidéo entre générations',
       en: 'Share your passion for video games between generations'
     }
   },
   {
-    src: '/img/gs5.webp',
+    src: '/img/musee4.webp',
     alt: {
-      fr: 'Découvrez les prémices du jeu vidéo',
-      en: 'Discover the origins of video games'
+      fr: 'Découvrez les consoles et jeux vidéo historiques',
+      en: 'Discover historical video game consoles and games'
     }
   }
 ]

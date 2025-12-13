@@ -10,4 +10,5 @@ export const clientScheme = z.object({
   VITE_API_URL: z.string(),
   VITE_BLOG_URL: z.string(),
   VITE_CAVE_URL: z.string(),
+  VITE_STRIPE_PUBLISHABLE_KEY: z.string(),
 });
