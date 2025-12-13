@@ -1,7 +1,7 @@
-import { CalCtrl } from "./Cal.ctrl"
+import { calCTRL } from "./Cal.ctrl"
 
 export const CalDateDisplay = () => {
-  const calendar = CalCtrl()
+  const calendar = calCTRL()
 
   return (
     <div class="text-xl font-semibold">

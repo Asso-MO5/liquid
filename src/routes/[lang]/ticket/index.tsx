@@ -1,17 +1,18 @@
 import { Show } from "solid-js";
-import { Slots } from "~/features/ticket/slots";
-import { TicketCtrl } from "~/features/ticket/ticket.ctrl";
+import { Slots } from "~/features/slots/slots";
 import { ticketStore } from "~/features/ticket/ticket.store";
-import { Cal } from "~/ui/Cal";
+import { Cal } from "~/ui/Cal/Cal";
 import { A, useParams } from "@solidjs/router";
 import { ticketTxt } from "~/features/ticket/ticket.txt";
 import { PersonalInfos } from "~/features/ticket/personal-infos";
 import { Prices } from "~/features/price/prices";
 import { Donation } from "~/features/ticket/donation";
-import { paymentCtrl } from "~/features/ticket/payment.ctrl";
-import { SumUp } from "~/features/sumup/sumup";
+import { paymentCTRL } from "~/features/ticket/payment.ctrl";
 import type { LANGS } from "~/features/lang-selector/lang-selector.const";
-// import { GuidedTourPrice } from "~/features/ticket/guided-tour-price";
+import { slotsCTRL } from "~/features/slots/slots.ctrl";
+import { PaymentBtn } from "~/features/ticket/payment.btn";
+import { GiftCodes } from "~/features/gift-codes/gift-codes";
+import { TicketResume } from "~/features/ticket/ticket-resume";
 
 const txt = {
   fr: {
@@ -31,26 +32,26 @@ const txt = {
 }
 
 export default function Ticket() {
-  const ticketCtrl = TicketCtrl();
-  const params = useParams()
-  const payment = paymentCtrl();
   const lang = () => params.lang as keyof typeof LANGS
+  const slotsCtrl = slotsCTRL();
+  const params = useParams()
+  const paymentCtrl = paymentCTRL();
 
   return (
     <main
       id="ticket"
-      class="items-center justify-center relative overflow-y-auto flex flex-col gap-4 p-6 text-text"
+      class="items-center justify-center relative overflow-y-auto flex flex-col gap-6 p-6 text-text"
     >
       <div id="step-1">
-        <Cal onDayClick={ticketCtrl.onDayClick} selectedDate={ticketStore.reservation_date} />
+        <Cal onDayClick={slotsCtrl.onDayClick} selectedDate={ticketStore.reservation_date} />
       </div>
-      <Show when={ticketStore.reservation_date && ticketCtrl.slots()?.length > 0}>
+      <Show when={ticketStore.reservation_date && slotsCtrl.slots()?.length > 0}>
         <div id="step-2">
           <h3 class="text-center">{ticketTxt.available_slots[lang() as keyof typeof ticketTxt.available_slots]}</h3>
           <Slots
-            isFetching={ticketCtrl.isFetching()}
-            slots={ticketCtrl.slots()}
-            onSlotClick={ticketCtrl.onSlotClick}
+            isFetching={slotsCtrl.isFetching()}
+            slots={slotsCtrl.slots()}
+            onSlotClick={slotsCtrl.onSlotClick}
             currentSlot={ticketStore.slot_start_time}
           />
         </div>
@@ -61,9 +62,8 @@ export default function Ticket() {
             <A class="pl-2" href={`/${lang() as string}/contact`}>{txt[lang() as keyof typeof txt].contact}</A>
           </p>
           <Prices />
-          {/* <GuidedTourPrice /> */}
           <Show when={ticketStore.tickets.length > 0}>
-            <div class="mt-4">
+            <div class="mt-6">
               <h3 class="text-center">{ticketTxt.donation[lang() as keyof typeof ticketTxt.donation]}</h3>
               <Donation />
             </div>
@@ -74,19 +74,15 @@ export default function Ticket() {
             <h3 class="text-center">
               {ticketTxt.personal_infos[lang() as keyof typeof ticketTxt.personal_infos]}
             </h3>
-            <PersonalInfos onPayment={payment.preparePayment} isLoading={payment.isLoading()} />
+            <PersonalInfos />
+            <GiftCodes />
+            <Show when={ticketStore.email !== '' && ticketStore.first_name !== '' && ticketStore.last_name !== ''}>
+              <TicketResume />
+            </Show>
+            <PaymentBtn disabled={paymentCtrl.paymentButtonDisabled()} isLoading={paymentCtrl.isLoading()} onPayment={paymentCtrl.preparePayment} />
           </Show>
         </div>
-        <div id="step-5" class="md:col-span-2">
-          <Show when={payment.checkoutId()}>
-            <div class="flex flex-col gap-2 items-center justify-center mt-2">
-              {ticketStore.tickets.length > 1 ? txt[lang() as keyof typeof txt].total_places_plural : txt[lang() as keyof typeof txt].total_places} {ticketStore.tickets.length}
-            </div>
-            <SumUp checkoutId={payment.checkoutId()} checkoutReference={payment.checkoutReference()} language={lang() as string} />
-          </Show>
-        </div>
-      </Show>
-
+      </Show >
     </main >
   )
 }

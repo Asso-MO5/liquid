@@ -37,6 +37,7 @@
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.1",
     "@solidjs/start": "^1.1.0",
+    "@stripe/stripe-js": "^8.5.3",
     "@tailwindcss/vite": "^4.1.13",
     "autoprefixer": "^10.4.19",
     "kaplay": "^4000.0.0-alpha.23",

@@ -1,4 +1,4 @@
-import type { CalendarEvent, CalendarView } from "./Cal.types"
+import type { CalendarEvent } from "./Cal.types"
 import type { JSX } from "solid-js"
 
 export interface CalDayProps {
@@ -10,11 +10,9 @@ export interface CalDayProps {
     isDayOpen: boolean
     items: CalendarEvent[]
   }
-  view: CalendarView
   onDayClick: (day: Date) => void
   onItemClick?: (event: CalendarEvent) => void
   renderItem?: (event: CalendarEvent, day: Date) => JSX.Element
-  formatDate: (date: Date) => string
   highlightedEventId?: string | null
 }
 

@@ -1,8 +1,8 @@
-import { CalCtrl } from "./Cal.ctrl"
+import { calCTRL } from "./Cal.ctrl"
 import { Chevron } from "../Chevron/Chevron"
 
 export const CalControls = () => {
-  const calendar = CalCtrl()
+  const calendar = calCTRL()
 
   return (
     <div class="flex items-center gap-2 text-text">

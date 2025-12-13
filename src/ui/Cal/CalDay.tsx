@@ -1,5 +1,6 @@
 import { Show, createSignal, onMount } from "solid-js"
 import type { CalDayProps } from "./CalDay.types"
+import { formatDate } from "~/utils/format-date"
 
 export const CalDay = (props: CalDayProps) => {
   const [isMobile, setIsMobile] = createSignal(false)
@@ -31,7 +32,7 @@ export const CalDay = (props: CalDayProps) => {
     <Show
       when={isMobile()}
       fallback={
-        /* Vue desktop */
+        /* DESKTOP */
         <div
           class="
             p-2 border border-primary rounded-sm cursor-pointer data-[open=true]:hover:bg-primary
@@ -49,12 +50,12 @@ export const CalDay = (props: CalDayProps) => {
           onClick={() => props.onDayClick(props.day.date)}
         >
           <div class="text-lg font-medium mb-1 flex items-center justify-center">
-            {props.formatDate(props.day.date)}
+            {formatDate(props.day.date)}
           </div>
         </div>
       }
     >
-      {/* Vue mobile avec ronds */}
+      {/* MOBILE */}
       <div
         class="
           aspect-square rounded-full flex flex-col items-center justify-center cursor-pointer data-[open=true]:cursor-pointer data-[open=true]:hover:bg-primary 
@@ -70,9 +71,8 @@ export const CalDay = (props: CalDayProps) => {
         data-selected={isSameDate(props.day.date)}
         onClick={() => props.onDayClick(props.day.date)}
       >
-        {/* Numéro du jour */}
         <div class="text-sm font-medium mb-1">
-          {props.formatDate(props.day.date)}
+          {formatDate(props.day.date)}
         </div>
       </div>
     </Show>
