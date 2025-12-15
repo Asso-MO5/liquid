@@ -1,25 +1,25 @@
-import { createEffect, createSignal } from "solid-js";
+import { createMemo, createSignal } from "solid-js";
+import { useNavigate } from "@solidjs/router";
 import { clientEnv } from "~/env/client";
 import { toast } from "~/ui/Toast";
-import { setTicketStore, ticketStore } from "./ticket.store";
-import type { PreparePaymentTicket } from "./payment.type";
-import type { Ticket } from "./ticket.type";
+import { setTicketStore, ticketStore } from "~/features/ticket/ticket.store";
+import type { Ticket } from "~/features/ticket/ticket.type";
+import type { PreparePaymentTicket } from "~/features/ticket/payment.type";
 import { locales } from "~/utils/langs";
-import { useNavigate } from "@solidjs/router";
 import { langCtrl } from "~/features/lang-selector/lang.ctrl";
 import { guidedTourPrice } from "~/features/price/price.store";
 
-export const paymentCtrl = () => {
+export const paymentCTRL = () => {
   const navigate = useNavigate();
   const lang = langCtrl();
+  const langStr = String(lang());
   const [isLoading, setIsLoading] = createSignal(false);
-  const [checkoutId, setCheckoutId] = createSignal<string | null>(null)
-  const [checkoutReference, setCheckoutReference] = createSignal<string | null>(null)
-  const [tickets, setTickets] = createSignal<Ticket[]>([])
-  const [totalAmount, setTotalAmount] = createSignal(0);
 
   const preparePayment = async () => {
     setIsLoading(true);
+    const origin = window.location.origin;
+    const successUrl = `${origin}/${langStr}/ticket/thanks`;
+    const cancelUrl = `${origin}/${langStr}/ticket/error`;
 
     const body = {
       email: ticketStore.email,
@@ -29,9 +29,11 @@ export const paymentCtrl = () => {
       currency: 'EUR',
       description: 'Tickets for the museum',
       language: locales[lang() as keyof typeof locales],
-      gift_codes: ticketStore.gift_codes,
+      gift_codes: ticketStore.gift_codes.filter(code => code !== ''),
       guided_tour: ticketStore.guided_tour,
       guided_tour_price: guidedTourPrice(),
+      success_url: successUrl,
+      cancel_url: cancelUrl,
     }
 
     ticketStore.tickets.forEach((ticket, idx) => {
@@ -61,32 +63,31 @@ export const paymentCtrl = () => {
         },
         body: JSON.stringify(body),
       });
-      const data: { checkout_id: string, checkout_reference: string, tickets: Ticket[], error: string } = await response.json();
+      const data: { checkout_id: string, checkout_url: string, checkout_reference: string, tickets: Ticket[], error: string } = await response.json();
 
       if (!response.ok) {
         throw new Error(data.error);
       }
 
-      // '0' is the default value for the checkout_id for free place
-      if (data.tickets?.length && data.tickets[0].checkout_id === '0' && !data.checkout_id) {
-        const langStr = String(lang());
-        const params = new URLSearchParams();
-        params.set('qr', data.tickets?.map((ticket) => ticket.qr_code).join(','));
-        params.set('email', ticketStore.email);
-        //vider le store
-        setTicketStore('reservation_date', '');
-        setTicketStore('slot_start_time', '');
-        setTicketStore('slot_end_time', '');
-        setTicketStore('tickets', []);
-        setTicketStore('donation_amount', 3);
-        navigate(`/${langStr}/ticket/thanks?${params.toString()}`);
-
+      setTicketStore('checkout_id', data.checkout_id);
+      setTicketStore('checkout_reference', data.checkout_reference);
+      setTicketStore('gift_codes', []);
+      setTicketStore('guided_tour', false);
+      setTicketStore('total_amount', 0);
+      setTicketStore('reservation_date', '');
+      setTicketStore('slot_start_time', '');
+      setTicketStore('slot_end_time', '');
+      setTicketStore('tickets', []);
+      setTicketStore('donation_amount', 3);
+      if (data.checkout_url) {
+        // Only Free places haven't  a checkout_url
+        window.location.href = data.checkout_url;
+      } else {
+        navigate(`/${langStr}/ticket/thanks`);
       }
-      setCheckoutId(data.checkout_id);
-      setCheckoutReference(data.checkout_reference);
-      setTickets(data.tickets);
 
     } catch (error) {
+
       if (error instanceof Error) {
         if (error.message.startsWith('{')) {
           const data = JSON.parse(error.message);
@@ -96,6 +97,7 @@ export const paymentCtrl = () => {
         toast.error(error.message);
         return;
       }
+
       const err = {
         fr: 'Erreur lors de la préparation du paiement',
         en: 'Error preparing payment',
@@ -108,21 +110,56 @@ export const paymentCtrl = () => {
     }
   }
 
-  createEffect(() => {
-    // Reload SumUp widget if the total amount has changed
-    void ticketStore.total_amount;
-    const total = ticketStore.donation_amount + ticketStore.tickets.reduce((acc, ticket) => acc + ticket.amount, 0);
-    if (total !== totalAmount() && !isLoading() && !!checkoutId() && !!checkoutReference()) {
-      setTotalAmount(total);
-      preparePayment();
+  const paymentButtonDisabled = createMemo(() => {
+    const testEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ticketStore.email);
+    return ticketStore.first_name === '' || ticketStore.last_name === '' || !testEmail || ticketStore.tickets.length === 0 || ticketStore.reservation_date === '' || ticketStore.slot_start_time === '';
+  });
+
+  const paymentButtonErrorMessage = createMemo(() => {
+    if (ticketStore.reservation_date === '') {
+      return {
+        fr: 'Veuillez sélectionner une date de visite',
+        en: 'Please select a visit date'
+      };
     }
+    if (ticketStore.slot_start_time === '') {
+      return {
+        fr: 'Veuillez sélectionner un créneau horaire',
+        en: 'Please select a time slot'
+      };
+    }
+    if (ticketStore.tickets.length === 0) {
+      return {
+        fr: 'Veuillez sélectionner au moins un billet',
+        en: 'Please select at least one ticket'
+      };
+    }
+    if (ticketStore.first_name === '') {
+      return {
+        fr: 'Veuillez renseigner votre prénom',
+        en: 'Please enter your first name'
+      };
+    }
+    if (ticketStore.last_name === '') {
+      return {
+        fr: 'Veuillez renseigner votre nom',
+        en: 'Please enter your last name'
+      };
+    }
+    const testEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ticketStore.email);
+    if (!testEmail) {
+      return {
+        fr: 'Veuillez renseigner une adresse email valide',
+        en: 'Please enter a valid email address'
+      };
+    }
+    return null;
   });
 
   return {
-    preparePayment,
     isLoading,
-    checkoutId,
-    checkoutReference,
-    tickets,
+    preparePayment,
+    paymentButtonDisabled,
+    paymentButtonErrorMessage
   }
 }

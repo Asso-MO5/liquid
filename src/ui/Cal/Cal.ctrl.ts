@@ -1,5 +1,5 @@
 import { createSignal, createMemo, onMount, onCleanup, createEffect } from "solid-js"
-import type { CalendarView, CalendarDay, CalendarEvent, CalendarCtrlReturn } from "./Cal.types"
+import type { CalendarDay, CalendarEvent, CalendarCtrlReturn } from "./Cal.types"
 import { langs } from "~/utils/langs"
 import { DAYS_TEXT } from "./Cal.const"
 import { schedules } from "~/features/schedules/schedules.store"
@@ -11,53 +11,33 @@ type Period = {
   start_date?: string | null
   end_date?: string | null
 }
-const [view, setView] = createSignal<CalendarView>('month')
+
 const [selectedDate, setSelectedDate] = createSignal<Date>(new Date())
 const [items, setItems] = createSignal<CalendarEvent[]>([])
 
-// Fonctions pour gérer les query parameters
 const getQueryParams = () => {
   if (typeof window === 'undefined') return {}
   const urlParams = new URLSearchParams(window.location.search)
   return {
-    view: urlParams.get('view') as CalendarView | null,
     date: urlParams.get('date')
   }
 }
 
-const updateQueryParams = (newView: CalendarView, newDate: Date) => {
-  if (typeof window === 'undefined') return
-
-  const url = new URL(window.location.href)
-  url.searchParams.set('view', newView)
-  url.searchParams.set('date', newDate.toISOString().split('T')[0])
-
-  window.history.pushState({}, '', url.toString())
-}
 
 const initializeFromURL = () => {
   const params = getQueryParams()
-
-  if (params.view && ['month', 'week', 'day', 'list'].includes(params.view)) {
-    setView(params.view as CalendarView)
-  } else {
-    updateQueryParams(view(), selectedDate())
-  }
-
 
   if (params.date) {
     const date = new Date(params.date)
     if (!isNaN(date.getTime())) {
       setSelectedDate(date)
     }
-  } else {
-    updateQueryParams(view(), selectedDate())
   }
 }
 
-export function CalCtrl(): CalendarCtrlReturn {
+export function calCTRL(): CalendarCtrlReturn {
   const lang = langCtrl()
-
+  const currentLang = lang()
 
   onMount(() => {
     initializeFromURL()
@@ -71,19 +51,10 @@ export function CalCtrl(): CalendarCtrlReturn {
       window.removeEventListener('popstate', handlePopState)
     })
   })
-  createEffect(() => {
-    initializeFromURL()
-  })
-
-  const setViewWithURL = (newView: CalendarView) => {
-    setView(newView)
-    updateQueryParams(newView, selectedDate())
-  }
 
   const setSelectedDateWithURL = (newDate: Date) => {
     newDate.setDate(1)
     setSelectedDate(newDate)
-    updateQueryParams(view(), newDate)
   }
 
   const goToPrevious = () => {
@@ -108,17 +79,16 @@ export function CalCtrl(): CalendarCtrlReturn {
     setSelectedDateWithURL(new Date())
   }
 
-  // Vérifie si une date est dans une période (closure ou holiday)
   const isDateInPeriod = (date: Date, period: Period): boolean => {
     if (!period.start_date || !period.end_date) {
       return false
     }
     const startDate = new Date(period.start_date)
     const endDate = new Date(period.end_date)
-    // Normaliser les dates pour comparer seulement les jours (sans heures)
     const start = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate())
     const end = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate())
     const check = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+
     return check >= start && check <= end
   }
 
@@ -145,21 +115,21 @@ export function CalCtrl(): CalendarCtrlReturn {
     for (let i = 0; i < 42; i++) {
       const date = new Date(startDate)
       date.setDate(startDate.getDate() + i)
+      const dateWithoutTime = new Date(date.getFullYear(), date.getMonth(), date.getDate())
 
+      const selectedDateWithoutTime = new Date(selectedDate().getFullYear(), selectedDate().getMonth(), selectedDate().getDate())
       const isOpen = () => {
-        // Vérifications de base
-        if (new Date(date) < new Date()) {
+        const currentDate = new Date()
+        currentDate.setHours(0, 0, 0, 0)
+        if (new Date(date) < currentDate) {
           return false
         }
-        if (date < selectedDate()) {
+        if (dateWithoutTime < selectedDateWithoutTime) {
           return false
         }
         if (date.getTime() > maxDate.getTime()) {
           return false
         }
-
-        // Vérifier d'abord les périodes de fermeture (closure_periods)
-        // Les périodes de fermeture s'appliquent à tous les jours
         const isInClosurePeriod = museumSchedule.some(schedule => {
           const closurePeriods = ((schedule as unknown) as { closure_periods?: Period[] }).closure_periods || []
           return closurePeriods.some((period: Period) => isDateInPeriod(date, period))
@@ -170,28 +140,20 @@ export function CalCtrl(): CalendarCtrlReturn {
           return false
         }
 
-        // Vérifier les jours avec audience_type: "holiday"
-        // Ils ne sont ouverts que si la date est dans une holiday_period ET que c'est le bon jour de la semaine
         const holidaySchedules = museumSchedule.filter(schedule => schedule.audience_type === 'holiday')
         if (holidaySchedules.length > 0) {
-          // Vérifier si c'est un jour holiday (même jour de la semaine)
           const matchingHolidaySchedule = holidaySchedules.find(schedule =>
             !schedule.is_exception && schedule.day_of_week === date.getDay()
           )
 
           if (matchingHolidaySchedule) {
-            // Si c'est un jour holiday, vérifier si la date est dans une holiday_period de ce schedule
             const holidayPeriods = ((matchingHolidaySchedule as unknown) as { holiday_periods?: Period[] }).holiday_periods || []
             const isInHolidayPeriod = holidayPeriods.some((period: Period) => isDateInPeriod(date, period))
-            // Les jours holiday ne sont ouverts QUE dans leurs périodes
             return isInHolidayPeriod
           }
         }
 
-        // Vérifier les règles normales d'ouverture (pour les jours non-holiday)
-        // Vérifier si la date correspond à un start_date ou end_date
         let isOpen = museumSchedule.some(schedule => {
-          // Ignorer les schedules holiday pour les règles normales
           if (schedule.audience_type === 'holiday') {
             return false
           }
@@ -208,7 +170,6 @@ export function CalCtrl(): CalendarCtrlReturn {
           return true
         }
 
-        // Vérifier les jours de la semaine réguliers (non exception, non holiday)
         isOpen = museumSchedule.some(schedule =>
           !schedule.is_exception &&
           schedule.day_of_week === date.getDay() &&
@@ -231,19 +192,16 @@ export function CalCtrl(): CalendarCtrlReturn {
     return days
   }
 
-  const isSameDay = (date1: Date, date2: Date): boolean => {
-    return date1.getFullYear() === date2.getFullYear() &&
-      date1.getMonth() === date2.getMonth() &&
-      date1.getDate() === date2.getDate()
-  }
+  const isSameDay = (date1: Date, date2: Date): boolean => date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
 
-  const formatDate = (date: Date): string => {
-    return date.getDate().toString()
-  }
-
-  const canGoToPrevious = createMemo(() => {
-    return selectedDate() < new Date()
-  })
+  const canGoToPrevious = createMemo(() => selectedDate() < new Date())
+  const currentYear = createMemo(() => selectedDate().getFullYear())
+  const currentMonthName = createMemo(() => selectedDate().toLocaleDateString(langs[currentLang] || langs.fr, {
+    month: 'long'
+  }))
+  const weekDays = createMemo(() => DAYS_TEXT[currentLang] || DAYS_TEXT.fr)
 
 
   const canGoToNext = createMemo(() => {
@@ -260,52 +218,28 @@ export function CalCtrl(): CalendarCtrlReturn {
     const days = generateMonthDays(current, today)
     return days.map(day => ({
       ...day,
-      items: items() // Utiliser le signal items
+      items: items()
     }))
   })
 
-  const currentMonthName = createMemo(() => {
-    const currentLang = lang()
-    return selectedDate().toLocaleDateString(langs[currentLang] || langs.fr, {
-      month: 'long'
-    })
-  })
 
-  const currentYear = createMemo(() => {
-    return selectedDate().getFullYear()
-  })
-
-  const weekDays = createMemo(() => {
-    const currentLang = lang()
-    return DAYS_TEXT[currentLang] || DAYS_TEXT.fr
+  createEffect(() => {
+    initializeFromURL()
   })
 
 
   return {
-    // État
-    view,
     selectedDate,
-
-
-    // Actions
-    setView: setViewWithURL,
     setSelectedDate: setSelectedDateWithURL,
     setItems,
-
-    // Navigation
     goToPrevious,
     goToNext,
     goToToday,
-
-    // Données calculées
     calendarDays,
     currentMonthName,
     currentYear,
     weekDays,
     canGoToPrevious,
     canGoToNext,
-
-    // Utilitaires
-    formatDate
   }
 }

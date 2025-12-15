@@ -1,8 +1,5 @@
 import type { Accessor } from "solid-js"
 
-// Types génériques pour l'UI
-export type CalendarView = 'month' | 'week' | 'day' | 'list'
-
 export interface CalendarDay {
   date: Date
   isCurrentMonth: boolean
@@ -33,10 +30,7 @@ export interface CalendarItem {
 }
 
 export interface CalendarCtrlReturn {
-  view: Accessor<CalendarView>
   selectedDate: Accessor<Date>
-
-  setView: (view: CalendarView) => void
   setSelectedDate: (date: Date) => void
   setItems: (items: CalendarEvent[]) => void
 
@@ -49,6 +43,4 @@ export interface CalendarCtrlReturn {
   currentMonthName: Accessor<string>
   currentYear: Accessor<number>
   weekDays: Accessor<string[]>
-
-  formatDate: (date: Date) => string
 }

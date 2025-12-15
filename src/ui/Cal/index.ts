@@ -1,8 +1,0 @@
-export { Cal } from './Cal'
-export { CalDay } from './CalDay'
-export { CalControls } from './CalControls'
-export { CalTodayBtn } from './CalToday.btn'
-export { CalDateDisplay } from './CalDate.display'
-export { CalCtrl } from './Cal.ctrl'
-export type { CalendarEvent, CalendarView, CalendarDay } from './Cal.types'
-export type { CalDayProps } from './CalDay.types'
