@@ -16,14 +16,20 @@ import { Show } from "solid-js";
 
 const txt = {
   fr: {
+    select_date: "Sélectionnez une date",
+    select_slot: "Sélectionnez un créneau horaire",
     total_amount: "Montant total: ",
+    select_price: "Sélectionnez vos tickets",
     total_places: "Nombre de billet: ",
     total_places_plural: "Nombre de billets: ",
     for_group: "Pour un groupe de plus de 10 personnes, veuillez nous contacter: ",
     contact: "Formulaire de contact",
   },
   en: {
+    select_date: "Select a date",
+    select_slot: "Select a time slot",
     total_amount: "Total amount: ",
+    select_price: "Select your tickets",
     total_places: "Total ticket: ",
     total_places_plural: "Total tickets: ",
     for_group: "For a group of more than 10 people, please contact us:",
@@ -43,11 +49,12 @@ export default function Ticket() {
       class="items-center justify-center relative overflow-y-auto flex flex-col gap-6 p-6 text-text"
     >
       <div id="step-1">
+        <h3 class="text-center">{txt[lang() as keyof typeof txt].select_date}</h3>
         <Cal onDayClick={slotsCtrl.onDayClick} selectedDate={ticketStore.reservation_date} />
       </div>
 
       <div id="step-2">
-        <h3 class="text-center">{ticketTxt.available_slots[lang() as keyof typeof ticketTxt.available_slots]}</h3>
+        <h3 class="text-center">{txt[lang() as keyof typeof txt].select_slot}</h3>
         <Slots
           isFetching={slotsCtrl.isFetching()}
           slots={slotsCtrl.slots()}
@@ -56,7 +63,7 @@ export default function Ticket() {
         />
       </div>
       <div id="step-3" class="mx-auto">
-        <h3 class="text-center">{ticketTxt.prices[lang() as keyof typeof ticketTxt.prices]}</h3>
+        <h3 class="text-center">{txt[lang() as keyof typeof txt].select_price}</h3>
         <p class="text-center text-sm text-text italic">
           {txt[lang() as keyof typeof txt].for_group}
           <A class="pl-2" href={`/${lang() as string}/contact`}>{txt[lang() as keyof typeof txt].contact}</A>

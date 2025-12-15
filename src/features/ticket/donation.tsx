@@ -29,7 +29,7 @@ export const Donation = () => {
                 dark:data-[selected=true]:text-black
               "
             >
-              €
+              {" "}€
             </span>
           </button>
         )}

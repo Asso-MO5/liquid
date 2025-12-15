@@ -19,8 +19,11 @@ export function Cal(props: CalProps) {
       >
         <For each={calendar.weekDays()}>
           {(day) => (
-            <div class="text-lg font-medium mb-1 flex items-center justify-center">
-              {day}
+            <div class="text-lg font-medium mb-1 flex items-center justify-center uppercase"
+              aria-label={day}
+              title={day}
+            >
+              {day.slice(0, 3)}
             </div>
           )}
         </For>
