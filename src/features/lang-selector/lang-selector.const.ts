@@ -14,3 +14,12 @@ export const LANGS = [
     }
   }
 ]
+
+export const SELECT = {
+  fr: {
+    selectLabel: 'Choix de la langue',
+  },
+  en: {
+    selectLabel: 'Select language',
+  }
+}
