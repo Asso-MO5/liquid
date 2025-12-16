@@ -24,6 +24,14 @@ export const legalLinks = [
     href: '/cgv',
     id: 28
   },
+  {
+    label: {
+      fr: 'Politique de confidentialité',
+      en: 'Privacy policy'
+    },
+    href: '/privacy-policy',
+    id: 3
+  }
 ]
 
 // Ressources et médias
