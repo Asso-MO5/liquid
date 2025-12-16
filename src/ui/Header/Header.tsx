@@ -1,7 +1,6 @@
 import { LangSelector } from "~/features/lang-selector/lang-selector"
 import { MiniGame } from "~/features/mini-game/mini-game"
 import { Show } from "solid-js"
-import { A } from "@solidjs/router"
 import { Logo } from "../Logo"
 import { MenuMobile } from "../Menu/menu-mobile"
 import { MenuDesktop } from "../Menu/menu-desktop"
@@ -28,6 +27,11 @@ export const Header = (props: HeaderProps) => {
 
   const lang = langCtrl()
 
+  const homeLink = () => {
+    window.history.pushState({}, '', `/${lang()}`)
+    window.location.reload()
+  }
+
   return (
     <div
       data-with-game={props.withGame}
@@ -47,9 +51,9 @@ export const Header = (props: HeaderProps) => {
             ease-in-out top-0 z-50 bg-bg"
         >
           <div class="flex items-center gap-4">
-            <A href={`/${lang()}`} aria-label={txt[lang() as keyof typeof txt].logoLabel}>
+            <div onClick={homeLink} class="cursor-pointer" role="link" tabindex="0" aria-label={txt[lang() as keyof typeof txt].logoLabel}>
               <Logo />
-            </A>
+            </div>
             <MenuDesktop />
           </div>
           <MenuMobile />
