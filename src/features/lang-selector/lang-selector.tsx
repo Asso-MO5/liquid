@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, useParams } from '@solidjs/router'
-import { LANGS } from './lang-selector.const'
+import { LANGS, SELECT } from './lang-selector.const'
 import { createSignal, For, onMount, Show } from 'solid-js'
 
 export const LangSelector = () => {
@@ -9,6 +9,8 @@ export const LangSelector = () => {
   const [selectedLang, setSelectedLang] = createSignal('')
 
   const changeLang = (lang: 'fr' | 'en') => {
+    document.documentElement.setAttribute('lang', lang)
+
     navigate(
       path.pathname.replace(selectedLang() || '', lang) + window.location.search
     )
@@ -26,6 +28,7 @@ export const LangSelector = () => {
           id="lang-selector"
           value={selectedLang() || 'fr'}
           onInput={(e) => changeLang(e.currentTarget?.value as 'fr' | 'en')}
+          title={SELECT[selectedLang() as keyof typeof SELECT].selectLabel}
         >
           <For each={LANGS}>
             {(lang) => (
