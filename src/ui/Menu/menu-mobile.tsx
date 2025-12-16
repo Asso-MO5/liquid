@@ -52,22 +52,23 @@ export const MenuMobile = () => {
         class={`fixed top-18 left-0 w-full bg-bg z-40 overflow-hidden transition-all duration-300 ease-in-out ${isOpen() ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
           }`}
       >
-        <div class="py-4 px-4 flex flex-col gap-2">
+        <div>
+          <ul class="py-4 px-4 flex flex-col gap-2">
           <For each={menuEntries}>
             {(entry) => {
 
               if (entry.external) {
-                return <a href={entry.href} target="_blank" rel="noopener noreferrer"
+                return <li class="px-4 flex flex-col gap-2"><a href={entry.href} target="_blank" rel="noopener noreferrer"
                   onClick={() => setIsOpen(false)}
                   class="
                   text-center secondary border-primary border px-2 py-2 
                   rounded-sm transition-all duration-300 hover:bg-primary/10 hover:text-primary
                 ">
                   {entry.label[lang() as "fr" | "en"]}
-                </a>;
+                </a></li>;
               }
               return (
-                <a
+                <li class="px-4 flex flex-col gap-2"><a
                   href={`/${lang()}${entry.href}`}
                   data-highlighted={entry.highlighted}
                   class="
@@ -78,10 +79,11 @@ export const MenuMobile = () => {
                   onClick={() => setIsOpen(false)}
                 >
                   {entry.label[lang() as "fr" | "en"]}
-                </a>
+                </a></li>
               );
             }}
           </For>
+          </ul>
         </div>
       </div>
     </div>
