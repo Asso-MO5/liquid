@@ -34,8 +34,8 @@ export default function App() {
       root={(props) => (
         <MetaProvider>
           <Title>Le musée du jeu vidéo</Title>
-          <Meta name="description" content="Le musée du jeu vidéo" />
-          <Meta name="keywords" content="musée, jeu vidéo, jeux, jeux vidéo, jeux de société, jeux de sociétés, jeux de sociétés en ligne, jeux de sociétés en ligne gratuit, jeux de sociétés en ligne gratuitement, jeux de sociétés en ligne gratuitement sans inscription, jeux de sociétés en ligne gratuitement sans inscription, jeux de sociétés en ligne gratuitement sans inscription, jeux de sociétés en ligne gratuitement sans inscription" />
+          <Meta name="description" content="Le musée du jeu vidéo, par l'association MO5 à Arcueil" />
+          <Meta name="keywords" content="musée, jeu vidéo, jeux, jeux vidéo, console, consoles, consoles de jeu vidéo, consoles de jeu vidéo portables, arcade, bornes d'arcade, ordinateur, ordinateurs, informatique, exposition, histoire, histoire du jeu vidéo" />
           <Meta name="og:image" content="https://museedujeuvideo.org/og.png" />
           <Meta name="og:description" content="Préserver, comprendre, transmettre : l'héritage du jeu vidéo" />
           <Meta name="og:title" content="Le musée du jeu vidéo" />
