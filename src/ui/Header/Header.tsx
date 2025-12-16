@@ -1,6 +1,7 @@
 import { LangSelector } from "~/features/lang-selector/lang-selector"
 import { MiniGame } from "~/features/mini-game/mini-game"
 import { Show } from "solid-js"
+import { A } from "@solidjs/router"
 import { Logo } from "../Logo"
 import { MenuMobile } from "../Menu/menu-mobile"
 import { MenuDesktop } from "../Menu/menu-desktop"
@@ -15,20 +16,17 @@ type HeaderProps = {
 const txt = {
   fr: {
     logoAlt: 'Logo de l\'association MO5',
+    logoLabel: 'Musée du Jeu Vidéo - Accueil',
   },
   en: {
     logoAlt: 'Logo of the MO5 association',
+    logoLabel: 'Video Game Museum - Home',
   }
 }
 
 export const Header = (props: HeaderProps) => {
 
   const lang = langCtrl()
-
-  const homeLink = () => {
-    window.history.pushState({}, '', `/${lang()}`)
-    window.location.reload()
-  }
 
   return (
     <div
@@ -49,9 +47,9 @@ export const Header = (props: HeaderProps) => {
             ease-in-out top-0 z-50 bg-bg"
         >
           <div class="flex items-center gap-4">
-            <div onClick={homeLink} class="cursor-pointer">
+            <A href={`/${lang()}`} aria-label={txt[lang() as keyof typeof txt].logoLabel}>
               <Logo />
-            </div>
+            </A>
             <MenuDesktop />
           </div>
           <MenuMobile />

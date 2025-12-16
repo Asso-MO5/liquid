@@ -2,8 +2,8 @@ import { langCtrl } from "~/features/lang-selector/lang.ctrl"
 
 const logoTxt = {
   alt: {
-    fr: 'Logo du Musée du Jeu Vidéo',
-    en: 'Logo of the Video Game Museum',
+    fr: 'Musée du Jeu Vidéo',
+    en: 'Video Game Museum',
   },
 }
 
