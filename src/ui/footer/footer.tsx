@@ -11,9 +11,9 @@ export const Footer = () => {
     <footer class="grid grid-cols-1 sm:grid-cols-3 gap-8 p-8 mt-16 pt-4 border-t dark:border-white/10">
       {/* Liens légaux */}
       <div>
-        <h3 class="text-xl mb-4 text-text/80">
+        <h2 class="text-xl mb-4 text-text/80">
           {lang() === 'fr' ? 'Informations légales' : 'Legal information'}
-        </h3>
+        </h2>
         <ul class="flex flex-col gap-2">
           <For each={legalLinks}>
             {(link) => (
@@ -32,9 +32,9 @@ export const Footer = () => {
 
       {/* Ressources */}
       <div>
-        <h3 class="text-xl mb-4 text-text/80">
+        <h2 class="text-xl mb-4 text-text/80">
           {lang() === 'fr' ? 'Ressources' : 'Resources'}
-        </h3>
+        </h2>
         <ul class="flex flex-col gap-2">
           <For each={resourcesLinks}>
             {(link) => (
@@ -53,9 +53,9 @@ export const Footer = () => {
 
       {/* Réseaux sociaux */}
       <div>
-        <h3 class="text-xl mb-4 text-text/80">
+        <h2 class="text-xl mb-4 text-text/80">
           {lang() === 'fr' ? 'Suivez-nous' : 'Follow us'}
-        </h3>
+        </h2>
         <ul class="flex flex-col gap-2">
           <For each={socialLinks}>
             {(link) => (
