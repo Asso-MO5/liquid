@@ -11,7 +11,7 @@ export const MenuMobile = () => {
   };
 
   return (
-    <div class="sm:hidden">
+    <div class="lg:hidden">
       <div class="fixed top-0 left-[50%] -translate-x-1/2 h-18 flex items-center justify-center">
         <button
           onClick={toggleMenu}
@@ -49,40 +49,44 @@ export const MenuMobile = () => {
 
       {/* Menu qui s'ouvre de haut en bas */}
       <div
-        class={`fixed top-18 left-0 w-full bg-bg z-40 overflow-hidden transition-all duration-300 ease-in-out ${isOpen() ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-          }`}
+        data-open={isOpen()}
+        class="
+        fixed top-18 left-0 w-full bg-bg z-40 overflow-hidden transition-all duration-300 ease-in-out
+        data-[open=true]:max-h-screen data-[open=true]:opacity-100
+        data-[open=false]:max-h-0 data-[open=false]:opacity-0
+        "
       >
         <div>
           <ul class="py-4 px-4 flex flex-col gap-2">
-          <For each={menuEntries}>
-            {(entry) => {
+            <For each={menuEntries}>
+              {(entry) => {
 
-              if (entry.external) {
-                return <li class="px-4 flex flex-col gap-2"><a href={entry.href} target="_blank" rel="noopener noreferrer"
-                  onClick={() => setIsOpen(false)}
-                  class="
+                if (entry.external) {
+                  return <li class="px-4 flex flex-col gap-2"><a href={entry.href} target="_blank" rel="noopener noreferrer"
+                    onClick={() => setIsOpen(false)}
+                    class="
                   text-center secondary border-primary border px-2 py-2 
                   rounded-sm transition-all duration-300 hover:bg-primary/10 hover:text-primary
                 ">
-                  {entry.label[lang() as "fr" | "en"]}
-                </a></li>;
-              }
-              return (
-                <li class="px-4 flex flex-col gap-2"><a
-                  href={`/${lang()}${entry.href}`}
-                  data-highlighted={entry.highlighted}
-                  class="
+                    {entry.label[lang() as "fr" | "en"]}
+                  </a></li>;
+                }
+                return (
+                  <li class="px-4 flex flex-col gap-2"><a
+                    href={`/${lang()}${entry.href}`}
+                    data-highlighted={entry.highlighted}
+                    class="
                   hover:text-primary text-text text-center
                   data-[highlighted=true]:text-secondary 
                   border border-transparent hover:bg-primary/10 
                   data-[highlighted=true]:hover:text-white rounded-sm px-2 py-2 transition-all duration-300 data-[highlighted=true]:border-secondary data-[highlighted=true]:hover:bg-secondary"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {entry.label[lang() as "fr" | "en"]}
-                </a></li>
-              );
-            }}
-          </For>
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {entry.label[lang() as "fr" | "en"]}
+                  </a></li>
+                );
+              }}
+            </For>
           </ul>
         </div>
       </div>
