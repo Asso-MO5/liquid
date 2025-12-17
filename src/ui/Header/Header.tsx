@@ -15,9 +15,11 @@ type HeaderProps = {
 const txt = {
   fr: {
     logoAlt: 'Logo de l\'association MO5',
+    logoLabel: 'Musée du Jeu Vidéo - Accueil',
   },
   en: {
     logoAlt: 'Logo of the MO5 association',
+    logoLabel: 'Video Game Museum - Home',
   }
 }
 
@@ -49,7 +51,7 @@ export const Header = (props: HeaderProps) => {
             ease-in-out top-0 z-50 bg-bg"
         >
           <div class="flex items-center gap-4">
-            <div onClick={homeLink} class="cursor-pointer">
+            <div onClick={homeLink} class="cursor-pointer" role="link" tabindex="0" aria-label={txt[lang() as keyof typeof txt].logoLabel}>
               <Logo />
             </div>
             <MenuDesktop />
