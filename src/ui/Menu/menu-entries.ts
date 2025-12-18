@@ -24,6 +24,13 @@ export const menuEntries: { label: { fr: string; en: string }; href: string; hig
     },
     href: "/your-visit"
   },
+  {
+    label: {
+      fr: "Offrir un ticket",
+      en: "Gift a ticket"
+    },
+    href: "/purchase-gift"
+  }
   /*
   {
     label: {
