@@ -19,6 +19,7 @@ const txt = {
     payButton: "Payer les cartes cadeaux",
     invalidEmail: "Veuillez saisir un email valide.",
     invalidQuantity: "Veuillez choisir une quantité entre 1 et 5.",
+    validityDateMsg: "Les codes cadeaux sont valables jusqu'au {date}.",
   },
   en: {
     title: "Buy a gift card",
@@ -36,6 +37,7 @@ const txt = {
     payButton: "Pay gift cards",
     invalidEmail: "Please enter a valid email address.",
     invalidQuantity: "Please choose a quantity between 1 and 5.",
+    validityDateMsg: "The gift codes are valid until {date}.",
   },
 };
 
@@ -80,6 +82,10 @@ export const PurchaseGift = () => {
             <p class="text-xs text-error">{t().invalidQuantity}</p>
           </Show>
         </div>
+
+        <Show when={ctrl.validityDate()}>
+          <p class="text-sm text-center text-accent">{t().validityDateMsg.replace("{date}", ctrl.validityDate())}</p>
+        </Show>
 
         <div class="flex flex-col gap-1">
           <label for="gift_email" class="text-primary font-semibold">

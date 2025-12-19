@@ -188,6 +188,13 @@ export const purchaseGiftCTRL = () => {
     setQuantity(value);
   };
 
+
+  const validityDate = createMemo(() => {
+    // fin janvier 2026
+    const validityDate = new Date(2026, 0, 31);
+    return validityDate.toLocaleDateString(lang(), { year: "numeric", month: "long", day: "numeric" });
+  });
+
   onMount(() => {
     fetchPrice();
   });
@@ -206,6 +213,7 @@ export const purchaseGiftCTRL = () => {
     quantityValid,
     canSubmit,
     preparePurchase,
+    validityDate,
   };
 };
 
