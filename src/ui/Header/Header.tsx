@@ -14,12 +14,12 @@ type HeaderProps = {
 
 const txt = {
   fr: {
-    logoAlt: 'Logo de l\'association MO5',
-    logoLabel: 'Musée du Jeu Vidéo - Accueil',
+    logoMO5Alt: 'Association MO5',
+    logoMJVLabel: 'Musée du Jeu Vidéo - Accueil',
   },
   en: {
-    logoAlt: 'Logo of the MO5 association',
-    logoLabel: 'Video Game Museum - Home',
+    logoMO5Alt: 'MO5 association',
+    logoMJVLabel: 'Video Game Museum - Home',
   }
 }
 
@@ -51,7 +51,7 @@ export const Header = (props: HeaderProps) => {
             ease-in-out top-0 z-50 bg-bg"
         >
           <div class="flex items-center gap-4">
-            <div onClick={homeLink} class="cursor-pointer" role="link" tabindex="0" aria-label={txt[lang() as keyof typeof txt].logoLabel}>
+            <div onClick={homeLink} class="cursor-pointer" role="link" tabindex="0" aria-label={txt[lang() as keyof typeof txt].logoMJVLabel}>
               <Logo />
             </div>
             <MenuDesktop />
@@ -62,7 +62,7 @@ export const Header = (props: HeaderProps) => {
               <img src="/logo.webp"
                 width={194}
                 height={60}
-                alt={txt[lang() as keyof typeof txt].logoAlt}
+                alt={txt[lang() as keyof typeof txt].logoMO5Alt}
                 class="w-[120px] h-auto hidden md:block" />
             </a>
             <DarkMode />
