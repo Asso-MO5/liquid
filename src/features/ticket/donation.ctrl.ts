@@ -8,6 +8,6 @@ export function donationCtrl() {
 
   return {
     setDonation,
-    donations: [0, 3, 5, 10, 20, 50],
+    donations: [0, 1, 3, 5, 10, 20],
   }
 }

@@ -1,4 +1,4 @@
-export const menuEntries: { label: { fr: string; en: string }; href: string; highlighted?: boolean; external?: boolean }[] = [
+export const menuEntries: { label: { fr: string; en: string }; href: string; highlighted?: boolean; external?: boolean; green?: boolean }[] = [
 
   {
     label: {
@@ -17,6 +17,14 @@ export const menuEntries: { label: { fr: string; en: string }; href: string; hig
     href: "https://don.mo5.com"
   },
   {
+    label: {
+      fr: "Offrir un ticket",
+      en: "Gift a ticket"
+    },
+    href: "/purchase-gift",
+    green: true
+  },
+  {
     label:
     {
       fr: "Votre visite",
@@ -24,13 +32,7 @@ export const menuEntries: { label: { fr: string; en: string }; href: string; hig
     },
     href: "/your-visit"
   },
-  {
-    label: {
-      fr: "Offrir un ticket",
-      en: "Gift a ticket"
-    },
-    href: "/purchase-gift"
-  }
+
   /*
   {
     label: {

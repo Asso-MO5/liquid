@@ -1,8 +1,19 @@
 import { For } from 'solid-js'
 import { donationCtrl } from './donation.ctrl'
 import { ticketStore } from './ticket.store'
+import { translate } from '../../utils/translate';
+
+const txt = {
+  fr: {
+    donationInfoTax: "Les dons sont déductibles à hauteur de 66% du montant versé.",
+  },
+  en: {
+    donationInfoTax: "Donations are deductible up to 66% of the amount paid.",
+  }
+}
 
 export const Donation = () => {
+  const { t } = translate(txt)
   const donations = donationCtrl()
 
   return (
@@ -34,6 +45,7 @@ export const Donation = () => {
           </button>
         )}
       </For>
+      <p class="text-sm text-secondary italic text-center col-span-3 mt-4">{t.donationInfoTax}</p>
     </div>
   )
 }

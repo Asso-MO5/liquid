@@ -2,7 +2,6 @@ import { createSignal } from "solid-js";
 import type { Slot, SlotsResponse } from "./slot.type";
 import { setTicketStore, ticketStore } from "~/features/ticket/ticket.store";
 import { clientEnv } from "~/env/client";
-import { scrollTo } from "~/utils/scroll-to";
 import { formatDateToISO } from "~/utils/format-date-to-iso";
 
 export const slotsCTRL = () => {
@@ -36,7 +35,6 @@ export const slotsCTRL = () => {
     setTicketStore('slot_start_time', slot.start_time);
     setTicketStore('slot_end_time', slot.end_time);
     setTicketStore('is_half_price', slot.is_half_price);
-    scrollTo('ticket', 'step-3');
   }
 
 
@@ -44,7 +42,6 @@ export const slotsCTRL = () => {
     const dateString = formatDateToISO(day);
     setTicketStore('reservation_date', `${dateString}T00:00:00.000Z`);
     await getSlots()
-    scrollTo('ticket', 'step-2');
   }
 
   return {

@@ -2,7 +2,6 @@ import { useLocation } from "@solidjs/router"
 import { createEffect, createSignal, type JSX } from "solid-js"
 import { ToastContainer } from "../Toast"
 import { Header } from "~/ui/Header/Header"
-import ScrollBehavior from "../ScrollBehavior"
 import { Footer } from "../footer/footer"
 
 type LayoutProps = {
@@ -26,7 +25,7 @@ export const Layout = (props: LayoutProps) => {
 
   return (
     <>
-      <ScrollBehavior />
+      {/* <ScrollBehavior /> */}
       <ToastContainer />
       <div
         data-with-game={withGame()}

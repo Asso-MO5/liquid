@@ -13,7 +13,7 @@ export const [ticketStore, setTicketStore] = createStore<TicketStore>({
   checkout_reference: null,
   transaction_status: null,
   ticket_price: 0,
-  donation_amount: 0,
+  donation_amount: 1,
   total_amount: 0,
   status: 'pending',
   guided_tour: false,

@@ -75,7 +75,11 @@ export const MenuMobile = () => {
                   <li class="px-4 flex flex-col gap-2"><a
                     href={`/${lang()}${entry.href}`}
                     data-highlighted={entry.highlighted}
+                    data-green={entry.green}
                     class="
+                    data-[green=true]:text-emerald-500
+                    data-[green=true]:hover:text-emerald-500
+                    data-[green=true]:border-emerald-500
                   hover:text-primary text-text text-center
                   data-[highlighted=true]:text-secondary 
                   border border-transparent hover:bg-primary/10 
