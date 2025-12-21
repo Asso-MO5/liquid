@@ -24,6 +24,28 @@ const applyMute = (muted: boolean) => {
 
 if (typeof window !== 'undefined') {
   applyMute(getInitialMuted())
+
+  const handleVisibilityChange = () => {
+    if (document.hidden) {
+      const game = getGameInstance()
+      game?.setVolume(0)
+    } else {
+      applyMute(isMuted())
+    }
+  }
+
+  const handlePageHide = () => {
+    const game = getGameInstance()
+    game?.setVolume(0)
+  }
+
+  const handlePageShow = () => {
+    applyMute(isMuted())
+  }
+
+  document.addEventListener('visibilitychange', handleVisibilityChange)
+  window.addEventListener('pagehide', handlePageHide)
+  window.addEventListener('pageshow', handlePageShow)
 }
 
 export const soundCtrl = {
