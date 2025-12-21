@@ -20,7 +20,7 @@ export const ToastContainer = (props: ToastContainerProps) => {
 
   return (
     <div
-      class="fixed z-50 pointer-events-none
+      class="fixed z-[9999] pointer-events-none
             data-[position=top-left]:top-4 data-[position=top-left]:left-4
             data-[position=top-center]:top-4 data-[position=top-center]:left-1/2 data-[position=top-center]:-translate-x-1/2
             data-[position=top-right]:top-4 data-[position=top-right]:right-4
