@@ -6,6 +6,7 @@ import { MenuMobile } from "../Menu/menu-mobile"
 import { MenuDesktop } from "../Menu/menu-desktop"
 import { langCtrl } from "~/features/lang-selector/lang.ctrl"
 import { DarkMode } from "~/features/dark-mode/dark-mode"
+import { translate } from "~/utils/translate"
 
 type HeaderProps = {
   withGame?: boolean
@@ -24,8 +25,9 @@ const txt = {
 }
 
 export const Header = (props: HeaderProps) => {
-
   const lang = langCtrl()
+  const { t } = translate(txt)
+
 
   const homeLink = () => {
     window.history.pushState({}, '', `/${lang()}`)
@@ -51,7 +53,7 @@ export const Header = (props: HeaderProps) => {
             ease-in-out top-0 z-50 bg-bg"
         >
           <div class="flex items-center gap-4">
-            <div onClick={homeLink} class="cursor-pointer" role="link" tabindex="0" aria-label={txt[lang() as keyof typeof txt].logoMJVLabel}>
+            <div onClick={homeLink} class="cursor-pointer" role="link" tabindex="0" aria-label={t.logoMJVLabel}>
               <Logo />
             </div>
             <MenuDesktop />
@@ -62,7 +64,7 @@ export const Header = (props: HeaderProps) => {
               <img src="/logo.webp"
                 width={194}
                 height={60}
-                alt={txt[lang() as keyof typeof txt].logoMO5Alt}
+                alt={t.logoMO5Alt}
                 class="w-[120px] h-auto hidden md:block" />
             </a>
             <DarkMode />
