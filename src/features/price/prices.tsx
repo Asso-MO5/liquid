@@ -33,7 +33,7 @@ export const Prices = () => {
             <div class="text-xl font-bold w-full flex justify-between gap-2">
               <p>{price.translations[lang() as keyof typeof price.translations].name}</p>
               <Show when={price.amount > 0}>
-                <div class="text-lg font-bold ">{ticketCreateCtrl.isHalfPrice() ? Math.floor(price.amount / 2) : price.amount}<span class="text-secondary"> €</span></div>
+                <div class="text-lg font-bold ">{ticketCreateCtrl.isHalfPrice() ? Math.round(price.amount / 2) : price.amount}<span class="text-secondary"> €</span></div>
               </Show>
               <Show when={price.amount === 0}>
                 <p>{txt[lang() as keyof typeof txt].free}</p>
