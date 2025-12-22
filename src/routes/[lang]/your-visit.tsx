@@ -11,11 +11,13 @@ import { translate } from '~/utils/translate'
 
 export const texts = {
   fr: {
+    error: 'Une erreur est survenue lors du chargement de la page.',
     openingHours: "Horaires d'ouverture",
     prices: 'Tarifs',
     holiday: 'Vacances scolaires uniquement',
   },
   en: {
+    error: 'An error occurred while loading the page.',
     openingHours: 'Opening Hours',
     prices: 'Prices',
     holiday: 'School holidays only',
@@ -88,7 +90,7 @@ export const Page = () => {
 
   return (
     <main id="main" class="container max-w-xl mx-auto px-4 py-8 text-text">
-      <ErrorBoundary fallback={<div>Une erreur est survenue lors du chargement de la page.</div>}>
+      <ErrorBoundary fallback={<div>{t().error}</div>}>
         <Suspense
           fallback={
             <div class="flex items-center justify-center p-3">
