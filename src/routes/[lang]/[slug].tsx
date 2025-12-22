@@ -1,9 +1,19 @@
-import { Meta, Title } from "@solidjs/meta";
+import { MetaProvider, Meta, Title } from "@solidjs/meta";
 import { query, createAsync, useParams, type RouteDefinition } from "@solidjs/router";
 import { Suspense, ErrorBoundary, createMemo } from "solid-js";
 import { legalLinks, resourcesLinks } from "~/ui/footer/footer.const";
 import { Loader } from "~/ui/loader";
 
+const texts = {
+  fr: {
+    error: 'Une erreur est survenue lors du chargement de la page.',
+    baseline: 'Le Musée du Jeu Vidéo',
+  },
+  en: {
+    error: 'An error occurred while loading the page.',
+    baseline: 'The Video Game Museum',
+  }
+}
 
 const getPage = query(async (lang: string, slug: string) => {
   'use server'
@@ -41,32 +51,39 @@ export const Page = () => {
     return getPage(params.lang, params.slug);
   });
 
-  const title = page()?.title?.rendered ? `${page().title.rendered} - Le musée du jeu vidéo` : 'Le musée du jeu vidéo'
+  
+  const lang = () => params.lang as 'fr' | 'en';
+  // @TODO Suspense + Meta ne semble pas fonctionner, le changement n'est pas déclenché sans rechargement
+  console.log(page()?.title?.rendered);
+  const title = page()?.title?.rendered ? `${page().title.rendered} - ${texts[lang()].baseline}` : texts[lang()].baseline;
   const description = page()?.excerpt?.rendered || ''
 
   return (
-    <div class="container max-w-xl mx-auto px-4 py-8 text-text">
-      <ErrorBoundary fallback={<div>Une erreur est survenue lors du chargement de la page.</div>}>
+      <ErrorBoundary fallback={<div>{texts[lang()].error}</div>}>
         <Suspense fallback={<div class="flex items-center justify-center p-3"><Loader /></div>}>
           {
             <>
-              <Title>{title}</Title>
-              <Meta name="description" content={description} />
-              {page()?.keywords && <Meta name="keywords" content={page().keywords.join(', ')} />}
-              <article class="prose prose-invert max-w-none">
-                {page()?.title?.rendered && (
-                  <h1 class="text-5xl text-tertiary text-center font-display">{page().title.rendered}</h1>
-                )}
-                {page()?.content?.rendered && (
-                  // eslint-disable-next-line solid/no-innerhtml
-                  <div innerHTML={page().content.rendered} class="text-text" />
-                )}
-              </article>
+              <MetaProvider>
+                <Title>{title}</Title>
+                <Meta name="description" content={description} />
+                {page()?.keywords && <Meta name="keywords" content={page().keywords.join(', ')} />}
+              </MetaProvider>
+
+              <main id="main" class="container max-w-xl mx-auto px-4 py-8 text-text">
+                <article class="prose prose-invert max-w-none">
+                  {page()?.title?.rendered && (
+                    <h1 class="text-5xl text-tertiary text-center font-display">{page().title.rendered}</h1>
+                  )}
+                  {page()?.content?.rendered && (
+                    // eslint-disable-next-line solid/no-innerhtml
+                    <div innerHTML={page().content.rendered} class="text-text" />
+                  )}
+                </article>
+              </main>
             </>
           }
         </Suspense>
       </ErrorBoundary>
-    </div>
 
   );
 };
