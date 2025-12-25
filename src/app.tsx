@@ -36,6 +36,7 @@ export default function App() {
           <Meta name="description" content="Le musée du jeu vidéo, par l'association MO5 à Arcueil" />
           <Meta name="keywords" content="musée, jeu vidéo, jeux, jeux vidéo, console, consoles, consoles de jeu vidéo, consoles de jeu vidéo portables, arcade, bornes d'arcade, ordinateur, ordinateurs, informatique, exposition, histoire, histoire du jeu vidéo" />
           <Meta name="og:image" content="https://museedujeuvideo.org/og.png" />
+          <Meta name='favicon' content="https://museedujeuvideo.org/favicon.ico" />
           <Meta name="og:description" content="Préserver, comprendre, transmettre : l'héritage du jeu vidéo" />
           <Meta name="og:title" content="Le musée du jeu vidéo" />
           <Meta name="viewport" content="width=device-width, initial-scale=1" />
