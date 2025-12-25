@@ -13,6 +13,7 @@ import { PaymentBtn } from "~/features/ticket/payment.btn";
 import { GiftCodes } from "~/features/gift-codes/gift-codes";
 import { TicketResume } from "~/features/ticket/ticket-resume";
 import { Show } from "solid-js";
+import { Address } from "~/features/address/address";
 
 const txt = {
   fr: {
@@ -88,6 +89,7 @@ export default function Ticket() {
           </p>
         </Show>
       </div>
-    </main >
+      <Address />
+    </main>
   )
 }

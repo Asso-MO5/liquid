@@ -2,7 +2,6 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Définition des polices */
 @font-face {
   font-family: 'Stack Sans Text';
   src: url('/fonts/Stack_Sans_Text/StackSansText-VariableFont_wght.ttf')
@@ -321,33 +320,31 @@
     @apply pb-4;
   }
 
-  /* Classe utilitaire pour Bebas Neue */
   .font-display {
     font-family: 'Bebas Neue', sans-serif;
   }
 }
 
-/* Animation pour le bouton avec bordure qui tourne */
 @keyframes border-rotate {
   0% {
-    border-color: #e83f36; /* secondary */
-    color: #e83f36; /* secondary */
+    border-color: #e83f36;
+    color: #e83f36;
   }
   25% {
-    border-color: #ff2a83; /* primary */
-    color: #ff2a83; /* primary */
+    border-color: #ff2a83;
+    color: #ff2a83;
   }
   50% {
-    border-color: #e83f36; /* secondary */
-    color: #e83f36; /* secondary */
+    border-color: #e83f36;
+    color: #e83f36;
   }
   75% {
-    border-color: #ff2a83; /* primary */
-    color: #ff2a83; /* primary */
+    border-color: #ff2a83;
+    color: #ff2a83;
   }
   100% {
-    border-color: #e83f36; /* secondary */
-    color: #e83f36; /* secondary */
+    border-color: #e83f36;
+    color: #e83f36;
   }
 }
 

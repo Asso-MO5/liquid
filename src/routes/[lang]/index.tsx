@@ -1,5 +1,6 @@
 import { A } from "@solidjs/router";
-import { For, type VoidComponent } from "solid-js";
+import type { VoidComponent } from "solid-js";
+import { Address } from "~/features/address/address";
 import { Asso } from "~/features/asso/asso";
 import { langCtrl } from "~/features/lang-selector/lang.ctrl";
 import { Pictures } from "~/features/pictures/pictures";
@@ -26,12 +27,7 @@ const Home: VoidComponent = () => {
   return (
     <main class="flex flex-col gap-12 p-4">
       <div class="grid grid-rows-1 md:grid-cols-2 flex-wrap gap-2 w-full md:justify-between justify-center items-center">
-        <div class="flex flex-col h-full justify-center items-center rounded-sm p-4">
-          <h2 class="text-4xl font-bold text-center">{infoTxt[lang() as keyof typeof infoTxt].Title}</h2>
-          <For each={infoTxt[lang() as keyof typeof infoTxt].address}>
-            {(address) => <p class="text-center line-clamp-1 p-0 m-0">{address}</p>}
-          </For>
-        </div>
+        <Address />
 
         <div class="flex justify-center items-center h-full">
           <A

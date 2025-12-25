@@ -1,6 +1,7 @@
 import { Meta, Title } from "@solidjs/meta";
 import { query, createAsync, useParams, type RouteDefinition } from "@solidjs/router";
 import { Suspense, ErrorBoundary, createMemo, For, Show } from "solid-js";
+import { Address } from "~/features/address/address";
 import { prices } from "~/features/price/price.store";
 import { schedules } from "~/features/schedules/schedules.store";
 import { TakeATicket } from "~/features/ticket/take-a-ticket";
@@ -54,8 +55,6 @@ export const Page = () => {
   const title = page()?.title?.rendered ? `${page().title.rendered} - Le musée du jeu vidéo` : 'Le musée du jeu vidéo'
   const description = page()?.excerpt?.rendered || ''
 
-  // Noms complets des jours de la semaine
-
   const regularSchedules = createMemo(() => {
     return schedules().filter(schedule =>
       !schedule.is_exception &&
@@ -85,6 +84,7 @@ export const Page = () => {
               <Meta name="description" content={description} />
               {page()?.keywords && <Meta name="keywords" content={page().keywords.join(', ')} />}
 
+              <Address />
               <article class="prose prose-invert max-w-none">
 
                 {page()?.content?.rendered && (
