@@ -52,8 +52,14 @@ export const Page = () => {
     return getPage(params.lang);
   });
 
-  const title = page()?.title?.rendered ? `${page().title.rendered} - Le musée du jeu vidéo` : 'Le musée du jeu vidéo'
-  const description = page()?.excerpt?.rendered || ''
+  const title = createMemo(() => {
+    const pageData = page()
+    return pageData?.title?.rendered ? `${pageData.title.rendered} - Le musée du jeu vidéo` : 'Le musée du jeu vidéo'
+  })
+  const description = createMemo(() => {
+    const pageData = page()
+    return pageData?.excerpt?.rendered || ''
+  })
 
   const regularSchedules = createMemo(() => {
     return schedules().filter(schedule =>
@@ -75,13 +81,12 @@ export const Page = () => {
 
   return (
     <div class="container max-w-xl mx-auto px-4 py-8 text-text">
-
       <ErrorBoundary fallback={<div>Une erreur est survenue lors du chargement de la page.</div>}>
         <Suspense fallback={<div class="flex items-center justify-center p-3"><Loader /></div>}>
           {
             <>
-              <Title>{title}</Title>
-              <Meta name="description" content={description} />
+              <Title>{title()}</Title>
+              <Meta name="description" content={description()} />
               {page()?.keywords && <Meta name="keywords" content={page().keywords.join(', ')} />}
 
               <Address />
