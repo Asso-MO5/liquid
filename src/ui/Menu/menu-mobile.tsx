@@ -1,6 +1,7 @@
 import { For, createSignal } from "solid-js"
 import { menuEntries } from "./menu-entries"
 import { langCtrl } from "~/features/lang-selector/lang.ctrl"
+import { translate } from "~/utils/translate"
 
 export const MenuMobile = () => {
   const lang = langCtrl()
@@ -60,6 +61,7 @@ export const MenuMobile = () => {
           <ul class="py-4 px-4 flex flex-col gap-2">
             <For each={menuEntries}>
               {(entry) => {
+                const { t } = translate({ fr: { label: entry.label.fr }, en: { label: entry.label.en } })
 
                 if (entry.external) {
                   return <li class="px-4 flex flex-col gap-2"><a href={entry.href} target="_blank" rel="noopener noreferrer"
@@ -68,7 +70,7 @@ export const MenuMobile = () => {
                   text-center secondary border-primary border px-2 py-2 
                   rounded-sm transition-all duration-300 hover:bg-primary/10 hover:text-primary
                 ">
-                    {entry.label[lang() as "fr" | "en"]}
+                    {t.label}
                   </a></li>;
                 }
                 return (
@@ -86,7 +88,7 @@ export const MenuMobile = () => {
                   data-[highlighted=true]:hover:text-white rounded-sm px-2 py-2 transition-all duration-300 data-[highlighted=true]:border-secondary data-[highlighted=true]:hover:bg-secondary"
                     onClick={() => setIsOpen(false)}
                   >
-                    {entry.label[lang() as "fr" | "en"]}
+                    {t.label}
                   </a></li>
                 );
               }}

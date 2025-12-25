@@ -1,20 +1,10 @@
 import { setTicketStore } from "~/features/ticket/ticket.store";
 import { onMount } from "solid-js";
-import { langCtrl } from "~/features/lang-selector/lang.ctrl";
-
-const errorTxt = {
-  fr: {
-    title: 'Erreur',
-    description: 'Une erreur est survenue lors de la réservation.',
-  },
-  en: {
-    title: 'Error',
-    description: 'An error occurred during the reservation.',
-  }
-}
+import { translate } from "~/utils/translate";
+import { errorTxt } from "./error.txt";
 
 export default function Error() {
-  const lang = langCtrl();
+  const { t } = translate(errorTxt);
 
   onMount(() => {
     // vider le store
@@ -27,8 +17,8 @@ export default function Error() {
 
   return (
     <div class="flex flex-col gap-2 items-center justify-center">
-      <h1 class="text-2xl font-bold">{errorTxt[lang()].title}</h1>
-      <p class="text-lg text-white">{errorTxt[lang()].description}</p>
+      <h1 class="text-2xl font-bold">{t.title}</h1>
+      <p class="text-lg text-white">{t.description}</p>
     </div>
   )
 }

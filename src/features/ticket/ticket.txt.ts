@@ -1,46 +1,28 @@
 export const ticketTxt = {
-  available_slots: {
-    fr: "Horaires disponibles",
-    en: "Available hours",
+  fr: {
+    available_slots: "Horaires disponibles",
+    loading: "Chargement...",
+    no_slots: "Aucun horaire disponible",
+    select_slot: "Sélectionnez un horaire",
+    personal_infos: "Informations personnelles",
+    first_name: "Prénom",
+    last_name: "Nom",
+    email: "Email",
+    prices: "Tarifs",
+    donation: "Soutenir le musée",
+    proceed_to_payment: "Valider la réservation",
   },
-  loading: {
-    fr: "Chargement...",
-    en: "Loading...",
-  },
-  no_slots: {
-    fr: "Aucun horaire disponible",
-    en: "No hours available",
-  },
-  select_slot: {
-    fr: "Sélectionnez un horaire",
-    en: "Select an hour",
-  },
-  personal_infos: {
-    fr: "Informations personnelles",
-    en: "Personal informations",
-  },
-  first_name: {
-    fr: "Prénom",
-    en: "First name",
-  },
-  last_name: {
-    fr: "Nom",
-    en: "Last name",
-  },
-  email: {
-    fr: "Email",
-    en: "Email",
-  },
-  prices: {
-    fr: "Tarifs",
-    en: "Prices",
-  },
-  donation: {
-    fr: "Soutenir le musée",
-    en: "Support the museum",
-  },
-  proceed_to_payment: {
-    fr: "Valider la réservation",
-    en: "Validate the reservation",
+  en: {
+    available_slots: "Available hours",
+    loading: "Loading...",
+    no_slots: "No hours available",
+    select_slot: "Select an hour",
+    personal_infos: "Personal informations",
+    first_name: "First name",
+    last_name: "Last name",
+    email: "Email",
+    prices: "Prices",
+    donation: "Support the museum",
+    proceed_to_payment: "Validate the reservation",
   },
 }

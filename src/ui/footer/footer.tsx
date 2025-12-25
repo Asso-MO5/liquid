@@ -3,8 +3,11 @@ import { For } from "solid-js"
 import { legalLinks, resourcesLinks, socialLinks } from "./footer.const"
 import { langCtrl } from "~/features/lang-selector/lang.ctrl"
 import { PowerBy } from "~/features/power-by/power-by"
+import { translate } from "~/utils/translate"
+import { footerTxt } from "./footer.txt"
 
 export const Footer = () => {
+  const { t } = translate(footerTxt)
   const lang = langCtrl()
 
   return (
@@ -12,20 +15,23 @@ export const Footer = () => {
       {/* Liens légaux */}
       <div>
         <h2 class="text-xl mb-4 text-text/80">
-          {lang() === 'fr' ? 'Informations légales' : 'Legal information'}
+          {t.legalInfo}
         </h2>
         <ul class="flex flex-col gap-2">
           <For each={legalLinks}>
-            {(link) => (
-              <li>
-                <A
-                  href={`/${lang()}${link.href}`}
-                  class="text-sm text-text/70 hover:text-text transition-colors"
-                >
-                  {link.label[lang()]}
-                </A>
-              </li>
-            )}
+            {(link) => {
+              const { t } = translate({ fr: { label: link.label.fr }, en: { label: link.label.en } })
+              return (
+                <li>
+                  <A
+                    href={`/${lang()}${link.href}`}
+                    class="text-sm text-text/70 hover:text-text transition-colors"
+                  >
+                    {t.label}
+                  </A>
+                </li>
+              )
+            }}
           </For>
         </ul>
       </div>
@@ -33,20 +39,23 @@ export const Footer = () => {
       {/* Ressources */}
       <div>
         <h2 class="text-xl mb-4 text-text/80">
-          {lang() === 'fr' ? 'Ressources' : 'Resources'}
+          {t.resources}
         </h2>
         <ul class="flex flex-col gap-2">
           <For each={resourcesLinks}>
-            {(link) => (
-              <li>
-                <A
-                  href={`/${lang()}${link.href}`}
-                  class="text-sm text-text/70 hover:text-text transition-colors"
-                >
-                  {link.label[lang()]}
-                </A>
-              </li>
-            )}
+            {(link) => {
+              const { t } = translate({ fr: { label: link.label.fr }, en: { label: link.label.en } })
+              return (
+                <li>
+                  <A
+                    href={`/${lang()}${link.href}`}
+                    class="text-sm text-text/70 hover:text-text transition-colors"
+                  >
+                    {t.label}
+                  </A>
+                </li>
+              )
+            }}
           </For>
         </ul>
       </div>
@@ -54,22 +63,25 @@ export const Footer = () => {
       {/* Réseaux sociaux */}
       <div>
         <h2 class="text-xl mb-4 text-text/80">
-          {lang() === 'fr' ? 'Suivez-nous' : 'Follow us'}
+          {t.followUs}
         </h2>
         <ul class="flex flex-col gap-2">
           <For each={socialLinks}>
-            {(link) => (
-              <li>
-                <A
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="text-sm text-text/70 hover:text-text transition-colors"
-                >
-                  {link.label[lang()]}
-                </A>
-              </li>
-            )}
+            {(link) => {
+              const { t } = translate({ fr: { label: link.label.fr }, en: { label: link.label.en } })
+              return (
+                <li>
+                  <A
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-sm text-text/70 hover:text-text transition-colors"
+                  >
+                    {t.label}
+                  </A>
+                </li>
+              )
+            }}
           </For>
         </ul>
       </div>

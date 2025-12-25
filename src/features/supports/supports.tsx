@@ -1,16 +1,7 @@
 import { For, createMemo } from "solid-js"
 import { supportsTestimonials } from "./supports.const"
-import { langCtrl } from "../lang-selector/lang.ctrl"
-
-
-const texts = {
-  fr: {
-    title: 'Ils nous soutiennent',
-  },
-  en: {
-    title: 'They support us',
-  }
-}
+import { translate } from "~/utils/translate"
+import { texts } from "./supports.txt"
 
 const shuffleArray = <T,>(array: T[]): T[] => {
   const shuffled = [...array]
@@ -22,14 +13,14 @@ const shuffleArray = <T,>(array: T[]): T[] => {
 }
 
 export const Supports = () => {
-  const lang = langCtrl()
+  const { t } = translate(texts)
   const randomTestimonials = createMemo(() => {
     return shuffleArray(supportsTestimonials).slice(0, 3)
   })
 
   return (
     <div class="max-w-4xl mx-auto p-6">
-      <h2 class="text-4xl text-center">{texts[lang()].title}</h2>
+      <h2 class="text-4xl text-center">{t.title}</h2>
       <ul class="flex flex-col gap-12">
         <For each={randomTestimonials()}>
           {(testimonial, index) => (
@@ -44,7 +35,12 @@ export const Supports = () => {
                   <img src={testimonial.image} alt="" class="w-32 h-auto rounded-full object-cover" />
                 </div>
                 <blockquote class="italic mb-8">
-                  <span class="text-secondary text-lg" aria-hidden="true">&quot;&nbsp;</span>{testimonial.quote[lang()]}<span class="text-secondary text-lg" aria-hidden="true">&nbsp;&quot;</span>
+                  <span class="text-secondary text-lg" aria-hidden="true">&quot;&nbsp;</span>
+                  {(() => {
+                    const { t } = translate({ fr: { quote: testimonial.quote.fr }, en: { quote: testimonial.quote.en } })
+                    return t.quote
+                  })()}
+                  <span class="text-secondary text-lg" aria-hidden="true">&nbsp;&quot;</span>
                 </blockquote>
               </div>
             </li>

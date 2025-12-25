@@ -1,22 +1,8 @@
 import { For } from "solid-js"
 import { translate } from "~/utils/translate"
+import { addressTxt } from "./address.txt"
 
-const addressTxt = {
-  fr: {
-    title: 'Le Musée du jeu vidéo',
-    street: '10 Avenue Paul Doumer',
-    city: '94110 Arcueil',
-    country: 'France',
-  },
-  en: {
-    title: 'The Video Game Museum',
-    street: '10 Avenue Paul Doumer',
-    city: '94110 Arcueil',
-    country: 'France',
-  }
-}
 export const Address = () => {
-
   const { t } = translate(addressTxt)
   return (
     <div class="flex flex-col h-full justify-center items-center rounded-sm p-4">

@@ -1,23 +1,11 @@
 import { For, Show } from "solid-js"
-import { langCtrl } from "~/features/lang-selector/lang.ctrl"
 import { ticketStore } from "~/features/ticket/ticket.store"
 import { giftCodesCtrl } from "~/features/gift-codes/gift-codes.ctrl"
-
-const giftCodesTxt = {
-  fr: {
-    label: 'Codes cadeaux',
-    add: 'Ajouter un code cadeau',
-    placeholder: 'Entrez un code cadeau',
-  },
-  en: {
-    label: 'Gift codes',
-    add: 'Add a gift code',
-    placeholder: 'Enter a gift code',
-  },
-}
+import { translate } from "~/utils/translate"
+import { giftCodesTxt } from "./gift-codes.txt"
 
 export const GiftCodes = () => {
-  const lang = langCtrl()
+  const { t } = translate(giftCodesTxt)
   const giftCodesCtrlStore = giftCodesCtrl();
 
   return (
@@ -28,7 +16,7 @@ export const GiftCodes = () => {
             <input
               type="text"
               class="bg-white/10 text-primary border border-primary rounded-md p-2 flex-1"
-              placeholder={giftCodesTxt[lang() as keyof typeof giftCodesTxt].placeholder}
+              placeholder={t.placeholder}
               value={code}
               onInput={(e) => {
                 giftCodesCtrlStore.setGiftCodes(e.currentTarget.value, index())
@@ -47,7 +35,7 @@ export const GiftCodes = () => {
       </For>
       <Show when={ticketStore.gift_codes.length < ticketStore.tickets.filter(ticket => ticket.amount > 0).length}>
         <button class="btn" onClick={() => giftCodesCtrlStore.addGiftCode()}>
-          {giftCodesTxt[lang() as keyof typeof giftCodesTxt].add}
+          {t.add}
         </button>
       </Show>
     </div>

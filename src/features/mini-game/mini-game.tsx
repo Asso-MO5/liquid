@@ -2,25 +2,14 @@ import type { VoidComponent } from 'solid-js';
 import { onMount, onCleanup, createSignal } from 'solid-js';
 import { initGame, cleanupGame, getGameInstance } from './game.init';
 import { CANVAS_ID } from './mini-game.const';
-import { langCtrl } from '~/features/lang-selector/lang.ctrl';
 import { GamePanelInfo } from './game-panel-info';
 import { HUD } from './hud';
-
-
-const miniGameTxt = {
-  alt: {
-    fr: 'Contrôlez Lulu pour explorer le musée',
-    en: 'Control Lulu to explore the museum',
-  },
-  reset: {
-    fr: 'Réinitialiser le jeu',
-    en: 'Reset game',
-  },
-}
+import { translate } from '~/utils/translate';
+import { miniGameTxt } from './mini-game.txt';
 
 export const MiniGame: VoidComponent = () => {
   let containerRef: HTMLDivElement | undefined;
-  const lang = langCtrl();
+  const { t } = translate(miniGameTxt);
   const [showResetButton, setShowResetButton] = createSignal(false);
   let checkInterval: number | undefined;
   let resizeTimeout: number | undefined;
@@ -136,7 +125,7 @@ export const MiniGame: VoidComponent = () => {
       <div
         id={CANVAS_ID}
         ref={containerRef}
-        aria-label={miniGameTxt.alt[lang() as keyof typeof miniGameTxt.alt]}
+        aria-label={t.alt}
         class="w-full h-full relative overflow-hidden"
         style={{
           'image-rendering': 'pixelated',
@@ -153,8 +142,8 @@ export const MiniGame: VoidComponent = () => {
           ? 'opacity-100 pointer-events-auto'
           : 'opacity-0 pointer-events-none'
           }`}
-        title={miniGameTxt.reset[lang() as keyof typeof miniGameTxt.reset]}
-        aria-label={miniGameTxt.reset[lang() as keyof typeof miniGameTxt.reset]}
+        title={t.reset}
+        aria-label={t.reset}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

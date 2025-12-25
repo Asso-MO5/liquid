@@ -1,38 +1,11 @@
 import { Show, createSignal, onMount, onCleanup } from "solid-js"
 import { CONTROLS, CANVAS_ID } from "./mini-game.const"
-import { langCtrl } from "~/features/lang-selector/lang.ctrl"
 import { getSoundCtrl } from "./sound.ctrl"
-
-const hudTxt = {
-  fr: {
-    left: '(Q / ←)',
-    right: '(D / →)',
-    jump: '(Espace / Up / Z)',
-    action: '(E / F)',
-    altLeft: '(Q)',
-    altRight: '(D)',
-    altJump: '(Espace)',
-    altAction: '(E)',
-    soundOn: 'Activer le son',
-    soundOff: 'Couper le son',
-  },
-  en: {
-    left: '(Q / ←)',
-    right: '(D / →)',
-    jump: '(Space / Up / Z)',
-    action: '(E / F)',
-    altLeft: 'Q',
-    altRight: '(D)',
-    altJump: '(Space)',
-    altAction: '(E)',
-    soundOn: 'Enable sound',
-    soundOff: 'Mute sound',
-  },
-}
+import { translate } from "~/utils/translate"
+import { hudTxt } from "./hud.txt"
 
 export const HUD = () => {
-
-  const lang = langCtrl()
+  const { t } = translate(hudTxt)
   const [isPortrait, setIsPortrait] = createSignal(false)
   const soundCtrl = getSoundCtrl()
 
@@ -136,8 +109,8 @@ export const HUD = () => {
           <button
             onClick={soundCtrl.toggleMute}
             class="bg-bg hover:border-primary hover:text-primary text-text rounded-full w-10 h-10 flex items-center justify-center border border-text backdrop-blur-sm transition-all active:scale-95"
-            title={soundCtrl.isMuted() ? hudTxt[lang()].soundOn : hudTxt[lang()].soundOff}
-            aria-label={soundCtrl.isMuted() ? hudTxt[lang()].soundOn : hudTxt[lang()].soundOff}
+            title={soundCtrl.isMuted() ? t.soundOn : t.soundOff}
+            aria-label={soundCtrl.isMuted() ? t.soundOn : t.soundOff}
           >
             <Show
               when={soundCtrl.isMuted()}
@@ -176,8 +149,8 @@ export const HUD = () => {
               onMouseDown={handleLeftDown}
               onMouseUp={handleLeftUp}
               onMouseLeave={handleLeftUp}
-              title={hudTxt[lang()].altLeft}
-              aria-label={hudTxt[lang()].altLeft}
+              title={t.altLeft}
+              aria-label={t.altLeft}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -196,8 +169,8 @@ export const HUD = () => {
               onMouseDown={handleRightDown}
               onMouseUp={handleRightUp}
               onMouseLeave={handleRightUp}
-              title={hudTxt[lang()].altRight}
-              aria-label={hudTxt[lang()].altRight}
+              title={t.altRight}
+              aria-label={t.altRight}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -217,8 +190,8 @@ export const HUD = () => {
               class="bg-primary hover:bg-primary text-white rounded-full w-14 h-14 flex items-center justify-center border-2 border-white/50 backdrop-blur-sm transition-all active:scale-95 pointer-events-auto"
               onTouchStart={handleJump}
               onMouseDown={handleJump}
-              title={hudTxt[lang()].altJump}
-              aria-label={hudTxt[lang()].altJump}
+              title={t.altJump}
+              aria-label={t.altJump}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -236,8 +209,8 @@ export const HUD = () => {
               class="bg-secondary hover:bg-secondary text-white rounded-full w-14 h-14 flex items-center justify-center border-2 border-white/50 backdrop-blur-sm transition-all active:scale-95 pointer-events-auto"
               onTouchStart={handleAction}
               onMouseDown={handleAction}
-              title={hudTxt[lang()].altAction}
-              aria-label={hudTxt[lang()].altAction}
+              title={t.altAction}
+              aria-label={t.altAction}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -261,8 +234,8 @@ export const HUD = () => {
           <button
             onClick={soundCtrl.toggleMute}
             class="bg-bg hover:border-primary hover:text-primary text-text rounded-lg px-3 py-2 flex items-center gap-2 border border-text backdrop-blur-sm transition-all active:scale-95"
-            title={soundCtrl.isMuted() ? hudTxt[lang()].soundOn : hudTxt[lang()].soundOff}
-            aria-label={soundCtrl.isMuted() ? hudTxt[lang()].soundOn : hudTxt[lang()].soundOff}
+            title={soundCtrl.isMuted() ? t.soundOn : t.soundOff}
+            aria-label={soundCtrl.isMuted() ? t.soundOn : t.soundOff}
           >
             <Show
               when={soundCtrl.isMuted()}
@@ -301,8 +274,8 @@ export const HUD = () => {
               onMouseDown={handleLeftDown}
               onMouseUp={handleLeftUp}
               onMouseLeave={handleLeftUp}
-              title={hudTxt[lang()].altLeft}
-              aria-label={hudTxt[lang()].altLeft}
+              title={t.altLeft}
+              aria-label={t.altLeft}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -313,7 +286,7 @@ export const HUD = () => {
               >
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
               </svg>
-              <span class="text-xs opacity-70">{hudTxt[lang()].left}</span>
+              <span class="text-xs opacity-70">{t.left}</span>
             </button>
             <button
               class="
@@ -322,10 +295,10 @@ export const HUD = () => {
               onMouseDown={handleRightDown}
               onMouseUp={handleRightUp}
               onMouseLeave={handleRightUp}
-              title={hudTxt[lang()].altRight}
-              aria-label={hudTxt[lang()].altRight}
+              title={t.altRight}
+              aria-label={t.altRight}
             >
-              <span class="text-xs opacity-70">{hudTxt[lang()].right}</span>
+              <span class="text-xs opacity-70">{t.right}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-4 w-4"
@@ -344,8 +317,8 @@ export const HUD = () => {
               justify-between
               bg-bg hover:border-primary hover:text-primary text-text rounded-lg px-3 py-2 flex items-center gap-2 border border-text backdrop-blur-sm transition-all active:scale-95 text-sm font-mono"
               onMouseDown={handleJump}
-              title={hudTxt[lang()].altJump}
-              aria-label={hudTxt[lang()].altJump}
+              title={t.altJump}
+              aria-label={t.altJump}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -356,18 +329,18 @@ export const HUD = () => {
               >
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
               </svg>
-              <span class="text-xs opacity-70">{hudTxt[lang()].jump}</span>
+              <span class="text-xs opacity-70">{t.jump}</span>
             </button>
             <button
               class="
               justify-between
               bg-bg hover:border-primary hover:text-primary text-text rounded-lg px-3 py-2 flex items-center gap-2 border border-text backdrop-blur-sm transition-all active:scale-95 text-sm font-mono"
               onMouseDown={handleAction}
-              title={hudTxt[lang()].altAction}
-              aria-label={hudTxt[lang()].altAction}
+              title={t.altAction}
+              aria-label={t.altAction}
             >
 
-              <span class="text-xs opacity-70">{hudTxt[lang()].action}</span>
+              <span class="text-xs opacity-70">{t.action}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-4 w-4"
