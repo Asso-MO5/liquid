@@ -41,8 +41,15 @@ export const Page = () => {
     return getPage(params.lang, params.slug);
   });
 
-  const title = page()?.title?.rendered ? `${page().title.rendered} - Le musée du jeu vidéo` : 'Le musée du jeu vidéo'
-  const description = page()?.excerpt?.rendered || ''
+  const title = createMemo(() => {
+    const pageData = page()
+    return pageData?.title?.rendered ? `${pageData.title.rendered} - Le musée du jeu vidéo` : 'Le musée du jeu vidéo'
+  })
+
+  const description = createMemo(() => {
+    const pageData = page()
+    return pageData?.excerpt?.rendered || ''
+  })
 
   return (
     <div class="container max-w-xl mx-auto px-4 py-8 text-text">
@@ -50,8 +57,8 @@ export const Page = () => {
         <Suspense fallback={<div class="flex items-center justify-center p-3"><Loader /></div>}>
           {
             <>
-              <Title>{title}</Title>
-              <Meta name="description" content={description} />
+              <Title>{title()}</Title>
+              <Meta name="description" content={description()} />
               {page()?.keywords && <Meta name="keywords" content={page().keywords.join(', ')} />}
               <article class="prose prose-invert max-w-none">
                 {page()?.title?.rendered && (

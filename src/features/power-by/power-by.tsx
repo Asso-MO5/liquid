@@ -1,27 +1,16 @@
-import { langCtrl } from "../lang-selector/lang.ctrl"
-
-const txt = {
-  fr: {
-    powerBy: 'Créé par',
-    logoAlt: 'Association MO5',
-  },
-  en: {
-    powerBy: 'Created by',
-    logoAlt: 'MO5 association',
-  },
-}
+import { translate } from "~/utils/translate"
+import { txt } from "./power-by.txt"
 
 export const PowerBy = () => {
-
-  const lang = langCtrl()
+  const { t } = translate(txt)
   return (
     <p class="text-sm text-text/70 m-0 text-center">
-      {txt[lang() as keyof typeof txt].powerBy}
+      {t.powerBy}
       <a href="https://mo5.com/" target="_blank" rel="noopener noreferrer">
         <img src="/logo.webp"
           width={194}
           height={60}
-          alt={txt[lang() as keyof typeof txt].logoAlt}
+          alt={t.logoAlt}
           class="w-[194px] h-auto" />
       </a>
     </p>

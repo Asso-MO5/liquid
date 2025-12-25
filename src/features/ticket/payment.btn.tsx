@@ -1,4 +1,5 @@
-import { langCtrl } from "~/features/lang-selector/lang.ctrl"
+import { translate } from "~/utils/translate"
+import { txt } from "./payment.btn.txt"
 
 type PaymentBtnProps = {
   disabled: boolean
@@ -6,17 +7,8 @@ type PaymentBtnProps = {
   onPayment: () => void
 }
 
-const txt = {
-  fr: {
-    proceed_to_payment: "Valider la réservation",
-  },
-  en: {
-    proceed_to_payment: "Validate the reservation",
-  }
-}
-
 export const PaymentBtn = (props: PaymentBtnProps) => {
-  const lang = langCtrl()
+  const { t } = translate(txt)
 
   return (
     <button
@@ -26,7 +18,7 @@ export const PaymentBtn = (props: PaymentBtnProps) => {
       aria-busy={props.isLoading}
       class="btn mt-4 disabled:opacity-50 disabled:cursor-not-allowed w-full"
       onClick={() => props.onPayment()}>
-      {txt[lang() as keyof typeof txt].proceed_to_payment}
+      {t.proceed_to_payment}
     </button>
   )
 }

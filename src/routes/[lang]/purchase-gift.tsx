@@ -2,40 +2,12 @@ import { Show, createSignal, onMount } from "solid-js";
 import { useSearchParams } from "@solidjs/router";
 import { clientEnv } from "~/env/client";
 import { toast } from "~/ui/Toast";
-import { langCtrl } from "~/features/lang-selector/lang.ctrl";
 import { PurchaseGift as PurchaseGiftView } from "~/features/gift-codes/purchase-gift";
-
-const txt = {
-  fr: {
-    successTitle: "Merci pour votre achat de cartes cadeaux",
-    successDescription:
-      "Votre paiement a été confirmé. Les codes cadeaux ont été envoyés à l'adresse email indiquée.",
-    cancelTitle: "Paiement annulé",
-    cancelDescription:
-      "Le paiement des cartes cadeaux a été annulé. Vous pouvez réessayer si vous le souhaitez.",
-    confirming: "Confirmation de votre paiement en cours...",
-    confirmError:
-      "Une erreur est survenue lors de la confirmation du paiement. Si le problème persiste, contactez-nous.",
-    missingCheckout:
-      "Impossible de retrouver la session de paiement. Si vous avez été débité, contactez-nous.",
-  },
-  en: {
-    successTitle: "Thank you for your gift card purchase",
-    successDescription:
-      "Your payment has been confirmed. The gift codes have been sent to the email address you provided.",
-    cancelTitle: "Payment cancelled",
-    cancelDescription:
-      "The gift card payment has been cancelled. You can try again if you wish.",
-    confirming: "Confirming your payment...",
-    confirmError:
-      "An error occurred while confirming the payment. If the problem persists, please contact us.",
-    missingCheckout:
-      "We could not find the payment session. If you have been charged, please contact us.",
-  },
-};
+import { translate } from "~/utils/translate";
+import { txt } from "./purchase-gift.txt";
 
 const PurchaseGiftRoute = () => {
-  const lang = langCtrl();
+  const { t } = translate(txt)
   const [searchParams] = useSearchParams();
   const [isConfirming, setIsConfirming] = createSignal(false);
   const [confirmationError, setConfirmationError] = createSignal<string | null>(
@@ -46,8 +18,6 @@ const PurchaseGiftRoute = () => {
   const status = () =>
     (searchParams.status as "success" | "cancel" | undefined) ?? undefined;
 
-  const t = () => txt[lang() as keyof typeof txt];
-
   const confirmPurchase = async () => {
     const checkoutId =
       typeof window !== "undefined"
@@ -55,7 +25,7 @@ const PurchaseGiftRoute = () => {
         : null;
 
     if (!checkoutId) {
-      setConfirmationError(t().missingCheckout);
+      setConfirmationError(t.missingCheckout);
       return;
     }
 
@@ -85,11 +55,11 @@ const PurchaseGiftRoute = () => {
       } catch {
         // ignore
       }
-      const messages = {
-        fr: "Votre paiement a bien été confirmé.",
-        en: "Your payment has been successfully confirmed.",
-      };
-      toast.success(messages[lang() as keyof typeof messages]);
+      const { t: successTxt } = translate({
+        fr: { success: "Votre paiement a bien été confirmé." },
+        en: { success: "Your payment has been successfully confirmed." },
+      });
+      toast.success(successTxt.success);
     } catch (error) {
       console.error(
         "Erreur lors de la confirmation d'achat de codes cadeaux",
@@ -98,9 +68,9 @@ const PurchaseGiftRoute = () => {
       if (error instanceof Error) {
         toast.error(error.message);
       } else {
-        toast.error(t().confirmError);
+        toast.error(t.confirmError);
       }
-      setConfirmationError(t().confirmError);
+      setConfirmationError(t.confirmError);
     } finally {
       setIsConfirming(false);
     }
@@ -124,13 +94,13 @@ const PurchaseGiftRoute = () => {
       <Show when={status() === "success"}>
         <section class="max-w-xl mx-auto mb-4 p-4 border border-secondary rounded-md bg-black/30">
           <h2 class="text-xl font-bold text-secondary mb-2">
-            {t().successTitle}
+            {t.successTitle}
           </h2>
           <Show when={isConfirming()}>
-            <p class="text-sm text-text">{t().confirming}</p>
+            <p class="text-sm text-text">{t.confirming}</p>
           </Show>
           <Show when={confirmationDone() && !confirmationError()}>
-            <p class="text-sm text-text">{t().successDescription}</p>
+            <p class="text-sm text-text">{t.successDescription}</p>
           </Show>
           <Show when={confirmationError()}>
             <p class="text-sm text-error">{confirmationError()}</p>
@@ -141,9 +111,9 @@ const PurchaseGiftRoute = () => {
       <Show when={status() === "cancel"}>
         <section class="max-w-xl mx-auto mb-4 p-4 border border-error rounded-md bg-black/30">
           <h2 class="text-xl font-bold text-error mb-2">
-            {t().cancelTitle}
+            {t.cancelTitle}
           </h2>
-          <p class="text-sm text-text">{t().cancelDescription}</p>
+          <p class="text-sm text-text">{t.cancelDescription}</p>
         </section>
       </Show>
 

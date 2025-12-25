@@ -1,30 +1,19 @@
 import { Meta, Title } from "@solidjs/meta";
 import { query, createAsync, useParams, type RouteDefinition } from "@solidjs/router";
 import { Suspense, ErrorBoundary, createMemo, For, Show } from "solid-js";
+import { Address } from "~/features/address/address";
 import { prices } from "~/features/price/price.store";
 import { schedules } from "~/features/schedules/schedules.store";
 import { TakeATicket } from "~/features/ticket/take-a-ticket";
 import { Loader } from "~/ui/loader";
+import { translate } from "~/utils/translate";
+import { texts } from "./your-visit.txt";
 
 
 const DAYS_FULL = {
   fr: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
   en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 };
-
-
-const texts = {
-  fr: {
-    openingHours: 'Horaires d\'ouverture',
-    prices: 'Tarifs',
-    holiday: 'Vacances scolaires',
-  },
-  en: {
-    openingHours: 'Opening Hours',
-    prices: 'Prices',
-    holiday: 'School holidays',
-  }
-}
 const getPage = query(async (lang: string) => {
   'use server'
   const blogUrl = process.env.BLOG_URL || import.meta.env.VITE_BLOG_URL;
@@ -51,10 +40,14 @@ export const Page = () => {
     return getPage(params.lang);
   });
 
-  const title = page()?.title?.rendered ? `${page().title.rendered} - Le musée du jeu vidéo` : 'Le musée du jeu vidéo'
-  const description = page()?.excerpt?.rendered || ''
-
-  // Noms complets des jours de la semaine
+  const title = createMemo(() => {
+    const pageData = page()
+    return pageData?.title?.rendered ? `${pageData.title.rendered} - Le musée du jeu vidéo` : 'Le musée du jeu vidéo'
+  })
+  const description = createMemo(() => {
+    const pageData = page()
+    return pageData?.excerpt?.rendered || ''
+  })
 
   const regularSchedules = createMemo(() => {
     return schedules().filter(schedule =>
@@ -72,19 +65,20 @@ export const Page = () => {
     return time.split(':').slice(0, 2).join(':');
   };
 
-  const lang = () => params.lang as 'fr' | 'en';
+  const { t } = translate(texts)
+  const lang = () => params.lang as 'fr' | 'en'
 
   return (
     <div class="container max-w-xl mx-auto px-4 py-8 text-text">
-
       <ErrorBoundary fallback={<div>Une erreur est survenue lors du chargement de la page.</div>}>
         <Suspense fallback={<div class="flex items-center justify-center p-3"><Loader /></div>}>
           {
             <>
-              <Title>{title}</Title>
-              <Meta name="description" content={description} />
+              <Title>{title()}</Title>
+              <Meta name="description" content={description()} />
               {page()?.keywords && <Meta name="keywords" content={page().keywords.join(', ')} />}
 
+              <Address />
               <article class="prose prose-invert max-w-none">
 
                 {page()?.content?.rendered && (
@@ -98,7 +92,7 @@ export const Page = () => {
                 <Show when={regularSchedules().length > 0}>
                   <section class="mb-8">
                     <h2>
-                      {texts[lang()].openingHours}
+                      {t.openingHours}
                     </h2>
                     <div class="flex flex-col gap-3">
                       <For each={regularSchedules()}>
@@ -108,7 +102,7 @@ export const Page = () => {
                               {DAYS_FULL[lang()][schedule.day_of_week]}
                               <Show when={schedule.audience_type == 'holiday'}>
                                 <span class="text-secondary italic text-sm">
-                                  {`(${texts[lang()].holiday})`}
+                                  {`(${t.holiday})`}
                                 </span>
                               </Show>
                             </span>
@@ -126,7 +120,7 @@ export const Page = () => {
                 <Show when={activePrices().length > 0}>
                   <section class="mb-8">
                     <h2>
-                      {texts[lang()].prices}
+                      {t.prices}
                     </h2>
                     <div class="flex flex-col gap-3">
                       <For each={activePrices()}>
@@ -135,14 +129,24 @@ export const Page = () => {
                         gap-4 border border-primary p-4 rounded-md"
                           >
                             <div class="flex-1">
-                              <h3 class=" text-xl mb-1 text-primary">
-                                {price.translations[lang()]?.name || ''}
-                              </h3>
-                              <Show when={price.translations[lang()]?.description}>
-                                <p class="text-sm text-text italic">
-                                  {price.translations[lang()]?.description}
-                                </p>
-                              </Show>
+                              {(() => {
+                                const { t } = translate({
+                                  fr: { name: price.translations.fr?.name || '', description: price.translations.fr?.description || '' },
+                                  en: { name: price.translations.en?.name || '', description: price.translations.en?.description || '' }
+                                })
+                                return (
+                                  <>
+                                    <h3 class=" text-xl mb-1 text-primary">
+                                      {t.name}
+                                    </h3>
+                                    <Show when={t.description}>
+                                      <p class="text-sm text-text italic">
+                                        {t.description}
+                                      </p>
+                                    </Show>
+                                  </>
+                                )
+                              })()}
                             </div>
                             <div class="text-xl text-secondary">
                               <span class="text-text">{price.amount}</span><span class="text-secondary">€</span>
