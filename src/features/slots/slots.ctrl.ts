@@ -22,7 +22,23 @@ export const slotsCTRL = () => {
         },
       });
       const data: SlotsResponse = await response.json();
-      setSlots(data.slots);
+
+
+      const isToday = new Date(ticketStore.reservation_date).toISOString().split('T')[0] === new Date().toISOString().split('T')[0];
+      setSlots(data.slots.filter(slot => {
+        if (isToday) {
+          const now = new Date();
+          const currentTime = now.toISOString().split('T')[1];
+          const slotStartTime = slot.start_time;
+          const [slotHours, slotMinutes] = slotStartTime.split(':').map(Number);
+          const slotDate = new Date(now);
+          slotDate.setHours(slotHours, slotMinutes, 0, 0);
+          const limitTime = new Date(slotDate.getTime() + 30 * 60 * 1000); // +30 minutes
+          const limitTimeString = limitTime.toISOString().split('T')[1];
+          return currentTime <= limitTimeString;
+        }
+        return true;
+      }));
     } catch (error) {
       console.error("Erreur lors de la récupération des slots");
     } finally {
