@@ -15,9 +15,7 @@ export function ticketCreate() {
   }
 
   const getQuantity = (price: Price) => ticketStore.tickets.filter((p) => p.id === price.id).length;
-
-  const isMaxQuantity = () => ticketStore.tickets.length >= 10;
-
+  const isMaxQuantity = () => ticketStore.tickets.length >= 20;
   const isHalfPrice = () => ticketStore.is_half_price
 
 
