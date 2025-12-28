@@ -12,7 +12,12 @@ export const talkAboutUsCtrl = () => {
     try {
       const response = await fetch(`${clientEnv.VITE_BLOG_URL}/media?search=PRESSE`);
       const data = await response.json();
-      setTalkAboutUs(data);
+      const shuffledData = [...data];
+      for (let i = shuffledData.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledData[i], shuffledData[j]] = [shuffledData[j], shuffledData[i]];
+      }
+      setTalkAboutUs(shuffledData);
     } catch (error) {
       console.error(error);
     } finally {
