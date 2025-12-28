@@ -7,7 +7,20 @@ import { Pictures } from "~/features/pictures/pictures";
 import { Supports } from "~/features/supports/supports";
 import { TakeATicket } from "~/features/ticket/take-a-ticket";
 import { translate } from "~/utils/translate";
-import { infoTxt } from "./index.txt";
+
+import { TalkAboutUs } from "~/features/talkAboutUs/TalkAboutUs";
+
+const infoTxt = {
+  fr: {
+    button: 'Réservation',
+    Title: 'Le Musée du jeu vidéo',
+  },
+  en: {
+    button: 'Reservation',
+    Title: 'The Video Game Museum',
+  }
+}
+
 
 
 const Home: VoidComponent = () => {
@@ -34,6 +47,7 @@ const Home: VoidComponent = () => {
       <Supports />
       <Pictures />
       <TakeATicket />
+      <TalkAboutUs />
     </main >
   );
 };

@@ -59,6 +59,14 @@ export const resourcesLinks = [
     },
     href: '/partners',
     id: 240
+  },
+  {
+    label: {
+      fr: 'Ils parlent de nous',
+      en: 'They talk about us'
+    },
+    href: '/talking-about-us',
+    id: 0
   }
 ]
 
