@@ -7,8 +7,19 @@ import { schedules } from "~/features/schedules/schedules.store";
 import { TakeATicket } from "~/features/ticket/take-a-ticket";
 import { Loader } from "~/ui/loader";
 import { translate } from "~/utils/translate";
-import { texts } from "./your-visit.txt";
 
+export const texts = {
+  fr: {
+    openingHours: 'Horaires d\'ouverture',
+    prices: 'Tarifs',
+    holiday: 'Vacances scolaires',
+  },
+  en: {
+    openingHours: 'Opening Hours',
+    prices: 'Prices',
+    holiday: 'School holidays',
+  }
+}
 
 const DAYS_FULL = {
   fr: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],

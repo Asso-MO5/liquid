@@ -1,7 +1,17 @@
 import { setTicketStore } from "~/features/ticket/ticket.store";
 import { onMount } from "solid-js";
 import { translate } from "~/utils/translate";
-import { errorTxt } from "./error.txt";
+
+const errorTxt = {
+  fr: {
+    title: 'Erreur',
+    description: 'Une erreur est survenue lors de la réservation.',
+  },
+  en: {
+    title: 'Error',
+    description: 'An error occurred during the reservation.',
+  }
+}
 
 export default function Error() {
   const { t } = translate(errorTxt);

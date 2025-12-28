@@ -11,6 +11,7 @@ export const ticketTxt = {
     prices: "Tarifs",
     donation: "Soutenir le musée",
     proceed_to_payment: "Valider la réservation",
+    warningEmail: "les billets seront envoyés vers l’adresse email que vous avez renseignée ici, vérifiez qu’il n’y a pas d’erreur et n’hésitez pas à vérifier dans les spams",
   },
   en: {
     available_slots: "Available hours",
@@ -24,5 +25,6 @@ export const ticketTxt = {
     prices: "Prices",
     donation: "Support the museum",
     proceed_to_payment: "Validate the reservation",
+    warningEmail: "the tickets will be sent to the email address you have entered here, please check that there is no error and do not hesitate to check in the spam",
   },
 }
