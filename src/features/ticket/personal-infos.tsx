@@ -34,6 +34,7 @@ export const PersonalInfos = () => {
           auto-complete="email"
           id="email" type="email" class="bg-white/10 text-text" value={ticketStore.email} onInput={(e) => setTicketStore('email', e.currentTarget.value)} />
       </div>
+      <p class="text-xs text-amber-500 italic">{t.warningEmail}</p>
     </div>
   )
 }
