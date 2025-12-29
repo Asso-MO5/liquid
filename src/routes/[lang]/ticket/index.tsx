@@ -31,6 +31,8 @@ const txt = {
     keywords: "billet, musée, jeu vidéo, jeux, jeux vidéo, console, consoles, consoles de jeu vidéo, consoles de jeu vidéo portables, arcade, bornes d'arcade, ordinateur, ordinateurs, informatique, exposition, histoire, histoire du jeu vidéo",
     donation: "Soutenir le musée",
     personal_infos: "Informations personnelles",
+    terms_and_conditions: "J'accepte les conditions d'utilisation",
+    terms_and_conditions_link: "Conditions générales de vente",
   },
   en: {
     select_date: "Select a date",
@@ -46,6 +48,8 @@ const txt = {
     keywords: "ticket, museum, video game, games, video games, console, consoles, video game consoles, portable video game consoles, arcade, arcade machines, computer, computers, information, history, video game history",
     donation: "Support the museum",
     personal_infos: "Personal informations",
+    terms_and_conditions: "I accept the terms of use",
+    terms_and_conditions_link: "Terms of service",
   }
 }
 
@@ -100,6 +104,23 @@ export default function Ticket() {
           <PersonalInfos />
           <GiftCodes />
           <TicketResume />
+          <div class="m-4 flex flex-col gap-4">
+            <div class="grid grid-cols-[auto_1fr] items-center gap-2">
+              <input type="checkbox"
+                class="bg-white/10 text-text w-4 h-4"
+                id="terms_and_conditions" checked={paymentCtrl.IHaveReadTheTermsAndConditions()} onChange={() => paymentCtrl.setIHaveReadTheTermsAndConditions(!paymentCtrl.IHaveReadTheTermsAndConditions())} />
+              <label for="terms_and_conditions">{t.terms_and_conditions}</label>
+            </div>
+
+            <a href={`/${lang() as string}/cgv`} target="_blank" rel="noopener noreferrer" class="text-center text-sm text-primary hover:text-primary inline-flex items-center gap-1 justify-center">
+              {t.terms_and_conditions_link}
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            </a>
+          </div>
           <PaymentBtn disabled={paymentCtrl.paymentButtonDisabled()} isLoading={paymentCtrl.isLoading()} onPayment={paymentCtrl.preparePayment} />
           <Show when={paymentCtrl.paymentButtonDisabled() && paymentCtrl.paymentButtonErrorMessage()}>
             <p class="text-error text-sm mt-2 text-center">

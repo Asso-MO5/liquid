@@ -14,6 +14,7 @@ export const paymentCTRL = () => {
   const lang = langCtrl();
   const langStr = String(lang());
   const [isLoading, setIsLoading] = createSignal(false);
+  const [IHaveReadTheTermsAndConditions, setIHaveReadTheTermsAndConditions] = createSignal(false);
 
   const preparePayment = async () => {
     setIsLoading(true);
@@ -112,7 +113,7 @@ export const paymentCTRL = () => {
 
   const paymentButtonDisabled = createMemo(() => {
     const testEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ticketStore.email);
-    return ticketStore.first_name === '' || ticketStore.last_name === '' || !testEmail || ticketStore.tickets.length === 0 || ticketStore.reservation_date === '' || ticketStore.slot_start_time === '';
+    return ticketStore.first_name === '' || ticketStore.last_name === '' || !testEmail || ticketStore.tickets.length === 0 || ticketStore.reservation_date === '' || ticketStore.slot_start_time === '' || !IHaveReadTheTermsAndConditions();
   });
 
   const paymentButtonErrorMessage = createMemo(() => {
@@ -153,6 +154,12 @@ export const paymentCTRL = () => {
         en: 'Please enter a valid email address'
       };
     }
+    if (!IHaveReadTheTermsAndConditions()) {
+      return {
+        fr: 'Veuillez accepter les conditions d\'utilisation',
+        en: 'Please accept the terms of use'
+      };
+    }
     return null;
   });
 
@@ -160,6 +167,8 @@ export const paymentCTRL = () => {
     isLoading,
     preparePayment,
     paymentButtonDisabled,
-    paymentButtonErrorMessage
+    paymentButtonErrorMessage,
+    IHaveReadTheTermsAndConditions,
+    setIHaveReadTheTermsAndConditions,
   }
 }
