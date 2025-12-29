@@ -11,6 +11,10 @@ export const TalkAboutUs = () => {
   const lang = langCtrl();
   const { fetching, talkAboutUs } = talkAboutUsCtrl();
 
+ const getMediaName = (media: Media) => {
+    return media.title.rendered;
+ }
+
   const getMediaTitle = (media: Media) => {
     const customFields = media.custom_fields;
     const langKey = lang() === 'fr' ? 'FR' : 'EN';
@@ -83,6 +87,7 @@ export const TalkAboutUs = () => {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
           <For each={talkAboutUs()}>
             {(media: Media) => {
+              const name = getMediaName(media);
               const title = getMediaTitle(media);
               const description = getMediaDescription(media);
               const youtubeUrl = getYouTubeUrl(media);
@@ -90,40 +95,41 @@ export const TalkAboutUs = () => {
               const imageSrc = getImageSrc(media);
               const imageSrcSet = getImageSrcSet(media);
               const imageSizes = getImageSizes();
-              const altText = media.alt_text || title || '';
 
               return (
                 <article class="flex flex-col rounded-t-lg overflow-hidden">
-                  <div class="relative w-full aspect-video overflow-hidden bg-gray-200">
-                    <Show when={youtubeUrl} fallback={
-                      <Show when={imageSrc}>
-                        <img
-                          src={imageSrc}
-                          srcset={imageSrcSet}
-                          sizes={imageSizes}
-                          alt={altText}
-                          loading="lazy"
-                          class="w-full h-full object-cover"
+                  <h3 class="m-0 relative w-full aspect-video overflow-hidden bg-gray-200">
+                      <span class="visually-hidden">{name}</span>
+                      <Show when={youtubeUrl} fallback={
+                        <Show when={imageSrc}>
+                          <img
+                            src={imageSrc}
+                            srcset={imageSrcSet}
+                            sizes={imageSizes}
+                            alt=""
+                            loading="lazy"
+                            class="w-full h-full object-cover"
+                          />
+                        </Show>
+                      }>
+                        <iframe
+                          src={youtubeUrl || ''}
+                          title={`YouTube video - ${name}`}
+                          class="w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowfullscreen
                         />
                       </Show>
-                    }>
-                      <iframe
-                        src={youtubeUrl || ''}
-                        title={title}
-                        class="w-full h-full"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                      />
-                    </Show>
-                  </div>
+                  </h3>
 
                   <div class="flex flex-col gap-1 flex-1 justify-between">
-                    <Show when={title}>
-                      <h3 class="text-sm text-text font-family-sans">{title}</h3>
+                    <Show when={title && description}>
+                      <h4 class="text-sm text-text font-family-sans">{title}</h4>
+                      <p class="text-sm text-text line-clamp-3" title={description}>{description}</p>
                     </Show>
-
-                    <Show when={description}>
-                      <p class="text-sm text-text line-clamp-3">{description}</p>
+                    
+                    <Show when={title && !description}>
+                      <p class="text-sm text-text line-clamp-3" title={title}>{title}</p>
                     </Show>
 
                     <div class="flex gap-2 justify-end items-end">
@@ -133,6 +139,7 @@ export const TalkAboutUs = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           class="btn btn-sm"
+                          aria-label={`${t.visitLink} - ${name} ${t.newWindow}`}
                         >
                           {t.visitLink}
                         </a>
@@ -143,6 +150,7 @@ export const TalkAboutUs = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           class="btn btn-primary"
+                          aria-label={`${t.watchVideo} - ${name} ${t.newWindow}`}
                         >
                           {t.watchVideo}
                         </a>
