@@ -6,6 +6,7 @@ export const txt = {
     readMore: 'Lire la suite',
     watchVideo: 'Voir la vidéo',
     visitLink: 'Visiter le lien',
+    newWindow: '(nouvelle fenêtre)',
   },
   en: {
     title: 'They talk about us',
@@ -14,6 +15,7 @@ export const txt = {
     readMore: 'Read more',
     watchVideo: 'Watch video',
     visitLink: 'Visit link',
+    newWindow: '(new window)',
   },
 }
 
