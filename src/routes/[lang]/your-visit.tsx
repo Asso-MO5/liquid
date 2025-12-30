@@ -80,7 +80,7 @@ export const Page = () => {
   const lang = () => params.lang as 'fr' | 'en'
 
   return (
-    <div class="container max-w-xl mx-auto px-4 py-8 text-text">
+    <main id="main" class="container max-w-xl mx-auto px-4 py-8 text-text">
       <ErrorBoundary fallback={<div>Une erreur est survenue lors du chargement de la page.</div>}>
         <Suspense fallback={<div class="flex items-center justify-center p-3"><Loader /></div>}>
           {
@@ -172,9 +172,9 @@ export const Page = () => {
               <TakeATicket />
             </>
           }
-        </Suspense >
-      </ErrorBoundary >
-    </div >
+        </Suspense>
+      </ErrorBoundary>
+    </main>
   );
 };
 

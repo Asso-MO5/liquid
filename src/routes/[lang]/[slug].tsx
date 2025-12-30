@@ -52,7 +52,7 @@ export const Page = () => {
   })
 
   return (
-    <div class="container max-w-xl mx-auto px-4 py-8 text-text">
+    <main id="main" class="container max-w-xl mx-auto px-4 py-8 text-text">
       <ErrorBoundary fallback={<div>Une erreur est survenue lors du chargement de la page.</div>}>
         <Suspense fallback={<div class="flex items-center justify-center p-3"><Loader /></div>}>
           {
@@ -60,20 +60,20 @@ export const Page = () => {
               <Title>{title()}</Title>
               <Meta name="description" content={description()} />
               {page()?.keywords && <Meta name="keywords" content={page().keywords.join(', ')} />}
-              <article class="prose prose-invert max-w-none">
-                {page()?.title?.rendered && (
-                  <h1 class="text-5xl text-tertiary text-center font-display">{page().title.rendered}</h1>
-                )}
-                {page()?.content?.rendered && (
-                  // eslint-disable-next-line solid/no-innerhtml
-                  <div innerHTML={page().content.rendered} class="text-text" />
-                )}
-              </article>
+                <article class="prose prose-invert max-w-none">
+                  {page()?.title?.rendered && (
+                    <h1 class="text-5xl text-tertiary text-center font-display">{page().title.rendered}</h1>
+                  )}
+                  {page()?.content?.rendered && (
+                    // eslint-disable-next-line solid/no-innerhtml
+                    <div innerHTML={page().content.rendered} class="text-text" />
+                  )}
+                </article>
             </>
           }
         </Suspense>
       </ErrorBoundary>
-    </div>
+    </main>
 
   );
 };
