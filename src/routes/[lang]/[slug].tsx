@@ -60,15 +60,15 @@ export const Page = () => {
               <Title>{title()}</Title>
               <Meta name="description" content={description()} />
               {page()?.keywords && <Meta name="keywords" content={page().keywords.join(', ')} />}
-                <article class="prose prose-invert max-w-none">
-                  {page()?.title?.rendered && (
-                    <h1 class="text-5xl text-tertiary text-center font-display">{page().title.rendered}</h1>
-                  )}
-                  {page()?.content?.rendered && (
-                    // eslint-disable-next-line solid/no-innerhtml
-                    <div innerHTML={page().content.rendered} class="text-text" />
-                  )}
-                </article>
+              <article class="prose prose-invert max-w-none">
+                {page()?.title?.rendered && (
+                  <h1 class="text-5xl text-tertiary text-center font-display">{page().title.rendered}</h1>
+                )}
+                {page()?.content?.rendered && (
+                  // eslint-disable-next-line solid/no-innerhtml
+                  <div innerHTML={page().content.rendered} class="text-text" />
+                )}
+              </article>
             </>
           }
         </Suspense>
