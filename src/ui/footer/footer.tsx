@@ -17,7 +17,7 @@ export const Footer = () => {
         <h2 class="text-xl mb-4 text-text/80">
           {t.legalInfo}
         </h2>
-        <ul class="flex flex-col gap-2">
+        <ul role="list" class="flex flex-col gap-2">
           <For each={legalLinks}>
             {(link) => {
               const { t } = translate({ fr: { label: link.label.fr }, en: { label: link.label.en } })
@@ -41,7 +41,7 @@ export const Footer = () => {
         <h2 class="text-xl mb-4 text-text/80">
           {t.resources}
         </h2>
-        <ul class="flex flex-col gap-2">
+        <ul role="list" class="flex flex-col gap-2">
           <For each={resourcesLinks}>
             {(link) => {
               const { t } = translate({ fr: { label: link.label.fr }, en: { label: link.label.en } })
@@ -65,7 +65,7 @@ export const Footer = () => {
         <h2 class="text-xl mb-4 text-text/80">
           {t.followUs}
         </h2>
-        <ul class="flex flex-col gap-2">
+        <ul role="list" class="flex flex-col gap-2">
           <For each={socialLinks}>
             {(link) => {
               const { t } = translate({ fr: { label: link.label.fr }, en: { label: link.label.en } })

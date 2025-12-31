@@ -84,7 +84,7 @@ export const TalkAboutUs = () => {
       </Show>
 
       <Show when={!fetching() && talkAboutUs().length > 0}>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <ul role="list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
           <For each={talkAboutUs()}>
             {(media: Media) => {
               const name = getMediaName(media);
@@ -97,71 +97,73 @@ export const TalkAboutUs = () => {
               const imageSizes = getImageSizes();
 
               return (
-                <article class="flex flex-col rounded-t-lg overflow-hidden">
-                  <h3 class="m-0 relative w-full aspect-video overflow-hidden bg-gray-200">
-                      <span class="visually-hidden">{name}</span>
-                      <Show when={youtubeUrl} fallback={
-                        <Show when={imageSrc}>
-                          <img
-                            src={imageSrc}
-                            srcset={imageSrcSet}
-                            sizes={imageSizes}
-                            alt=""
-                            loading="lazy"
-                            class="w-full h-full object-cover"
+                <li>
+                  <article class="flex flex-col rounded-t-lg overflow-hidden">
+                    <h3 class="m-0 relative w-full aspect-video overflow-hidden bg-gray-200">
+                        <span class="sr-only">{name}</span>
+                        <Show when={youtubeUrl} fallback={
+                          <Show when={imageSrc}>
+                            <img
+                              src={imageSrc}
+                              srcset={imageSrcSet}
+                              sizes={imageSizes}
+                              alt=""
+                              loading="lazy"
+                              class="w-full h-full object-cover"
+                            />
+                          </Show>
+                        }>
+                          <iframe
+                            src={youtubeUrl || ''}
+                            title={`YouTube video - ${name}`}
+                            class="w-full h-full"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
                           />
                         </Show>
-                      }>
-                        <iframe
-                          src={youtubeUrl || ''}
-                          title={`YouTube video - ${name}`}
-                          class="w-full h-full"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowfullscreen
-                        />
-                      </Show>
-                  </h3>
+                    </h3>
 
-                  <div class="flex flex-col gap-1 flex-1 justify-between">
-                    <Show when={title && description}>
-                      <h4 class="text-sm text-text font-family-sans">{title}</h4>
-                      <p class="text-sm text-text line-clamp-3" title={description}>{description}</p>
-                    </Show>
-                    
-                    <Show when={title && !description}>
-                      <p class="text-sm text-text line-clamp-3" title={title}>{title}</p>
-                    </Show>
+                    <div class="flex flex-col gap-1 flex-1 justify-between">
+                      <Show when={title && description}>
+                        <h4 class="text-sm text-text font-family-sans">{title}</h4>
+                        <p class="text-sm text-text line-clamp-3" title={description}>{description}</p>
+                      </Show>
+                      
+                      <Show when={title && !description}>
+                        <p class="text-sm text-text line-clamp-3" title={title}>{title}</p>
+                      </Show>
 
-                    <div class="flex gap-2 justify-end items-end">
-                      <Show when={externalUrl}>
-                        <a
-                          href={externalUrl || '#'}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="btn btn-sm"
-                          aria-label={`${t.visitLink} - ${name} ${t.newWindow}`}
-                        >
-                          {t.visitLink}
-                        </a>
-                      </Show>
-                      <Show when={youtubeUrl && !externalUrl}>
-                        <a
-                          href={youtubeUrl || '#'}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="btn btn-primary"
-                          aria-label={`${t.watchVideo} - ${name} ${t.newWindow}`}
-                        >
-                          {t.watchVideo}
-                        </a>
-                      </Show>
+                      <div class="flex gap-2 justify-end items-end">
+                        <Show when={externalUrl}>
+                          <a
+                            href={externalUrl || '#'}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-sm"
+                            aria-label={`${t.visitLink} - ${name} ${t.newWindow}`}
+                          >
+                            {t.visitLink}
+                          </a>
+                        </Show>
+                        <Show when={youtubeUrl && !externalUrl}>
+                          <a
+                            href={youtubeUrl || '#'}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-primary"
+                            aria-label={`${t.watchVideo} - ${name} ${t.newWindow}`}
+                          >
+                            {t.watchVideo}
+                          </a>
+                        </Show>
+                      </div>
                     </div>
-                  </div>
-                </article>
+                  </article>
+                </li>
               );
             }}
           </For>
-        </div>
+        </ul>
       </Show>
     </section>
   );

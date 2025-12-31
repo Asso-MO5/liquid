@@ -58,7 +58,7 @@ export const MenuMobile = () => {
         "
       >
         <div>
-          <ul class="py-4 px-4 flex flex-col gap-2">
+          <ul role="list" class="py-4 px-4 flex flex-col gap-2">
             <For each={menuEntries}>
               {(entry) => {
                 const { t } = translate({ fr: { label: entry.label.fr }, en: { label: entry.label.en } })
