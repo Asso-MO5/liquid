@@ -40,6 +40,7 @@ export default createHandler(() => (
               <!-- End Matomo Code -->
             `}
           </script>
+          <script src="https://terrors.ben-to.fr/cdn/terrors.js" data-app-id="app_6051n9rr" />
           {assets}
         </head>
         <body>
