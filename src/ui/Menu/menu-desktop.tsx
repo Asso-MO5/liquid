@@ -8,7 +8,7 @@ export const MenuDesktop = () => {
   const lang = langCtrl()
   return (
     <nav>
-      <ul class="lg:flex hidden items-center gap-4 text-text">
+      <ul role="list" class="lg:flex hidden items-center gap-4 text-text">
         <For each={menuEntries}>
           {(entry) => {
             const { t } = translate({ fr: { label: entry.label.fr }, en: { label: entry.label.en } })

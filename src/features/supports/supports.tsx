@@ -21,7 +21,7 @@ export const Supports = () => {
   return (
     <div class="max-w-4xl mx-auto p-6">
       <h2 class="text-4xl text-center">{t.title}</h2>
-      <ul class="flex flex-col gap-12">
+      <ul role="list" class="flex flex-col gap-12">
         <For each={randomTestimonials()}>
           {(testimonial, index) => (
             <li class="flex flex-col gap-4 items-center">
