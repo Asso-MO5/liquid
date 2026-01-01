@@ -558,8 +558,7 @@
   ],
   "layers": [
    { "name": "calque 2", "opacity": 255, "blendMode": "normal" },
-   { "name": "lulu-xmas", "opacity": 255, "blendMode": "normal" },
-   { "name": "hat", "opacity": 255, "blendMode": "normal" },
+   { "name": "lulu", "opacity": 255, "blendMode": "normal" },
    { "name": "effect", "opacity": 255, "blendMode": "normal" }
   ],
   "slices": [
