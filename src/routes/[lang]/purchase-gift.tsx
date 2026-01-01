@@ -119,7 +119,7 @@ const PurchaseGiftRoute = () => {
   });
 
   return (
-    <main class="items-center justify-center relative overflow-y-auto flex flex-col gap-6 p-6 text-text">
+    <main id="main" class="items-center justify-center relative overflow-y-auto flex flex-col gap-6 p-6 text-text">
       <Show when={status() === "success"}>
         <section class="max-w-xl mx-auto mb-4 p-4 border border-secondary rounded-md bg-black/30">
           <h2 class="text-xl font-bold text-secondary mb-2">
