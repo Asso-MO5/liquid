@@ -27,7 +27,7 @@ const Home: VoidComponent = () => {
   const { t } = translate(infoTxt)
   const lang = langCtrl()
   return (
-    <main class="flex flex-col gap-12 p-4">
+    <main id="main" class="flex flex-col gap-12 p-4">
       <div class="grid grid-rows-1 md:grid-cols-2 flex-wrap gap-2 w-full md:justify-between justify-center items-center">
         <Address />
 

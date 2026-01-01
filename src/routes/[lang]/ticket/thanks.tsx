@@ -22,7 +22,7 @@ export default function Thanks() {
   const { t } = translate(thanksTxt)
 
   return (
-    <div class="flex flex-col gap-2 items-center justify-center max-w-md mx-auto">
+    <main id="main" class="flex flex-col gap-2 items-center justify-center max-w-md mx-auto">
       <h1 class="text-2xl font-bold text-center">{t.title}</h1>
       <p class="text-lg text-text text-center">{t.description}</p>
       <div class="flex flex-col gap-2 items-center justify-center mt-8 border border-secondary rounded-md p-4">
@@ -32,6 +32,6 @@ export default function Thanks() {
           class="btn text-white text-lg">{t.joinMo5}
         </a>
       </div>
-    </div>
+    </main>
   )
 }

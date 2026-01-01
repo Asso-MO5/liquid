@@ -26,9 +26,9 @@ export default function Error() {
   });
 
   return (
-    <div class="flex flex-col gap-2 items-center justify-center">
+    <main id="main" class="flex flex-col gap-2 items-center justify-center">
       <h1 class="text-2xl font-bold">{t.title}</h1>
       <p class="text-lg text-white">{t.description}</p>
-    </div>
+    </main>
   )
 }
