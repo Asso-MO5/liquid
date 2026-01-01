@@ -422,3 +422,11 @@
   width: 100px;
   height: 100%;
 }
+
+[data-page='partners'] img {
+  filter: invert(1);
+}
+
+.dark [data-page='partners'] img {
+  filter: invert(0);
+}
