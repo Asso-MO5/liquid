@@ -1,0 +1,159 @@
+{ "frames": [
+   {
+    "filename": "{num}",
+    "frame": { "x": 0, "y": 0, "w": 22, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 36 },
+    "sourceSize": { "w": 22, "h": 36 },
+    "duration": 100
+   },
+   {
+    "filename": "{num}",
+    "frame": { "x": 22, "y": 0, "w": 22, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 36 },
+    "sourceSize": { "w": 22, "h": 36 },
+    "duration": 100
+   },
+   {
+    "filename": "{num}",
+    "frame": { "x": 44, "y": 0, "w": 22, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 36 },
+    "sourceSize": { "w": 22, "h": 36 },
+    "duration": 100
+   },
+   {
+    "filename": "{num}",
+    "frame": { "x": 66, "y": 0, "w": 22, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 36 },
+    "sourceSize": { "w": 22, "h": 36 },
+    "duration": 100
+   },
+   {
+    "filename": "{num}",
+    "frame": { "x": 88, "y": 0, "w": 22, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 36 },
+    "sourceSize": { "w": 22, "h": 36 },
+    "duration": 100
+   },
+   {
+    "filename": "{num}",
+    "frame": { "x": 110, "y": 0, "w": 22, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 36 },
+    "sourceSize": { "w": 22, "h": 36 },
+    "duration": 100
+   },
+   {
+    "filename": "{num}",
+    "frame": { "x": 132, "y": 0, "w": 22, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 36 },
+    "sourceSize": { "w": 22, "h": 36 },
+    "duration": 100
+   },
+   {
+    "filename": "{num}",
+    "frame": { "x": 154, "y": 0, "w": 22, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 36 },
+    "sourceSize": { "w": 22, "h": 36 },
+    "duration": 100
+   },
+   {
+    "filename": "{num}",
+    "frame": { "x": 176, "y": 0, "w": 22, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 36 },
+    "sourceSize": { "w": 22, "h": 36 },
+    "duration": 100
+   },
+   {
+    "filename": "{num}",
+    "frame": { "x": 198, "y": 0, "w": 22, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 36 },
+    "sourceSize": { "w": 22, "h": 36 },
+    "duration": 100
+   },
+   {
+    "filename": "{num}",
+    "frame": { "x": 220, "y": 0, "w": 22, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 36 },
+    "sourceSize": { "w": 22, "h": 36 },
+    "duration": 100
+   },
+   {
+    "filename": "{num}",
+    "frame": { "x": 242, "y": 0, "w": 22, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 36 },
+    "sourceSize": { "w": 22, "h": 36 },
+    "duration": 100
+   },
+   {
+    "filename": "{num}",
+    "frame": { "x": 264, "y": 0, "w": 22, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 36 },
+    "sourceSize": { "w": 22, "h": 36 },
+    "duration": 100
+   },
+   {
+    "filename": "{num}",
+    "frame": { "x": 286, "y": 0, "w": 22, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 36 },
+    "sourceSize": { "w": 22, "h": 36 },
+    "duration": 100
+   },
+   {
+    "filename": "{num}",
+    "frame": { "x": 308, "y": 0, "w": 22, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 36 },
+    "sourceSize": { "w": 22, "h": 36 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.17-beta2-x64",
+  "image": "amiga500.png",
+  "format": "I8",
+  "size": { "w": 330, "h": 36 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "off", "from": 0, "to": 0, "direction": "forward", "color": "#000000ff" },
+   { "name": "ignition", "from": 1, "to": 5, "direction": "forward", "color": "#000000ff" },
+   { "name": "on", "from": 6, "to": 14, "direction": "forward", "color": "#000000ff" }
+  ],
+  "layers": [
+   { "name": "game", "opacity": 255, "blendMode": "normal" },
+   { "name": "calque 1", "opacity": 255, "blendMode": "normal" },
+   { "name": "calque 2", "opacity": 255, "blendMode": "normal" },
+   { "name": "furniture", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

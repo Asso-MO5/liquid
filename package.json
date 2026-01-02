@@ -11,7 +11,8 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
+    "db:studio": "drizzle-kit studio",
+    "generate:sprites": "node scripts/generate-composed-sprites.js"
   },
   "author": {
     "name": "Benoist Bouteiller",
@@ -24,6 +25,7 @@
     "@types/node": "^20.11.26",
     "@typescript-eslint/eslint-plugin": "^7.6.0",
     "@typescript-eslint/parser": "^7.6.0",
+    "baseline-browser-mapping": "^2.9.11",
     "eslint": "^8.56.0",
     "eslint-plugin-solid": "^0.14.3",
     "jsdom": "^27.0.0",
@@ -39,8 +41,10 @@
     "@stripe/stripe-js": "^8.5.3",
     "@tailwindcss/vite": "^4.1.13",
     "autoprefixer": "^10.4.19",
+    "colyseus.js": "^0.16.22",
     "kaplay": "^4000.0.0-alpha.23",
     "postcss": "^8.4.40",
+    "sharp": "^0.33.5",
     "solid-js": "^1.9.5",
     "tailwindcss": "^4.1.13",
     "vinxi": "^0.5.7",

@@ -138,13 +138,14 @@ export const MiniGame: VoidComponent = () => {
 
       <button
         onClick={handleReset}
-        class={`absolute top-4 right-4 z-50 bg-black/80 hover:bg-black text-white rounded-full w-12 h-12 flex items-center justify-center border-2 border-white/50 backdrop-blur-sm transition-all active:scale-95 ${showResetButton()
+        class={`absolute top-10 left-4 z-[9999] bg-black/80 hover:bg-black text-white rounded-full w-12 h-12 flex items-center justify-center border-2 border-white/50 backdrop-blur-sm transition-all active:scale-95 ${showResetButton()
           ? 'opacity-100 pointer-events-auto'
           : 'opacity-0 pointer-events-none'
           }`}
         title={t().reset}
         aria-label={t().reset}
       >
+        fdfsf
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6"

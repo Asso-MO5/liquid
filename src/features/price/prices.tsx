@@ -45,7 +45,6 @@ export const Prices = () => {
                   </button>
                   <div class="text-xl">{ticketCreateCtrl.getQuantity(price)}</div>
                   <button
-
                     type="button"
                     aria-label={t().add_to_cart}
                     onClick={() => ticketCreateCtrl.addToCart(price)} disabled={ticketCreateCtrl.isMaxQuantity()}>

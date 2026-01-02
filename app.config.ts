@@ -8,11 +8,12 @@ export default defineConfig({
     // @ts-expect-error - Tailwind CSS Vite plugin is not typed
     plugins: [tailwindcss()],
     build: {
-      // Réduire les warnings pour les gros fichiers
       chunkSizeWarningLimit: 1000,
     },
-    // Ignorer les warnings pour les fichiers statiques dans public/
     logLevel: 'warn',
+  },
+  server: {
+    preset: 'node-server',
   },
   alias: {
     '~': path.resolve(process.cwd(), 'src'),
