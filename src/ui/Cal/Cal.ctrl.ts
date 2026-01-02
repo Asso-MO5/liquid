@@ -1,9 +1,10 @@
-import { createSignal, createMemo, onMount, onCleanup, createEffect } from "solid-js"
+import { createSignal, createMemo, onMount, onCleanup, createEffect, untrack } from "solid-js"
 import type { CalendarDay, CalendarEvent, CalendarCtrlReturn } from "./Cal.types"
 import { langs } from "~/utils/langs"
 import { DAYS_TEXT } from "./Cal.const"
 import { schedules } from "~/features/schedules/schedules.store"
 import { langCtrl } from "~/features/lang-selector/lang.ctrl"
+import { ticketStore } from "~/features/ticket/ticket.store"
 
 type Period = {
   id: string
@@ -35,7 +36,7 @@ const initializeFromURL = () => {
   }
 }
 
-export function calCTRL(): CalendarCtrlReturn {
+export function calCTRL(onDayClick?: (day: Date) => Promise<void>): CalendarCtrlReturn {
   const lang = langCtrl()
   const currentLang = lang()
 
@@ -187,7 +188,11 @@ export function calCTRL(): CalendarCtrlReturn {
         items: []
       })
 
+
+
     }
+
+
 
     return days
   }
@@ -216,6 +221,7 @@ export function calCTRL(): CalendarCtrlReturn {
     const today = new Date()
 
     const days = generateMonthDays(current, today)
+
     return days.map(day => ({
       ...day,
       items: items()
@@ -225,6 +231,46 @@ export function calCTRL(): CalendarCtrlReturn {
 
   createEffect(() => {
     initializeFromURL()
+  })
+
+  // Flag pour éviter les appels multiples
+  const [hasAutoSelected, setHasAutoSelected] = createSignal(false)
+
+  createEffect(() => {
+
+    if (ticketStore.reservation_date) {
+      setHasAutoSelected(false)
+      return
+    }
+
+
+    if (hasAutoSelected()) return
+
+    const days = calendarDays()
+    if (!days || days.length === 0) return;
+    const currentSelectedDate = untrack(() => selectedDate())
+    const indexForSelectedDate = days.findIndex(day => isSameDay(day.date, currentSelectedDate))
+
+    if (indexForSelectedDate !== -1) {
+      const todayIsOpen = days[indexForSelectedDate].isDayOpen
+      if (todayIsOpen) {
+        setHasAutoSelected(true)
+
+        onDayClick?.(days[indexForSelectedDate].date)
+      } else {
+        const nextOpenDay = days.slice(indexForSelectedDate + 1).find(day => day.isDayOpen)
+        if (nextOpenDay) {
+          setHasAutoSelected(true)
+          onDayClick?.(nextOpenDay.date)
+        } else {
+          const previousOpenDay = days.slice(0, indexForSelectedDate).reverse().find(day => day.isDayOpen)
+          if (previousOpenDay) {
+            setHasAutoSelected(true)
+            onDayClick?.(previousOpenDay.date)
+          }
+        }
+      }
+    }
   })
 
 

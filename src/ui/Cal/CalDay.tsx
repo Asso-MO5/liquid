@@ -1,20 +1,23 @@
-import { Show, createSignal, onMount } from "solid-js"
-import type { CalDayProps } from "./CalDay.types"
-import { formatDate } from "~/utils/format-date"
+import { Show, createSignal, onMount } from 'solid-js'
+import type { CalDayProps } from './CalDay.types'
+import { formatDate } from '~/utils/format-date'
 
 export const CalDay = (props: CalDayProps) => {
   const [isMobile, setIsMobile] = createSignal(false)
 
   const isSameDate = (date: Date) => {
-    if (!props.selectedDate || typeof props.selectedDate !== 'string') return false
-
-    // format YYYY-MM-DD
+    if (!props.selectedDate || typeof props.selectedDate !== 'string')
+      return false
     const selectedDate = new Date(props.selectedDate)
     const day = date.getDate()
     const month = date.getMonth()
     const year = date.getFullYear()
 
-    return selectedDate.getDate() === day && selectedDate.getMonth() === month && selectedDate.getFullYear() === year
+    return (
+      selectedDate.getDate() === day &&
+      selectedDate.getMonth() === month &&
+      selectedDate.getFullYear() === year
+    )
   }
   onMount(() => {
     const checkMobile = () => {
@@ -27,34 +30,37 @@ export const CalDay = (props: CalDayProps) => {
     return () => window.removeEventListener('resize', checkMobile)
   })
 
-
   return (
     <Show
       when={isMobile()}
       fallback={
         /* DESKTOP */
-        <>        <Show when={props.day.isDayOpen}>
-          <button
-            type="button"
-            class="
-              p-2 border border-primary rounded-sm cursor-pointer data-[open=true]:hover:bg-primary
-              data-[current-month=false]:opacity-30
-              data-[today=true]:text-accent data-[today=true]:border-accent
-              data-[today=true]:hover:bg-accent data-[today=true]:hover:text-white
-              data-[today=true]:bg-transparent 
-              data-[selected=true]:bg-primary data-[selected=true]:border-primary data-[selected=true]:text-white
-              data-[disabled=true]:opacity-50 data-[disabled=true]:cursor-not-allowed
-            "
-            data-current-month={props.day.isCurrentMonth}
-            data-selected={isSameDate(props.day.date)}
-            data-today={props.day.isToday}
-            onClick={() => props.onDayClick(props.day.date)}
-          >
-            <div class="text-lg font-medium mb-1 flex items-center justify-center">
-              {formatDate(props.day.date)}
-            </div>
-          </button>
-        </Show>
+        <>
+          <Show when={props.day.isDayOpen}>
+            <button
+              type="button"
+              class="
+                p-2 border border-primary rounded-sm cursor-pointer data-[open=true]:hover:bg-primary
+                data-[current-month=false]:opacity-30
+                data-[today=true]:text-accent data-[today=true]:border-accent
+                data-[today=true]:hover:bg-accent data-[today=true]:hover:text-white
+                data-[today=true]:bg-transparent 
+                data-[selected=true]:bg-primary data-[selected=true]:border-primary 
+                data-[selected=true]:text-white
+                data-[today=true]:data-[selected=true]:bg-accent 
+                data-[today=true]:data-[selected=true]:text-white
+                data-[disabled=true]:opacity-50 data-[disabled=true]:cursor-not-allowed
+              "
+              data-current-month={props.day.isCurrentMonth}
+              data-selected={isSameDate(props.day.date)}
+              data-today={props.day.isToday}
+              onClick={() => props.onDayClick(props.day.date)}
+            >
+              <div class="text-lg font-medium mb-1 flex items-center justify-center">
+                {formatDate(props.day.date)}
+              </div>
+            </button>
+          </Show>
           <Show when={!props.day.isDayOpen}>
             <div
               class="
@@ -73,8 +79,6 @@ export const CalDay = (props: CalDayProps) => {
             </div>
           </Show>
         </>
-
-
       }
     >
       {/* MOBILE */}
@@ -107,6 +111,5 @@ export const CalDay = (props: CalDayProps) => {
         </Show>
       </>
     </Show>
-
   )
 }
