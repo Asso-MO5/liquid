@@ -23,7 +23,7 @@ export const Prices = () => {
                 <div class="text-lg font-bold ">{ticketCreateCtrl.isHalfPrice() ? Math.round(price.amount / 2) : price.amount}<span class="text-secondary"> €</span></div>
               </Show>
               <Show when={price.amount === 0}>
-                <p>{t.free}</p>
+                <p>{t().free}</p>
               </Show>
             </div>
 
@@ -38,7 +38,7 @@ export const Prices = () => {
 
                 <div class="flex h-full text-xl items-center justify-center gap-2">
                   <button onClick={() => ticketCreateCtrl.removeFromCart(price)} type="button"
-                    aria-label={t.remove_from_cart}
+                    aria-label={t().remove_from_cart}
                     class="text-xl"
                   >
                     {"\u2212"}
@@ -47,7 +47,7 @@ export const Prices = () => {
                   <button
 
                     type="button"
-                    aria-label={t.add_to_cart}
+                    aria-label={t().add_to_cart}
                     onClick={() => ticketCreateCtrl.addToCart(price)} disabled={ticketCreateCtrl.isMaxQuantity()}>
                     {"\u002B"}
                   </button>

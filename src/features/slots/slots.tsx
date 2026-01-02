@@ -48,12 +48,12 @@ export const Slots = (props: SlotsProps) => {
       </For>
       <Show when={props.isFetching}>
         <div class="text-center text-sm text-accent" aria-busy="true">
-          {t.loading}
+          {t().loading}
         </div>
       </Show>
       <Show when={props.slots.length === 0 && !props.isFetching}>
         <div class="text-center text-sm text-accent">
-          {t.no_slots}
+          {t().no_slots}
         </div>
       </Show>
     </div>

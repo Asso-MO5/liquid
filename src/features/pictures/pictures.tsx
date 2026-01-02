@@ -43,12 +43,12 @@ export const Pictures = () => {
               <div class="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 aspect-[4/3]">
                 <img
                   src={image.src}
-                  alt={t.alt}
+                  alt={t().alt}
                   class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                   loading="lazy"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                  <p class="text-white text-sm font-medium">{t.alt}</p>
+                  <p class="text-white text-sm font-medium">{t().alt}</p>
                 </div>
               </div>
             )

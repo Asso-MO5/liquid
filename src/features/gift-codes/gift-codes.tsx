@@ -16,7 +16,7 @@ export const GiftCodes = () => {
             <input
               type="text"
               class="bg-white/10 text-primary border border-primary rounded-md p-2 flex-1"
-              placeholder={t.placeholder}
+              placeholder={t().placeholder}
               value={code}
               onInput={(e) => {
                 giftCodesCtrlStore.setGiftCodes(e.currentTarget.value, index())
@@ -35,7 +35,7 @@ export const GiftCodes = () => {
       </For>
       <Show when={ticketStore.gift_codes.length < ticketStore.tickets.filter(ticket => ticket.amount > 0).length}>
         <button class="btn" onClick={() => giftCodesCtrlStore.addGiftCode()}>
-          {t.add}
+          {t().add}
         </button>
       </Show>
     </div>

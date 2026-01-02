@@ -53,7 +53,7 @@ export const Header = (props: HeaderProps) => {
             ease-in-out top-0 z-50 bg-bg"
         >
           <div class="flex items-center gap-4">
-            <div onClick={homeLink} class="cursor-pointer" role="link" tabindex="0" aria-label={t.logoMJVLabel}>
+            <div onClick={homeLink} class="cursor-pointer" role="link" tabindex="0" aria-label={t().logoMJVLabel}>
               <Logo />
             </div>
             <MenuDesktop />
@@ -64,7 +64,7 @@ export const Header = (props: HeaderProps) => {
               <img src="/logo.webp"
                 width={194}
                 height={60}
-                alt={t.logoMO5Alt}
+                alt={t().logoMO5Alt}
                 class="w-[120px] h-auto hidden md:block" />
             </a>
             <DarkMode />

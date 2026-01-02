@@ -11,7 +11,7 @@ export const Asso = () => {
           width={100}
           height={87}
           class="w-[87px] md:w-[100px] h-auto" />
-        <p class="text-text h-full justify-center items-center flex m-0">{t.speach}</p>
+        <p class="text-text h-full justify-center items-center flex m-0">{t().speach}</p>
 
       </div>
       <div class="flex justify-center items-center">
@@ -19,7 +19,7 @@ export const Asso = () => {
           target="_blank"
           rel="noopener noreferrer"
           href="https://mo5.com/"
-          class="btn ">{t.discoverAssociation}</a>
+          class="btn ">{t().discoverAssociation}</a>
       </div>
     </div>
   )

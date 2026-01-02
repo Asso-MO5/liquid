@@ -20,7 +20,7 @@ export const Supports = () => {
 
   return (
     <div class="max-w-4xl mx-auto p-6">
-      <h2 class="text-4xl text-center">{t.title}</h2>
+      <h2 class="text-4xl text-center">{t().title}</h2>
       <ul role="list" class="flex flex-col gap-12">
         <For each={randomTestimonials()}>
           {(testimonial, index) => (
@@ -38,7 +38,7 @@ export const Supports = () => {
                   <span class="text-secondary text-lg" aria-hidden="true">&quot;&nbsp;</span>
                   {(() => {
                     const { t } = translate({ fr: { quote: testimonial.quote.fr }, en: { quote: testimonial.quote.en } })
-                    return t.quote
+                    return t().quote
                   })()}
                   <span class="text-secondary text-lg" aria-hidden="true">&nbsp;&quot;</span>
                 </blockquote>
