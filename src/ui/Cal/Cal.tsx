@@ -9,7 +9,7 @@ interface CalProps {
 }
 
 export function Cal(props: CalProps) {
-  const calendar = calCTRL();
+  const calendar = calCTRL(props.onDayClick ? props.onDayClick : undefined);
 
   return (
     <div class="flex flex-col items-center justify-baseline gap-4 text-text" id="calendar">
