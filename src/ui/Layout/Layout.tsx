@@ -11,17 +11,12 @@ type LayoutProps = {
 
 export const Layout = (props: LayoutProps) => {
   const location = useLocation()
-  const [withGame, setWithGame] = createSignal(true)
-
+  const [withGame, setWithGame] = createSignal(false)
 
   const [page, setPage] = createSignal('')
   createEffect(() => {
     setPage(location.pathname.split('/')[2])
-    if (!page() || page() === 'game') {
-      setWithGame(true)
-    } else {
-      setWithGame(false)
-    }
+    setWithGame(!page() || page() === 'game')
   })
 
   return (

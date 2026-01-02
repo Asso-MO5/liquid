@@ -1,0 +1,140 @@
+{ "frames": [
+   {
+    "filename": "0",
+    "frame": { "x": 0, "y": 0, "w": 40, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 24 },
+    "sourceSize": { "w": 40, "h": 24 },
+    "duration": 100
+   },
+   {
+    "filename": "1",
+    "frame": { "x": 40, "y": 0, "w": 40, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 24 },
+    "sourceSize": { "w": 40, "h": 24 },
+    "duration": 100
+   },
+   {
+    "filename": "2",
+    "frame": { "x": 80, "y": 0, "w": 40, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 24 },
+    "sourceSize": { "w": 40, "h": 24 },
+    "duration": 100
+   },
+   {
+    "filename": "3",
+    "frame": { "x": 120, "y": 0, "w": 40, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 24 },
+    "sourceSize": { "w": 40, "h": 24 },
+    "duration": 100
+   },
+   {
+    "filename": "4",
+    "frame": { "x": 160, "y": 0, "w": 40, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 24 },
+    "sourceSize": { "w": 40, "h": 24 },
+    "duration": 100
+   },
+   {
+    "filename": "5",
+    "frame": { "x": 200, "y": 0, "w": 40, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 24 },
+    "sourceSize": { "w": 40, "h": 24 },
+    "duration": 100
+   },
+   {
+    "filename": "6",
+    "frame": { "x": 240, "y": 0, "w": 40, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 24 },
+    "sourceSize": { "w": 40, "h": 24 },
+    "duration": 100
+   },
+   {
+    "filename": "7",
+    "frame": { "x": 280, "y": 0, "w": 40, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 24 },
+    "sourceSize": { "w": 40, "h": 24 },
+    "duration": 100
+   },
+   {
+    "filename": "8",
+    "frame": { "x": 320, "y": 0, "w": 40, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 24 },
+    "sourceSize": { "w": 40, "h": 24 },
+    "duration": 100
+   },
+   {
+    "filename": "9",
+    "frame": { "x": 360, "y": 0, "w": 40, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 24 },
+    "sourceSize": { "w": 40, "h": 24 },
+    "duration": 100
+   },
+   {
+    "filename": "10",
+    "frame": { "x": 400, "y": 0, "w": 40, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 24 },
+    "sourceSize": { "w": 40, "h": 24 },
+    "duration": 100
+   },
+   {
+    "filename": "11",
+    "frame": { "x": 440, "y": 0, "w": 40, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 24 },
+    "sourceSize": { "w": 40, "h": 24 },
+    "duration": 100
+   },
+   {
+    "filename": "12",
+    "frame": { "x": 480, "y": 0, "w": 40, "h": 24 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 40, "h": 24 },
+    "sourceSize": { "w": 40, "h": 24 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.17-beta2-x64",
+  "image": "tennis-for-two.png",
+  "format": "I8",
+  "size": { "w": 520, "h": 24 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "off", "from": 0, "to": 0, "direction": "forward", "color": "#000000ff" },
+   { "name": "ignition", "from": 1, "to": 2, "direction": "forward", "color": "#000000ff" },
+   { "name": "on", "from": 3, "to": 12, "direction": "forward", "color": "#000000ff" }
+  ],
+  "layers": [
+   { "name": "fond", "opacity": 255, "blendMode": "normal" },
+   { "name": "game", "opacity": 255, "blendMode": "normal" },
+   { "name": "machine", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}
