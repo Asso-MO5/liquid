@@ -12,6 +12,8 @@ export const slotsCTRL = () => {
   const getSlots = async () => {
     const params = new URLSearchParams();
     params.set('date', ticketStore.reservation_date.split('T')[0]);
+    if (!ticketStore.reservation_date || isLoading()) return;
+
     setIsFetching(true);
     setIsLoading(true);
     try {
