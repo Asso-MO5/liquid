@@ -124,6 +124,8 @@ export const initGame = async () => {
   const sounds = [
     'jump',
     'explosion',
+    "hurt",
+    "bythepond",
   ]
 
   for (const sound of sounds) {
