@@ -1,9 +1,9 @@
 import { createSignal, onMount } from "solid-js"
+import { setSoundIsSupport } from "./pixel-museum-sound.ctrl"
 
 export const pixelMuseumCtrl = () => {
   const [gameIsReady, setGameIsReady] = createSignal<boolean>(false)
   const [webglIsSupported, setWebglIsSupported] = createSignal<boolean>(false)
-  const [soundIsSupport, setSoundIsSupport] = createSignal<boolean>(false)
 
 
   const checkWebglSupport = () => {
@@ -32,7 +32,6 @@ export const pixelMuseumCtrl = () => {
   return {
     isLoading: false,
     gameIsReady,
-    soundIsSupport,
     webglIsSupported
   }
 }

@@ -1,6 +1,9 @@
 import type Kaplay from "kaplay";
 import { CANVAS_ID } from "./pixel-museum.const";
 import { onMount } from "solid-js";
+import { museumLevel } from "./levels/museum.level";
+import { LEVELS } from "./levels/levels.const";
+import { pixelMuseumRessources } from "./pixel-museum-ressources";
 
 export let k: ReturnType<typeof Kaplay> | null = null;
 
@@ -31,6 +34,10 @@ export const pixelMuseumInitGame = () => {
       pixelDensity: 1,
     });
 
+    if (import.meta.env.DEV) {
+      k.debug.inspect = true;
+    }
+
     const canvas = containerRef.querySelector('canvas');
 
     if (!canvas || !k) return console.error('Canvas ou kaplay non trouvé');
@@ -40,7 +47,6 @@ export const pixelMuseumInitGame = () => {
     canvas.style.imageRendering = 'crisp-edges';
     canvas.style.touchAction = 'pan-y';
     canvas.style.pointerEvents = 'auto';
-
 
     let touchStartY = 0;
     let touchStartX = 0;
@@ -90,6 +96,11 @@ export const pixelMuseumInitGame = () => {
       touchStartX = 0;
     }, { passive: true });
 
+    await pixelMuseumRessources(k)
+
+    k.scene(LEVELS.MUSEUM, () => museumLevel(k));
+
+    k.go(LEVELS.MUSEUM);
 
 
   }
