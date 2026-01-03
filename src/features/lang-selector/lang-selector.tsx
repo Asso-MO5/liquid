@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from '@solidjs/router'
+import { useLocation, useNavigate } from '@solidjs/router'
 import { LANGS, SELECT } from './lang-selector.const'
 import { createSignal, For, onMount, Show } from 'solid-js'
 import { langCtrl } from './lang.ctrl'
