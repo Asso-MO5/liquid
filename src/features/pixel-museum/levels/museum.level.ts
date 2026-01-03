@@ -1,7 +1,6 @@
 import type kaplay from "kaplay";
-import { FONTS, SOUNDS, SPRITES } from "../pixel-museum.const";
-import { volume } from "../pixel-museum-sound.ctrl";
-import { pixelMuseumState } from "../pixel-museum.state";
+import { FONTS, IMAGES, OBJECTS, SOUNDS, SPRITES } from "../pixel-museum.const";
+import { playMusic } from "../pixel-museum-sound.ctrl";
 import { createPlayer } from "../entities/player.create";
 
 
@@ -14,16 +13,14 @@ const texts = {
 
 const levelWidth = 2104
 const levelHeight = 302
-const GROUND_Y = 156
+const GROUND_Y = 155
 
 export const museumLevel = (k: ReturnType<typeof kaplay> | null) => {
 
   if (!k) return console.error('kaplay non trouvé');
   k.setGravity(1500);
 
-  pixelMuseumState.musicSound?.stop?.()
-  pixelMuseumState.musicSound = k.play(SOUNDS.BYTHEPOND, { loop: true, volume: volume() });
-
+  playMusic(k, SOUNDS.BYTHEPOND);
 
   // Background
   k.add([
@@ -70,6 +67,31 @@ export const museumLevel = (k: ReturnType<typeof kaplay> | null) => {
   ])
 
 
+  k.add([
+    k.sprite(OBJECTS.TICKET_DESK),
+    k.pos(806, GROUND_Y),
+    k.anchor('botleft'),
+    k.z(95),
+    'ticket-desk',
+  ])
+
+  k.add([
+    k.sprite(OBJECTS.TICKET_PC),
+    k.pos(816, GROUND_Y - 16),
+    k.anchor('botleft'),
+    k.z(95),
+    'ticket-desk',
+  ])
+
+
+  k.add([
+    k.sprite(IMAGES.OCELOT),
+    k.pos(816, GROUND_Y - 16),
+    k.anchor('botleft'),
+    k.z(95),
+    k.scale(0.1),
+    'ticket-desk',
+  ])
 
   const lang = window.location.pathname.split('/')[1] || 'fr'
 
@@ -85,14 +107,13 @@ export const museumLevel = (k: ReturnType<typeof kaplay> | null) => {
     }),
     k.color(255, 255, 255),
     k.z(-50),
-    k.pos(152, 60),
+    k.pos(795, 50),
   ])
-
 
   const isPortrait = window.innerWidth < window.innerHeight
 
-  const startPosition = isPortrait ? { x: 840, y: 140 } : {
-    x: import.meta.env.DEV ? 840 : 840,
+  const startPosition = isPortrait ? { x: 815, y: 140 } : {
+    x: import.meta.env.DEV ? 810 : 810,
     y: 140,
   }
 

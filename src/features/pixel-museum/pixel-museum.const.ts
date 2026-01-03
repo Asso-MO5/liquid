@@ -35,3 +35,14 @@ export const CONTROLS = {
   MOVE_RIGHT: ['right', 'd'],
   JUMP: ['space', 'up', 'w', 'z', 'x'],
 } as const
+
+
+export const OBJECTS = {
+  TICKET_PC: 'ticket-pc',
+  TICKET_DESK: 'ticket-desk',
+} as const
+
+
+export const IMAGES = {
+  OCELOT: 'ocelot',
+} as const

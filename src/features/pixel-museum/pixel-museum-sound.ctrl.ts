@@ -1,4 +1,6 @@
 import { createSignal } from "solid-js"
+import type kaplay from "kaplay"
+import { pixelMuseumState } from "./pixel-museum.state"
 
 export const [soundIsSupport, setSoundIsSupport] = createSignal<boolean>(false)
 export const [volume, setVolume] = createSignal<number>(0)
@@ -29,4 +31,17 @@ export const pixelMuseumSoundCtrl = () => {
     unmute,
     toggleMute,
   }
+}
+
+export const playMusic = (k: ReturnType<typeof kaplay>, sound: string) => {
+  if (!k) return console.error('kaplay non trouvé');
+  if (isMuted() || !soundIsSupport()) return;
+  pixelMuseumState.musicSound?.stop?.()
+  pixelMuseumState.musicSound = k.play(sound, { loop: true, volume: volume() });
+}
+
+export const playSound = (k: ReturnType<typeof kaplay>, sound: string) => {
+  if (!k) return console.error('kaplay non trouvé');
+  if (isMuted() || !soundIsSupport()) return;
+  k.play(sound, { loop: false, volume: volume() });
 }

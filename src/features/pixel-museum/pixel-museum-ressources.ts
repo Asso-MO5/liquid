@@ -1,5 +1,5 @@
 import type kaplay from 'kaplay'
-import { ASEPRITES, FONTS, SOUNDS, SPRITES } from './pixel-museum.const'
+import { ASEPRITES, FONTS, IMAGES, OBJECTS, SOUNDS, SPRITES } from './pixel-museum.const'
 
 export const pixelMuseumRessources = async (k: ReturnType<typeof kaplay>) => {
   const BASE_URL = `${window.location.protocol}//${window.location.host}/pixel-museum`
@@ -10,6 +10,14 @@ export const pixelMuseumRessources = async (k: ReturnType<typeof kaplay>) => {
 
   for (const sprite of Object.values(SPRITES)) {
     k.loadSprite(sprite, `${BASE_URL}/tiles/${sprite}.png`)
+  }
+
+  for (const object of Object.values(OBJECTS)) {
+    k.loadSprite(object, `${BASE_URL}/objs/${object}.png`)
+  }
+
+  for (const image of Object.values(IMAGES)) {
+    k.loadSprite(image, `${BASE_URL}/images/${image}.webp`)
   }
 
   for (const sound of Object.values(SOUNDS)) {
