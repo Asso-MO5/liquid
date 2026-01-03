@@ -20,25 +20,25 @@ export const PersonalInfos = () => {
   return (
     <div class="flex flex-col gap-2">
       <div class="flex flex-col gap-1">
-        <label for="first_name" class="text-primary">{t.first_name}</label>
+        <label for="first_name" class="text-primary">{t().first_name}</label>
         <input
-          aria-label={t.first_name}
+          aria-label={t().first_name}
           aria-required="true"
           required
           auto-complete="given-name"
           id="first_name" type="text" class="bg-white/10 text-text" value={ticketStore.first_name} onInput={(e) => setTicketStore('first_name', e.currentTarget.value)} />
       </div>
       <div class="flex flex-col gap-1">
-        <label for="last_name" class="text-primary">{t.last_name}</label>
+        <label for="last_name" class="text-primary">{t().last_name}</label>
         <input
-          aria-label={t.last_name}
+          aria-label={t().last_name}
           aria-required="true"
           required
           auto-complete="family-name"
           id="last_name" type="text" class="bg-white/10 text-text" value={ticketStore.last_name} onInput={(e) => setTicketStore('last_name', e.currentTarget.value)} />
       </div>
       <div class="flex flex-col gap-1">
-        <label for="email" class="text-primary">{t.email}</label>
+        <label for="email" class="text-primary">{t().email}</label>
         {/* Champ factice pour tromper l'autocomplétion */}
         <input
           type="email"
@@ -50,7 +50,7 @@ export const PersonalInfos = () => {
         />
         <input
           ref={emailInputRef}
-          aria-label={t.email}
+          aria-label={t().email}
           aria-required="true"
           required
           readonly
@@ -72,7 +72,7 @@ export const PersonalInfos = () => {
           }}
         />
       </div>
-      <p class="text-xs text-amber-500 italic">{t.warningEmail}</p>
+      <p class="text-xs text-amber-500 italic">{t().warningEmail}</p>
     </div>
   )
 }

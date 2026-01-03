@@ -45,7 +45,7 @@ export const Donation = () => {
           </button>
         )}
       </For>
-      <p class="text-sm text-secondary italic text-center col-span-3 mt-4">{t.donationInfoTax}</p>
+      <p class="text-sm text-secondary italic text-center col-span-3 mt-4">{t().donationInfoTax}</p>
     </div>
   )
 }

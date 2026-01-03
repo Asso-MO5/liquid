@@ -12,7 +12,6 @@ export const MenuDesktop = () => {
         <For each={menuEntries}>
           {(entry) => {
             const { t } = translate({ fr: { label: entry.label.fr }, en: { label: entry.label.en } })
-
             if (entry.external) {
               return (
                 <li>
@@ -24,7 +23,7 @@ export const MenuDesktop = () => {
               secondary border-primary border px-2 py-2 rounded-sm transition-all duration-300 hover:bg-primary/10 hover:text-primary
               "
                   >
-                    {t.label}
+                    {t().label}
                   </a>
                 </li>
               )
@@ -46,7 +45,7 @@ export const MenuDesktop = () => {
             border border-transparent hover:bg-primary/10 
             data-[highlighted=true]:hover:text-white rounded-sm px-2 py-2 transition-all duration-300 data-[highlighted=true]:border-secondary data-[highlighted=true]:hover:bg-secondary"
                 >
-                  {t.label}
+                  {t().label}
                 </A>
               </li>
             )
