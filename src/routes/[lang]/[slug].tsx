@@ -1,5 +1,5 @@
 import { Meta, Title } from "@solidjs/meta";
-import { query, createAsync, useParams, type RouteDefinition } from "@solidjs/router";
+import { query, createAsync, useParams, type RouteDefinition, Navigate } from "@solidjs/router";
 import { Suspense, ErrorBoundary, createMemo } from "solid-js";
 import { legalLinks, resourcesLinks } from "~/ui/footer/footer.const";
 import { Loader } from "~/ui/loader";
@@ -18,6 +18,7 @@ const getPage = query(async (lang: string, slug: string) => {
   if (!pageConfig) {
     throw new Error(`Page slug "${slug}" not found`);
   }
+
   const response = await fetch(`${blogUrl}/pages/${pageConfig.id}?lang=${lang}`);
 
   if (!response.ok) {
@@ -53,24 +54,22 @@ export const Page = () => {
 
   return (
     <main id="main" class="container max-w-xl mx-auto px-4 py-8 text-text" data-page={params.slug}>
-      <ErrorBoundary fallback={<div>Une erreur est survenue lors du chargement de la page.</div>}>
+      <ErrorBoundary fallback={<Navigate href={`/${params.lang}`} />}>
         <Suspense fallback={<div class="flex items-center justify-center p-3"><Loader /></div>}>
-          {
-            <>
-              <Title>{title()}</Title>
-              <Meta name="description" content={description()} />
-              {page()?.keywords && <Meta name="keywords" content={page().keywords.join(', ')} />}
-              <article class="prose prose-invert max-w-none">
-                {page()?.title?.rendered && (
-                  <h1 class="text-5xl text-tertiary text-center font-display">{page().title.rendered}</h1>
-                )}
-                {page()?.content?.rendered && (
-                  // eslint-disable-next-line solid/no-innerhtml
-                  <div innerHTML={page().content.rendered} class="text-text" />
-                )}
-              </article>
-            </>
-          }
+          <>
+            <Title>{title()}</Title>
+            <Meta name="description" content={description()} />
+            {page()?.keywords && <Meta name="keywords" content={page().keywords.join(', ')} />}
+            <article class="prose prose-invert max-w-none">
+              {page()?.title?.rendered && (
+                <h1 class="text-5xl text-tertiary text-center font-display">{page().title.rendered}</h1>
+              )}
+              {page()?.content?.rendered && (
+                // eslint-disable-next-line solid/no-innerhtml
+                <div innerHTML={page().content.rendered} class="text-text" />
+              )}
+            </article>
+          </>
         </Suspense>
       </ErrorBoundary>
     </main>

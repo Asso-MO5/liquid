@@ -1,4 +1,3 @@
-import { langCtrl } from "~/features/lang-selector/lang.ctrl"
 import { translate } from "~/utils/translate"
 
 const txt = {
