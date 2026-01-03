@@ -70,7 +70,7 @@ export const MenuMobile = () => {
                   text-center secondary border-primary border px-2 py-2 
                   rounded-sm transition-all duration-300 hover:bg-primary/10 hover:text-primary
                 ">
-                    {t.label}
+                    {t().label}
                   </a></li>;
                 }
                 return (
@@ -88,7 +88,7 @@ export const MenuMobile = () => {
                   data-[highlighted=true]:hover:text-white rounded-sm px-2 py-2 transition-all duration-300 data-[highlighted=true]:border-secondary data-[highlighted=true]:hover:bg-secondary"
                     onClick={() => setIsOpen(false)}
                   >
-                    {t.label}
+                    {t().label}
                   </a></li>
                 );
               }}

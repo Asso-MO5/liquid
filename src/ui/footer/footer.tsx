@@ -15,7 +15,7 @@ export const Footer = () => {
       {/* Liens légaux */}
       <div>
         <h2 class="text-xl mb-4 text-text/80">
-          {t.legalInfo}
+          {t().legalInfo}
         </h2>
         <ul role="list" class="flex flex-col gap-2">
           <For each={legalLinks}>
@@ -27,7 +27,7 @@ export const Footer = () => {
                     href={`/${lang()}${link.href}`}
                     class="text-sm text-text/70 hover:text-text transition-colors"
                   >
-                    {t.label}
+                    {t().label}
                   </A>
                 </li>
               )
@@ -39,7 +39,7 @@ export const Footer = () => {
       {/* Ressources */}
       <div>
         <h2 class="text-xl mb-4 text-text/80">
-          {t.resources}
+          {t().resources}
         </h2>
         <ul role="list" class="flex flex-col gap-2">
           <For each={resourcesLinks}>
@@ -51,7 +51,7 @@ export const Footer = () => {
                     href={`/${lang()}${link.href}`}
                     class="text-sm text-text/70 hover:text-text transition-colors"
                   >
-                    {t.label}
+                    {t().label}
                   </A>
                 </li>
               )
@@ -63,7 +63,7 @@ export const Footer = () => {
       {/* Réseaux sociaux */}
       <div>
         <h2 class="text-xl mb-4 text-text/80">
-          {t.followUs}
+          {t().followUs}
         </h2>
         <ul role="list" class="flex flex-col gap-2">
           <For each={socialLinks}>
@@ -77,7 +77,7 @@ export const Footer = () => {
                     rel="noopener noreferrer"
                     class="text-sm text-text/70 hover:text-text transition-colors"
                   >
-                    {t.label}
+                    {t().label}
                   </A>
                 </li>
               )

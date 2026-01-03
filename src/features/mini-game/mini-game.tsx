@@ -125,7 +125,7 @@ export const MiniGame: VoidComponent = () => {
       <div
         id={CANVAS_ID}
         ref={containerRef}
-        aria-label={t.alt}
+        aria-label={t().alt}
         class="w-full h-full relative overflow-hidden"
         style={{
           'image-rendering': 'pixelated',
@@ -142,8 +142,8 @@ export const MiniGame: VoidComponent = () => {
           ? 'opacity-100 pointer-events-auto'
           : 'opacity-0 pointer-events-none'
           }`}
-        title={t.reset}
-        aria-label={t.reset}
+        title={t().reset}
+        aria-label={t().reset}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

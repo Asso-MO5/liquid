@@ -103,7 +103,7 @@ export const Page = () => {
                 <Show when={regularSchedules().length > 0}>
                   <section class="mb-8">
                     <h2>
-                      {t.openingHours}
+                      {t().openingHours}
                     </h2>
                     <div class="flex flex-col gap-3">
                       <For each={regularSchedules()}>
@@ -113,7 +113,7 @@ export const Page = () => {
                               {DAYS_FULL[lang()][schedule.day_of_week]}
                               <Show when={schedule.audience_type == 'holiday'}>
                                 <span class="text-secondary italic text-sm">
-                                  {`(${t.holiday})`}
+                                  {`(${t().holiday})`}
                                 </span>
                               </Show>
                             </span>
@@ -131,7 +131,7 @@ export const Page = () => {
                 <Show when={activePrices().length > 0}>
                   <section class="mb-8">
                     <h2>
-                      {t.prices}
+                      {t().prices}
                     </h2>
                     <div class="flex flex-col gap-3">
                       <For each={activePrices()}>
@@ -148,11 +148,11 @@ export const Page = () => {
                                 return (
                                   <>
                                     <h3 class=" text-xl mb-1 text-primary">
-                                      {t.name}
+                                      {t().name}
                                     </h3>
-                                    <Show when={t.description}>
+                                    <Show when={t().description}>
                                       <p class="text-sm text-text italic">
-                                        {t.description}
+                                        {t().description}
                                       </p>
                                     </Show>
                                   </>

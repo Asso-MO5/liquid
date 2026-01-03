@@ -18,7 +18,7 @@ export const PaymentBtn = (props: PaymentBtnProps) => {
       aria-busy={props.isLoading}
       class="btn mt-4 disabled:opacity-50 disabled:cursor-not-allowed w-full"
       onClick={() => props.onPayment()}>
-      {t.proceed_to_payment}
+      {t().proceed_to_payment}
     </button>
   )
 }

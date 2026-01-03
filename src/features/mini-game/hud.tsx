@@ -109,8 +109,8 @@ export const HUD = () => {
           <button
             onClick={soundCtrl.toggleMute}
             class="bg-bg hover:border-primary hover:text-primary text-text rounded-full w-10 h-10 flex items-center justify-center border border-text backdrop-blur-sm transition-all active:scale-95"
-            title={soundCtrl.isMuted() ? t.soundOn : t.soundOff}
-            aria-label={soundCtrl.isMuted() ? t.soundOn : t.soundOff}
+            title={soundCtrl.isMuted() ? t().soundOn : t().soundOff}
+            aria-label={soundCtrl.isMuted() ? t().soundOn : t().soundOff}
           >
             <Show
               when={soundCtrl.isMuted()}
@@ -149,8 +149,8 @@ export const HUD = () => {
               onMouseDown={handleLeftDown}
               onMouseUp={handleLeftUp}
               onMouseLeave={handleLeftUp}
-              title={t.altLeft}
-              aria-label={t.altLeft}
+              title={t().altLeft}
+              aria-label={t().altLeft}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -169,8 +169,8 @@ export const HUD = () => {
               onMouseDown={handleRightDown}
               onMouseUp={handleRightUp}
               onMouseLeave={handleRightUp}
-              title={t.altRight}
-              aria-label={t.altRight}
+              title={t().altRight}
+              aria-label={t().altRight}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -190,8 +190,8 @@ export const HUD = () => {
               class="bg-primary hover:bg-primary text-white rounded-full w-14 h-14 flex items-center justify-center border-2 border-white/50 backdrop-blur-sm transition-all active:scale-95 pointer-events-auto"
               onTouchStart={handleJump}
               onMouseDown={handleJump}
-              title={t.altJump}
-              aria-label={t.altJump}
+              title={t().altJump}
+              aria-label={t().altJump}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -209,8 +209,8 @@ export const HUD = () => {
               class="bg-secondary hover:bg-secondary text-white rounded-full w-14 h-14 flex items-center justify-center border-2 border-white/50 backdrop-blur-sm transition-all active:scale-95 pointer-events-auto"
               onTouchStart={handleAction}
               onMouseDown={handleAction}
-              title={t.altAction}
-              aria-label={t.altAction}
+              title={t().altAction}
+              aria-label={t().altAction}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -234,8 +234,8 @@ export const HUD = () => {
           <button
             onClick={soundCtrl.toggleMute}
             class="bg-bg hover:border-primary hover:text-primary text-text rounded-lg px-3 py-2 flex items-center gap-2 border border-text backdrop-blur-sm transition-all active:scale-95"
-            title={soundCtrl.isMuted() ? t.soundOn : t.soundOff}
-            aria-label={soundCtrl.isMuted() ? t.soundOn : t.soundOff}
+            title={soundCtrl.isMuted() ? t().soundOn : t().soundOff}
+            aria-label={soundCtrl.isMuted() ? t().soundOn : t().soundOff}
           >
             <Show
               when={soundCtrl.isMuted()}
@@ -274,8 +274,8 @@ export const HUD = () => {
               onMouseDown={handleLeftDown}
               onMouseUp={handleLeftUp}
               onMouseLeave={handleLeftUp}
-              title={t.altLeft}
-              aria-label={t.altLeft}
+              title={t().altLeft}
+              aria-label={t().altLeft}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -286,7 +286,7 @@ export const HUD = () => {
               >
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
               </svg>
-              <span class="text-xs opacity-70">{t.left}</span>
+              <span class="text-xs opacity-70">{t().left}</span>
             </button>
             <button
               class="
@@ -295,10 +295,10 @@ export const HUD = () => {
               onMouseDown={handleRightDown}
               onMouseUp={handleRightUp}
               onMouseLeave={handleRightUp}
-              title={t.altRight}
-              aria-label={t.altRight}
+              title={t().altRight}
+              aria-label={t().altRight}
             >
-              <span class="text-xs opacity-70">{t.right}</span>
+              <span class="text-xs opacity-70">{t().right}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-4 w-4"
@@ -317,8 +317,8 @@ export const HUD = () => {
               justify-between
               bg-bg hover:border-primary hover:text-primary text-text rounded-lg px-3 py-2 flex items-center gap-2 border border-text backdrop-blur-sm transition-all active:scale-95 text-sm font-mono"
               onMouseDown={handleJump}
-              title={t.altJump}
-              aria-label={t.altJump}
+              title={t().altJump}
+              aria-label={t().altJump}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -329,18 +329,18 @@ export const HUD = () => {
               >
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
               </svg>
-              <span class="text-xs opacity-70">{t.jump}</span>
+              <span class="text-xs opacity-70">{t().jump}</span>
             </button>
             <button
               class="
               justify-between
               bg-bg hover:border-primary hover:text-primary text-text rounded-lg px-3 py-2 flex items-center gap-2 border border-text backdrop-blur-sm transition-all active:scale-95 text-sm font-mono"
               onMouseDown={handleAction}
-              title={t.altAction}
-              aria-label={t.altAction}
+              title={t().altAction}
+              aria-label={t().altAction}
             >
 
-              <span class="text-xs opacity-70">{t.action}</span>
+              <span class="text-xs opacity-70">{t().action}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-4 w-4"

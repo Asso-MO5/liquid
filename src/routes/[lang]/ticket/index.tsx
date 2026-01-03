@@ -64,20 +64,20 @@ export default function Ticket() {
 
   return (
     <>
-      <Title>{t.title}</Title>
-      <Meta name="description" content={t.description} />
-      <Meta name="keywords" content={t.keywords} />
+      <Title>{t().title}</Title>
+      <Meta name="description" content={t().description} />
+      <Meta name="keywords" content={t().keywords} />
       <main
         id="main"
         class="items-center justify-center relative overflow-y-auto flex flex-col gap-6 p-6 text-text"
       >
         <div id="step-1">
-          <h3 class="text-center">{t.select_date}</h3>
+          <h3 class="text-center">{t().select_date}</h3>
           <Cal onDayClick={slotsCtrl.onDayClick} selectedDate={ticketStore.reservation_date} />
         </div>
 
         <div id="step-2">
-          <h3 class="text-center">{t.select_slot}</h3>
+          <h3 class="text-center">{t().select_slot}</h3>
           <Slots
             isFetching={slotsCtrl.isFetching()}
             slots={slotsCtrl.slots()}
@@ -86,20 +86,20 @@ export default function Ticket() {
           />
         </div>
         <div id="step-3" class="mx-auto">
-          <h3 class="text-center">{t.select_price}</h3>
+          <h3 class="text-center">{t().select_price}</h3>
           <p class="text-center text-sm text-text italic">
-            {t.for_group}
-            <A class="pl-2" href={`/${lang() as string}/contact`}>{t.contact}</A>
+            {t().for_group}
+            <A class="pl-2" href={`/${lang() as string}/contact`}>{t().contact}</A>
           </p>
           <Prices />
           <div class="mt-6">
-            <h3 class="text-center">{t.donation}</h3>
+            <h3 class="text-center">{t().donation}</h3>
             <Donation />
           </div>
         </div>
         <div id="step-4" class="max-w-sm mx-auto lg:self-start">
           <h3 class="text-center">
-            {t.personal_infos}
+            {t().personal_infos}
           </h3>
           <PersonalInfos />
           <GiftCodes />
@@ -109,11 +109,11 @@ export default function Ticket() {
               <input type="checkbox"
                 class="bg-white/10 text-text w-4 h-4"
                 id="terms_and_conditions" checked={paymentCtrl.IHaveReadTheTermsAndConditions()} onChange={() => paymentCtrl.setIHaveReadTheTermsAndConditions(!paymentCtrl.IHaveReadTheTermsAndConditions())} />
-              <label for="terms_and_conditions">{t.terms_and_conditions}</label>
+              <label for="terms_and_conditions">{t().terms_and_conditions}</label>
             </div>
 
             <a href={`/${lang() as string}/cgv`} target="_blank" rel="noopener noreferrer" class="text-center text-sm text-primary hover:text-primary inline-flex items-center gap-1 justify-center">
-              {t.terms_and_conditions_link}
+              {t().terms_and_conditions_link}
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block">
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                 <polyline points="15 3 21 3 21 9" />
