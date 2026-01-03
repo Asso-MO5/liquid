@@ -1,4 +1,5 @@
 import { langCtrl } from "~/features/lang-selector/lang.ctrl"
+import { translate } from "~/utils/translate"
 
 const txt = {
   fr: {
@@ -10,8 +11,8 @@ const txt = {
 }
 
 export const Loader = () => {
-  const lang = langCtrl()
+  const { t } = translate(txt)
   return (
-    <img src="/lulu-wait.gif" alt={txt[lang() as keyof typeof txt].loading} class="w-[32px] h-[32px]" />
+    <img src="/lulu-wait.gif" alt={t().loading} class="w-[32px] h-[32px]" />
   )
 }

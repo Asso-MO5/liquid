@@ -1,9 +1,10 @@
 import { useLocation, useNavigate, useParams } from '@solidjs/router'
 import { LANGS, SELECT } from './lang-selector.const'
 import { createSignal, For, onMount, Show } from 'solid-js'
+import { langCtrl } from './lang.ctrl'
 
 export const LangSelector = () => {
-  const { lang: langParams = 'fr' } = useParams()
+  const lang = langCtrl()
   const navigate = useNavigate()
   const path = useLocation()
   const [selectedLang, setSelectedLang] = createSignal('')
@@ -11,13 +12,16 @@ export const LangSelector = () => {
   const changeLang = (lang: 'fr' | 'en') => {
     document.documentElement.setAttribute('lang', lang)
 
+    const splitPath = path.pathname.split('/')
+    splitPath[1] = lang
+    const newPath = splitPath.join('/')
     navigate(
-      path.pathname.replace(selectedLang() || '', lang) + window.location.search
+      newPath + window.location.search
     )
     setSelectedLang(lang)
   }
   onMount(() => {
-    setSelectedLang(langParams)
+    setSelectedLang(lang())
   })
 
   return (
