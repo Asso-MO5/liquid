@@ -106,12 +106,8 @@ export function calCTRL(onDayClick?: (day: Date) => Promise<void>): CalendarCtrl
     const museumSchedule = schedules()
     const maxDate = new Date()
 
-
-    // ===> Plus classique Désactivé pour le moment
+    // On peut réserver jusqu'à 3 mois à l'avance
     maxDate.setMonth(maxDate.getMonth() + 2)
-    // ICI on force la date: 22 février
-    maxDate.setMonth(1)
-    maxDate.setDate(22)
 
     for (let i = 0; i < 42; i++) {
       const date = new Date(startDate)
