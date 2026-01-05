@@ -1,7 +1,7 @@
 export const darkModeTxt = {
   fr: {
-    toDark: 'Utliser le thème sombre',
-    toLight: 'Utliser le thème clair',
+    toDark: 'Utiliser le thème sombre',
+    toLight: 'Utiliser le thème clair',
   },
   en: {
     toDark: 'Apply dark theme',
