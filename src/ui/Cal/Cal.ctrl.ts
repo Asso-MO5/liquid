@@ -109,9 +109,9 @@ export function calCTRL(onDayClick?: (day: Date) => Promise<void>): CalendarCtrl
 
     // ===> Plus classique Désactivé pour le moment
     maxDate.setMonth(maxDate.getMonth() + 2)
-    // ICI on force le mois de janvier
-    maxDate.setMonth(0)
-    maxDate.setDate(31)
+    // ICI on force la date: 22 février
+    maxDate.setMonth(1)
+    maxDate.setDate(22)
 
     for (let i = 0; i < 42; i++) {
       const date = new Date(startDate)
