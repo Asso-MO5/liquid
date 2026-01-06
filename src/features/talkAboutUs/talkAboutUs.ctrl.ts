@@ -10,7 +10,7 @@ export const talkAboutUsCtrl = () => {
   const getTalkAboutUs = async () => {
     setFetching(true);
     try {
-      const response = await fetch(`${clientEnv.VITE_BLOG_URL}/media?search=PRESSE`);
+      const response = await fetch(`${clientEnv.VITE_BLOG_URL}/media?search=PRESSE&per_page=100`);
       const data = await response.json();
       const shuffledData = [...data];
       for (let i = shuffledData.length - 1; i > 0; i--) {
