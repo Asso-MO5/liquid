@@ -1,5 +1,4 @@
 export const menuEntries: { label: { fr: string; en: string }; href: string; highlighted?: boolean; external?: boolean; green?: boolean }[] = [
-
   {
     label: {
       fr: "Réservation",
@@ -10,19 +9,19 @@ export const menuEntries: { label: { fr: string; en: string }; href: string; hig
   },
   {
     label: {
-      fr: "Faire un don",
-      en: "Make a donation"
-    },
-    external: true,
-    href: "https://don.mo5.com"
-  },
-  {
-    label: {
       fr: "Offrir un ticket",
       en: "Gift a ticket"
     },
     href: "/purchase-gift",
     green: true
+  },
+  {
+    label: {
+      fr: "Faire un don",
+      en: "Make a donation"
+    },
+    external: true,
+    href: "https://don.mo5.com"
   },
   {
     label:

@@ -39,7 +39,7 @@ export const Header = (props: HeaderProps) => {
       data-with-game={props.withGame}
       class="grid grid-rows-[auto_1fr] data-[with-game=true]:h-[100dvh] data-[with-game=false]:grid-rows-[auto]">
       <Show when={props.page !== 'game'}>
-        <div class="mt-20 borde w-full" />
+        <div class="mt-20 w-full" />
         <header
           id="header"
           data-visible="true"
@@ -52,20 +52,20 @@ export const Header = (props: HeaderProps) => {
             flex justify-between items-center p-2
             ease-in-out top-0 z-50 bg-bg"
         >
-          <div class="flex items-center gap-4">
+          <nav role="navigation" class="flex items-center gap-4">
             <div onClick={homeLink} class="cursor-pointer" role="link" tabindex="0" aria-label={t().logoMJVLabel}>
               <Logo />
             </div>
             <MenuDesktop />
-          </div>
-          <MenuMobile />
+            <MenuMobile />
+          </nav>
           <div class="flex items-center gap-4">
-            <a href="https://mo5.com/" target="_blank" rel="noopener noreferrer">
+            <a href="https://mo5.com/" target="_blank" rel="noopener noreferrer"class="hidden md:block">
               <img src="/logo.webp"
                 width={194}
                 height={60}
                 alt={t().logoMO5Alt}
-                class="w-[120px] h-auto hidden md:block" />
+                class="w-[120px] h-auto" />
             </a>
             <DarkMode />
             <LangSelector />
