@@ -8,7 +8,7 @@ interface CalProps {
   selectedDate?: string
 }
 
-export function Cal(props: CalProps) {
+export function Cal(props: CalProps){
   const calendar = calCTRL(props.onDayClick ? props.onDayClick : undefined);
 
   return (
@@ -16,6 +16,8 @@ export function Cal(props: CalProps) {
       <CalControls />
       <div
         class="grid gap-3 grid-cols-7"
+        role="group"
+        aria-labelledby="selected-month"
       >
         <For each={calendar.weekDays()}>
           {(day) => (
