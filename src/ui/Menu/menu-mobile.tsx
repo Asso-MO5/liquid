@@ -1,10 +1,20 @@
-import { For, createSignal } from "solid-js"
+import { For, Show, createSignal } from "solid-js"
 import { menuEntries } from "./menu-entries"
 import { langCtrl } from "~/features/lang-selector/lang.ctrl"
 import { translate } from "~/utils/translate"
 
+const txt = {
+  fr: {
+    button: 'Principaux liens',
+  },
+  en: {
+    button: 'Main links',
+  }
+}
+
 export const MenuMobile = () => {
   const lang = langCtrl()
+  const { t } = translate(txt);
   const [isOpen, setIsOpen] = createSignal(false);
 
   const toggleMenu = () => {
@@ -17,8 +27,11 @@ export const MenuMobile = () => {
         <button
           onClick={toggleMenu}
           class="flex flex-col gap-1.5 p-2 z-50 relative bg-transparent border-none"
-          aria-label="Toggle menu"
+          aria-label={t().button}
           aria-expanded={isOpen()}
+          aria-haspopup="true"
+          aria-controls="mobile-menu"
+          id="mobile-menu-button"
         >
           <span
             data-open={isOpen()}
@@ -50,6 +63,7 @@ export const MenuMobile = () => {
 
       {/* Menu qui s'ouvre de haut en bas */}
       <div
+        id="mobile-menu"
         data-open={isOpen()}
         class="
         fixed top-18 left-0 w-full bg-bg z-40 overflow-hidden transition-all duration-300 ease-in-out
@@ -57,8 +71,8 @@ export const MenuMobile = () => {
         data-[open=false]:max-h-0 data-[open=false]:opacity-0
         "
       >
-        <div>
-          <ul role="list" class="py-4 px-4 flex flex-col gap-2">
+        <Show when={isOpen()}>
+          <ul role="list" class="py-4 px-4 flex flex-col gap-2 border-b-1" aria-labelledby="mobile-menu-button">
             <For each={menuEntries}>
               {(entry) => {
                 const { t } = translate({ fr: { label: entry.label.fr }, en: { label: entry.label.en } })
@@ -94,7 +108,7 @@ export const MenuMobile = () => {
               }}
             </For>
           </ul>
-        </div>
+        </Show>
       </div>
     </div>
   )
