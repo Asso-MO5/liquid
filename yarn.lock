@@ -2329,7 +2329,7 @@ color@^4.2.3:
 
 colyseus.js@^0.16.22:
   version "0.16.22"
-  resolved "https://registry.npmjs.org/colyseus.js/-/colyseus.js-0.16.22.tgz"
+  resolved "https://registry.npmjs.org/colyseus.js/-/colyseus.js-0.16.22.tgz#89353d5c03c88aff7fbd052b191b68f07ddce17f"
   integrity sha512-xyiajukHvlwOtcziVbXZWmz7yBH3EImovYrGPAe2kVkdubLVYmOjskJuXh2VLlO8XGjyhmNwig9ELz18sTUo9g==
   dependencies:
     "@colyseus/httpie" "^2.0.0"
