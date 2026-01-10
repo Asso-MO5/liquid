@@ -19,7 +19,7 @@ Frontend public pour l'association MO5, construit avec **SolidJS**. Ce projet g�
 
 - **Billeterie publique** pour les expositions
 - **Affichage des événements publics**
-- **Mini-jeu pixel art** intégré
+- **Mini-jeu pixel art multijoueur** intégré (avec serveur Colyseus)
 - **Informations pratiques** sur l'association
 
 > L'authentification, la gestion des membres, les cotisations et l'administration sont gérées par d'autres applications (voir [Architecture](#-architecture-du-système-mo5)).
@@ -35,6 +35,7 @@ Frontend public pour l'association MO5, construit avec **SolidJS**. Ce projet g�
   - Vérifier l'installation : `node --version` (doit afficher v22.x.x ou supérieur)
 - **Yarn** : Installer après Node.js avec `npm install -g yarn`
 - **Backend Ocelot** : Le backend doit être lancé séparément (voir [Ocelot](https://github.com/Asso-MO5/ocelot))
+- **Serveur Colyseus (Kitana)** : Le serveur de jeu multijoueur doit être lancé séparément (voir [Kitana](https://github.com/Asso-MO5/kitana))
 
 ### Installation et lancement en local
 
@@ -73,7 +74,9 @@ yarn install
 
 # Configurer les variables d'environnement
 cp env.example .env
-# Éditer .env avec l'URL du backend Ocelot
+# Éditer .env avec les URLs des services :
+# - VITE_API_URL : URL du backend Ocelot
+# - VITE_KITANA_URL : URL du serveur Colyseus (Kitana) pour le mini-jeu multijoueur
 ```
 
 #### 4. Démarrer le serveur de développement
@@ -109,10 +112,16 @@ Le système MO5 est composé de **trois applications distinctes** :
    - API REST pour les applications frontend
 
 3. **[Solid](https://github.com/Asso-MO5/solid)** : Interface d'administration
+
    - Gestion des membres
    - Gestion des événements
    - Gestion des cotisations
    - Outils administratifs
+
+4. **[Kitana](https://github.com/Asso-MO5/kitana)** : Serveur Colyseus (jeu multijoueur)
+   - Serveur de jeu multijoueur pour le mini-jeu pixel art
+   - Gestion des rooms et synchronisation des joueurs
+   - Basé sur Colyseus
 
 ### Structure Features-Based
 
@@ -221,7 +230,7 @@ yarn test:coverage # Tests avec couverture
 
 ## 🎮 Mini-Jeu Pixel Art
 
-Le projet inclut un mini-jeu développé avec **MelonJS**, un moteur de jeu JavaScript pour jeux 2D en pixel art.
+Le projet inclut un mini-jeu multijoueur développé avec **Kaplay**, un moteur de jeu JavaScript pour jeux 2D en pixel art. Le jeu utilise **Colyseus** pour la synchronisation multijoueur via le serveur [Kitana](https://github.com/Asso-MO5/kitana).
 
 ### 📁 Fichiers sources du jeu
 
@@ -229,81 +238,92 @@ Les fichiers sources du jeu se trouvent dans les dossiers suivants :
 
 #### Code source du jeu
 
-- **`src/features/mini-game/`** : Code source principal du mini-jeu
-  - `mini-game.tsx` : Composant React/SolidJS minimal qui gère le conteneur du jeu
-  - `game.init.ts` : **Initialisation centralisée de MelonJS** (logique principale du jeu)
-  - `entities/player.ts` : Logique du joueur (mouvement, collisions, animations)
-  - `entities/HUD.ts` : Interface utilisateur du jeu
-  - `screens/start.ts` : Écran de démarrage et chargement des niveaux
-  - `screens/loading.ts` : Écran de chargement personnalisé
-  - `ressources.ts` : Liste des ressources à charger (sprites, sons, niveaux)
-  - `game-state.ts` : État global du jeu
-  - `mini-game.types.ts` : Types TypeScript pour le jeu
+- **`src/features/pixel-museum/`** : Code source principal du mini-jeu multijoueur
+  - `pixel-museum.tsx` : Composant principal du jeu
+  - `pixem-museum-init-game.ts` : **Initialisation centralisée de Kaplay** (logique principale du jeu)
+  - `pixel-museum.ctrl.tsx` : Contrôleur principal (vérification WebGL, état du jeu)
+  - `entities/player.create.ts` : Logique du joueur (mouvement, collisions, animations)
+  - `hud.tsx` : Interface utilisateur du jeu (HUD)
+  - `levels/museum.level.ts` : Niveau principal du musée
+  - `pixel-museum-ressources.ts` : Chargement des ressources (sprites, sons, niveaux)
+  - `pixel-museum.multi.ts` : Gestion du multijoueur avec Colyseus
+  - `pixel-museum-sound.ctrl.ts` : Contrôleur audio
 
-#### Assets du jeu (sprites, tilesets, sons)
+#### Assets du jeu (sprites, sons, polices)
 
-- **`public/game/entities/`** : Sprites du joueur
-  - `lulu.aseprite` : Fichier source Aseprite du personnage
-  - `lulu.png` : Sprite sheet exportée
-  - `lulu.json` : Métadonnées des animations (frame tags, durées)
-- **`public/game/tiles/`** : Tilesets et niveaux
+- **`public/pixel-museum/entities/`** : Sprites des entités
 
-  - `tileset.png` : Tileset principal (8x8 pixels par tile)
-  - `tileset.tsx` / `tileset.json` : Définitions du tileset
-  - `start.tmx` : Niveau de départ (format Tiled)
-  - `start.aseprite` : Fichier source Aseprite du niveau
-  - `start.png` : Image exportée du niveau
-  - Autres niveaux : `home.tmx`, `interlude.tmx`, `final.tmx`, etc.
+  - Fichiers `.aseprite` : Fichiers source Aseprite des personnages et entités
+  - Fichiers `.png` : Sprite sheets exportées
+  - Fichiers `.json` : Métadonnées des animations (frame tags, durées)
+  - Dossier `composed/` : Sprites composés générés aléatoirement
 
-- **`public/game/sounds/`** : Sons et effets sonores
+- **`public/pixel-museum/tiles/`** : Tilesets et niveaux
 
-  - `jump.mp3` : Son de saut
-  - `spike.mp3` : Son de chute/impact
-  - Autres sons : `hurt.mp3`, `explosion.mp3`, etc.
+  - `museum.aseprite` / `museum.png` : Tileset principal
+  - `start.aseprite` / `start.png` : Niveau de départ
 
-- **`public/game/fnt/`** : Polices bitmap
-  - `PressStart2P.*` : Police pixel art pour l'interface
+- **`public/pixel-museum/objs/`** : Objets interactifs
+
+  - `ticket-desk.aseprite` / `ticket-desk.png` : Bureau de billetterie
+  - `ticket-pc.aseprite` / `ticket-pc.png` : PC de billetterie
+
+- **`public/pixel-museum/sounds/`** : Sons et effets sonores
+
+  - `jump.ogg` : Son de saut
+  - `ignition.ogg` : Son d'allumage
+  - `explosion.ogg` : Son d'explosion
+  - `bythepond.ogg` : Musique d'ambiance
+  - Autres sons : `hurt.ogg`, `collided.ogg`, etc.
+
+- **`public/pixel-museum/fonts/`** : Polices
+  - `Silkscreen/` : Police pixel art pour l'interface
 
 ### 🏗️ Architecture du code du jeu
 
-Le code du jeu a été structuré pour **éviter les problèmes de nettoyage et de réinitialisation** avec MelonJS :
+Le code du jeu a été structuré pour **éviter les problèmes de nettoyage et de réinitialisation** avec Kaplay :
 
 #### Stratégie de garde en vie (Keep-Alive)
 
 **Pourquoi garder le jeu en vie ?**
 
-MelonJS est une bibliothèque complexe qui gère de nombreux états internes (game loop, ressources, événements, etc.). Lors du changement de page ou du démontage du composant, tenter de nettoyer complètement MelonJS peut causer :
+Kaplay est un moteur de jeu qui gère de nombreux états internes (game loop, ressources, événements, WebGL, etc.). Lors du changement de page ou du démontage du composant, tenter de nettoyer complètement Kaplay peut causer :
 
-- **Erreurs de référence** : `Cannot read properties of undefined (reading 'length')`
+- **Erreurs de référence** : `Cannot read properties of undefined`
 - **Fuites mémoire** : Références circulaires non résolues
 - **Problèmes de réinitialisation** : Conflits lors de la réinitialisation après nettoyage
+- **Problèmes WebGL** : Contexte WebGL perdu ou mal réinitialisé
 
 **Solution adoptée :**
 
-1. **Initialisation unique** : Le jeu est initialisé **une seule fois** dans `game.init.ts` avec un garde `gameInitialized`
-2. **Pas de nettoyage agressif** : Le composant `mini-game.tsx` ne nettoie **pas** MelonJS lors du démontage
-3. **Réutilisation** : Si le composant est remonté, MelonJS réutilise l'instance existante au lieu de créer une nouvelle
-4. **Séparation des responsabilités** :
-   - `mini-game.tsx` : Gère uniquement le conteneur DOM et la prop `init`
-   - `game.init.ts` : Contient toute la logique d'initialisation MelonJS (une seule fois)
+1. **Initialisation unique** : Le jeu est initialisé **une seule fois** dans `pixem-museum-init-game.ts`
+2. **Vérification WebGL** : Le composant vérifie le support WebGL avant d'afficher le canvas
+3. **Gestion d'erreurs** : Try/catch autour de l'initialisation pour éviter les crashes
+4. **Multijoueur** : Connexion au serveur Colyseus (Kitana) pour la synchronisation des joueurs
+5. **Séparation des responsabilités** :
+   - `pixel-museum.tsx` : Gère l'affichage conditionnel (WebGL check)
+   - `pixem-museum-init-game.ts` : Contient toute la logique d'initialisation Kaplay
+   - `pixel-museum.multi.ts` : Gère la synchronisation multijoueur avec Colyseus
 
-Cette approche garantit une **stabilité maximale** et évite les bugs liés au cycle de vie des composants React/SolidJS.
+Cette approche garantit une **stabilité maximale** et évite les bugs liés au cycle de vie des composants SolidJS.
 
 #### Structure des fichiers
 
 ```
-src/features/mini-game/
-├── mini-game.tsx          # Composant minimal (conteneur + prop init)
-├── game.init.ts          # Initialisation MelonJS (singleton)
-├── game-state.ts         # État global partagé
-├── ressources.ts         # Définition des ressources
-├── mini-game.types.ts    # Types TypeScript
+src/features/pixel-museum/
+├── pixel-museum.tsx              # Composant principal
+├── pixem-museum-init-game.ts    # Initialisation Kaplay
+├── pixel-museum.ctrl.tsx         # Contrôleur (WebGL check, état)
+├── pixel-museum-ressources.ts   # Chargement des ressources
+├── pixel-museum.multi.ts         # Gestion multijoueur Colyseus
+├── pixel-museum-sound.ctrl.ts   # Contrôleur audio
+├── pixel-museum.state.ts         # État global
 ├── entities/
-│   ├── player.ts         # Logique du joueur
-│   └── HUD.ts           # Interface utilisateur
-└── screens/
-    ├── start.ts          # Écran de jeu
-    └── loading.ts       # Écran de chargement
+│   ├── player.create.ts          # Logique du joueur
+│   └── remote-player.create.ts   # Logique des autres joueurs
+├── levels/
+│   └── museum.level.ts           # Niveau principal
+└── hud.tsx                       # Interface utilisateur
 ```
 
 ### 🛠️ Outils nécessaires pour modifier le jeu
@@ -312,75 +332,65 @@ Pour modifier les assets du jeu, vous aurez besoin de :
 
 1. **Aseprite** (recommandé) : [aseprite.org](https://www.aseprite.org/)
 
-   - Pour éditer les sprites du joueur (`lulu.aseprite`)
+   - Pour éditer les sprites du joueur et des entités
    - Pour créer/modifier les tilesets
    - Export en PNG avec métadonnées JSON pour les animations
    - Alternative gratuite : [Piskel](https://www.piskelapp.com/) (en ligne)
 
-2. **Tiled Map Editor** : [mapeditor.org](https://www.mapeditor.org/)
+2. **Éditeur de texte** : Pour modifier les fichiers de configuration
 
-   - Pour créer et éditer les niveaux (fichiers `.tmx`)
-   - Format utilisé : TMX (Tiled Map XML)
-   - Les tilesets doivent être configurés dans Tiled
+   - Les animations sont définies dans les fichiers JSON d'Aseprite
+   - Les ressources sont listées dans `pixel-museum-ressources.ts`
 
-3. **Éditeur de texte** : Pour modifier les fichiers JSON de configuration
-   - Les animations sont définies dans `lulu.json`
-   - Les ressources sont listées dans `ressources.ts`
+3. **Serveur Colyseus (Kitana)** : Pour tester le multijoueur
+   - Voir : [github.com/Asso-MO5/kitana](https://github.com/Asso-MO5/kitana)
+   - Le serveur doit être lancé et accessible via `VITE_KITANA_URL`
 
 ### 📝 Workflow de développement du jeu
 
 1. **Modifier les sprites** :
 
-   - Ouvrir `public/game/entities/lulu.aseprite` dans Aseprite
-   - Modifier les animations (stand, walk, jump, grounded)
+   - Ouvrir les fichiers `.aseprite` dans `public/pixel-museum/entities/` avec Aseprite
+   - Modifier les animations (stand, walk, jump, grounded, interact, etc.)
    - Exporter en PNG et JSON depuis Aseprite
-   - Les frame tags définissent les animations dans `lulu.json`
+   - Les frame tags définissent les animations dans les fichiers JSON
 
-2. **Créer/modifier un niveau** :
+2. **Ajouter des ressources** :
 
-   - Ouvrir `public/game/tiles/start.tmx` dans Tiled
-   - Utiliser le tileset `tileset.png` (8x8 pixels)
-   - Dessiner le niveau avec les tiles
-   - Sauvegarder en `.tmx`
-   - Exporter l'image de prévisualisation si nécessaire
+   - Ajouter les fichiers dans `public/pixel-museum/`
+   - Déclarer les ressources dans `src/features/pixel-museum/pixel-museum-ressources.ts`
+   - Utiliser les méthodes Kaplay : `loadAseprite()`, `loadSprite()`, `loadSound()`, `loadFont()`
 
-3. **Ajouter des ressources** :
-
-   - Ajouter les fichiers dans `public/game/`
-   - Déclarer les ressources dans `src/features/mini-game/ressources.ts`
-   - Format : `{ name: 'nom', type: 'image|json|audio|tmx', src: 'chemin' }`
-
-4. **Tester les modifications** :
+3. **Tester les modifications** :
+   - Lancer le serveur Colyseus (Kitana) : voir [github.com/Asso-MO5/kitana](https://github.com/Asso-MO5/kitana)
+   - Configurer `VITE_KITANA_URL` dans `.env`
    - Lancer `yarn dev`
-   - Accéder à `/game` dans le navigateur
+   - Accéder à la route du jeu dans le navigateur
    - Les ressources sont rechargées automatiquement en développement
-   - **Note** : Si vous modifiez `game.init.ts`, vous devrez peut-être recharger complètement la page (F5) car l'initialisation est en singleton
 
 ### 🎨 Format des assets
 
-- **Sprites** : Format PNG avec sprite sheet (toutes les frames sur une image)
+- **Sprites** : Format Aseprite (`.aseprite`) avec export PNG + JSON
 - **Animations** : Définies dans JSON avec frame tags et durées personnalisées
-- **Niveaux** : Format TMX (Tiled Map XML) avec tilesets PNG
-- **Sons** : Format MP3/OGG pour compatibilité navigateur
+- **Sons** : Format OGG pour compatibilité navigateur
+- **Polices** : Format TTF
 
 ### ⚠️ Notes importantes sur le développement
 
 #### Réinitialisation du jeu
 
-Si vous devez **forcer une réinitialisation complète** du jeu (par exemple après des modifications majeures dans `game.init.ts`), vous pouvez :
+Si vous devez **forcer une réinitialisation complète** du jeu (par exemple après des modifications majeures), vous pouvez :
 
 1. **Recharger complètement la page** (F5 ou Ctrl+R)
-2. **Modifier temporairement** `game.init.ts` pour réinitialiser le garde :
-   ```typescript
-   // Dans game.init.ts, ligne 8
-   let gameInitialized = false // Forcer la réinitialisation
-   ```
+2. **Vérifier le support WebGL** : Le jeu ne s'affiche que si WebGL est supporté
+3. **Vérifier la connexion Colyseus** : Le serveur Kitana doit être accessible
 
 #### Débogage
 
-- Les logs de MelonJS apparaissent dans la console du navigateur
+- Les logs de Kaplay apparaissent dans la console du navigateur
 - Utilisez les DevTools pour inspecter le canvas et les ressources chargées
-- En cas d'erreur, vérifiez que `game.init.ts` n'a été appelé qu'une seule fois
+- Vérifiez la connexion au serveur Colyseus dans la console
+- En cas d'erreur WebGL, vérifiez que votre navigateur supporte WebGL
 
 ## 🎯 Features à implémenter
 
@@ -423,6 +433,14 @@ Si vous devez **forcer une réinitialisation complète** du jeu (par exemple apr
 - **Rapports** et statistiques
 - Voir : [github.com/Asso-MO5/solid](https://github.com/Asso-MO5/solid)
 
+### 🎮 Kitana - Serveur Colyseus (Jeu Multijoueur)
+
+- **Serveur de jeu multijoueur** pour le mini-jeu pixel art
+- **Synchronisation des joueurs** en temps réel
+- **Gestion des rooms** Colyseus
+- Basé sur **Colyseus** (framework de jeu multijoueur)
+- Voir : [github.com/Asso-MO5/kitana](https://github.com/Asso-MO5/kitana)
+
 ## 🔒 Sécurité et Confidentialité
 
 - **Authentification** gérée par Ocelot (Discord OAuth2)
@@ -452,3 +470,4 @@ Ce projet est sous licence MIT.
 >
 > - [Ocelot](https://github.com/Asso-MO5/ocelot) - Backend API
 > - [Solid](https://github.com/Asso-MO5/solid) - Interface d'administration
+> - [Kitana](https://github.com/Asso-MO5/kitana) - Serveur Colyseus (jeu multijoueur)
