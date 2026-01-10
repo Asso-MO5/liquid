@@ -15,7 +15,7 @@ export const CalControls = () => {
         <Chevron direction="left" size={40} />
       </button>
 
-      <div class="first-letter:uppercase">
+      <div class="first-letter:uppercase" id="selected-month" aria-live="polite" aria-atomic="true">
         {calendar.currentMonthName()} {calendar.currentYear()}
       </div>
       <button
