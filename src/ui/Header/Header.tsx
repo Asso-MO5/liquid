@@ -7,6 +7,7 @@ import { MenuDesktop } from "../Menu/menu-desktop"
 import { langCtrl } from "~/features/lang-selector/lang.ctrl"
 import { DarkMode } from "~/features/dark-mode/dark-mode"
 import { translate } from "~/utils/translate"
+import { PixelMuseum } from "~/features/pixel-museum/pixel-museum"
 
 type HeaderProps = {
   withGame?: boolean
@@ -74,7 +75,7 @@ export const Header = (props: HeaderProps) => {
       </Show>
 
       <div class="h-full w-full " data-with-game={props.withGame}>
-        {props.withGame && <MiniGame />}
+        {props.withGame && <PixelMuseum />}
       </div>
     </div >
   )
