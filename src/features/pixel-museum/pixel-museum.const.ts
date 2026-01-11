@@ -14,28 +14,20 @@ export const SOUNDS = {
 
 export const ASEPRITES = {
   LULU: 'lulu',
-  FURNITURE: 'furniture',
-  WHOLE: 'whole',
-  GAMES: 'games',
-  BOMBERMAN: 'bomberman',
   COMPUTER_SPACE: 'computer-space',
   VECTREX: 'vectrex',
   TENNIS_FOR_TWO: 'tennis-for-two',
   SPACEWAR: 'spacewar',
   SPACE_INVADERS: 'space-invaders',
-  WONDERSWAN: 'wonderswan',
   VIRTUALBOY: 'virtualboy',
   '3DO': '3do',
   "PS2": 'ps2',
   NES: 'nes',
   GAMECUBE: 'gamecube',
   PONG: 'pong',
-  PORTAL: 'portal',
-  SAGWA: 'sagwa',
   AMIGA_500: "amiga500",
   DREAMCAST: 'dreamcast',
   XBOX: 'xbox',
-  HAIR_1: 'hair1',
 } as const
 
 export const SPRITES = {
@@ -64,3 +56,4 @@ export const TAGS = {
   MACHINE: 'machine',
   DOC: 'doc',
 } as const
+

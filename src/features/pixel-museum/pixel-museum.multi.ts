@@ -6,11 +6,11 @@ import type { Room } from 'colyseus.js'
 
 type MultiplayerOptions = {
   k: ReturnType<typeof kaplay>
-  player: NonNullable<ReturnType<typeof createPlayer>>
+  player: NonNullable<Awaited<ReturnType<typeof createPlayer>>>
   startPosition: { x: number; y: number }
 }
 
-export const initMultiplayer = ({
+export const initMultiplayer = async ({
   k,
   player,
   startPosition,
@@ -20,7 +20,7 @@ export const initMultiplayer = ({
 
   const remotePlayers = new Map<
     string,
-    NonNullable<ReturnType<typeof createRemotePlayer>>
+    NonNullable<Awaited<ReturnType<typeof createRemotePlayer>>>
   >()
 
   let lastSentPosition = { x: startPosition.x, y: startPosition.y }
@@ -64,7 +64,7 @@ export const initMultiplayer = ({
     }
   })
 
-  const initRemotePlayers = () => {
+  const initRemotePlayers = async () => {
     if (!room.state.players) {
       console.debug("room.state.players n'est pas encore initialisé")
       return
@@ -73,16 +73,16 @@ export const initMultiplayer = ({
     const players = room.state.players
     if (!players) return
 
-    const createOrUpdateRemotePlayer = (
+    const createOrUpdateRemotePlayer = async (
       sessionId: string,
       playerState: Room['state']['players']
-    ) => {
+    ) => async () => {
       if (sessionId === room.sessionId) return
 
-      let remotePlayer = remotePlayers.get(sessionId)
+      let remotePlayer = await remotePlayers.get(sessionId)
 
       if (!remotePlayer || !remotePlayer.exists()) {
-        const newRemotePlayer = createRemotePlayer(k, {
+        const newRemotePlayer = await createRemotePlayer(k, {
           playerId: sessionId,
           initialPosition: {
             x: playerState.x || startPosition.x + 50,
