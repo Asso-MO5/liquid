@@ -58,7 +58,7 @@ export const createPlayer = async (
     k.sprite(COMPOSED_NAME, {
       anim: ANIMS.STAND,
     }),
-    k.pos(Math.round(startPosition.x), Math.round(startPosition.y)),
+    k.pos(Math.round(startPosition.x || 0), Math.round(startPosition.y || 0)),
     k.body({
       jumpForce: 100,
     }),
@@ -98,6 +98,25 @@ export const createPlayer = async (
     moveRight = false
   })
 
+
+  k.onKeyPress(CONTROLS.JUMP as unknown as string[], () => {
+
+    if (player.isGrounded() && canJump) {
+      canJump = false
+      isInteracting = false
+      isInteractingAnim = false
+      if (isPlayingGroundedAnim) {
+        isPlayingGroundedAnim = false
+      }
+      resetIdleTimer()
+      player.jump(400)
+      playSound(k, SOUNDS.JUMP)
+      player.play(ANIMS.JUMP, {
+        loop: false,
+      })
+    }
+  })
+
   k.onKeyPress(CONTROLS.INTERACT as unknown as string[], async () => {
 
     const collisionsDoc = player.getCollisions().find(collision => collision.target.tags.includes(TAGS.DOC))
@@ -134,20 +153,15 @@ export const createPlayer = async (
     }
 
     if (isInteractingAnim) return
-
-    if (isPlayingGroundedAnim) {
-      isPlayingGroundedAnim = false
-    }
-    if (isInIdleAnim) {
-      isInIdleAnim = false
-    }
-    if (isPlayingWaitAnim) {
-      isPlayingWaitAnim = false
-    }
-    resetIdleTimer()
-
     isInteractingAnim = true
     isInteracting = true
+    isPlayingGroundedAnim = false
+
+    isInIdleAnim = false
+    isPlayingWaitAnim = false
+    resetIdleTimer()
+
+
 
     try {
       player.play(ANIMS.INTERACT, {
@@ -158,39 +172,27 @@ export const createPlayer = async (
         },
       })
     } catch (e) {
-      // En cas d'erreur, réinitialiser les flags
       isInteractingAnim = false
       isInteracting = false
     }
   })
 
-  k.onKeyPress(CONTROLS.JUMP as unknown as string[], () => {
-    if (player.isGrounded() && canJump && !isInteracting && !isInteractingAnim) {
-      canJump = false
-      if (isPlayingGroundedAnim) {
-        isPlayingGroundedAnim = false
-      }
-      resetIdleTimer()
-      player.jump(400)
-      playSound(k, SOUNDS.JUMP)
-      player.play(ANIMS.JUMP, {
-        loop: false,
-      })
-    }
-  })
 
   player.onUpdate(() => {
     if (!k || !player) return
     const dt = k.dt()
     const isGrounded = player.isGrounded()
 
+    canJump = isGrounded
+
+
     if (
       isGrounded &&
       !wasGrounded &&
       !isPlayingGroundedAnim &&
-      !isInteractingAnim
+      !isInteracting
     ) {
-      canJump = true
+
       try {
         player.play(ANIMS.GROUNDED, {
           loop: false,
@@ -316,8 +318,6 @@ export const createPlayer = async (
     camY = Math.max(minCamY, Math.min(camY, maxCamY))
     k.setCamPos(camX, camY)
   })
-
-
 
   return player
 }
