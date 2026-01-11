@@ -173,9 +173,9 @@ export const pixelMuseumInitGame = async () => {
 
     const BASE_URL = `${window.location.protocol}//${window.location.host}/pixel-museum`
 
+    if (k) await pixelMuseumRessources(k, BASE_URL)
     k.scene(LEVELS.MUSEUM, async () => {
-      if (k) await pixelMuseumRessources(k, BASE_URL)
-      if (k) museumLevel(k)
+      museumLevel(k)
     })
 
     k.go(LEVELS.MUSEUM)

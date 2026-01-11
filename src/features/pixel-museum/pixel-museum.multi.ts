@@ -76,10 +76,10 @@ export const initMultiplayer = async ({
     const createOrUpdateRemotePlayer = async (
       sessionId: string,
       playerState: Room['state']['players']
-    ) => async () => {
+    ) => {
       if (sessionId === room.sessionId) return
 
-      let remotePlayer = await remotePlayers.get(sessionId)
+      let remotePlayer = remotePlayers.get(sessionId)
 
       if (!remotePlayer || !remotePlayer.exists()) {
         const newRemotePlayer = await createRemotePlayer(k, {
@@ -126,11 +126,15 @@ export const initMultiplayer = async ({
     ) {
       players.onAdd(
         (playerState: Room['state']['players'], sessionId: string) => {
-          createOrUpdateRemotePlayer(sessionId, playerState)
+          createOrUpdateRemotePlayer(sessionId, playerState).catch((error) => {
+            console.debug('Erreur lors de la création du joueur distant:', error)
+          })
 
           if (playerState.onChange) {
             playerState.onChange(() => {
-              createOrUpdateRemotePlayer(sessionId, playerState)
+              createOrUpdateRemotePlayer(sessionId, playerState).catch((error) => {
+                console.debug('Erreur lors de la mise à jour du joueur distant:', error)
+              })
             })
           }
         }
@@ -154,15 +158,21 @@ export const initMultiplayer = async ({
           (playerState: Room['state']['players'], sessionId: string) => {
             if (!knownPlayerIds.has(sessionId)) {
               knownPlayerIds.add(sessionId)
-              createOrUpdateRemotePlayer(sessionId, playerState)
+              createOrUpdateRemotePlayer(sessionId, playerState).catch((error) => {
+                console.debug('Erreur lors de la création du joueur distant:', error)
+              })
 
               if (playerState.onChange) {
                 playerState.onChange(() => {
-                  createOrUpdateRemotePlayer(sessionId, playerState)
+                  createOrUpdateRemotePlayer(sessionId, playerState).catch((error) => {
+                    console.debug('Erreur lors de la mise à jour du joueur distant:', error)
+                  })
                 })
               }
             } else {
-              createOrUpdateRemotePlayer(sessionId, playerState)
+              createOrUpdateRemotePlayer(sessionId, playerState).catch((error) => {
+                console.debug('Erreur lors de la mise à jour du joueur distant:', error)
+              })
             }
           }
         )
@@ -189,11 +199,15 @@ export const initMultiplayer = async ({
 
     players.forEach(
       (playerState: Room['state']['players'], sessionId: string) => {
-        createOrUpdateRemotePlayer(sessionId, playerState)
+        createOrUpdateRemotePlayer(sessionId, playerState).catch((error) => {
+          console.debug('Erreur lors de la création du joueur distant:', error)
+        })
 
         if (playerState.onChange) {
           playerState.onChange(() => {
-            createOrUpdateRemotePlayer(sessionId, playerState)
+            createOrUpdateRemotePlayer(sessionId, playerState).catch((error) => {
+              console.debug('Erreur lors de la mise à jour du joueur distant:', error)
+            })
           })
         }
       }
