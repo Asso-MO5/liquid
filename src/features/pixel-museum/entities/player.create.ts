@@ -44,7 +44,17 @@ export const createPlayer = (
   const COMPOSED_MIN = 1
   const COMPOSED_NUMBER =
     Math.floor(Math.random() * (COMPOSED_MAX - COMPOSED_MIN + 1)) + COMPOSED_MIN
-  const COMPOSED_NAME = `sagwa_composed_${COMPOSED_NUMBER}`
+  let COMPOSED_NAME = `sagwa_composed_${COMPOSED_NUMBER}`
+
+
+  if (!k.getSprite(COMPOSED_NAME)) {
+    console.error(`Sprite ${COMPOSED_NAME} non trouvé`)
+
+    k.wait(1000, () => {
+      console.log('Sprite trouvé')
+      COMPOSED_NAME = `sagwa_composed_${COMPOSED_NUMBER}`
+    })
+  }
 
   const player = k.add([
     k.sprite(COMPOSED_NAME, {
