@@ -9,7 +9,7 @@ type Options = {
   startPosition: { x: number; y: number }
 }
 
-export const createPlayer = (
+export const createPlayer = async (
   k: ReturnType<typeof kaplay>,
   { levelWidth, levelHeight, startPosition }: Options
 ) => {
@@ -44,17 +44,10 @@ export const createPlayer = (
   const COMPOSED_MIN = 1
   const COMPOSED_NUMBER =
     Math.floor(Math.random() * (COMPOSED_MAX - COMPOSED_MIN + 1)) + COMPOSED_MIN
-  let COMPOSED_NAME = `sagwa_composed_${COMPOSED_NUMBER}`
+  const COMPOSED_NAME = `sagwa_composed_${COMPOSED_NUMBER}`
+  const BASE_URL = `${window.location.protocol}//${window.location.host}/pixel-museum`
 
-
-  if (!k.getSprite(COMPOSED_NAME)) {
-    console.error(`Sprite ${COMPOSED_NAME} non trouvé`)
-
-    k.wait(1000, () => {
-      console.log('Sprite trouvé')
-      COMPOSED_NAME = `sagwa_composed_${COMPOSED_NUMBER}`
-    })
-  }
+  await k.loadAseprite(COMPOSED_NAME, `${BASE_URL}/entities/composed/${COMPOSED_NAME}.png`, `${BASE_URL}/entities/sagwa.json`)
 
   const player = k.add([
     k.sprite(COMPOSED_NAME, {

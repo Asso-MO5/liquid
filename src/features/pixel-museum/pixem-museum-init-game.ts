@@ -12,7 +12,7 @@ export let k: ReturnType<typeof Kaplay> | null = null
 export const getGameInstance = () => k
 export let gameRoom: Room | null = null
 
-export const pixelMuseumInitGame = () => {
+export const pixelMuseumInitGame = async () => {
   const ignition = async () => {
 
     const containerRef = document.getElementById(
@@ -171,20 +171,14 @@ export const pixelMuseumInitGame = () => {
       { passive: true }
     )
 
-    try {
-      await pixelMuseumRessources(k)
+    const BASE_URL = `${window.location.protocol}//${window.location.host}/pixel-museum`
 
-      if (!k || !k.scene || !k.go) {
-        console.error('kaplay n\'est pas complètement initialisé')
-        return
-      }
+    k.scene(LEVELS.MUSEUM, async () => {
+      if (k) await pixelMuseumRessources(k, BASE_URL)
+      if (k) museumLevel(k)
+    })
 
-      k.scene(LEVELS.MUSEUM, () => museumLevel(k))
-      k.go(LEVELS.MUSEUM)
-    } catch (error) {
-      console.error('Erreur lors du chargement des ressources ou de la scène:', error)
-    }
-
+    k.go(LEVELS.MUSEUM)
   }
 
   onMount(() => {

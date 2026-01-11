@@ -15,7 +15,7 @@ const LEVEL_WIDTH = 2104
 const LEVEL_HEIGHT = 302
 const GROUND_Y = 155
 
-export const museumLevel = (k: ReturnType<typeof kaplay> | null) => {
+export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
   if (!k) return console.error('kaplay non trouvé')
   k.setGravity(1500)
 
@@ -248,21 +248,20 @@ export const museumLevel = (k: ReturnType<typeof kaplay> | null) => {
 
   const startPosition = { x: 815, y: 120 }
   k.setCamPos(845, 120)
-  setTimeout(() => {
-    if (!k) return
-    const player = createPlayer(k, {
-      levelWidth: LEVEL_WIDTH,
-      levelHeight: LEVEL_HEIGHT,
+
+  if (!k) return
+  const player = await createPlayer(k, {
+    levelWidth: LEVEL_WIDTH,
+    levelHeight: LEVEL_HEIGHT,
+    startPosition,
+  })
+
+  if (player) {
+    initMultiplayer({
+      k,
+      player,
       startPosition,
     })
-    if (player) {
-      initMultiplayer({
-        k,
-        player,
-        startPosition,
-      })
-    }
-  }, 500)
-
+  }
 
 }
