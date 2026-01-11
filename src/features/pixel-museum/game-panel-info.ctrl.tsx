@@ -15,8 +15,32 @@ let headerRef: HTMLDivElement | null = null
 export const openGamePanelInfo = async (id: string) => {
   try {
     const response = await fetch(`${clientEnv.VITE_CAVE_URL}/item/public/${id}`)
-    const data = await response.json()
+
+    if (!response.ok) {
+      console.error(`Erreur HTTP: ${response.status} ${response.statusText}`)
+      return
+    }
+
+    const contentType = response.headers.get('content-type')
+    if (!contentType || !contentType.includes('application/json')) {
+      console.error('La réponse n\'est pas du JSON:', contentType)
+      return
+    }
+
+    let data
+    try {
+      data = await response.json()
+    } catch (jsonError) {
+      console.error('Erreur lors du décodage JSON:', jsonError)
+      return
+    }
+
     const item = data.item as GamePanelItem
+
+    if (!item) {
+      console.error('Item non trouvé dans la réponse')
+      return
+    }
 
     setPosition({ x: 20, y: 85 })
     setOpen(item)

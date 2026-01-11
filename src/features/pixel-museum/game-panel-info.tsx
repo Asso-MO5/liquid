@@ -65,14 +65,26 @@ export const GamePanelInfo = () => {
               src={coverImage()}
               alt={item()?.name || 'Cover'}
               class="w-full h-auto rounded-md object-cover"
+              onError={(e) => {
+                console.error('Erreur lors du chargement de l\'image:', coverImage())
+                e.currentTarget.style.display = 'none'
+              }}
             />
           </Show>
 
           {/* Audio Player */}
           <Show when={audioUrl()}>
             <div class="w-full h-10 ">
-              <audio controls class="w-full h-10" src={audioUrl()} autoplay={!isMuted()}
+              <audio
+                controls
+                class="w-full h-10"
+                src={audioUrl()}
+                autoplay={!isMuted()}
                 muted={isMuted()}
+                onError={(e) => {
+                  console.error('Erreur lors du chargement de l\'audio:', audioUrl())
+                  e.currentTarget.style.display = 'none'
+                }}
               >
                 <source src={audioUrl()} />
                 Votre navigateur ne supporte pas l'élément audio.
