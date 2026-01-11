@@ -25,11 +25,12 @@ export const createRemotePlayer = async (
     await k.loadAseprite(COMPOSED_NAME, `${BASE_URL}/entities/composed/${COMPOSED_NAME}.png`, `${BASE_URL}/entities/sagwa.json`)
   }
 
+  k.wait(300)
   const remotePlayer = k.add([
     k.sprite(COMPOSED_NAME, {
       anim: 'stand',
     }),
-    k.pos(Math.round(initialPosition.x), Math.round(initialPosition.y)),
+    k.pos(Math.round(initialPosition.x || 0), Math.round(initialPosition.y || 0)),
     k.anchor('bot'),
     k.z(98),
     `remote-player-${playerId}`,

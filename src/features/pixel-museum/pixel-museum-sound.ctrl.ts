@@ -20,6 +20,11 @@ export const pixelMuseumSoundCtrl = () => {
   const toggleMute = () => {
     setIsMuted(!isMuted())
     setVolume(isMuted() ? 0 : 0.5)
+    if (isMuted()) {
+      pixelMuseumState.musicSound?.stop?.()
+    } else if (pixelMuseumState.musicSound) {
+      pixelMuseumState.musicSound.play()
+    }
   }
 
   return {

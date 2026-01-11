@@ -76,8 +76,6 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
     'ticket-desk',
   ])
 
-
-
   const machines = [
     {
       name: 'Tennis for Two',

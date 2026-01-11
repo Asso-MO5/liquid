@@ -45,12 +45,12 @@ export const initMultiplayer = async ({
           }
 
           room.send('playerMove', {
-            x: player.pos.x,
-            y: player.pos.y,
+            x: player?.pos?.x || 0,
+            y: player?.pos?.y || 0,
             flipX: player.flipX || false,
             anim: player.getCurAnim()?.name || 'stand',
           })
-          lastSentPosition = { x: player.pos.x, y: player.pos.y }
+          lastSentPosition = { x: player?.pos?.x || 0, y: player?.pos?.y || 0 }
           syncTimer = 0
         }
       } catch (error) {
@@ -97,8 +97,8 @@ export const initMultiplayer = async ({
           const newRemotePlayer = await createRemotePlayer(k, {
             playerId: sessionId,
             initialPosition: {
-              x: playerState.x || startPosition.x + 50,
-              y: playerState.y || startPosition.y,
+              x: playerState?.x || (startPosition.x + 50) || 0,
+              y: playerState?.y || (startPosition.y) || 0,
             },
           })
           if (newRemotePlayer) {
@@ -118,8 +118,8 @@ export const initMultiplayer = async ({
       }
 
       if (!remotePlayer || !remotePlayer.exists()) return
-      if (playerState.x !== undefined) remotePlayer.pos.x = playerState.x
-      if (playerState.y !== undefined) remotePlayer.pos.y = playerState.y
+      if (playerState?.x !== undefined && playerState.x !== null) remotePlayer.pos.x = playerState.x
+      if (playerState?.y !== undefined && playerState.y !== null) remotePlayer.pos.y = playerState.y
       if (playerState.flipX !== undefined)
         remotePlayer.flipX = playerState.flipX
       if (
@@ -145,14 +145,14 @@ export const initMultiplayer = async ({
       typeof players.onRemove === 'function'
     ) {
       players.onAdd(
-        (playerState: Room['state']['players'], sessionId: string) => {
-          createOrUpdateRemotePlayer(sessionId, playerState).catch((error) => {
+        async (playerState: Room['state']['players'], sessionId: string) => {
+          await createOrUpdateRemotePlayer(sessionId, playerState).catch((error) => {
             console.debug('Erreur lors de la création du joueur distant:', error)
           })
 
           if (playerState.onChange) {
-            playerState.onChange(() => {
-              createOrUpdateRemotePlayer(sessionId, playerState).catch((error) => {
+            playerState.onChange(async () => {
+              await createOrUpdateRemotePlayer(sessionId, playerState).catch((error) => {
                 console.debug('Erreur lors de la mise à jour du joueur distant:', error)
               })
             })

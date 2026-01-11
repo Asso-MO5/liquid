@@ -65,33 +65,6 @@ export const pixelMuseumInitGame = async () => {
       return
     }
 
-    let ColyseusClient
-    try {
-      const colyseusModule = await import('colyseus.js')
-      ColyseusClient = colyseusModule?.Client
-      if (!ColyseusClient) {
-        console.error('Colyseus Client non trouvé')
-        gameRoom = null
-      } else {
-        const client = new ColyseusClient(clientEnv.VITE_KITANA_URL)
-
-        await client
-          .joinOrCreate(ROOM_NAME, {
-            name: 'Pixel Museum',
-          })
-          .then((room) => {
-            gameRoom = room
-          })
-          .catch((error) => {
-            console.error('Erreur lors de la connexion à Colyseus:', error)
-            gameRoom = null
-          })
-      }
-    } catch (error) {
-      console.error('Erreur lors du chargement de Colyseus:', error)
-      gameRoom = null
-    }
-
     if (import.meta.env.DEV) {
       //k.debug.inspect = true;
     }
@@ -102,6 +75,7 @@ export const pixelMuseumInitGame = async () => {
       console.error('Canvas ou kaplay non trouvé')
       return
     }
+
 
     canvas.style.imageRendering = 'pixelated'
     canvas.style.imageRendering = '-moz-crisp-edges'
@@ -174,11 +148,44 @@ export const pixelMuseumInitGame = async () => {
     const BASE_URL = `${window.location.protocol}//${window.location.host}/pixel-museum`
 
     if (k) await pixelMuseumRessources(k, BASE_URL)
+
+
     k.scene(LEVELS.MUSEUM, async () => {
       museumLevel(k)
     })
 
+    let ColyseusClient
+    try {
+      const colyseusModule = await import('colyseus.js')
+      ColyseusClient = colyseusModule?.Client
+      if (!ColyseusClient) {
+        console.error('Colyseus Client non trouvé')
+        gameRoom = null
+      } else {
+        const client = new ColyseusClient(clientEnv.VITE_KITANA_URL)
+
+        await client
+          .joinOrCreate(ROOM_NAME, {
+            name: 'Pixel Museum',
+          })
+          .then((room) => {
+            gameRoom = room
+          })
+          .catch((error) => {
+            console.error('Erreur lors de la connexion à Colyseus:', error)
+            gameRoom = null
+          })
+      }
+    } catch (error) {
+      console.error('Erreur lors du chargement de Colyseus:', error)
+      gameRoom = null
+    }
+
+
+
     k.go(LEVELS.MUSEUM)
+
+
   }
 
   onMount(() => {
