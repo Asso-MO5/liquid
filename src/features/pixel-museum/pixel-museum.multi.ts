@@ -26,6 +26,7 @@ export const initMultiplayer = async ({
   let lastSentPosition = { x: startPosition.x, y: startPosition.y }
   const SYNC_INTERVAL = 0.1
   let syncTimer = 0
+  let isInitializing = false
 
   player.onUpdate(() => {
     if (!k || !player) return
@@ -65,6 +66,11 @@ export const initMultiplayer = async ({
   })
 
   const initRemotePlayers = async () => {
+    if (isInitializing) {
+      console.debug('initRemotePlayers déjà en cours')
+      return
+    }
+
     if (!room.state.players) {
       console.debug("room.state.players n'est pas encore initialisé")
       return
@@ -72,6 +78,10 @@ export const initMultiplayer = async ({
 
     const players = room.state.players
     if (!players) return
+
+    isInitializing = true
+
+    const creatingPlayers = new Set<string>() // Pour éviter les créations simultanées
 
     const createOrUpdateRemotePlayer = async (
       sessionId: string,
@@ -81,23 +91,33 @@ export const initMultiplayer = async ({
 
       let remotePlayer = remotePlayers.get(sessionId)
 
-      if (!remotePlayer || !remotePlayer.exists()) {
-        const newRemotePlayer = await createRemotePlayer(k, {
-          playerId: sessionId,
-          initialPosition: {
-            x: playerState.x || startPosition.x + 50,
-            y: playerState.y || startPosition.y,
-          },
-        })
-        if (newRemotePlayer) {
-          remotePlayer = newRemotePlayer
-          remotePlayers.set(sessionId, remotePlayer)
-        } else {
-          return
+      if ((!remotePlayer || !remotePlayer.exists()) && !creatingPlayers.has(sessionId)) {
+        creatingPlayers.add(sessionId)
+        try {
+          const newRemotePlayer = await createRemotePlayer(k, {
+            playerId: sessionId,
+            initialPosition: {
+              x: playerState.x || startPosition.x + 50,
+              y: playerState.y || startPosition.y,
+            },
+          })
+          if (newRemotePlayer) {
+            const existing = remotePlayers.get(sessionId)
+            if (existing && existing.exists()) {
+              newRemotePlayer.destroy()
+            } else {
+              remotePlayer = newRemotePlayer
+              remotePlayers.set(sessionId, remotePlayer)
+            }
+          }
+        } finally {
+          creatingPlayers.delete(sessionId)
         }
+
+        if (!remotePlayer) return
       }
 
-      if (!remotePlayer) return
+      if (!remotePlayer || !remotePlayer.exists()) return
       if (playerState.x !== undefined) remotePlayer.pos.x = playerState.x
       if (playerState.y !== undefined) remotePlayer.pos.y = playerState.y
       if (playerState.flipX !== undefined)
@@ -143,6 +163,27 @@ export const initMultiplayer = async ({
       players.onRemove(
         (_playerState: Room['state']['players'], sessionId: string) => {
           removeRemotePlayer(sessionId)
+        }
+      )
+
+      // Ne pas appeler players.forEach si onAdd existe, car onAdd gère déjà les nouveaux joueurs
+      // On initialise seulement les joueurs existants une fois
+      players.forEach(
+        (playerState: Room['state']['players'], sessionId: string) => {
+          // Vérifier qu'on n'a pas déjà créé ce joueur via onAdd
+          if (!remotePlayers.has(sessionId)) {
+            createOrUpdateRemotePlayer(sessionId, playerState).catch((error) => {
+              console.debug('Erreur lors de la création du joueur distant:', error)
+            })
+
+            if (playerState.onChange) {
+              playerState.onChange(() => {
+                createOrUpdateRemotePlayer(sessionId, playerState).catch((error) => {
+                  console.debug('Erreur lors de la mise à jour du joueur distant:', error)
+                })
+              })
+            }
+          }
         }
       )
     } else {
@@ -212,13 +253,15 @@ export const initMultiplayer = async ({
         }
       }
     )
+
+    isInitializing = false
   }
 
   initRemotePlayers()
 
   if (room.onStateChange) {
     room.onStateChange(() => {
-      if (room.state && room.state.players && remotePlayers.size === 0) {
+      if (room.state && room.state.players && remotePlayers.size === 0 && !isInitializing) {
         initRemotePlayers()
       }
     })
