@@ -64,7 +64,30 @@ export const paymentCTRL = () => {
         },
         body: JSON.stringify(body),
       });
-      const data: { checkout_id: string, checkout_url: string, checkout_reference: string, tickets: Ticket[], error: string } = await response.json();
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        let errorData
+        try {
+          errorData = JSON.parse(errorText)
+        } catch {
+          throw new Error(errorText || `HTTP ${response.status}: ${response.statusText}`)
+        }
+        throw new Error(JSON.stringify(errorData))
+      }
+
+      const contentType = response.headers.get('content-type')
+      if (!contentType || !contentType.includes('application/json')) {
+        throw new Error(`Réponse invalide: ${contentType}`)
+      }
+
+      let data: { checkout_id: string, checkout_url: string, checkout_reference: string, tickets: Ticket[], error: string }
+      try {
+        data = await response.json()
+      } catch (jsonError) {
+        console.error('Erreur lors du décodage JSON:', jsonError)
+        throw new Error('Erreur lors du décodage de la réponse du serveur')
+      }
 
       if (!response.ok) {
         throw new Error(data.error);
