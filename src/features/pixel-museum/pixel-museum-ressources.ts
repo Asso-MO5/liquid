@@ -9,7 +9,7 @@ import {
 } from './pixel-museum.const'
 
 export const pixelMuseumRessources = async (k: ReturnType<typeof kaplay>, baseUrl: string) => {
-
+  // Lancer tous les chargements (les méthodes retournent des Asset, pas des promesses)
   for (const aseprite of Object.values(ASEPRITES)) {
     await k.loadAseprite(
       aseprite,
@@ -31,13 +31,12 @@ export const pixelMuseumRessources = async (k: ReturnType<typeof kaplay>, baseUr
   }
 
   for (const sound of Object.values(SOUNDS)) {
-    await k.loadSound(sound, `${baseUrl}/sounds/${sound}.ogg`).catch(() => {
-      console.debug(`Son ${sound} non disponible`)
-    })
+    await k.loadSound(sound, `${baseUrl}/sounds/${sound}.ogg`)
   }
 
   for (const font of Object.values(FONTS)) {
     const fontName = font.split('/')[1].split('.')[0]
     await k.loadFont(fontName, `${baseUrl}/fonts/${font}`)
   }
+
 }
