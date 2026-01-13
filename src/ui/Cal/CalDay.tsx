@@ -1,6 +1,7 @@
 import { Show, createSignal, onMount } from 'solid-js'
 import type { CalDayProps } from './CalDay.types'
 import { formatDate } from '~/utils/format-date'
+import { formatDay } from '~/utils/format-day'
 
 export const CalDay = (props: CalDayProps) => {
   const [isMobile, setIsMobile] = createSignal(false)
@@ -54,28 +55,30 @@ export const CalDay = (props: CalDayProps) => {
               data-current-month={props.day.isCurrentMonth}
               data-selected={isSameDate(props.day.date)}
               data-today={props.day.isToday}
+              aria-pressed={isSameDate(props.day.date)}
+              aria-label={`${formatDay(props.day.date)} ${formatDate(props.day.date)}`}
               onClick={() => props.onDayClick(props.day.date)}
             >
-              <div class="text-lg font-medium mb-1 flex items-center justify-center">
+              <span class="text-lg font-medium mb-1 flex items-center justify-center">
                 {formatDate(props.day.date)}
-              </div>
+              </span>
             </button>
           </Show>
           <Show when={!props.day.isDayOpen}>
             <div
               class="
                 p-2 border border-transparent
-              data-[today=true]:text-accent data-[today=true]:border-accent
-              data-[today=true]:hover:bg-accent data-[today=true]:hover:text-white
+                data-[today=true]:text-accent data-[today=true]:border-accent
+                data-[today=true]:hover:bg-accent data-[today=true]:hover:text-white
                 data-[today=true]:bg-transparent pointer-events-none
                 opacity-30
               "
               data-current-month={props.day.isCurrentMonth}
               data-today={props.day.isToday}
             >
-              <div class="text-lg font-medium mb-1 flex items-center justify-center">
+              <span class="text-lg font-medium mb-1 flex items-center justify-center">
                 {formatDate(props.day.date)}
-              </div>
+              </span>
             </div>
           </Show>
         </>
@@ -90,18 +93,20 @@ export const CalDay = (props: CalDayProps) => {
             class="
               aspect-square rounded-full flex flex-col items-center justify-center cursor-pointer
               hover:bg-primary border border-transparent
-            data-[current-month=false]:text-gray-400 data-[current-month=false]:bg-bg 
-            data-[today=true]:border-secondary 
-            data-[selected=true]:bg-primary data-[selected=true]:border-primary data-[selected=true]:text-white
+              data-[current-month=false]:text-gray-400 data-[current-month=false]:bg-bg 
+              data-[today=true]:border-secondary 
+              data-[selected=true]:bg-primary data-[selected=true]:border-primary data-[selected=true]:text-white
             "
             data-current-month={props.day.isCurrentMonth}
             data-today={props.day.isToday}
             data-selected={isSameDate(props.day.date)}
+            aria-pressed={isSameDate(props.day.date)}
+            aria-label={`${formatDay(props.day.date)} ${formatDate(props.day.date)}`}
             onClick={() => props.onDayClick(props.day.date)}
           >
-            <div class="text-sm font-medium mb-1">
+            <span class="text-sm font-medium mb-1">
               {formatDate(props.day.date)}
-            </div>
+            </span>
           </button>
         </Show>
         <Show when={!props.day.isDayOpen}>
