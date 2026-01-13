@@ -30,7 +30,7 @@ export const paymentCTRL = () => {
       currency: 'EUR',
       description: 'Tickets for the museum',
       language: locales[lang() as keyof typeof locales],
-      gift_codes: ticketStore.gift_codes.filter(code => code !== ''),
+      gift_codes: ticketStore.gift_codes.filter(({ code }) => code !== '').map(({ code }) => code),
       guided_tour: ticketStore.guided_tour,
       guided_tour_price: guidedTourPrice(),
       success_url: successUrl,

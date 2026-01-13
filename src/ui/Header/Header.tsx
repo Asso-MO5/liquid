@@ -1,5 +1,4 @@
 import { LangSelector } from "~/features/lang-selector/lang-selector"
-import { MiniGame } from "~/features/mini-game/mini-game"
 import { Show } from "solid-js"
 import { Logo } from "../Logo"
 import { MenuMobile } from "../Menu/menu-mobile"
@@ -61,7 +60,7 @@ export const Header = (props: HeaderProps) => {
             <MenuMobile />
           </nav>
           <div class="flex items-center gap-4">
-            <a href="https://mo5.com/" target="_blank" rel="noopener noreferrer"class="hidden md:block">
+            <a href="https://mo5.com/" target="_blank" rel="noopener noreferrer" class="hidden md:block">
               <img src="/logo.webp"
                 width={194}
                 height={60}

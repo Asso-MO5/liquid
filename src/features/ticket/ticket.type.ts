@@ -41,7 +41,7 @@ export interface TicketStore {
   total_amount: number;
   status: TicketStatus;
   tickets: Price[];
-  gift_codes: string[];
+  gift_codes: { index: number, code: string }[];
   guided_tour: boolean;
 }
 

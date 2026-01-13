@@ -42,7 +42,6 @@ export default function App() {
           <Meta name="viewport" content="width=device-width, initial-scale=1" />
           <Suspense fallback={<div class="flex items-center justify-center p-3 h-screen"><Loader /></div>}>
             <Layout>
-
               {props.children}
             </Layout>
             <Modal />
