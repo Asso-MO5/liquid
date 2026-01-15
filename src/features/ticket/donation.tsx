@@ -1,7 +1,9 @@
-import { For } from 'solid-js'
+import { For, Show } from 'solid-js'
+import { langCtrl } from "../lang-selector/lang.ctrl"
 import { donationCtrl } from './donation.ctrl'
 import { ticketStore } from './ticket.store'
-import { translate } from '../../utils/translate';
+import { formatPriceObj } from "~/utils/format-price"
+import { translate } from '~/utils/translate';
 
 const txt = {
   fr: {
@@ -14,6 +16,7 @@ const txt = {
 
 export const Donation = () => {
   const { t } = translate(txt)
+  const lang = langCtrl()
   const donations = donationCtrl()
 
   return (
@@ -31,7 +34,9 @@ export const Donation = () => {
             "
             onClick={() => donations.setDonation(donation)}
           >
-            {donation}
+            <Show when={lang() === 'fr'}>
+              {formatPriceObj(donation).value}
+            </Show>
             <span
               data-selected={donation === ticketStore.donation_amount}
               class="
@@ -40,8 +45,11 @@ export const Donation = () => {
                 dark:data-[selected=true]:text-black
               "
             >
-              {" "}€
+              {formatPriceObj(donation).currency}
             </span>
+            <Show when={lang() !== 'fr'}>
+              {formatPriceObj(donation).value}
+            </Show>
           </button>
         )}
       </For>
