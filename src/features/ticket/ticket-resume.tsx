@@ -2,7 +2,7 @@ import { For, Show } from "solid-js"
 import { langCtrl } from "~/features/lang-selector/lang.ctrl"
 import { ticketStore } from "~/features/ticket/ticket.store"
 import { ticketResumeCTRL } from "~/features/ticket/ticket-resume.ctrl"
-import { formatPrice } from "~/utils/format-price"
+import { formatPrice } from "~/features/price/prices.utils"
 import { translate } from "~/utils/translate"
 import { txt } from "./ticket-resume.txt"
 

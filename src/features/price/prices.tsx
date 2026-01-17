@@ -3,7 +3,7 @@ import { prices } from "./price.store"
 
 import { ticketCreate } from "../ticket/ticket-create"
 import { langCtrl } from "../lang-selector/lang.ctrl"
-import { formatPriceObj } from "~/utils/format-price"
+import { formatPriceObj } from "~/features/price/prices.utils"
 import { translate } from "~/utils/translate"
 import { txt } from "./prices.txt"
 

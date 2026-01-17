@@ -2,7 +2,7 @@ import { For, Show } from 'solid-js'
 import { langCtrl } from "../lang-selector/lang.ctrl"
 import { donationCtrl } from './donation.ctrl'
 import { ticketStore } from './ticket.store'
-import { formatPriceObj } from "~/utils/format-price"
+import { formatPriceObj } from "~/features/price/prices.utils"
 import { translate } from '~/utils/translate';
 
 const txt = {
