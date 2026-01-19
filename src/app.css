@@ -217,25 +217,25 @@
   }
 
   select option:hover {
-    @apply bg-primary text-white transform  cursor-pointer;
+    @apply bg-primary text-white transform cursor-pointer;
   }
 
   textarea {
-    @apply border outline-none  border-border focus:border-primary rounded p-1 cursor-pointer text-primary bg-white min-w-full;
+    @apply border outline-none border-border focus:border-primary rounded p-1 cursor-pointer text-primary bg-white min-w-full;
     resize: none;
   }
 
   input {
-    @apply border outline-none  border-border focus:border-primary rounded p-1 cursor-pointer text-primary bg-white min-w-full;
+    @apply border outline-none border-border focus:border-primary rounded p-1 cursor-pointer text-primary bg-white min-w-full;
   }
 
   input[type='checkbox'] {
-    @apply w-4 h-4 appearance-none relative cursor-pointer rounded-none border-2 border-border focus:border-primary bg-white;
+    @apply w-5 h-5 appearance-none relative cursor-pointer rounded-none border-2 border-border focus:border-primary bg-white;
   }
 
   input[type='checkbox']:checked::after {
     content: '✓';
-    @apply absolute top-0 left-0 w-full h-full flex items-center justify-center text-white text-xs font-bold;
+    @apply absolute top-0 left-0 w-full h-full flex items-center justify-center text-white text-text font-bold;
     pointer-events: none;
   }
 
@@ -269,7 +269,7 @@
   }
 
   h3 {
-    @apply text-3xl  mb-6 mt-4 text-secondary;
+    @apply text-3xl mb-6 mt-4 text-secondary;
     font-family: 'Bebas Neue', sans-serif;
   }
 
