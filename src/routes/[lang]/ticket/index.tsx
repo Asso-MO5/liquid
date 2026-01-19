@@ -107,7 +107,7 @@ export default function Ticket() {
           <div class="m-4 flex flex-col gap-4">
             <div class="grid grid-cols-[auto_1fr] items-center gap-2">
               <input type="checkbox"
-                class="bg-white/10 text-text w-4 h-4"
+                class="bg-white/10 checked:bg-primary"
                 id="terms_and_conditions" checked={paymentCtrl.IHaveReadTheTermsAndConditions()} onChange={() => paymentCtrl.setIHaveReadTheTermsAndConditions(!paymentCtrl.IHaveReadTheTermsAndConditions())} />
               <label for="terms_and_conditions">{t().terms_and_conditions}</label>
             </div>
