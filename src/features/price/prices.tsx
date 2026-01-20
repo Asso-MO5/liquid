@@ -7,20 +7,23 @@ import { formatPriceObj } from "~/features/price/prices.utils"
 import { translate } from "~/utils/translate"
 import { txt } from "./prices.txt"
 
-export const Prices = () => {
+export const Prices = (props: {labelId: string}) => {
   const { t } = translate(txt)
   const lang = langCtrl()
   const ticketCreateCtrl = ticketCreate();
 
   return (
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl mx-auto text-text">
+    <ul
+      role="list"
+      class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl mx-auto text-text"
+      aria-labelledby={props.labelId}
+    >
       <For each={prices()}>
         {(price) => {
           const amount = ticketCreateCtrl.isHalfPrice() ? Math.round(price.amount / 2) : price.amount
 
           return (
-              <div class="flex flex-col gap-2 p-2 w-full dark:bg-white/5 bg-black/5 rounded-md">
-
+              <li class="flex flex-col gap-2 p-2 w-full dark:bg-white/5 bg-black/5 rounded-md">
                 <div class="text-xl font-bold w-full flex justify-between gap-2">
                   <p>{price.translations[lang() as keyof typeof price.translations].name}</p>
                   <Show when={price.amount > 0}>
@@ -49,7 +52,9 @@ export const Prices = () => {
                   <div class="flex flex-col gap-4">
 
                     <div class="flex h-full text-xl items-center justify-center gap-2">
-                      <button onClick={() => ticketCreateCtrl.removeFromCart(price)} type="button"
+                      <button
+                        type="button"
+                        onClick={() => ticketCreateCtrl.removeFromCart(price)}
                         aria-label={t().remove_from_cart}
                         disabled={ticketCreateCtrl.getQuantity(price) === 0}
                         class="text-xl"
@@ -67,11 +72,11 @@ export const Prices = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </li>
             )
           }
         }
       </For>
-    </div>
+    </ul>
   )
 }

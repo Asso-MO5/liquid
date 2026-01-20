@@ -29,6 +29,7 @@ export const GiftCodes = () => {
               <button
                 class="btn"
                 onClick={() => giftCodesCtrlStore.removeGiftCode(index)}
+                aria-label={t().remove}
               >
                 ×
               </button>
