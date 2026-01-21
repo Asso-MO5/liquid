@@ -20,11 +20,11 @@ const txt = {
   fr: {
     select_date: "Sélectionnez une date",
     select_slot: "Sélectionnez un créneau horaire",
-    total_amount: "Montant total: ",
+    total_amount: "Montant total : ",
     select_price: "Sélectionnez vos tickets",
-    total_places: "Nombre de billet: ",
-    total_places_plural: "Nombre de billets: ",
-    for_group: "Pour un groupe de plus de 20 personnes, veuillez nous contacter: ",
+    total_places: "Nombre de billet : ",
+    total_places_plural: "Nombre de billets : ",
+    for_group: "Pour un groupe de plus de 20 personnes, veuillez nous contacter : ",
     contact: "Formulaire de contact",
     title: "Réserver un billet",
     description: "Réservez un billet pour visiter le musée du jeu vidéo",
@@ -57,9 +57,9 @@ const txt = {
 
 export default function Ticket() {
   const { t } = translate(txt)
+  const params = useParams()
   const lang = () => params.lang as keyof typeof LANGS
   const slotsCtrl = slotsCTRL();
-  const params = useParams()
   const paymentCtrl = paymentCTRL();
 
   return (
@@ -77,24 +77,25 @@ export default function Ticket() {
         </div>
 
         <div id="step-2">
-          <h3 class="text-center">{t().select_slot}</h3>
+          <h3 class="text-center" id="select-slot-title">{t().select_slot}</h3>
           <Slots
             isFetching={slotsCtrl.isFetching()}
             slots={slotsCtrl.slots()}
             onSlotClick={slotsCtrl.onSlotClick}
             currentSlot={ticketStore.slot_start_time}
+            labelId="select-slot-title"
           />
         </div>
         <div id="step-3" class="mx-auto">
-          <h3 class="text-center">{t().select_price}</h3>
+          <h3 class="text-center" id="select-price-title">{t().select_price}</h3>
           <p class="text-center text-sm text-text italic">
             {t().for_group}
             <A class="pl-2" href={`/${lang() as string}/contact`}>{t().contact}</A>
           </p>
-          <Prices />
+          <Prices labelId="select-price-title" />
           <div class="mt-6">
-            <h3 class="text-center">{t().donation}</h3>
-            <Donation />
+            <h3 class="text-center" id="select-donation-title">{t().donation}</h3>
+            <Donation labelId="select-donation-title" />
           </div>
         </div>
         <div id="step-4" class="max-w-sm mx-auto lg:self-start">
