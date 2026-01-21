@@ -12,12 +12,12 @@ export const texts = {
   fr: {
     openingHours: 'Horaires d\'ouverture',
     prices: 'Tarifs',
-    holiday: 'Vacances scolaires',
+    holiday: 'Vacances scolaires uniquement',
   },
   en: {
     openingHours: 'Opening Hours',
     prices: 'Prices',
-    holiday: 'School holidays',
+    holiday: 'School holidays only',
   }
 }
 
