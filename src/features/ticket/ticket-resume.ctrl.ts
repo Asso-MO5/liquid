@@ -9,13 +9,16 @@ export const ticketResumeCTRL = () => {
 
   const getUniqueTickets = createMemo(() => {
     const seen = new Set<string>();
-    return ticketStore.tickets.filter(ticket => {
-      if (seen.has(ticket.id)) {
-        return false;
-      }
-      seen.add(ticket.id);
-      return true;
-    });
+    return ticketStore.tickets
+      .filter(ticket => {
+        if (seen.has(ticket.id)) return false;
+        seen.add(ticket.id);
+        return true;
+      })
+      .map(ticket => ({
+        ticket,
+        quantity: getTicketCount(ticket.id)
+      }));
   });
 
   const calculateTicketTotal = createMemo(() => {

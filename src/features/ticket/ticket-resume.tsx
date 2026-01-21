@@ -1,4 +1,4 @@
-import { For, Show } from "solid-js"
+import { createMemo, For, Show } from "solid-js"
 import { langCtrl } from "~/features/lang-selector/lang.ctrl"
 import { ticketStore } from "~/features/ticket/ticket.store"
 import { ticketResumeCTRL } from "~/features/ticket/ticket-resume.ctrl"
@@ -34,26 +34,30 @@ export const TicketResume = () => {
           <span class="font-bold text-primary">{t().tickets}</span>
           <div class="flex flex-col gap-1 pl-2">
             <For each={ctrl.getUniqueTickets()}>
-              {(ticket) => {
-                const quantity = ctrl.getTicketCount(ticket.id);
+              {({ ticket, quantity }) => {
                 const price = ctrl.getTicketPrice(ticket);
-                const totalPrice = price * quantity;
+                const totalPrice = createMemo(() => ticketStore.is_half_price ? Math.round(price * quantity / 2) : price * quantity);
                 return (
                   <div class="flex justify-between items-center">
-                    <span>
-                      {ticket.translations[lang() as keyof typeof ticket.translations]?.name || ''}
-                      {quantity > 1 && ` x${quantity}`}
-                    </span>
+                    <p class="flex gap-2 p-0 m-0">
+                      <span class="text-secondary">
+                        {quantity}
+                      </span>
+                      <span>
+                        {ticket.translations[lang() as keyof typeof ticket.translations]?.name || ''}
+                      </span>
+                    </p>
+
                     <span class="font-semibold">
-                      {price === 0 ? t().free : formatPrice(totalPrice)}
+                      {price === 0 ? t().free : formatPrice(totalPrice())}
                     </span>
                   </div>
                 );
               }}
             </For>
           </div>
-        </div>
-      </Show>
+        </div >
+      </Show >
 
       <Show when={ticketStore.donation_amount > 0}>
         <div class="flex justify-between items-center">
@@ -66,6 +70,6 @@ export const TicketResume = () => {
         <span class="font-bold text-lg">{t().total}</span>
         <span class="font-bold text-lg text-secondary">{formatPrice(ctrl.calculateTotal())}</span>
       </div>
-    </div>
+    </div >
   )
 }
