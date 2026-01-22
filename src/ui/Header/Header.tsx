@@ -73,9 +73,9 @@ export const Header = (props: HeaderProps) => {
         </header>
       </Show>
 
-      <div class="h-full w-full " data-with-game={props.withGame}>
+      <Show when={props.withGame}>
         {props.withGame && <PixelMuseum />}
-      </div>
+      </Show>
     </div >
   )
 }

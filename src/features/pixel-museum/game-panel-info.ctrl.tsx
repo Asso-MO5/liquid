@@ -53,6 +53,13 @@ export const closeGamePanelInfo = () => {
   setOpen(undefined)
 }
 
+const handleEscapeKey = (e: KeyboardEvent) => {
+  // Works only if panel has focus (happens after clicking the Interact button, but not with the keyboard shortcut)
+  if (e.key === 'Escape' && open()) {
+    closeGamePanelInfo()
+  }
+}
+
 const handleMouseMove = (e: MouseEvent) => {
   if (!isDragging() || !panelRef) return
   e.preventDefault()
@@ -160,5 +167,6 @@ export const GamePanelInfoCtrl = () => {
     },
     handleMouseDown,
     handleTouchStart,
+    handleEscapeKey,
   }
 }
