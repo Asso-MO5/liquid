@@ -28,7 +28,10 @@ export const ticketResumeCTRL = () => {
     }, 0);
   });
 
-  const calculateTotal = createMemo(() => calculateTicketTotal() + ticketStore.donation_amount);
+  const calculateTotal = createMemo(() => {
+    const total = calculateTicketTotal() + ticketStore.donation_amount;
+    return Math.round(total * 100) / 100;
+  });
 
   const formatDate = (dateString: string, locale: string): string => {
     if (!dateString) return '';
