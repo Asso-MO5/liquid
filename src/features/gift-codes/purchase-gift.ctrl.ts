@@ -190,8 +190,7 @@ export const purchaseGiftCTRL = () => {
 
 
   const validityDate = createMemo(() => {
-    // fin janvier 2026
-    const validityDate = new Date(2026, 0, 31);
+    const validityDate = new Date(2026, 2, 8);
     return validityDate.toLocaleDateString(lang(), { year: "numeric", month: "long", day: "numeric" });
   });
 
