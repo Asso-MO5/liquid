@@ -1,12 +1,14 @@
 import { Show, createMemo } from "solid-js"
+import { translate } from "~/utils/translate"
 import { GamePanelInfoCtrl, closeGamePanelInfo } from "./game-panel-info.ctrl"
+import { gamePanelInfoTxt } from "./game-panel-info.texts"
 import { langCtrl } from "~/features/lang-selector/lang.ctrl"
 import { isMuted } from "./pixel-museum-sound.ctrl"
 
 export const GamePanelInfo = () => {
+  const { t } = translate(gamePanelInfoTxt)
   const gamePanelInfo = GamePanelInfoCtrl()
   const lang = langCtrl()
-
 
   const item = createMemo(() => gamePanelInfo.open())
   const description = createMemo(() => gamePanelInfo.getDescription(lang() === 'fr' ? 'fr' : 'en'))
@@ -17,6 +19,12 @@ export const GamePanelInfo = () => {
   return (
     <Show when={item()}>
       <div
+        id="game-panel-info-modal"
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="game-panel-info-title"
+        onKeyDown={gamePanelInfo.handleEscapeKey}
         ref={(el) => gamePanelInfo.setPanelRef(el)}
         class="fixed bg-white rounded-lg shadow-2xl border-2 border-primary max-w-sm w-full max-h-[80vh] flex flex-col z-50 transition-shadow data-[is-dragging=true]:shadow-4xl data-[is-dragging=false]:shadow-2xl"
         data-is-dragging={gamePanelInfo.isDragging()}
@@ -29,16 +37,17 @@ export const GamePanelInfo = () => {
         {/* Header */}
         <div
           ref={(el) => gamePanelInfo.setHeaderRef(el)}
-          class="bg-primary text-white px-4 py-2 rounded-t-lg flex items-center justify-between cursor-grab active:cursor-grabbing select-none"
+          class="bg-primary text-white px-4 py-2 rounded-t-lg flex flex-row-reverse items-center justify-between cursor-grab active:cursor-grabbing select-none"
           onMouseDown={gamePanelInfo.handleMouseDown}
           onTouchStart={gamePanelInfo.handleTouchStart}
         >
-          <h3 class="text-base m-0 text-white">{item()?.name || 'Information'}</h3>
+          {/* Close button is placed first, so one can quickly close it if opened by mistake or after a focus loop */}
           <button
+            id="game-panel-info-close"
             onClick={closeGamePanelInfo}
-            class="text-text  bg-black/20 transition-colors p-1 rounded border-transparent hover:border-secondary "
-            title="Fermer"
-            aria-label="Fermer le panneau"
+            class="text-text bg-black/20 transition-colors p-1 rounded border-transparent hover:bg-white hover:text-secondary focus:border-secondary"
+            title={t().closeTitle}
+            aria-label={t().closeLabel}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -55,6 +64,7 @@ export const GamePanelInfo = () => {
               />
             </svg>
           </button>
+          <h3 id="game-panel-info-title" class="text-xl m-0 text-white">{item()?.name || 'Information'}</h3>
         </div>
 
         {/* Content */}
@@ -63,7 +73,7 @@ export const GamePanelInfo = () => {
           <Show when={coverImage()}>
             <img
               src={coverImage()}
-              alt={item()?.name || 'Cover'}
+              alt={item()?.name || ''}
               class="w-full h-auto rounded-md object-cover"
               onError={(e) => {
                 console.error('Erreur lors du chargement de l\'image:', coverImage())
@@ -109,6 +119,8 @@ export const GamePanelInfo = () => {
           </Show>
         </div>
       </div>
+      {/* Focus trap, when tabbing through the interactive elements in the modal, users should go back to the first element and not go outside the modal */}
+      <div id="game-info-panel-end" tabindex="0" class="sr-only" onFocus={() => document.getElementById('game-panel-info-close')?.focus()} />
     </Show>
   )
 }

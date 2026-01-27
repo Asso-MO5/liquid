@@ -76,7 +76,7 @@ export const pixelMuseumInitGame = async () => {
       return
     }
 
-
+    canvas.tabIndex = -1 // Make canvas focusable without breaking the tab sequence
     canvas.style.imageRendering = 'pixelated'
     canvas.style.imageRendering = '-moz-crisp-edges'
     canvas.style.imageRendering = 'crisp-edges'
