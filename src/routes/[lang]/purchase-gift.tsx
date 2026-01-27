@@ -10,6 +10,7 @@ const txt = {
     successTitle: "Merci pour votre achat de cartes cadeaux",
     successDescription:
       "Votre paiement a été confirmé. Les codes cadeaux ont été envoyés à l'adresse email indiquée.",
+    successToast: "Votre paiement a bien été confirmé.",
     cancelTitle: "Paiement annulé",
     cancelDescription:
       "Le paiement des cartes cadeaux a été annulé. Vous pouvez réessayer si vous le souhaitez.",
@@ -23,6 +24,7 @@ const txt = {
     successTitle: "Thank you for your gift card purchase",
     successDescription:
       "Your payment has been confirmed. The gift codes have been sent to the email address you provided.",
+    successToast: "Your payment has been successfully confirmed.",
     cancelTitle: "Payment cancelled",
     cancelDescription:
       "The gift card payment has been cancelled. You can try again if you wish.",
@@ -84,11 +86,6 @@ const PurchaseGiftRoute = () => {
       } catch {
         // ignore
       }
-      const { t: successTxt } = translate({
-        fr: { success: "Votre paiement a bien été confirmé." },
-        en: { success: "Your payment has been successfully confirmed." },
-      });
-      toast.success(successTxt().success);
     } catch (error) {
       console.error(
         "Erreur lors de la confirmation d'achat de codes cadeaux",
