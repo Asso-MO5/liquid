@@ -97,15 +97,21 @@ export const GamePanelInfo = () => {
                 }}
               >
                 <source src={audioUrl()} />
-                Votre navigateur ne supporte pas l'élément audio.
+                {t().audioNotSupported}
               </audio>
             </div>
           </Show>
           <Show when={youTubeVideoUrl()}>
             <div class="w-full">
-              <iframe id="ytplayer" width="340" height="
-              240" allowfullscreen class="w-full aspect-video"
-                src={youTubeVideoUrl()} />
+              <iframe
+                id="ytplayer"
+                width="340"
+                height="240"
+                allowfullscreen
+                class="w-full aspect-video"
+                src={youTubeVideoUrl()}
+                title={t().youTubeVideoTitle}
+              />
             </div>
           </Show>
 
