@@ -65,8 +65,15 @@ export const pixelMuseumInitGame = async () => {
       return
     }
 
+    k.onError((error) => {
+      console.error('Erreur lors de l\'initialisation de kaplay:', error)
+      k = null
+      return
+    })
+
+
     if (import.meta.env.DEV) {
-      //k.debug.inspect = true;
+      k.debug.inspect = true;
     }
 
     const canvas = containerRef.querySelector('canvas')
