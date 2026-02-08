@@ -12,30 +12,34 @@ let panelStartPos = { x: 0, y: 0 }
 let panelRef: HTMLDivElement | null = null
 let headerRef: HTMLDivElement | null = null
 
+export const fetchItem = async (id: string) => {
+  const response = await fetch(`${clientEnv.VITE_CAVE_URL}/item/public/${id}`)
+
+  if (!response.ok) {
+    console.error(`Erreur HTTP: ${response.status} ${response.statusText}`)
+    return
+  }
+
+  const contentType = response.headers.get('content-type')
+  if (!contentType || !contentType.includes('application/json')) {
+    console.error('La réponse n\'est pas du JSON:', contentType)
+    return
+  }
+
+  let data
+  try {
+    data = await response.json()
+  } catch (jsonError) {
+    console.error('Erreur lors du décodage JSON:', jsonError)
+    return
+  }
+
+  return data.item as GamePanelItem
+}
+
 export const openGamePanelInfo = async (id: string) => {
   try {
-    const response = await fetch(`${clientEnv.VITE_CAVE_URL}/item/public/${id}`)
-
-    if (!response.ok) {
-      console.error(`Erreur HTTP: ${response.status} ${response.statusText}`)
-      return
-    }
-
-    const contentType = response.headers.get('content-type')
-    if (!contentType || !contentType.includes('application/json')) {
-      console.error('La réponse n\'est pas du JSON:', contentType)
-      return
-    }
-
-    let data
-    try {
-      data = await response.json()
-    } catch (jsonError) {
-      console.error('Erreur lors du décodage JSON:', jsonError)
-      return
-    }
-
-    const item = data.item as GamePanelItem
+    const item = await fetchItem(id)
 
     if (!item) {
       console.error('Item non trouvé dans la réponse')
