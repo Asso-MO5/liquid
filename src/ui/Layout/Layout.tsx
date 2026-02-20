@@ -30,7 +30,7 @@ export const Layout = (props: LayoutProps) => {
         <Header withGame={withGame()} page={page()} />
         {props.children}
         {page() !== 'game' && <Footer />}
-      </div >
+      </div>
     </>
   )
 }

@@ -129,6 +129,13 @@
     pointer-events: none;
   }
 
+  #header,
+  #footer,
+  #main,
+  #game-hud {
+    @apply m-auto max-w-7xl;
+  }
+
   main {
     background-color: var(--color-bg);
   }
