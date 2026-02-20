@@ -38,35 +38,42 @@ export const CalDay = (props: CalDayProps) => {
         /* DESKTOP */
         <>
           <Show when={props.day.isDayOpen}>
-            <button
-              type="button"
-              class="
-                p-2 border border-primary rounded-sm cursor-pointer data-[open=true]:hover:bg-primary
-                data-[current-month=false]:opacity-30
-                data-[today=true]:text-accent data-[today=true]:border-accent
-                data-[today=true]:hover:bg-accent data-[today=true]:hover:text-white
-                data-[today=true]:bg-transparent 
-                data-[selected=true]:bg-primary data-[selected=true]:border-primary 
-                data-[selected=true]:text-white
-                data-[today=true]:data-[selected=true]:bg-accent 
-                data-[today=true]:data-[selected=true]:text-white
-                data-[disabled=true]:opacity-50 data-[disabled=true]:cursor-not-allowed
-              "
-              data-current-month={props.day.isCurrentMonth}
-              data-selected={isSameDate(props.day.date)}
-              data-today={props.day.isToday}
-              aria-pressed={isSameDate(props.day.date)}
-              aria-label={`${formatDay(props.day.date)} ${formatDate(props.day.date)}`}
-              onClick={() => props.onDayClick(props.day.date)}
-            >
-              <span class="text-lg font-medium mb-1 flex items-center justify-center">
-                {formatDate(props.day.date)}
-              </span>
-            </button>
+            <li>
+              <button
+                type="button"
+                class="
+                  w-full aspect-square flex items-center justify-center
+                  p-2 border border-primary rounded-sm cursor-pointer data-[open=true]:hover:bg-primary
+                  data-[current-month=false]:opacity-30
+                  data-[today=true]:text-accent data-[today=true]:border-accent
+                  data-[today=true]:hover:bg-accent data-[today=true]:hover:text-white
+                  data-[today=true]:bg-transparent 
+                  data-[selected=true]:bg-primary data-[selected=true]:border-primary 
+                  data-[selected=true]:text-white
+                  data-[today=true]:data-[selected=true]:bg-accent 
+                  data-[today=true]:data-[selected=true]:text-white
+                  data-[disabled=true]:opacity-50 data-[disabled=true]:cursor-not-allowed
+                "
+                data-current-month={props.day.isCurrentMonth}
+                data-selected={isSameDate(props.day.date)}
+                data-today={props.day.isToday}
+                aria-pressed={isSameDate(props.day.date)}
+                onClick={() => props.onDayClick(props.day.date)}
+              >
+                <span class="sr-only">
+                  {`${formatDay(props.day.date)} `}
+                </span>
+                <span class="text-lg font-medium">
+                  {formatDate(props.day.date)}
+                </span>
+              </button>
+            </li>
           </Show>
           <Show when={!props.day.isDayOpen}>
-            <div
+            <li
+              aria-hidden="true"
               class="
+                aspect-square w-full flex flex-col items-center justify-center
                 p-2 border border-transparent
                 data-[today=true]:text-accent data-[today=true]:border-accent
                 data-[today=true]:hover:bg-accent data-[today=true]:hover:text-white
@@ -76,10 +83,13 @@ export const CalDay = (props: CalDayProps) => {
               data-current-month={props.day.isCurrentMonth}
               data-today={props.day.isToday}
             >
-              <span class="text-lg font-medium mb-1 flex items-center justify-center">
+              <span class="sr-only">
+                {`${formatDay(props.day.date)} `}
+              </span>
+              <span class="text-lg font-medium">
                 {formatDate(props.day.date)}
               </span>
-            </div>
+            </li>
           </Show>
         </>
       }
@@ -87,32 +97,39 @@ export const CalDay = (props: CalDayProps) => {
       {/* MOBILE */}
       <>
         <Show when={props.day.isDayOpen}>
-          <button
-            type="button"
-            tabIndex={props.day.isDayOpen ? 0 : -1}
-            class="
-              aspect-square rounded-full flex flex-col items-center justify-center cursor-pointer
-              hover:bg-primary border border-transparent
-              data-[current-month=false]:text-gray-400 data-[current-month=false]:bg-bg 
-              data-[today=true]:border-secondary 
-              data-[selected=true]:bg-primary data-[selected=true]:border-primary data-[selected=true]:text-white
-            "
-            data-current-month={props.day.isCurrentMonth}
-            data-today={props.day.isToday}
-            data-selected={isSameDate(props.day.date)}
-            aria-pressed={isSameDate(props.day.date)}
-            aria-label={`${formatDay(props.day.date)} ${formatDate(props.day.date)}`}
-            onClick={() => props.onDayClick(props.day.date)}
-          >
-            <span class="text-sm font-medium mb-1">
-              {formatDate(props.day.date)}
-            </span>
-          </button>
+          <li>
+            <button
+              type="button"
+              tabIndex={props.day.isDayOpen ? 0 : -1}
+              class="
+                aspect-square w-full rounded-full flex flex-col items-center justify-center cursor-pointer
+                hover:bg-primary border border-transparent
+                data-[current-month=false]:text-gray-400 data-[current-month=false]:bg-bg 
+                data-[today=true]:border-secondary 
+                data-[selected=true]:bg-primary data-[selected=true]:border-primary data-[selected=true]:text-white
+              "
+              data-current-month={props.day.isCurrentMonth}
+              data-today={props.day.isToday}
+              data-selected={isSameDate(props.day.date)}
+              aria-pressed={isSameDate(props.day.date)}
+              onClick={() => props.onDayClick(props.day.date)}
+            >
+              <span class="sr-only">
+                {`${formatDay(props.day.date)} `}
+              </span>
+              <span class="text-sm font-medium">
+                {formatDate(props.day.date)}
+              </span>
+            </button>
+          </li>
         </Show>
         <Show when={!props.day.isDayOpen}>
-          <div class="text-sm font-medium mb-1 opacity-30 pointer-events-none">
+          <li aria-hidden="true" class="text-sm font-medium opacity-30 pointer-events-none aspect-square w-full flex flex-col items-center justify-center">
+            <span class="sr-only">
+              {`${formatDay(props.day.date)} `}
+            </span>
             {formatDate(props.day.date)}
-          </div>
+          </li>
         </Show>
       </>
     </Show>

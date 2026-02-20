@@ -33,13 +33,11 @@ export function Cal(props: CalProps) {
       >
         <For each={calendar.calendarDays()}>
           {(day) => (
-            <li>
-              <CalDay
-                day={day}
-                selectedDate={props.selectedDate}
-                onDayClick={(day) => props.onDayClick?.(day)}
-              />
-            </li>
+            <CalDay
+              day={day}
+              selectedDate={props.selectedDate}
+              onDayClick={(day) => props.onDayClick?.(day)}
+            />
           )}
         </For>
       </ol>
