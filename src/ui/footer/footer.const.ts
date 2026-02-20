@@ -39,7 +39,7 @@ export const resourcesLinks = [
   {
     label: {
       fr: 'Qui sommes-nous ?',
-      en: 'Who are we ?'
+      en: 'Who are we?'
     },
     href: '/about-us',
     id: 22

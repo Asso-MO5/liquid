@@ -11,7 +11,7 @@ export const Footer = () => {
   const lang = langCtrl()
 
   return (
-    <footer class="grid grid-cols-1 sm:grid-cols-3 gap-8 p-8 mt-16 pt-4 border-t dark:border-white/10">
+    <footer id="footer" class="grid grid-cols-1 sm:grid-cols-3 gap-8 p-8 mt-16 pt-4 border-t dark:border-white/10">
       {/* Liens légaux */}
       <div>
         <h2 class="text-xl mb-4 text-text/80">
