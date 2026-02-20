@@ -55,7 +55,6 @@ export const Header = (props: HeaderProps) => {
       <Show when={props.page !== 'game'}>
         <div class="mt-20 w-full" />
         <header
-          id="header"
           data-visible="true"
           class="
             transition-all duration-500
@@ -63,41 +62,42 @@ export const Header = (props: HeaderProps) => {
             data-[visible=true]:translate-y-0
             fixed h-18
             left-0 right-0
-            flex justify-between items-center p-2
             ease-in-out top-0 z-50 bg-bg"
         >
-          <nav class="flex items-center gap-4">
-            <a
-              href="/"
-              onClick={handleHomeClick}
-              onKeyDown={handleHomeLinkKeyDown}
-              class="cursor-pointer"
-              tabindex="0"
-              aria-label={t().logoMJVLabel}
-            >
-              <Logo />
-            </a>
-            <MenuDesktop />
-            <MenuMobile />
-          </nav>
+          <div id="header" class="flex justify-between items-center p-2">
+            <nav class="flex items-center gap-4">
+              <a
+                href="/"
+                onClick={handleHomeClick}
+                onKeyDown={handleHomeLinkKeyDown}
+                class="cursor-pointer"
+                tabindex="0"
+                aria-label={t().logoMJVLabel}
+              >
+                <Logo />
+              </a>
+              <MenuDesktop />
+              <MenuMobile />
+            </nav>
 
-          <div class="flex items-center gap-4">
-            <a
-              href="https://mo5.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="hidden md:block"
-            >
-              <img
-                src="/logo.webp"
-                width={194}
-                height={60}
-                alt={t().logoMO5Alt}
-                class="w-[120px] h-auto"
-              />
-            </a>
-            <DarkMode />
-            <LangSelector />
+            <div class="flex items-center gap-4">
+              <a
+                href="https://mo5.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="hidden md:block"
+              >
+                <img
+                  src="/logo.webp"
+                  width={194}
+                  height={60}
+                  alt={t().logoMO5Alt}
+                  class="w-[120px] h-auto"
+                />
+              </a>
+              <DarkMode />
+              <LangSelector />
+            </div>
           </div>
         </header>
       </Show>
