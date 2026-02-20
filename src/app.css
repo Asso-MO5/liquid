@@ -258,6 +258,10 @@
     @apply text-primary;
   }
 
+  a:not(.btn, .border) {
+    @apply focus:underline hover:underline;
+  }
+
   h1 {
     @apply text-4xl mb-6 mt-4 text-primary;
     font-family: 'Bebas Neue', sans-serif;
