@@ -52,6 +52,7 @@ export const pixelMuseumInitGame = async () => {
         touchToMouse: true,
         crisp: true,
         pixelDensity: 1,
+        focus: false,
       })
 
       if (!k || typeof k !== 'object' || !k.scene || !k.go) {
