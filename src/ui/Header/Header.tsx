@@ -15,10 +15,12 @@ type HeaderProps = {
 
 const txt = {
   fr: {
+    nav: 'Menu principal',
     logoMO5Alt: 'Association MO5',
     logoMJVLabel: 'Musée du Jeu Vidéo - Accueil',
   },
   en: {
+    nav: 'Main menu',
     logoMO5Alt: 'MO5 association',
     logoMJVLabel: 'Video Game Museum - Home',
   }
@@ -28,10 +30,15 @@ export const Header = (props: HeaderProps) => {
   const lang = langCtrl()
   const { t } = translate(txt)
 
-
   const homeLink = () => {
     window.history.pushState({}, '', `/${lang()}`)
     window.location.reload()
+  }
+
+  const onEnterKeyUp = (event: KeyboardEvent) => {
+    if (event.target instanceof HTMLElement && event.key === 'Enter') {
+      event.target.click()
+    }
   }
 
   return (
@@ -52,8 +59,8 @@ export const Header = (props: HeaderProps) => {
             flex justify-between items-center p-2
             ease-in-out top-0 z-50 bg-bg"
         >
-          <nav role="navigation" class="flex items-center gap-4">
-            <div onClick={homeLink} class="cursor-pointer" role="link" tabindex="0" aria-label={t().logoMJVLabel}>
+          <nav role="navigation" class="flex items-center gap-4" aria-label={t().nav}>
+            <div onClick={homeLink} onKeyUp={(e) => onEnterKeyUp(e)} class="cursor-pointer" role="link" tabindex="0" aria-label={t().logoMJVLabel}>
               <Logo />
             </div>
             <MenuDesktop />
