@@ -10,7 +10,8 @@ import { TalkAboutUs } from "~/features/talkAboutUs/TalkAboutUs";
 const Home: VoidComponent = () => {
   return (
     <main id="main" class="flex flex-col gap-12 p-4">
-      <div class="grid grid-rows-1 md:grid-cols-2 flex-wrap gap-2 w-full md:justify-between justify-center items-center">
+      {/* Pendant la pause md:grid-cols-1, sinon md:grid-cols-2 */}
+      <div class="grid grid-rows-1 flex-wrap gap-2 w-full md:justify-between justify-center items-center md:grid-cols-1">
         <Address />
         <TakeATicket />
       </div>

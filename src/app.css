@@ -133,6 +133,14 @@
     background-color: var(--color-bg);
   }
 
+  :target {
+    scroll-margin-block: 10vh;
+  }
+
+  html {
+    scroll-padding-top: 10vh;
+  }
+
   /* ==== SCROLLBAR ==== */
   ::-webkit-scrollbar {
     width: 8px;

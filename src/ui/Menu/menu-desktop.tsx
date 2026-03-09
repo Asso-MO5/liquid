@@ -30,22 +30,25 @@ export const MenuDesktop = () => {
 
           return (
             <li>
-              <A
-                href={`/${lang()}${entry.href}`}
-                data-highlighted={entry.highlighted}
-                data-green={entry.green}
-                class="
-          hover:text-primary text-text 
-          data-[green=true]:text-emerald-500
-          data-[green=true]:hover:text-emerald-500
-          data-[green=true]:border-emerald-500
-          data-[green=true]:hover:bg-emerald-500/20
-          data-[highlighted=true]:text-secondary 
-          border border-transparent hover:bg-primary/10 
-          data-[highlighted=true]:hover:text-white rounded-sm px-2 py-2 transition-all duration-300 data-[highlighted=true]:border-secondary data-[highlighted=true]:hover:bg-secondary"
-              >
-                {t().label}
-              </A>
+                <A
+                  href={`/${lang()}${!entry.disabled ? entry.href : '#pause'}`}
+                  data-highlighted={entry.highlighted}
+                  data-green={entry.green}
+                  class={!entry.disabled ? `
+            hover:text-primary text-text 
+            data-[green=true]:text-emerald-500
+            data-[green=true]:hover:text-emerald-500
+            data-[green=true]:border-emerald-500
+            data-[green=true]:hover:bg-emerald-500/20
+            data-[highlighted=true]:text-secondary 
+            border border-transparent hover:bg-primary/10 
+            data-[highlighted=true]:hover:text-white rounded-sm px-2 py-2 transition-all duration-300 data-[highlighted=true]:border-secondary data-[highlighted=true]:hover:bg-secondary
+            ` : `
+            text-primary text-text text-center rounded-sm px-2 py-2 border border-text
+            `}
+                >
+                  {t().label}
+                </A>
             </li>
           )
         }}
