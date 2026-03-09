@@ -31,7 +31,8 @@ export const menuEntries: { label: { fr: string; en: string }; href: string; hig
       fr: "Votre visite",
       en: "Your visit"
     },
-    href: "/your-visit"
+    href: "/your-visit",
+    disabled: true
   },
 
   /*

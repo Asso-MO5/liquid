@@ -4,9 +4,9 @@ import { txt } from "./asso.txt"
 export const Asso = () => {
   const { t } = translate(txt)
   return (
-    <div class="flex flex-col gap-5 max-w-2xl mx-auto">
-      <div class="text-text h-full m-0" id="pause">
-        <p>{t().pause1}</p>
+    <div class="flex flex-col gap-5 max-w-4xl mx-auto">
+      <div class="text-text h-full m-0 text-xl" id="pause">
+        <p class="font-bold">{t().pause1}</p>
         <p>{t().pause2}</p>
         <p>{t().pause3}</p>
         <p>{t().pause4}</p>
