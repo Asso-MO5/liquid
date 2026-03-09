@@ -11,7 +11,15 @@ export const Asso = () => {
           width={100}
           height={87}
           class="w-[87px] md:w-[100px] h-auto" />
-        <p class="text-text h-full justify-center items-center flex m-0">{t().speach}</p>
+        {/* <p class="text-text h-full justify-center items-center flex m-0">{t().speech}</p> */}
+        <div class="text-text h-full m-0">
+          <p>{t().pause1}</p>
+          <p>{t().pause2}</p>
+          <p>{t().pause3}</p>
+          <p>{t().pause4}</p>
+          <p>{t().pause5}</p>
+          <p>{t().pause6}</p>
+        </div>
 
       </div>
       <div class="flex justify-center items-center">
