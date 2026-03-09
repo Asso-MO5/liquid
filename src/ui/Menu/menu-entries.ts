@@ -1,11 +1,12 @@
-export const menuEntries: { label: { fr: string; en: string }; href: string; highlighted?: boolean; external?: boolean; green?: boolean }[] = [
+export const menuEntries: { label: { fr: string; en: string }; href: string; highlighted?: boolean; external?: boolean; green?: boolean; disabled?: boolean }[] = [
   {
     label: {
       fr: "Réservation",
       en: "Reservation"
     },
     href: "/ticket",
-    highlighted: true
+    highlighted: true,
+    disabled: true
   },
   {
     label: {
@@ -13,7 +14,8 @@ export const menuEntries: { label: { fr: string; en: string }; href: string; hig
       en: "Gift a ticket"
     },
     href: "/purchase-gift",
-    green: true
+    green: true,
+    disabled: true
   },
   {
     label: {
