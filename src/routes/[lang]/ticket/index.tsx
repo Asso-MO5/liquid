@@ -1,7 +1,7 @@
 import { Slots } from "~/features/slots/slots";
 import { ticketStore } from "~/features/ticket/ticket.store";
 import { Cal } from "~/ui/Cal/Cal";
-import { A, useParams } from "@solidjs/router";
+import { A, Navigate, useLocation, useParams } from "@solidjs/router";
 import { PersonalInfos } from "~/features/ticket/personal-infos";
 import { Prices } from "~/features/price/prices";
 import { Donation } from "~/features/ticket/donation";
@@ -53,9 +53,13 @@ const txt = {
   }
 }
 
-
-
 export default function Ticket() {
+  // Redirection à retirer après la pause
+  const location = useLocation()
+  if (location.pathname.includes('ticket')) {
+      <Navigate href={`/`} />
+  }
+
   const { t } = translate(txt)
   const params = useParams()
   const lang = () => params.lang as keyof typeof LANGS

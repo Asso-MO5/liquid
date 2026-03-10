@@ -1,5 +1,5 @@
 import { Show, createSignal, onMount } from "solid-js";
-import { useSearchParams } from "@solidjs/router";
+import { Navigate, useLocation, useSearchParams } from "@solidjs/router";
 import { clientEnv } from "~/env/client";
 import { toast } from "~/ui/Toast";
 import { PurchaseGift as PurchaseGiftView } from "~/features/gift-codes/purchase-gift";
@@ -36,8 +36,13 @@ const txt = {
   },
 };
 
-
 const PurchaseGiftRoute = () => {
+  // Redirection à retirer après la pause
+  const location = useLocation()
+  if (location.pathname.includes('purchase-gift')) {
+      <Navigate href={`/`} />
+  }
+
   const { t } = translate(txt)
   const [searchParams] = useSearchParams();
   const [isConfirming, setIsConfirming] = createSignal(false);
