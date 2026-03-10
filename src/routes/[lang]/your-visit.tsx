@@ -1,5 +1,5 @@
 import { Meta, Title } from "@solidjs/meta";
-import { query, createAsync, useParams, type RouteDefinition } from "@solidjs/router";
+import { query, createAsync, Navigate, useLocation, useParams, type RouteDefinition } from "@solidjs/router";
 import { Suspense, ErrorBoundary, createMemo, For, Show } from "solid-js";
 import { Address } from "~/features/address/address";
 import { prices } from "~/features/price/price.store";
@@ -43,6 +43,12 @@ export const route = {
 } satisfies RouteDefinition;
 
 export const Page = () => {
+  // Redirection à retirer après la pause
+  const location = useLocation()
+  if (location.pathname.includes('your-visit')) {
+      <Navigate href={`/`} />
+  }
+
   const params = useParams<{ lang: string, slug: string }>();
   const queryKey = createMemo(() => `${params.lang}`);
 
