@@ -26,7 +26,7 @@ const txt = {
     pause4: 'Nous ne manquerons pas de vous tenir informés des prochaines évolutions lorsque le calendrier sera précisé.',
     pause5: 'Merci à nos partenaires et bénévoles pour leur soutien dans cette aventure de préservation du patrimoine vidéoludique.',
     pause6: 'L’équipe MO5',
-    close: 'Fermer',
+    close: 'OK',
   },
   en: {
     logoMO5Alt: 'MO5 association',
@@ -40,7 +40,7 @@ const txt = {
     pause4: 'We will keep you informed of further developments as soon as the schedule is finalized.',
     pause5: 'Thank you to our partners and volunteers for their support in this adventure of preserving video game heritage.',
     pause6: 'The MO5 team',
-    close: 'Close',
+    close: 'OK',
   }
 }
 
@@ -80,20 +80,18 @@ export const Header = (props: HeaderProps) => {
             <MenuMobile />
           </nav>
 
-          <div class="fixed w-full left-0 top-[70px] py-4 bg-bg sm:relative sm:w-auto sm:top-0 sm:mt-4 sm:p-0 text-center">
-            <p class="m-0 px-4">{t().pauseLabel}</p>
-            <button command="show-modal" commandfor="dialog-pause" aria-label={t().pauseReadAria}>{t().pauseRead}</button>
-          </div>
-
-          <dialog class="w-[98vw] md:w-[50vw] m-auto p-4 border border -border bg-bg text-text" id="dialog-pause" aria-labelledby="title-pause">
-            <button command="close" commandfor="dialog-pause">{t().close}</button>
-            <h1 id="title-pause" class="text-3xl font-bold">{t().pause1}</h1>
+          <dialog class="top-[10vh] max-h-[90vh] w-[98vw] md:w-[60vw] m-auto p-4 border border -border bg-bg text-text overflow-y-scroll" id="dialog-pause" aria-labelledby="title-pause" open>
+            <h1 id="title-pause" class="text-text font-bold">{t().pause1}</h1>
             <p>{t().pause2}</p>
             <p>{t().pause3}</p>
             <p>{t().pause4}</p>
             <p>{t().pause5}</p>
             <p>{t().pause6}</p>
+            <div class="text-center">
+            <button command="close" commandfor="dialog-pause">{t().close}</button>
+            </div>
           </dialog>
+
           <div class="flex items-center gap-4">
             <a href="https://mo5.com/" target="_blank" rel="noopener noreferrer" class="hidden md:block">
               <img src="/logo.webp"
