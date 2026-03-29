@@ -7,7 +7,6 @@ import { langCtrl } from "~/features/lang-selector/lang.ctrl"
 import { DarkMode } from "~/features/dark-mode/dark-mode"
 import { translate } from "~/utils/translate"
 import { PixelMuseum } from "~/features/pixel-museum/pixel-museum"
-import { PauseModal } from "./pause-modal"
 
 type HeaderProps = {
   withGame?: boolean
@@ -16,13 +15,13 @@ type HeaderProps = {
 
 const txt = {
   fr: {
-    logoMO5Alt: 'Association MO5',
-    logoMJVLabel: 'Musée du Jeu Vidéo - Accueil',
+    logoMO5Alt: "Association MO5",
+    logoMJVLabel: "Musée du Jeu Vidéo - Accueil",
   },
   en: {
-    logoMO5Alt: 'MO5 association',
-    logoMJVLabel: 'Video Game Museum - Home',
-  }
+    logoMO5Alt: "MO5 association",
+    logoMJVLabel: "Video Game Museum - Home",
+  },
 }
 
 export const Header = (props: HeaderProps) => {
@@ -30,15 +29,13 @@ export const Header = (props: HeaderProps) => {
   const { t } = translate(txt)
 
   const homeLink = () => {
-    window.history.pushState({}, '', `/${lang()}`)
+    window.history.pushState({}, "", `/${lang()}`)
     window.location.reload()
   }
 
   return (
-    <div
-      data-with-game={props.withGame}
-      class="grid grid-rows-[auto_1fr] data-[with-game=true]:h-[100dvh] data-[with-game=false]:grid-rows-[auto]">
-      <Show when={props.page !== 'game'}>
+    <div data-with-game={props.withGame} class="grid grid-rows-[auto_1fr] data-[with-game=true]:h-[100dvh] data-[with-game=false]:grid-rows-[auto]">
+      <Show when={props.page !== "game"}>
         <div class="mt-20 w-full" />
         <header
           id="header"
@@ -60,15 +57,9 @@ export const Header = (props: HeaderProps) => {
             <MenuMobile />
           </nav>
 
-          <PauseModal />
-
           <div class="flex items-center gap-4">
             <a href="https://mo5.com/" target="_blank" rel="noopener noreferrer" class="hidden md:block">
-              <img src="/logo.webp"
-                width={194}
-                height={60}
-                alt={t().logoMO5Alt}
-                class="w-[120px] h-auto" />
+              <img src="/logo.webp" width={194} height={60} alt={t().logoMO5Alt} class="w-[120px] h-auto" />
             </a>
             <DarkMode />
             <LangSelector />
@@ -76,9 +67,7 @@ export const Header = (props: HeaderProps) => {
         </header>
       </Show>
 
-      <Show when={props.withGame}>
-        {props.withGame && <PixelMuseum />}
-      </Show>
-    </div >
+      <Show when={props.withGame}>{props.withGame && <PixelMuseum />}</Show>
+    </div>
   )
 }

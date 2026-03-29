@@ -2,37 +2,33 @@ export const menuEntries: { label: { fr: string; en: string }; href: string; hig
   {
     label: {
       fr: "Réservation",
-      en: "Reservation"
+      en: "Reservation",
     },
     href: "/ticket",
     highlighted: true,
-    disabled: true
   },
   {
     label: {
       fr: "Offrir un ticket",
-      en: "Gift a ticket"
+      en: "Gift a ticket",
     },
     href: "/purchase-gift",
     green: true,
-    disabled: true
   },
   {
     label: {
       fr: "Faire un don",
-      en: "Make a donation"
+      en: "Make a donation",
     },
     external: true,
-    href: "https://don.mo5.com"
+    href: "https://don.mo5.com",
   },
   {
-    label:
-    {
+    label: {
       fr: "Votre visite",
-      en: "Your visit"
+      en: "Your visit",
     },
     href: "/your-visit",
-    disabled: true
   },
 
   /*
