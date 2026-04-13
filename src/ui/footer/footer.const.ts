@@ -2,118 +2,117 @@
 export const legalLinks = [
   {
     label: {
-      fr: 'Contact',
-      en: 'Contact'
+      fr: "Contact",
+      en: "Contact",
     },
-    href: '/contact',
-    id: 24
+    href: "/contact",
+    id: 24,
   },
   {
     label: {
-      fr: 'Mentions légales',
-      en: 'Legal notice'
+      fr: "Mentions légales",
+      en: "Legal notice",
     },
-    href: '/legal-notice',
-    id: 26
+    href: "/legal-notice",
+    id: 26,
   },
   {
     label: {
-      fr: 'Conditions générales de vente',
-      en: 'Terms of service'
+      fr: "Conditions générales de vente",
+      en: "Terms of service",
     },
-    href: '/cgv',
-    id: 28
+    href: "/cgv",
+    id: 28,
   },
   {
     label: {
-      fr: 'Politique de confidentialité',
-      en: 'Privacy policy'
+      fr: "Politique de confidentialité",
+      en: "Privacy policy",
     },
-    href: '/privacy-policy',
-    id: 3
-  }
+    href: "/privacy-policy",
+    id: 3,
+  },
 ]
 
 // Ressources et médias
 export const resourcesLinks = [
   {
     label: {
-      fr: 'Qui sommes-nous ?',
-      en: 'Who are we ?'
+      fr: "Qui sommes-nous ?",
+      en: "Who are we?",
     },
-    href: '/about-us',
-    id: 22
+    href: "/about-us",
+    id: 22,
   },
   {
     label: {
-      fr: 'Kit presse',
-      en: 'Press kit'
+      fr: "Kit presse",
+      en: "Press kit",
     },
-    href: '/press-kit',
-    id: 138
+    href: "/press-kit",
+    id: 138,
   },
   {
     label: {
-      fr: 'Partenaires',
-      en: 'Partners'
+      fr: "Partenaires",
+      en: "Partners",
     },
-    href: '/partners',
-    id: 240
+    href: "/partners",
+    id: 240,
   },
   {
     label: {
-      fr: 'Ils parlent de nous',
-      en: 'They talk about us'
+      fr: "Ils parlent de nous",
+      en: "They talk about us",
     },
-    href: '/talking-about-us',
-    id: 0
-  }
+    href: "/talking-about-us",
+    id: 0,
+  },
 ]
 
 // Réseaux sociaux
 export const socialLinks = [
+  {
+    label: {
+      fr: "Facebook",
+      en: "Facebook",
+    },
+    href: "https://www.facebook.com/AssoMO5/",
+  },
+  {
+    label: {
+      fr: "Instagram",
+      en: "Instagram",
+    },
+    href: "https://www.instagram.com/assomo5/",
+  },
 
   {
     label: {
-      fr: 'Facebook',
-      en: 'Facebook'
+      fr: "YouTube",
+      en: "YouTube",
     },
-    href: 'https://www.facebook.com/AssoMO5/'
+    href: "https://www.youtube.com/channel/UCRncMsBo89C9u_8gpWnsOVw/featured",
   },
   {
     label: {
-      fr: 'Instagram',
-      en: 'Instagram'
+      fr: "TikTok",
+      en: "TikTok",
     },
-    href: 'https://www.instagram.com/assomo5/'
-  },
-
-  {
-    label: {
-      fr: 'YouTube',
-      en: 'YouTube'
-    },
-    href: 'https://www.youtube.com/channel/UCRncMsBo89C9u_8gpWnsOVw/featured'
+    href: "https://www.tiktok.com/@mo5asso",
   },
   {
     label: {
-      fr: 'TikTok',
-      en: 'TikTok'
+      fr: "BlueSky",
+      en: "BlueSky",
     },
-    href: 'https://www.tiktok.com/@mo5asso'
+    href: "https://bsky.app/profile/assomo5.bsky.social",
   },
   {
     label: {
-      fr: 'BlueSky',
-      en: 'BlueSky'
+      fr: "X (Twitter)",
+      en: "X (Twitter)",
     },
-    href: 'https://bsky.app/profile/assomo5.bsky.social'
-  },
-  {
-    label: {
-      fr: 'X (Twitter)',
-      en: 'X (Twitter)'
-    },
-    href: 'https://x.com/assomo5'
+    href: "https://x.com/assomo5",
   },
 ]

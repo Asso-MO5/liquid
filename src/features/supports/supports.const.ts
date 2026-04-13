@@ -1,65 +1,99 @@
+// \xa0 = non-breaking space
 export const supportsTestimonials = [
   {
-    name: 'Frédérick Raynal',
+    name: "Frédérick Raynal",
     quote: {
-      fr: 'À tous mes vieux amis créateurs de jeux qui étaient pris pour des fous il y a de si nombreuses années, à tous les constructeurs illuminés de machines ludiques qui faisaient des miracles avec une poignée de transistors,à tous les joueurs passionnés qui nous ont suivis dans cette folie depuis le début sans imaginer que le monde entier nous rejoindrait, voici enfin réunie au même endroit notre histoire commune ! Un grand bravo à l’association MO5 qui a réussi à rassembler ces dizaines d’années de créativité et de passion grâce à cette impressionnante collection de machines qui retrace notre aventure afin de vous la faire découvrir.',
-      en: 'To all my old friends who were considered crazy in the past, to all the brilliant inventors of gaming machines who made miracles with a handful of transistors, to all the passionate players who followed us from the beginning without imagining that the whole world would join us, here is finally united at the same place our common story! A big congratulations to the MO5 association which has succeeded in gathering these decades of creativity and passion thanks to this impressive collection of machines which traces our adventure in order to make you discover it.',
+      fr: "À tous mes vieux amis créateurs de jeux qui étaient pris pour des fous il y a de si nombreuses années, à tous les constructeurs illuminés de machines ludiques qui faisaient des miracles avec une poignée de transistors,à tous les joueurs passionnés qui nous ont suivis dans cette folie depuis le début sans imaginer que le monde entier nous rejoindrait, voici enfin réunie au même endroit notre histoire commune\xa0! Un grand bravo à l’association MO5 qui a réussi à rassembler ces dizaines d’années de créativité et de passion grâce à cette impressionnante collection de machines qui retrace notre aventure afin de vous la faire découvrir.",
+      en: "To all my old friends who were considered crazy in the past, to all the brilliant inventors of gaming machines who made miracles with a handful of transistors, to all the passionate players who followed us from the beginning without imagining that the whole world would join us, here is finally united at the same place our common story! A big congratulations to the MO5 association which has succeeded in gathering these decades of creativity and passion thanks to this impressive collection of machines which traces our adventure in order to make you discover it.",
     },
-    image: '/supports/frederick-raynal.webp',
+    image: "/supports/frederick-raynal.webp",
+    link: {
+      fr: "https://mo5.com/fr/artwork-artists/frederic-raynal/",
+      en: "https://mo5.com/en/artwork-artists/frederic-raynal/",
+    },
   },
   {
-    name: 'Muriel Tramis',
+    name: "Muriel Tramis",
     quote: {
-      fr: "Je vous adresse donc tout mon sincère soutien ! J’ai hâte d’arpenter cet espace, de rejouer à quelques classiques et de voir naitre chez d’autres concepteurs l’envie d’écrire la suite de cette histoire. Avec toute ma sympathie et mes encouragements.",
+      fr: "Je vous adresse donc tout mon sincère soutien\xa0! J’ai hâte d’arpenter cet espace, de rejouer à quelques classiques et de voir naitre chez d’autres concepteurs l’envie d’écrire la suite de cette histoire. Avec toute ma sympathie et mes encouragements.",
       en: "I therefore address you all my sincere support! I can’t wait to explore this space, to re-play some classics and to see other designers’ desire to write the sequel to this story. With all my sympathy and my encouragement.",
     },
-    image: '/supports/muriel-tramis.webp',
+    image: "/supports/muriel-tramis.webp",
+    link: {
+      fr: "https://mag.mo5.com/muriel-tramis-membre-dhonneur-de-mo5-com/",
+      en: "https://mag.mo5.com/muriel-tramis-membre-dhonneur-de-mo5-com/",
+    },
   },
   {
-    name: 'Jordan Mechner',
+    name: "Jordan Mechner",
     quote: {
-      fr: "Un grand bravo à MO5 pour l’ouverture en décembre de leur Musée... La suite du jeu vidéo à Arcueil, près de Paris ! De même que le XIXᵉ siècle a vu naître le cinéma et la photographie, le XXᵉ nous a apporté le jeu vidéo. Documenter et préserver les œuvres qui témoignent de l’évolution d’un nouvel art constitue une contribution précieuse à l’histoire culturelle, et un héritage dont les générations à venir pourront profiter.",
+      fr: "Un grand bravo à MO5 pour l’ouverture en décembre de leur Musée... La suite du jeu vidéo à Arcueil, près de Paris\xa0! De même que le XIXᵉ siècle a vu naître le cinéma et la photographie, le XXᵉ nous a apporté le jeu vidéo. Documenter et préserver les œuvres qui témoignent de l’évolution d’un nouvel art constitue une contribution précieuse à l’histoire culturelle, et un héritage dont les générations à venir pourront profiter.",
       en: "A big congratulations to MO5 for the opening of their Museum in December... The next step of video game in Arcueil, near Paris! Just like the XIXᵉ century saw the birth of cinema and photography, the XXᵉ we have brought video game. Documenting and preserving the works that testify to the evolution of a new art constitutes a precious contribution to cultural history, and an heritage that future generations will be able to benefit from.",
     },
-    image: '/supports/jordan-mechner.webp',
+    image: "/supports/jordan-mechner.webp",
+    link: {
+      fr: "https://mo5.com/fr/artwork-artists/jordan-mechner/",
+      en: "https://mo5.com/en/artwork-artists/jordan-mechner/",
+    },
   },
   {
-    name: 'Éric Chahi',
+    name: "Éric Chahi",
     quote: {
-      fr: 'Je suis ravi qu’il y ait ENFIN un musée national du jeu vidéo. Un grand merci à @assomo5 d’avoir préservé activement pendant plusieurs décennies notre patrimoine. Et je suis très heureux que leur superbe collection fasse partie du musée ! ',
-      en: 'I am happy that there is finally a national museum of video games. A big thank you to @assomo5 for actively preserving our heritage for several decades. And I am very happy that their beautiful collection is part of the museum!',
+      fr: "Je suis ravi qu’il y ait ENFIN un musée national du jeu vidéo. Un grand merci à @assomo5 d’avoir préservé activement pendant plusieurs décennies notre patrimoine. Et je suis très heureux que leur superbe collection fasse partie du musée\xa0!",
+      en: "I am happy that there is finally a national museum of video games. A big thank you to @assomo5 for actively preserving our heritage for several decades. And I am very happy that their beautiful collection is part of the museum!",
     },
-    image: '/supports/eric-chahi.webp',
-  }, {
-    name: 'Pierre Esteve',
-    quote: {
-      fr: 'Félicitations à l’équipe de MO5 pour l’ouverture prochaine du musée du jeu vidéo ! Le travail de préservation du patrimoine vidéoludique fourni par l’association est exemplaire et unique en son genre. Grâce à la persévérance de MO5, c’est tout un pan de notre culture qui pourra passer à la postérité et nourrir l’imaginaire des générations futures. Il y a encore beaucoup à faire, mais pouvoir s’appuyer sur une structure muséale pérenne constitue un socle solide indispensable pour la suite. Merci et tous mes vœux de réussite !',
-      en: 'Congratulations to the MO5 team for the opening of the video game museum! The work of preserving the video game heritage provided by the association is exemplary and unique in its genre. Thanks to the persistence of MO5, it is a whole part of our culture that will pass to posterity and feed the imagination of future generations. There is still a lot to do, but being able to rely on a permanent museum structure constitutes a solid foundation indispensable for the next steps. Thank you and all my best wishes for success!',
+    image: "/supports/eric-chahi.webp",
+    link: {
+      fr: "https://mo5.com/fr/artwork-artists/eric-chahi/",
+      en: "https://mo5.com/en/artwork-artists/eric-chahi/",
     },
-    image: '/supports/pierre-esteve.webp',
-  }, {
-    name: 'Paul Cuisset',
-    quote: {
-      fr: 'Je me réjouis de voir naître ce musée qui rend hommage à tant de souvenirs, de passion et de créativité. Bravo à toute l’équipe pour ce beau projet!',
-      en: 'I am happy to see this museum being born which pays tribute to so many memories, passion and creativity. Congratulations to the team for this beautiful project!',
-    },
-    image: '/supports/paul-cuisset.webp',
   },
   {
-
-    name: 'Marcus',
+    name: "Pierre Esteve",
     quote: {
-      fr: 'J’ai eu le privilège d’assister à l’annonce de leur grand musée du jeu vidéo, qui ouvrira ses portes à Arcueil près de Paris en décembre! 1200m² de retrogaming et de véritables trésors archéologiques conservés religieusement par l’asso depuis plus de vingt ans seront enfin à la disposition du public de façon permanente ! Trop hâte d’y être !',
-      en: 'I had the privilege to attend the announcement of their great video game museum, which will open its doors in December in Arcueil near Paris! 1200m² of retro gaming and truly archaeological treasures conserved religiously by the association for more than twenty years will finally be at the disposal of the public in a permanent way! Too eager to be there!',
+      fr: "Félicitations à l’équipe de MO5 pour l’ouverture prochaine du musée du jeu vidéo\xa0! Le travail de préservation du patrimoine vidéoludique fourni par l’association est exemplaire et unique en son genre. Grâce à la persévérance de MO5, c’est tout un pan de notre culture qui pourra passer à la postérité et nourrir l’imaginaire des générations futures. Il y a encore beaucoup à faire, mais pouvoir s’appuyer sur une structure muséale pérenne constitue un socle solide indispensable pour la suite. Merci et tous mes vœux de réussite\xa0!",
+      en: "Congratulations to the MO5 team for the opening of the video game museum! The work of preserving the video game heritage provided by the association is exemplary and unique in its genre. Thanks to the persistence of MO5, it is a whole part of our culture that will pass to posterity and feed the imagination of future generations. There is still a lot to do, but being able to rely on a permanent museum structure constitutes a solid foundation indispensable for the next steps. Thank you and all my best wishes for success!",
     },
-    image: '/supports/marcus.webp',
+    image: "/supports/pierre-esteve.webp",
+    link: {
+      fr: "https://mo5.com/fr/artwork-artists/pierre-esteve/",
+      en: "https://mo5.com/en/artwork-artists/pierre-esteve/",
+    },
   },
   {
-    name: 'Philippe Dessoly',
+    name: "Paul Cuisset",
     quote: {
-      fr: 'En tant que membre d’honneur de MO5, je suis profondément touché de voir s’ouvrir aujourd’hui un musée consacré à l’histoire du JV.Ce lieu n’est pas seulement un espace d’exposition : c’est un hommage à celles et ceux qui ont bâti, au fil des décennies, l’identité du JV français.',
-      en: 'As a honorary member of MO5, I am deeply touched to see today a museum dedicated to the history of the JV. This place is not only an exhibition space: it is a tribute to those who built, over the decades, the identity of the French JV.',
+      fr: "Je me réjouis de voir naître ce musée qui rend hommage à tant de souvenirs, de passion et de créativité. Bravo à toute l’équipe pour ce beau projet\xa0!",
+      en: "I am happy to see this museum being born which pays tribute to so many memories, passion and creativity. Congratulations to the team for this beautiful project!",
     },
-    image: '/supports/philippe-dessoly.webp',
-  }
+    image: "/supports/paul-cuisset.webp",
+    link: {
+      fr: "https://mo5.com/fr/artwork-artists/paul-cuisset/",
+      en: "https://mo5.com/en/artwork-artists/paul-cuisset/",
+    },
+  },
+  {
+    name: "Marcus",
+    quote: {
+      fr: "J’ai eu le privilège d’assister à l’annonce de leur grand musée du jeu vidéo, qui ouvrira ses portes à Arcueil près de Paris en décembre\xa0! 1200m² de retrogaming et de véritables trésors archéologiques conservés religieusement par l’asso depuis plus de vingt ans seront enfin à la disposition du public de façon permanente\xa0! Trop hâte d’y être\xa0!",
+      en: "I had the privilege to attend the announcement of their great video game museum, which will open its doors in December in Arcueil near Paris! 1200m² of retro gaming and truly archaeological treasures conserved religiously by the association for more than twenty years will finally be at the disposal of the public in a permanent way! Too eager to be there!",
+    },
+    image: "/supports/marcus.webp",
+    link: {
+      fr: "https://mo5.com/fr/artwork-artists/marc-lacombe/",
+      en: "https://mo5.com/en/artwork-artists/marc-lacombe/",
+    },
+  },
+  {
+    name: "Philippe Dessoly",
+    quote: {
+      fr: "En tant que membre d’honneur de MO5, je suis profondément touché de voir s’ouvrir aujourd’hui un musée consacré à l’histoire du JV. Ce lieu n’est pas seulement un espace d’exposition\xa0: c’est un hommage à celles et ceux qui ont bâti, au fil des décennies, l’identité du JV français.",
+      en: "As a honorary member of MO5, I am deeply touched to see today a museum dedicated to the history of the JV. This place is not only an exhibition space: it is a tribute to those who built, over the decades, the identity of the French JV.",
+    },
+    image: "/supports/philippe-dessoly.webp",
+    link: {
+      fr: "https://mo5.com/fr/artwork-artists/philippe-dessoly/",
+      en: "https://mo5.com/en/artwork-artists/philippe-dessoly/",
+    },
+  },
 ]
