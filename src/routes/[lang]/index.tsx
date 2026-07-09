@@ -1,6 +1,7 @@
 import type { VoidComponent } from "solid-js";
 import { Address } from "~/features/address/address";
 import { Asso } from "~/features/asso/asso";
+import { MuseumInfo } from "~/features/museum-info/museum-info";
 import { Pictures } from "~/features/pictures/pictures";
 import { Supports } from "~/features/supports/supports";
 import { TakeATicket } from "~/features/ticket/take-a-ticket";
@@ -12,7 +13,8 @@ const Home: VoidComponent = () => {
     <main id="main" class="flex flex-col gap-12 p-4">
       {/* Pendant la pause md:grid-cols-1 sinon md:grid-cols-2 avec TakeATicket et Address en entier */}
       <div class="grid grid-rows-1 flex-wrap gap-2 w-full md:justify-between justify-center items-center md:grid-cols-1">
-        <Address />
+        {/*<Address />*/}
+        <MuseumInfo />
         <TakeATicket />
       </div>
       <Asso />
