@@ -10,15 +10,14 @@ export const BreakModal = () => {
 
   return (
     <Show when={show()}>
-      <div class="fixed inset-0 flex items-center justify-center z-[9999] p-6">
+      <div class="fixed inset-0 flex items-center justify-center z-[9999] p-6 overflow-x-hidden">
         <dialog
           open
           class="
-          max-h-[90dvh]
+          max-h-[90dvh] w-full max-w-2xl
           md:text-xl
-          m-10
           p-4 border border-primary bg-bg text-text
-          overflow-y-scroll"
+          overflow-y-auto overflow-x-hidden"
           id="dialog-pause"
         >
           {/*
