@@ -7,7 +7,6 @@ import { langCtrl } from "~/features/lang-selector/lang.ctrl"
 import { DarkMode } from "~/features/dark-mode/dark-mode"
 import { translate } from "~/utils/translate"
 import { PixelMuseum } from "~/features/pixel-museum/pixel-museum"
-import { PauseModal } from "./pause-modal"
 
 type HeaderProps = {
   withGame?: boolean
@@ -59,8 +58,6 @@ export const Header = (props: HeaderProps) => {
             <MenuDesktop />
             <MenuMobile />
           </nav>
-
-          <PauseModal />
 
           <div class="flex items-center gap-4">
             <a href="https://mo5.com/" target="_blank" rel="noopener noreferrer" class="hidden md:block">

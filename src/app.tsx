@@ -8,6 +8,7 @@ import { Layout } from '~/ui/Layout/Layout'
 import schedulesCtrl from '~/features/schedules/schedules.ctrl'
 import { priceCtrl } from '~/features/price/price.ctrl'
 import { Loader } from './ui/loader'
+import { BreakModal } from './features/break-modal/break-modal'
 
 export default function App() {
   schedulesCtrl()
@@ -42,6 +43,7 @@ export default function App() {
           <Meta name="viewport" content="width=device-width, initial-scale=1" />
           <Suspense fallback={<div class="flex items-center justify-center p-3 h-screen"><Loader /></div>}>
             <Layout>
+              <BreakModal />
               {props.children}
             </Layout>
             <Modal />
