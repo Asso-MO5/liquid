@@ -1,10 +1,10 @@
-import { createSignal, createMemo, onMount, onCleanup, createEffect, untrack } from "solid-js"
-import type { CalendarDay, CalendarEvent, CalendarCtrlReturn } from "./Cal.types"
-import { langs } from "~/utils/langs"
-import { DAYS_TEXT } from "./Cal.const"
-import { schedules } from "~/features/schedules/schedules.store"
-import { langCtrl } from "~/features/lang-selector/lang.ctrl"
-import { ticketStore } from "~/features/ticket/ticket.store"
+import { createEffect, createMemo, createSignal, onCleanup, onMount, untrack } from 'solid-js'
+import { langCtrl } from '~/features/lang-selector/lang.ctrl'
+import { schedules } from '~/features/schedules/schedules.store'
+import { ticketStore } from '~/features/ticket/ticket.store'
+import { langs } from '~/utils/langs'
+import { DAYS_TEXT } from './Cal.const'
+import type { CalendarCtrlReturn, CalendarDay, CalendarEvent } from './Cal.types'
 
 type Period = {
   id: string
@@ -20,17 +20,16 @@ const getQueryParams = () => {
   if (typeof window === 'undefined') return {}
   const urlParams = new URLSearchParams(window.location.search)
   return {
-    date: urlParams.get('date')
+    date: urlParams.get('date'),
   }
 }
-
 
 const initializeFromURL = () => {
   const params = getQueryParams()
 
   if (params.date) {
     const date = new Date(params.date)
-    if (!isNaN(date.getTime())) {
+    if (!Number.isNaN(date.getTime())) {
       setSelectedDate(date)
     }
   }
@@ -114,7 +113,11 @@ export function calCTRL(onDayClick?: (day: Date) => Promise<void>): CalendarCtrl
       date.setDate(startDate.getDate() + i)
       const dateWithoutTime = new Date(date.getFullYear(), date.getMonth(), date.getDate())
 
-      const selectedDateWithoutTime = new Date(selectedDate().getFullYear(), selectedDate().getMonth(), selectedDate().getDate())
+      const selectedDateWithoutTime = new Date(
+        selectedDate().getFullYear(),
+        selectedDate().getMonth(),
+        selectedDate().getDate(),
+      )
       const isOpen = () => {
         const currentDate = new Date()
         currentDate.setHours(0, 0, 0, 0)
@@ -127,30 +130,36 @@ export function calCTRL(onDayClick?: (day: Date) => Promise<void>): CalendarCtrl
         if (date.getTime() > maxDate.getTime()) {
           return false
         }
-        const isInClosurePeriod = museumSchedule.some(schedule => {
-          const closurePeriods = ((schedule as unknown) as { closure_periods?: Period[] }).closure_periods || []
+        const isInClosurePeriod = museumSchedule.some((schedule) => {
+          const closurePeriods =
+            (schedule as unknown as { closure_periods?: Period[] }).closure_periods || []
           return closurePeriods.some((period: Period) => isDateInPeriod(date, period))
         })
-
 
         if (isInClosurePeriod) {
           return false
         }
 
-        const holidaySchedules = museumSchedule.filter(schedule => schedule.audience_type === 'holiday')
+        const holidaySchedules = museumSchedule.filter(
+          (schedule) => schedule.audience_type === 'holiday',
+        )
         if (holidaySchedules.length > 0) {
-          const matchingHolidaySchedule = holidaySchedules.find(schedule =>
-            !schedule.is_exception && schedule.day_of_week === date.getDay()
+          const matchingHolidaySchedule = holidaySchedules.find(
+            (schedule) => !schedule.is_exception && schedule.day_of_week === date.getDay(),
           )
 
           if (matchingHolidaySchedule) {
-            const holidayPeriods = ((matchingHolidaySchedule as unknown) as { holiday_periods?: Period[] }).holiday_periods || []
-            const isInHolidayPeriod = holidayPeriods.some((period: Period) => isDateInPeriod(date, period))
+            const holidayPeriods =
+              (matchingHolidaySchedule as unknown as { holiday_periods?: Period[] })
+                .holiday_periods || []
+            const isInHolidayPeriod = holidayPeriods.some((period: Period) =>
+              isDateInPeriod(date, period),
+            )
             return isInHolidayPeriod
           }
         }
 
-        let isOpen = museumSchedule.some(schedule => {
+        let isOpen = museumSchedule.some((schedule) => {
           if (schedule.audience_type === 'holiday') {
             return false
           }
@@ -167,10 +176,11 @@ export function calCTRL(onDayClick?: (day: Date) => Promise<void>): CalendarCtrl
           return true
         }
 
-        isOpen = museumSchedule.some(schedule =>
-          !schedule.is_exception &&
-          schedule.day_of_week === date.getDay() &&
-          schedule.audience_type !== 'holiday'
+        isOpen = museumSchedule.some(
+          (schedule) =>
+            !schedule.is_exception &&
+            schedule.day_of_week === date.getDay() &&
+            schedule.audience_type !== 'holiday',
         )
 
         return isOpen
@@ -181,29 +191,26 @@ export function calCTRL(onDayClick?: (day: Date) => Promise<void>): CalendarCtrl
         isCurrentMonth: date.getMonth() === month,
         isToday: isSameDay(date, today),
         isDayOpen: isOpen(),
-        items: []
+        items: [],
       })
-
-
-
     }
-
-
 
     return days
   }
 
-  const isSameDay = (date1: Date, date2: Date): boolean => date1.getFullYear() === date2.getFullYear() &&
+  const isSameDay = (date1: Date, date2: Date): boolean =>
+    date1.getFullYear() === date2.getFullYear() &&
     date1.getMonth() === date2.getMonth() &&
     date1.getDate() === date2.getDate()
 
   const canGoToPrevious = createMemo(() => selectedDate() < new Date())
   const currentYear = createMemo(() => selectedDate().getFullYear())
-  const currentMonthName = createMemo(() => selectedDate().toLocaleDateString(langs[currentLang] || langs.fr, {
-    month: 'long'
-  }))
+  const currentMonthName = createMemo(() =>
+    selectedDate().toLocaleDateString(langs[currentLang] || langs.fr, {
+      month: 'long',
+    }),
+  )
   const weekDays = createMemo(() => DAYS_TEXT[currentLang] || DAYS_TEXT.fr)
-
 
   const canGoToNext = createMemo(() => {
     const today = new Date()
@@ -218,12 +225,11 @@ export function calCTRL(onDayClick?: (day: Date) => Promise<void>): CalendarCtrl
 
     const days = generateMonthDays(current, today)
 
-    return days.map(day => ({
+    return days.map((day) => ({
       ...day,
-      items: items()
+      items: items(),
     }))
   })
-
 
   createEffect(() => {
     initializeFromURL()
@@ -233,19 +239,17 @@ export function calCTRL(onDayClick?: (day: Date) => Promise<void>): CalendarCtrl
   const [hasAutoSelected, setHasAutoSelected] = createSignal(false)
 
   createEffect(() => {
-
     if (ticketStore.reservation_date) {
       setHasAutoSelected(false)
       return
     }
 
-
     if (hasAutoSelected()) return
 
     const days = calendarDays()
-    if (!days || days.length === 0) return;
+    if (!days || days.length === 0) return
     const currentSelectedDate = untrack(() => selectedDate())
-    const indexForSelectedDate = days.findIndex(day => isSameDay(day.date, currentSelectedDate))
+    const indexForSelectedDate = days.findIndex((day) => isSameDay(day.date, currentSelectedDate))
 
     if (indexForSelectedDate !== -1) {
       const todayIsOpen = days[indexForSelectedDate].isDayOpen
@@ -254,12 +258,15 @@ export function calCTRL(onDayClick?: (day: Date) => Promise<void>): CalendarCtrl
 
         onDayClick?.(days[indexForSelectedDate].date)
       } else {
-        const nextOpenDay = days.slice(indexForSelectedDate + 1).find(day => day.isDayOpen)
+        const nextOpenDay = days.slice(indexForSelectedDate + 1).find((day) => day.isDayOpen)
         if (nextOpenDay) {
           setHasAutoSelected(true)
           onDayClick?.(nextOpenDay.date)
         } else {
-          const previousOpenDay = days.slice(0, indexForSelectedDate).reverse().find(day => day.isDayOpen)
+          const previousOpenDay = days
+            .slice(0, indexForSelectedDate)
+            .reverse()
+            .find((day) => day.isDayOpen)
           if (previousOpenDay) {
             setHasAutoSelected(true)
             onDayClick?.(previousOpenDay.date)
@@ -268,7 +275,6 @@ export function calCTRL(onDayClick?: (day: Date) => Promise<void>): CalendarCtrl
       }
     }
   })
-
 
   return {
     selectedDate,

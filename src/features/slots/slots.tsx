@@ -1,14 +1,14 @@
-import { For, Show } from "solid-js";
-import type { Slot } from "~/features/slots/slot.type";
-import { translate } from "~/utils/translate";
-import { slotsText } from "./slots.text";
+import { For, Show } from 'solid-js'
+import type { Slot } from '~/features/slots/slot.type'
+import { translate } from '~/utils/translate'
+import { slotsText } from './slots.text'
 
 type SlotsProps = {
-  isFetching: boolean,
-  slots: Slot[],
-  currentSlot?: string,
-  onSlotClick: (slot: Slot) => void,
-  labelId: string,
+  isFetching: boolean
+  slots: Slot[]
+  currentSlot?: string
+  onSlotClick: (slot: Slot) => void
+  labelId: string
 }
 
 export const Slots = (props: SlotsProps) => {
@@ -21,13 +21,10 @@ export const Slots = (props: SlotsProps) => {
         </div>
       </Show>
       <Show when={props.slots.length === 0 && !props.isFetching}>
-        <div class="text-center text-sm text-accent">
-          {t().no_slots}
-        </div>
+        <div class="text-center text-sm text-accent">{t().no_slots}</div>
       </Show>
-      
+
       <ol
-        role="list"
         class="p-3 gap-4 md:flex grid grid-cols-2 flex-wrap justify-center mx-auto"
         aria-labelledby={props.labelId}
       >
@@ -37,7 +34,7 @@ export const Slots = (props: SlotsProps) => {
               <button
                 type="button"
                 tabIndex={slot.available > 0 ? 0 : -1}
-                aria-label={slot.start_time.split(':').slice(0, 2).join(':') + ' - ' + slot.end_time.split(':').slice(0, 2).join(':')}
+                aria-label={`${slot.start_time.split(':').slice(0, 2).join(':')} - ${slot.end_time.split(':').slice(0, 2).join(':')}`}
                 aria-pressed={slot.start_time === props.currentSlot}
                 disabled={slot.available === 0}
                 data-available={slot.available > 0}

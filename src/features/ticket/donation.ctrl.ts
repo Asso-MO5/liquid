@@ -1,9 +1,8 @@
-import { setTicketStore } from "./ticket.store";
+import { setTicketStore } from './ticket.store'
 
 export function donationCtrl() {
-
   const setDonation = (donation: number) => {
-    setTicketStore('donation_amount', donation);
+    setTicketStore('donation_amount', donation)
   }
 
   return {

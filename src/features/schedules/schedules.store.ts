@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js";
-import type { Schedule } from "./schedules.type";
+import { createSignal } from 'solid-js'
+import type { Schedule } from './schedules.type'
 
-export const [schedules, setSchedules] = createSignal<Schedule[]>([]);
+export const [schedules, setSchedules] = createSignal<Schedule[]>([])
