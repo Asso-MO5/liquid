@@ -1,4 +1,4 @@
-import { onMount, onCleanup } from 'solid-js'
+import { onCleanup, onMount } from 'solid-js'
 
 export default function ScrollBehavior() {
   let lastScrollY = 0
@@ -6,7 +6,6 @@ export default function ScrollBehavior() {
   let timeoutId: number | undefined
 
   const handleScroll = () => {
-
     if (!header) return
 
     const currentScrollY = window.scrollY
@@ -18,7 +17,6 @@ export default function ScrollBehavior() {
         if (header) header.dataset.visible = 'false'
       }, 100)
     } else {
-
       header.dataset.visible = 'true'
     }
 
