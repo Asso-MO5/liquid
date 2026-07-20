@@ -1,3 +1,3 @@
 export const GET = () => {
-  return new Response("Hello, world!");
-};
+  return new Response('Hello, world!')
+}

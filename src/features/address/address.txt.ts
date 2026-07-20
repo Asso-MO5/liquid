@@ -10,6 +10,5 @@ export const addressTxt = {
     street: '10 Avenue Paul Doumer',
     city: '94110 Arcueil',
     country: 'France',
-  }
+  },
 }
-
