@@ -35,7 +35,7 @@ export const openGamePanelInfo = async (id: string) => {
       return
     }
 
-    const item = data.item as GamePanelItem
+    const item = (data as { item?: GamePanelItem }).item
 
     if (!item) {
       console.error('Item non trouvé dans la réponse')
