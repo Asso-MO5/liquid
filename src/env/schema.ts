@@ -3,6 +3,7 @@ import { z } from 'zod'
 export const serverScheme = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   BLOG_URL: z.string(),
+  ENCRYPTION_KEY: z.string().optional(),
 })
 
 export const clientScheme = z.object({

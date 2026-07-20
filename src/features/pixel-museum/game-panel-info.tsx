@@ -36,7 +36,7 @@ export const GamePanelInfo = () => {
       >
         {/* Header */}
         <header
-          ref={(el) => gamePanelInfo.setHeaderRef(el)}
+          ref={(el) => gamePanelInfo.setHeaderRef(el as HTMLDivElement)}
           class="bg-primary text-white px-4 py-2 rounded-t-lg flex flex-row-reverse items-center justify-between cursor-grab active:cursor-grabbing select-none"
           aria-roledescription="draggable panel header"
           aria-label={t().closeTitle}

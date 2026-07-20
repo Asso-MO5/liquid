@@ -15,6 +15,7 @@
       "~": ["./src"]
     },
     "allowImportingTsExtensions": true,
+    "skipLibCheck": true,
     "noEmit": true
   }
 }
