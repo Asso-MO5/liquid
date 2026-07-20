@@ -1,5 +1,5 @@
-import { createSignal, type JSX } from "solid-js"
-import type { ModalState, ModalCtrlReturn } from "./Modal.types"
+import { createSignal, type JSX } from 'solid-js'
+import type { ModalCtrlReturn, ModalState } from './Modal.types'
 
 // Signaux globaux pour le modal
 const [isOpen, setIsOpen] = createSignal<boolean>(false)
@@ -10,7 +10,6 @@ const [closable, setClosable] = createSignal<boolean>(true)
 const [onClose, setOnClose] = createSignal<(() => void) | undefined>(undefined)
 
 export function ModalCtrl(): ModalCtrlReturn {
-
   const open = (options: Partial<ModalState> = {}) => {
     if (options.title !== undefined) setTitle(options.title)
     if (options.content !== undefined) setContent(options.content)
@@ -28,7 +27,6 @@ export function ModalCtrl(): ModalCtrlReturn {
       closeHandler()
     }
   }
-
 
   const handleBackdropClick = (e: MouseEvent) => {
     if (e.target === e.currentTarget && closable()) {
@@ -64,6 +62,6 @@ export function ModalCtrl(): ModalCtrlReturn {
     // Utilitaires
     handleBackdropClick,
     handleKeyDown,
-    handleContentClick
+    handleContentClick,
   }
 }

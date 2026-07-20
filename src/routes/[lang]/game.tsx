@@ -1,7 +1,7 @@
-import { type VoidComponent } from "solid-js";
+import type { VoidComponent } from 'solid-js'
 
 const Game: VoidComponent = () => {
-  return null;
-};
+  return null
+}
 
-export default Game;
+export default Game

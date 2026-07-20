@@ -1,16 +1,22 @@
-import { For, createMemo } from "solid-js"
-import { Toast } from "./Toast"
-import { ToastCtrl } from "./Toast.ctrl"
+import { createMemo, For } from 'solid-js'
+import { Toast } from './Toast'
+import { ToastCtrl } from './Toast.ctrl'
 
 interface ToastContainerProps {
-  position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'top-center' | 'bottom-center'
+  position?:
+    | 'top-left'
+    | 'top-center'
+    | 'top-right'
+    | 'bottom-left'
+    | 'bottom-center'
+    | 'bottom-right'
   maxToasts?: number
 }
 
 export const ToastContainer = (props: ToastContainerProps) => {
   const toast = ToastCtrl()
+  const position = () => props.position ?? 'top-right'
 
-  const position = createMemo(() => props.position || 'top-right')
   const maxToasts = createMemo(() => props.maxToasts || 5)
 
   const visibleToasts = () => {
@@ -19,7 +25,7 @@ export const ToastContainer = (props: ToastContainerProps) => {
   }
 
   return (
-    <div
+    <section
       class="fixed z-[9999] pointer-events-none
             data-[position=top-left]:top-4 data-[position=top-left]:left-4
             data-[position=top-center]:top-4 data-[position=top-center]:left-1/2 data-[position=top-center]:-translate-x-1/2
@@ -36,17 +42,14 @@ export const ToastContainer = (props: ToastContainerProps) => {
           <div
             class="pointer-events-auto mb-2 last:mb-0 transition-all duration-300 ease-in-out"
             style={{
-              'transform': `translateY(${index() * 8}px)`,
-              'transition-delay': `${index() * 50}ms`
+              transform: `translateY(${index() * 8}px)`,
+              'transition-delay': `${index() * 50}ms`,
             }}
           >
-            <Toast
-              toast={toastItem}
-              onClose={toast.removeToast}
-            />
+            <Toast toast={toastItem} onClose={toast.removeToast} />
           </div>
         )}
       </For>
-    </div>
+    </section>
   )
 }

@@ -1,77 +1,84 @@
-import { For, Show } from "solid-js";
-import { langCtrl } from "~/features/lang-selector/lang.ctrl";
-import { translate } from "~/utils/translate";
-import { talkAboutUsCtrl } from "./talkAboutUs.ctrl";
-import { txt } from "./talkAboutUs.txt";
-import type { Media } from "./talkAboutUs.type";
-import { Loader } from "~/ui/loader";
+import { For, Show } from 'solid-js'
+import { langCtrl } from '~/features/lang-selector/lang.ctrl'
+import { Loader } from '~/ui/loader'
+import { translate } from '~/utils/translate'
+import { talkAboutUsCtrl } from './talkAboutUs.ctrl'
+import { txt } from './talkAboutUs.txt'
+import type { Media } from './talkAboutUs.type'
 
 export const TalkAboutUs = () => {
-  const { t } = translate(txt);
-  const lang = langCtrl();
-  const { fetching, talkAboutUs } = talkAboutUsCtrl();
+  const { t } = translate(txt)
+  const lang = langCtrl()
+  const { fetching, talkAboutUs } = talkAboutUsCtrl()
 
   const getMediaName = (media: Media) => {
-    return media.title.rendered;
+    return media.title.rendered
   }
 
   const getMediaTitle = (media: Media) => {
-    const customFields = media.custom_fields;
-    const langKey = lang() === 'fr' ? 'FR' : 'EN';
-    return customFields?.[langKey as keyof typeof customFields]?.[0] || media.title.rendered || '';
-  };
+    const customFields = media.custom_fields
+    const langKey = lang() === 'fr' ? 'FR' : 'EN'
+    return customFields?.[langKey as keyof typeof customFields]?.[0] || media.title.rendered || ''
+  }
 
   const getMediaDescription = (media: Media) => {
-    const customFields = media.custom_fields;
-    const langKey = lang() === 'fr' ? 'FR' : 'EN';
-    return customFields?.[langKey as keyof typeof customFields]?.[1] || '';
-  };
+    const customFields = media.custom_fields
+    const langKey = lang() === 'fr' ? 'FR' : 'EN'
+    return customFields?.[langKey as keyof typeof customFields]?.[1] || ''
+  }
 
   const getYouTubeUrl = (media: Media) => {
-    const youtubeUrl = media.custom_fields?.Youtube?.[0];
-    if (!youtubeUrl) return null;
+    const youtubeUrl = media.custom_fields?.Youtube?.[0]
+    if (!youtubeUrl) return null
 
-    const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
-    const match = youtubeUrl.match(youtubeRegex);
+    const youtubeRegex =
+      /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/
+    const match = youtubeUrl.match(youtubeRegex)
     if (match) {
-      return `https://www.youtube.com/embed/${match[1]}`;
+      return `https://www.youtube.com/embed/${match[1]}`
     }
 
     if (youtubeUrl.includes('youtube.com/embed')) {
-      return youtubeUrl;
+      return youtubeUrl
     }
 
-    return null;
-  };
+    return null
+  }
 
   const getExternalUrl = (media: Media) => {
-    return media.custom_fields?.URL?.[0] || null;
-  };
+    return media.custom_fields?.URL?.[0] || null
+  }
 
   const getImageSrcSet = (media: Media) => {
-    const sizes = media.sizes;
-    if (!sizes) return '';
+    const sizes = media.sizes
+    if (!sizes) return ''
 
-    const srcset = [];
+    const srcset = []
     if (sizes.medium?.source_url) {
-      srcset.push(`${sizes.medium.source_url} 768w`);
+      srcset.push(`${sizes.medium.source_url} 768w`)
     }
     if (sizes.large?.source_url) {
-      srcset.push(`${sizes.large.source_url} 1024w`);
+      srcset.push(`${sizes.large.source_url} 1024w`)
     }
     if (sizes.full?.source_url) {
-      srcset.push(`${sizes.full.source_url} 1920w`);
+      srcset.push(`${sizes.full.source_url} 1920w`)
     }
-    return srcset.join(', ');
-  };
+    return srcset.join(', ')
+  }
 
   const getImageSizes = () => {
-    return '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw';
-  };
+    return '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
+  }
 
   const getImageSrc = (media: Media) => {
-    return media.sizes?.medium?.source_url || media.sizes?.large?.source_url || media.sizes?.full?.source_url || media.source_url || '';
-  };
+    return (
+      media.sizes?.medium?.source_url ||
+      media.sizes?.large?.source_url ||
+      media.sizes?.full?.source_url ||
+      media.source_url ||
+      ''
+    )
+  }
 
   return (
     <section class="flex flex-col gap-4 max-w-6xl mx-auto px-4 py-8">
@@ -84,35 +91,38 @@ export const TalkAboutUs = () => {
       </Show>
 
       <Show when={!fetching() && talkAboutUs().length > 0}>
-        <ul role="list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+        <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
           <For each={talkAboutUs()}>
             {(media: Media) => {
-              const name = getMediaName(media);
-              const title = getMediaTitle(media);
-              const description = getMediaDescription(media);
-              const youtubeUrl = getYouTubeUrl(media);
-              const externalUrl = getExternalUrl(media);
-              const imageSrc = getImageSrc(media);
-              const imageSrcSet = getImageSrcSet(media);
-              const imageSizes = getImageSizes();
+              const name = getMediaName(media)
+              const title = getMediaTitle(media)
+              const description = getMediaDescription(media)
+              const youtubeUrl = getYouTubeUrl(media)
+              const externalUrl = getExternalUrl(media)
+              const imageSrc = getImageSrc(media)
+              const imageSrcSet = getImageSrcSet(media)
+              const imageSizes = getImageSizes()
 
               return (
                 <li>
                   <article class="flex flex-col rounded-t-lg overflow-hidden">
                     <h3 class="m-0 relative w-full aspect-video overflow-hidden bg-gray-200">
                       <span class="sr-only">{name}</span>
-                      <Show when={youtubeUrl} fallback={
-                        <Show when={imageSrc}>
-                          <img
-                            src={imageSrc}
-                            srcset={imageSrcSet}
-                            sizes={imageSizes}
-                            alt=""
-                            loading="lazy"
-                            class="w-full h-full object-cover"
-                          />
-                        </Show>
-                      }>
+                      <Show
+                        when={youtubeUrl}
+                        fallback={
+                          <Show when={imageSrc}>
+                            <img
+                              src={imageSrc}
+                              srcset={imageSrcSet}
+                              sizes={imageSizes}
+                              alt=""
+                              loading="lazy"
+                              class="w-full h-full object-cover"
+                            />
+                          </Show>
+                        }
+                      >
                         <iframe
                           src={youtubeUrl || ''}
                           title={`YouTube video - ${name}`}
@@ -126,11 +136,15 @@ export const TalkAboutUs = () => {
                     <div class="flex flex-col gap-1 flex-1 justify-between">
                       <Show when={title && description}>
                         <h4 class="text-sm text-text font-family-sans">{title}</h4>
-                        <p class="text-sm text-text line-clamp-3" title={description}>{description}</p>
+                        <p class="text-sm text-text line-clamp-3" title={description}>
+                          {description}
+                        </p>
                       </Show>
 
                       <Show when={title && !description}>
-                        <p class="text-sm text-text line-clamp-3" title={title}>{title}</p>
+                        <p class="text-sm text-text line-clamp-3" title={title}>
+                          {title}
+                        </p>
                       </Show>
 
                       <div class="flex gap-2 justify-end items-end">
@@ -160,11 +174,11 @@ export const TalkAboutUs = () => {
                     </div>
                   </article>
                 </li>
-              );
+              )
             }}
           </For>
         </ul>
       </Show>
     </section>
-  );
+  )
 }

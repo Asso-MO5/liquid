@@ -1,4 +1,4 @@
-import { createHandler, StartServer } from "@solidjs/start/server";
+import { createHandler, StartServer } from '@solidjs/start/server'
 
 export default createHandler(() => (
   <StartServer
@@ -8,9 +8,23 @@ export default createHandler(() => (
           <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" type="image/x-icon" href="https://museedujeuvideo.org/favicon.ico" />
-          <link rel="icon" type="image/png" sizes="32x32" href="https://museedujeuvideo.org/favicon.ico" />
-          <link rel="icon" type="image/png" sizes="16x16" href="https://museedujeuvideo.org/favicon.ico" />
-          <link rel="apple-touch-icon" sizes="64x64" href="https://museedujeuvideo.org/favicon.ico" />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="https://museedujeuvideo.org/favicon.ico"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="https://museedujeuvideo.org/favicon.ico"
+          />
+          <link
+            rel="apple-touch-icon"
+            sizes="64x64"
+            href="https://museedujeuvideo.org/favicon.ico"
+          />
           <script>
             {`(function() {
               const stored = localStorage.getItem('darkMode');
@@ -50,4 +64,4 @@ export default createHandler(() => (
       </html>
     )}
   />
-));
+))

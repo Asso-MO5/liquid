@@ -1,27 +1,27 @@
-import { For, Show, createMemo } from "solid-js"
-import { prices } from "./price.store"
-
-import { ticketCreate } from "../ticket/ticket-create"
-import { ticketStore } from "../ticket/ticket.store"
-import { langCtrl } from "../lang-selector/lang.ctrl"
-import { formatPriceObj } from "~/features/price/prices.utils"
-import { translate } from "~/utils/translate"
-import { txt } from "./prices.txt"
+import { createMemo, For, Show } from 'solid-js'
+import { formatPriceObj } from '~/features/price/prices.utils'
+import { translate } from '~/utils/translate'
+import { langCtrl } from '../lang-selector/lang.ctrl'
+import { ticketStore } from '../ticket/ticket.store'
+import { ticketCreate } from '../ticket/ticket-create'
+import { prices } from './price.store'
+import { txt } from './prices.txt'
 
 export const Prices = (props: { labelId: string }) => {
   const { t } = translate(txt)
   const lang = langCtrl()
-  const ticketCreateCtrl = ticketCreate();
+  const ticketCreateCtrl = ticketCreate()
 
   return (
     <ul
-      role="list"
       class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl mx-auto text-text"
       aria-labelledby={props.labelId}
     >
       <For each={prices()}>
         {(price) => {
-          const amount = createMemo(() => ticketStore.is_half_price ? Math.round(price.amount / 2) : price.amount)
+          const amount = createMemo(() =>
+            ticketStore.is_half_price ? Math.round(price.amount / 2) : price.amount,
+          )
 
           return (
             <li class="flex flex-col gap-2 p-2 w-full dark:bg-white/5 bg-black/5 rounded-md">
@@ -29,13 +29,9 @@ export const Prices = (props: { labelId: string }) => {
                 <p>{price.translations[lang() as keyof typeof price.translations].name}</p>
                 <Show when={price.amount > 0}>
                   <div class="text-lg font-bold">
-                    <Show when={lang() === 'fr'}>
-                      {formatPriceObj(amount()).value}
-                    </Show>
+                    <Show when={lang() === 'fr'}>{formatPriceObj(amount()).value}</Show>
                     <span class="text-secondary">{formatPriceObj(amount()).currency}</span>
-                    <Show when={lang() !== 'fr'}>
-                      {formatPriceObj(amount()).value}
-                    </Show>
+                    <Show when={lang() !== 'fr'}>{formatPriceObj(amount()).value}</Show>
                   </div>
                 </Show>
                 <Show when={price.amount === 0}>
@@ -51,7 +47,6 @@ export const Prices = (props: { labelId: string }) => {
                 </div>
 
                 <div class="flex flex-col gap-4">
-
                   <div class="flex h-full text-xl items-center justify-center gap-2">
                     <button
                       type="button"
@@ -62,12 +57,15 @@ export const Prices = (props: { labelId: string }) => {
                     >
                       &minus;
                     </button>
-                    <div class="text-xl" aria-live="polite">{ticketCreateCtrl.getQuantity(price)}</div>
+                    <div class="text-xl" aria-live="polite">
+                      {ticketCreateCtrl.getQuantity(price)}
+                    </div>
                     <button
                       type="button"
                       aria-label={t().add_to_cart}
                       onClick={() => ticketCreateCtrl.addToCart(price)}
-                      disabled={ticketCreateCtrl.isMaxQuantity()}>
+                      disabled={ticketCreateCtrl.isMaxQuantity()}
+                    >
                       &plus;
                     </button>
                   </div>
@@ -75,8 +73,7 @@ export const Prices = (props: { labelId: string }) => {
               </div>
             </li>
           )
-        }
-        }
+        }}
       </For>
     </ul>
   )

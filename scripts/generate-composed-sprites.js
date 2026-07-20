@@ -1,7 +1,7 @@
+import fs from 'node:fs/promises'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
-import fs from 'fs/promises'
-import path from 'path'
-import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -13,39 +13,39 @@ const MAX_COMBINATIONS = 50
 
 // Couleurs pour les vêtements et cheveux
 const WEAR_COLORS = [
-  [14, 105, 46],   // Vert
-  [20, 78, 186],   // Bleu
-  [52, 53, 54],    // Gris foncé
+  [14, 105, 46], // Vert
+  [20, 78, 186], // Bleu
+  [52, 53, 54], // Gris foncé
   [255, 156, 255], // Rose
-  [122, 23, 23],   // Rouge foncé
-  [171, 21, 61],   // Rouge
-  [173, 166, 19],  // Jaune-vert
-  [255, 200, 0],   // Jaune
-  [128, 0, 128],   // Violet
-  [0, 128, 128],   // Cyan
-  [255, 140, 0],   // Orange foncé
-  [139, 69, 19],   // Marron
+  [122, 23, 23], // Rouge foncé
+  [171, 21, 61], // Rouge
+  [173, 166, 19], // Jaune-vert
+  [255, 200, 0], // Jaune
+  [128, 0, 128], // Violet
+  [0, 128, 128], // Cyan
+  [255, 140, 0], // Orange foncé
+  [139, 69, 19], // Marron
   [255, 192, 203], // Rose clair
-  [0, 191, 255],   // Bleu ciel
-  [50, 205, 50],   // Vert clair
-  [255, 20, 147],  // Rose profond
-  [255, 165, 0],   // Orange
-  [75, 0, 130],    // Indigo
-  [220, 20, 60],   // Rouge cramoisi
-  [0, 100, 0],     // Vert foncé
+  [0, 191, 255], // Bleu ciel
+  [50, 205, 50], // Vert clair
+  [255, 20, 147], // Rose profond
+  [255, 165, 0], // Orange
+  [75, 0, 130], // Indigo
+  [220, 20, 60], // Rouge cramoisi
+  [0, 100, 0], // Vert foncé
 ]
 
 const HAIR_COLORS = [
-  [36, 35, 36],    // Noir
-  [118, 128, 28],  // Vert olive
-  [212, 90, 8],    // Orange
-  [42, 48, 168],   // Bleu foncé
-  [139, 90, 43],   // Marron
+  [36, 35, 36], // Noir
+  [118, 128, 28], // Vert olive
+  [212, 90, 8], // Orange
+  [42, 48, 168], // Bleu foncé
+  [139, 90, 43], // Marron
   [255, 200, 150], // Blond
   [200, 150, 100], // Châtain
   [255, 220, 177], // Blond clair
-  [80, 50, 30],    // Brun foncé
-  [150, 100, 50],  // Châtain foncé
+  [80, 50, 30], // Brun foncé
+  [150, 100, 50], // Châtain foncé
 ]
 
 async function applyColorToGrayscale(imagePath, color, outputPath) {
@@ -53,10 +53,7 @@ async function applyColorToGrayscale(imagePath, color, outputPath) {
 
   const image = sharp(imagePath)
 
-  const { data, info } = await image
-    .ensureAlpha()
-    .raw()
-    .toBuffer({ resolveWithObject: true })
+  const { data, info } = await image.ensureAlpha().raw().toBuffer({ resolveWithObject: true })
 
   const pixels = new Uint8Array(data.length)
   for (let i = 0; i < data.length; i += 4) {
@@ -66,10 +63,10 @@ async function applyColorToGrayscale(imagePath, color, outputPath) {
       const gray = (data[i] + data[i + 1] + data[i + 2]) / 3
       const factor = gray / 255
 
-      pixels[i] = Math.round(r * factor)     // R
+      pixels[i] = Math.round(r * factor) // R
       pixels[i + 1] = Math.round(g * factor) // G
       pixels[i + 2] = Math.round(b * factor) // B
-      pixels[i + 3] = alpha                  // A
+      pixels[i + 3] = alpha // A
     } else {
       pixels[i] = 0
       pixels[i + 1] = 0
@@ -94,7 +91,7 @@ async function composeSpriteSheet(
   coloredWearPath,
   coloredHairPath,
   animationData,
-  outputPath
+  outputPath,
 ) {
   const body = sharp(bodyPath)
   const wear = sharp(coloredWearPath)
@@ -104,7 +101,9 @@ async function composeSpriteSheet(
   const wearMeta = await wear.metadata()
   const hairMeta = await hair.metadata()
 
-  console.log(`   📐 Dimensions - Body: ${bodyMeta.width}x${bodyMeta.height}, Wear: ${wearMeta.width}x${wearMeta.height}, Hair: ${hairMeta.width}x${hairMeta.height}`)
+  console.log(
+    `   📐 Dimensions - Body: ${bodyMeta.width}x${bodyMeta.height}, Wear: ${wearMeta.width}x${wearMeta.height}, Hair: ${hairMeta.width}x${hairMeta.height}`,
+  )
 
   const frameWidth = 32
   const frameHeight = 40
@@ -120,13 +119,18 @@ async function composeSpriteSheet(
     const frameX = frame.frame.x
     const frameY = frame.frame.y
 
-    const bodyValid = frameX + frameWidth <= bodyMeta.width && frameY + frameHeight <= bodyMeta.height
-    const wearValid = frameX + frameWidth <= wearMeta.width && frameY + frameHeight <= wearMeta.height
-    const hairValid = frameX + frameWidth <= hairMeta.width && frameY + frameHeight <= hairMeta.height
+    const bodyValid =
+      frameX + frameWidth <= bodyMeta.width && frameY + frameHeight <= bodyMeta.height
+    const wearValid =
+      frameX + frameWidth <= wearMeta.width && frameY + frameHeight <= wearMeta.height
+    const hairValid =
+      frameX + frameWidth <= hairMeta.width && frameY + frameHeight <= hairMeta.height
 
     if (!bodyValid || !wearValid || !hairValid) {
       console.error(`   ⚠️  Frame ${i}: Coordonnées invalides (x:${frameX}, y:${frameY})`)
-      console.error(`      Body: ${bodyValid ? 'OK' : 'INVALIDE'}, Wear: ${wearValid ? 'OK' : 'INVALIDE'}, Hair: ${hairValid ? 'OK' : 'INVALIDE'}`)
+      console.error(
+        `      Body: ${bodyValid ? 'OK' : 'INVALIDE'}, Wear: ${wearValid ? 'OK' : 'INVALIDE'}, Hair: ${hairValid ? 'OK' : 'INVALIDE'}`,
+      )
       throw new Error(`Coordonnées invalides pour le frame ${i}`)
     }
 
@@ -179,28 +183,24 @@ async function composeSpriteSheet(
 
         if (wearFrame[idx + 3] > 0) {
           const alpha = wearFrame[idx + 3] / 255
-          composedFrame[idx] = Math.round(
-            composedFrame[idx] * (1 - alpha) + wearFrame[idx] * alpha
-          )
+          composedFrame[idx] = Math.round(composedFrame[idx] * (1 - alpha) + wearFrame[idx] * alpha)
           composedFrame[idx + 1] = Math.round(
-            composedFrame[idx + 1] * (1 - alpha) + wearFrame[idx + 1] * alpha
+            composedFrame[idx + 1] * (1 - alpha) + wearFrame[idx + 1] * alpha,
           )
           composedFrame[idx + 2] = Math.round(
-            composedFrame[idx + 2] * (1 - alpha) + wearFrame[idx + 2] * alpha
+            composedFrame[idx + 2] * (1 - alpha) + wearFrame[idx + 2] * alpha,
           )
           composedFrame[idx + 3] = Math.max(composedFrame[idx + 3], wearFrame[idx + 3])
         }
 
         if (hairFrame[idx + 3] > 0) {
           const alpha = hairFrame[idx + 3] / 255
-          composedFrame[idx] = Math.round(
-            composedFrame[idx] * (1 - alpha) + hairFrame[idx] * alpha
-          )
+          composedFrame[idx] = Math.round(composedFrame[idx] * (1 - alpha) + hairFrame[idx] * alpha)
           composedFrame[idx + 1] = Math.round(
-            composedFrame[idx + 1] * (1 - alpha) + hairFrame[idx + 1] * alpha
+            composedFrame[idx + 1] * (1 - alpha) + hairFrame[idx + 1] * alpha,
           )
           composedFrame[idx + 2] = Math.round(
-            composedFrame[idx + 2] * (1 - alpha) + hairFrame[idx + 2] * alpha
+            composedFrame[idx + 2] * (1 - alpha) + hairFrame[idx + 2] * alpha,
           )
           composedFrame[idx + 3] = Math.max(composedFrame[idx + 3], hairFrame[idx + 3])
         }
@@ -282,30 +282,25 @@ async function generateComposedSprites() {
 
         console.log('   🖼️  Composition des layers frame par frame...')
         const outputPath = path.join(OUTPUT_DIR, `${comboId}.png`)
-        await composeSpriteSheet(
-          bodyPath,
-          tempWearPath,
-          tempHairPath,
-          animationData,
-          outputPath
-        )
+        await composeSpriteSheet(bodyPath, tempWearPath, tempHairPath, animationData, outputPath)
 
-        await fs.unlink(tempWearPath).catch(() => { })
-        await fs.unlink(tempHairPath).catch(() => { })
+        await fs.unlink(tempWearPath).catch(() => {})
+        await fs.unlink(tempHairPath).catch(() => {})
 
         combinationCount++
         console.log(`   ✅ ${comboId} généré avec succès!`)
       } catch (error) {
         console.error(`   ❌ Erreur lors de la génération de ${comboId}:`, error.message)
-        await fs.unlink(tempWearPath).catch(() => { })
-        await fs.unlink(tempHairPath).catch(() => { })
+        await fs.unlink(tempWearPath).catch(() => {})
+        await fs.unlink(tempHairPath).catch(() => {})
       }
     }
     if (combinationCount >= MAX_COMBINATIONS) break
   }
 
-  console.log(`\n✨ Génération terminée! ${combinationCount} sprites composés créés dans ${OUTPUT_DIR}`)
+  console.log(
+    `\n✨ Génération terminée! ${combinationCount} sprites composés créés dans ${OUTPUT_DIR}`,
+  )
 }
 
 generateComposedSprites().catch(console.error)
-

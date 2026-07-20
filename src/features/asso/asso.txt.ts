@@ -6,7 +6,7 @@ export const txt = {
   },
   en: {
     speech:
-      "After more than twenty years of preservation, restoration and transmission of the video game heritage, the MO5 association takes a historic step: the first phase of the opening of the Video Game Museum. This place, unique in France, will be entirely dedicated to the history, culture and memory of video games, its creators and its influence on contemporary society.",
-    discoverAssociation: "Discover the MO5 association",
+      'After more than twenty years of preservation, restoration and transmission of the video game heritage, the MO5 association takes a historic step: the first phase of the opening of the Video Game Museum. This place, unique in France, will be entirely dedicated to the history, culture and memory of video games, its creators and its influence on contemporary society.',
+    discoverAssociation: 'Discover the MO5 association',
   },
 }

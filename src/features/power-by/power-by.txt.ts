@@ -8,4 +8,3 @@ export const txt = {
     logoAlt: 'MO5 association',
   },
 }
-

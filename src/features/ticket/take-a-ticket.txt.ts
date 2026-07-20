@@ -1,9 +1,8 @@
 export const txt = {
   fr: {
-    title: "Réservation",
+    title: 'Réservation',
   },
   en: {
-    title: "Reservation",
+    title: 'Reservation',
   },
-};
-
+}

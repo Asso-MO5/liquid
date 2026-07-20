@@ -1,4 +1,4 @@
-import { onMount, createSignal } from "solid-js"
+import { createSignal, onMount } from 'solid-js'
 
 export const darkModeCtrl = () => {
   const [isDarkMode, setIsDarkMode] = createSignal<'light' | 'dark'>('light')

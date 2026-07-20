@@ -1,10 +1,10 @@
-import { A } from "@solidjs/router"
-import { For } from "solid-js"
-import { legalLinks, resourcesLinks, socialLinks } from "./footer.const"
-import { langCtrl } from "~/features/lang-selector/lang.ctrl"
-import { PowerBy } from "~/features/power-by/power-by"
-import { translate } from "~/utils/translate"
-import { footerTxt } from "./footer.txt"
+import { A } from '@solidjs/router'
+import { For } from 'solid-js'
+import { langCtrl } from '~/features/lang-selector/lang.ctrl'
+import { PowerBy } from '~/features/power-by/power-by'
+import { translate } from '~/utils/translate'
+import { legalLinks, resourcesLinks, socialLinks } from './footer.const'
+import { footerTxt } from './footer.txt'
 
 export const Footer = () => {
   const { t } = translate(footerTxt)
@@ -14,13 +14,14 @@ export const Footer = () => {
     <footer class="grid grid-cols-1 sm:grid-cols-3 gap-8 p-8 mt-16 pt-4 border-t dark:border-white/10">
       {/* Liens légaux */}
       <div>
-        <h2 class="text-xl mb-4 text-text/80">
-          {t().legalInfo}
-        </h2>
-        <ul role="list" class="flex flex-col gap-2">
+        <h2 class="text-xl mb-4 text-text/80">{t().legalInfo}</h2>
+        <ul class="flex flex-col gap-2">
           <For each={legalLinks}>
             {(link) => {
-              const { t } = translate({ fr: { label: link.label.fr }, en: { label: link.label.en } })
+              const { t } = translate({
+                fr: { label: link.label.fr },
+                en: { label: link.label.en },
+              })
               return (
                 <li>
                   <A
@@ -38,13 +39,14 @@ export const Footer = () => {
 
       {/* Ressources */}
       <div>
-        <h2 class="text-xl mb-4 text-text/80">
-          {t().resources}
-        </h2>
-        <ul role="list" class="flex flex-col gap-2">
+        <h2 class="text-xl mb-4 text-text/80">{t().resources}</h2>
+        <ul class="flex flex-col gap-2">
           <For each={resourcesLinks}>
             {(link) => {
-              const { t } = translate({ fr: { label: link.label.fr }, en: { label: link.label.en } })
+              const { t } = translate({
+                fr: { label: link.label.fr },
+                en: { label: link.label.en },
+              })
               return (
                 <li>
                   <A
@@ -62,13 +64,14 @@ export const Footer = () => {
 
       {/* Réseaux sociaux */}
       <div>
-        <h2 class="text-xl mb-4 text-text/80">
-          {t().followUs}
-        </h2>
-        <ul role="list" class="flex flex-col gap-2">
+        <h2 class="text-xl mb-4 text-text/80">{t().followUs}</h2>
+        <ul class="flex flex-col gap-2">
           <For each={socialLinks}>
             {(link) => {
-              const { t } = translate({ fr: { label: link.label.fr }, en: { label: link.label.en } })
+              const { t } = translate({
+                fr: { label: link.label.fr },
+                en: { label: link.label.en },
+              })
               return (
                 <li>
                   <A

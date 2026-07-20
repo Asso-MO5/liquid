@@ -1,8 +1,8 @@
 import type kaplay from 'kaplay'
-import { ASEPRITES, FONTS, OBJECTS, SOUNDS, SPRITES, TAGS } from '../pixel-museum.const'
-import { playMusic } from '../pixel-museum-sound.ctrl'
 import { createPlayer } from '../entities/player.create'
+import { ASEPRITES, FONTS, OBJECTS, SOUNDS, SPRITES, TAGS } from '../pixel-museum.const'
 import { initMultiplayer } from '../pixel-museum.multi'
+import { playMusic } from '../pixel-museum-sound.ctrl'
 
 const texts = {
   welcome: {
@@ -84,7 +84,7 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       machine: {
         sprite: ASEPRITES.TENNIS_FOR_TWO,
         pos: { x: 132, y: GROUND_Y - 15 },
-      }
+      },
     },
     {
       name: 'Spacewar!',
@@ -93,7 +93,7 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       machine: {
         sprite: ASEPRITES.SPACEWAR,
         pos: { x: 245, y: GROUND_Y - 15 },
-      }
+      },
     },
     {
       name: 'Computer Space',
@@ -102,7 +102,7 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       machine: {
         sprite: ASEPRITES.COMPUTER_SPACE,
         pos: { x: 455, y: GROUND_Y + 3 },
-      }
+      },
     },
     {
       name: 'Pong',
@@ -111,7 +111,7 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       machine: {
         sprite: ASEPRITES.PONG,
         pos: { x: 540, y: GROUND_Y },
-      }
+      },
     },
     {
       name: 'Space Invaders',
@@ -120,7 +120,7 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       machine: {
         sprite: ASEPRITES.SPACE_INVADERS,
         pos: { x: 638, y: GROUND_Y + 1 },
-      }
+      },
     },
     {
       name: 'Vectrex',
@@ -129,7 +129,7 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       machine: {
         sprite: ASEPRITES.VECTREX,
         pos: { x: 936, y: GROUND_Y },
-      }
+      },
     },
     {
       name: 'Nes',
@@ -138,7 +138,7 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       machine: {
         sprite: ASEPRITES.NES,
         pos: { x: 1021, y: GROUND_Y },
-      }
+      },
     },
     {
       name: 'Amiga 500',
@@ -147,7 +147,7 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       machine: {
         sprite: ASEPRITES.AMIGA_500,
         pos: { x: 1105, y: GROUND_Y },
-      }
+      },
     },
     {
       name: '3DO',
@@ -156,7 +156,7 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       machine: {
         sprite: ASEPRITES['3DO'],
         pos: { x: 1287, y: GROUND_Y },
-      }
+      },
     },
     {
       name: 'Virtual Boy',
@@ -165,7 +165,7 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       machine: {
         sprite: ASEPRITES.VIRTUALBOY,
         pos: { x: 1370, y: GROUND_Y },
-      }
+      },
     },
     {
       name: 'Dreamcast',
@@ -174,7 +174,7 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       machine: {
         sprite: ASEPRITES.DREAMCAST,
         pos: { x: 1455, y: GROUND_Y },
-      }
+      },
     },
     {
       name: 'PS2',
@@ -183,7 +183,7 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       machine: {
         sprite: ASEPRITES.PS2,
         pos: { x: 1635, y: GROUND_Y },
-      }
+      },
     },
     {
       name: 'GameCube',
@@ -192,7 +192,7 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       machine: {
         sprite: ASEPRITES.GAMECUBE,
         pos: { x: 1715, y: GROUND_Y },
-      }
+      },
     },
     {
       name: 'Xbox',
@@ -201,8 +201,8 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       machine: {
         sprite: ASEPRITES.XBOX,
         pos: { x: 1805, y: GROUND_Y },
-      }
-    }
+      },
+    },
   ]
 
   for (const machine of machines) {
@@ -214,7 +214,7 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       k.z(95),
       k.opacity(0),
       TAGS.DOC,
-      `id-${machine.id}`
+      `id-${machine.id}`,
     ])
     k.add([
       k.sprite(machine.machine.sprite, { anim: 'off' }),
@@ -225,8 +225,6 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       TAGS.MACHINE,
     ])
   }
-
-
 
   const lang = window.location.pathname.split('/')[1] || 'fr'
 
@@ -261,5 +259,4 @@ export const museumLevel = async (k: ReturnType<typeof kaplay> | null) => {
       startPosition,
     })
   }
-
 }
