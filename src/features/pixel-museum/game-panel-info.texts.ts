@@ -6,5 +6,5 @@ export const gamePanelInfoTxt = {
   en: {
     closeLabel: 'Close panel',
     closeTitle: 'Close',
-  }
+  },
 }

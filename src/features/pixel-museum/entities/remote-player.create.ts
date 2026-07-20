@@ -7,9 +7,8 @@ type RemotePlayerOptions = {
 
 export const createRemotePlayer = async (
   k: ReturnType<typeof kaplay>,
-  { playerId, initialPosition }: RemotePlayerOptions
+  { playerId, initialPosition }: RemotePlayerOptions,
 ) => {
-
   if (!k) {
     console.error('kaplay non trouvé')
     return
@@ -17,12 +16,17 @@ export const createRemotePlayer = async (
 
   const COMPOSED_MAX = 50
   const COMPOSED_MIN = 1
-  const COMPOSED_NUMBER = Math.floor(Math.random() * (COMPOSED_MAX - COMPOSED_MIN + 1)) + COMPOSED_MIN
+  const COMPOSED_NUMBER =
+    Math.floor(Math.random() * (COMPOSED_MAX - COMPOSED_MIN + 1)) + COMPOSED_MIN
   const COMPOSED_NAME = `sagwa_composed_${COMPOSED_NUMBER}`
   const BASE_URL = `${window.location.protocol}//${window.location.host}/pixel-museum`
 
   if (!k.getSprite(COMPOSED_NAME)) {
-    await k.loadAseprite(COMPOSED_NAME, `${BASE_URL}/entities/composed/${COMPOSED_NAME}.png`, `${BASE_URL}/entities/sagwa.json`)
+    await k.loadAseprite(
+      COMPOSED_NAME,
+      `${BASE_URL}/entities/composed/${COMPOSED_NAME}.png`,
+      `${BASE_URL}/entities/sagwa.json`,
+    )
   }
 
   k.wait(300)
@@ -39,4 +43,3 @@ export const createRemotePlayer = async (
 
   return remotePlayer
 }
-

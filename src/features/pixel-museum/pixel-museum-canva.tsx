@@ -1,5 +1,5 @@
-import { CANVAS_ID } from "./pixel-museum.const"
-import { pixelMuseumInitGame } from "./pixem-museum-init-game"
+import { CANVAS_ID } from './pixel-museum.const'
+import { pixelMuseumInitGame } from './pixem-museum-init-game'
 
 export const PixelMuseumCanvas = () => {
   pixelMuseumInitGame()
