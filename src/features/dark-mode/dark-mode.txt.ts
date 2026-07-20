@@ -6,6 +6,5 @@ export const darkModeTxt = {
   en: {
     toDark: 'Apply dark theme',
     toLight: 'Apply light theme',
-  }
+  },
 }
-

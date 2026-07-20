@@ -1,8 +1,8 @@
-import { Show, createSignal, onMount, onCleanup } from "solid-js"
-import { pixelMuseumSoundCtrl } from "./pixel-museum-sound.ctrl"
-import { translate } from "~/utils/translate"
-import { hudTxt } from "./hud.txt"
-import { CANVAS_ID, CONTROLS } from "./pixel-museum.const"
+import { createSignal, onCleanup, onMount, Show } from 'solid-js'
+import { translate } from '~/utils/translate'
+import { hudTxt } from './hud.txt'
+import { CANVAS_ID, CONTROLS } from './pixel-museum.const'
+import { pixelMuseumSoundCtrl } from './pixel-museum-sound.ctrl'
 
 export const HUD = () => {
   const { t } = translate(hudTxt)
@@ -30,28 +30,32 @@ export const HUD = () => {
   const triggerKeyEvent = (key: string, type: 'keydown' | 'keyup' | 'keypress') => {
     if (typeof window === 'undefined') return
 
-    const keyMap: Record<string, { key: string, code: string }> = {
-      'space': { key: ' ', code: 'Space' },
-      'up': { key: 'ArrowUp', code: 'ArrowUp' },
-      'left': { key: 'ArrowLeft', code: 'ArrowLeft' },
-      'right': { key: 'ArrowRight', code: 'ArrowRight' },
-      'a': { key: 'a', code: 'KeyA' },
-      'q': { key: 'q', code: 'KeyQ' },
-      'd': { key: 'd', code: 'KeyD' },
-      'w': { key: 'w', code: 'KeyW' },
-      'z': { key: 'z', code: 'KeyZ' },
-      'x': { key: 'x', code: 'KeyX' },
-      'e': { key: 'e', code: 'KeyE' },
-      'f': { key: 'f', code: 'KeyF' },
-      'interact': { key: 'e', code: 'KeyE' },
+    const keyMap: Record<string, { key: string; code: string }> = {
+      space: { key: ' ', code: 'Space' },
+      up: { key: 'ArrowUp', code: 'ArrowUp' },
+      left: { key: 'ArrowLeft', code: 'ArrowLeft' },
+      right: { key: 'ArrowRight', code: 'ArrowRight' },
+      a: { key: 'a', code: 'KeyA' },
+      q: { key: 'q', code: 'KeyQ' },
+      d: { key: 'd', code: 'KeyD' },
+      w: { key: 'w', code: 'KeyW' },
+      z: { key: 'z', code: 'KeyZ' },
+      x: { key: 'x', code: 'KeyX' },
+      e: { key: 'e', code: 'KeyE' },
+      f: { key: 'f', code: 'KeyF' },
+      interact: { key: 'e', code: 'KeyE' },
     }
 
     const keyInfo = keyMap[key.toLowerCase()] || { key: key.toLowerCase(), code: key }
 
     const canvas = document.getElementById(CANVAS_ID)?.querySelector('canvas')
-    const targets = [canvas, document, window].filter(Boolean) as (HTMLElement | Document | Window)[]
+    const targets = [canvas, document, window].filter(Boolean) as (
+      | HTMLElement
+      | Document
+      | Window
+    )[]
 
-    targets.forEach(target => {
+    targets.forEach((target) => {
       const event = new KeyboardEvent(type, {
         key: keyInfo.key,
         code: keyInfo.code,
@@ -63,23 +67,23 @@ export const HUD = () => {
   }
 
   const handleLeftDown = () => {
-    CONTROLS.MOVE_LEFT.forEach(key => triggerKeyEvent(key, 'keydown'))
+    CONTROLS.MOVE_LEFT.forEach(triggerKeyEvent.bind(null, 'keydown'))
   }
 
   const handleLeftUp = () => {
-    CONTROLS.MOVE_LEFT.forEach(key => triggerKeyEvent(key, 'keyup'))
+    CONTROLS.MOVE_LEFT.forEach(triggerKeyEvent.bind(null, 'keyup'))
   }
 
   const handleRightDown = () => {
-    CONTROLS.MOVE_RIGHT.forEach(key => triggerKeyEvent(key, 'keydown'))
+    CONTROLS.MOVE_RIGHT.forEach(triggerKeyEvent.bind(null, 'keydown'))
   }
 
   const handleRightUp = () => {
-    CONTROLS.MOVE_RIGHT.forEach(key => triggerKeyEvent(key, 'keyup'))
+    CONTROLS.MOVE_RIGHT.forEach(triggerKeyEvent.bind(null, 'keyup'))
   }
 
   const handleJump = () => {
-    CONTROLS.JUMP.forEach(key => {
+    CONTROLS.JUMP.forEach((key) => {
       triggerKeyEvent(key, 'keydown')
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
@@ -90,7 +94,7 @@ export const HUD = () => {
   }
 
   const handleAction = () => {
-    CONTROLS.INTERACT.forEach(key => {
+    CONTROLS.INTERACT.forEach((key) => {
       triggerKeyEvent(key, 'keydown')
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
@@ -107,6 +111,7 @@ export const HUD = () => {
         {/* Bouton contrôle son en haut à droite */}
         <div class="absolute top-4 right-4 pointer-events-auto z-40 md:hidden">
           <button
+            type="button"
             onClick={soundCtrl.toggleMute}
             class="bg-bg hover:border-primary hover:text-primary text-text rounded-full w-10 h-10 flex items-center justify-center border border-text backdrop-blur-sm transition-all active:scale-95"
             title={soundCtrl.isMuted() ? t().soundOn : t().soundOff}
@@ -121,8 +126,14 @@ export const HUD = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                  aria-hidden="true"
                 >
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+                  />
                 </svg>
               }
             >
@@ -132,9 +143,20 @@ export const HUD = () => {
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                aria-hidden="true"
               >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"
+                />
               </svg>
             </Show>
           </button>
@@ -146,6 +168,7 @@ export const HUD = () => {
               {/* Ligne du haut - vide */}
               <div />
               <button
+                type="button"
                 class="bg-bg hover:border-primary hover:text-primary text-text rounded-t-lg border border-text backdrop-blur-sm transition-all active:scale-95 flex items-center justify-center  opacity-70 hover:opacity-100"
                 onTouchStart={handleJump}
                 onTouchEnd={handleJump}
@@ -160,6 +183,7 @@ export const HUD = () => {
                   class="h-5 w-5 rotate-90"
                   viewBox="0 0 24 24"
                   fill="currentColor"
+                  aria-hidden="true"
                 >
                   <path d="M15 19l-7-7 7-7v14z" />
                 </svg>
@@ -168,6 +192,7 @@ export const HUD = () => {
 
               {/* Ligne du milieu - gauche, centre (menu), droite */}
               <button
+                type="button"
                 class="bg-bg hover:border-primary hover:text-primary text-text rounded-l-lg border border-text backdrop-blur-sm transition-all active:scale-95 flex items-center justify-center  opacity-70 hover:opacity-100"
                 onTouchStart={handleLeftDown}
                 onTouchEnd={handleLeftUp}
@@ -182,11 +207,13 @@ export const HUD = () => {
                   class="h-5 w-5"
                   viewBox="0 0 24 24"
                   fill="currentColor"
+                  aria-hidden="true"
                 >
                   <path d="M15 19l-7-7 7-7v14z" />
                 </svg>
               </button>
               <button
+                type="button"
                 class="bg-bg/90 hover:border-primary hover:text-primary text-text border border-text backdrop-blur-sm transition-all active:scale-95 flex items-center justify-center  opacity-70 hover:opacity-100"
                 onClick={() => setShowControlsMenu(!showControlsMenu())}
                 title="Afficher les contrôles"
@@ -198,11 +225,18 @@ export const HUD = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                  aria-hidden="true"
                 >
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
                 </svg>
               </button>
               <button
+                type="button"
                 class="bg-bg hover:border-primary hover:text-primary text-text rounded-r-lg border border-text backdrop-blur-sm transition-all active:scale-95 flex items-center justify-center  opacity-70 hover:opacity-100"
                 onTouchStart={handleRightDown}
                 onTouchEnd={handleRightUp}
@@ -217,6 +251,7 @@ export const HUD = () => {
                   class="h-5 w-5"
                   viewBox="0 0 24 24"
                   fill="currentColor"
+                  aria-hidden="true"
                 >
                   <path d="M9 5l7 7-7 7V5z" />
                 </svg>
@@ -225,6 +260,7 @@ export const HUD = () => {
               {/* Ligne du bas - vide */}
               <div />
               <button
+                type="button"
                 class="bg-bg hover:border-primary hover:text-primary text-text rounded-b-lg border border-text backdrop-blur-sm transition-all active:scale-95 flex items-center justify-center  opacity-70 hover:opacity-100 "
                 onTouchStart={handleAction}
                 onTouchEnd={handleAction}
@@ -239,6 +275,7 @@ export const HUD = () => {
                   class="h-5 w-5 rotate-90"
                   viewBox="0 0 24 24"
                   fill="currentColor"
+                  aria-hidden="true"
                 >
                   <path d="M9 5l7 7-7 7V5z" />
                 </svg>
@@ -280,6 +317,7 @@ export const HUD = () => {
           {/* Boutons d'actions */}
           <div class="flex gap-3 pointer-events-auto">
             <button
+              type="button"
               class="bg-primary hover:bg-primary text-white rounded-full w-14 h-14 flex items-center justify-center border-2 border-white/50 backdrop-blur-sm transition-all active:scale-95"
               onTouchStart={handleJump}
               onMouseDown={handleJump}
@@ -291,6 +329,7 @@ export const HUD = () => {
             </button>
 
             <button
+              type="button"
               class="bg-secondary hover:bg-secondary text-white rounded-full w-14 h-14 flex items-center justify-center border-2 border-white/50 backdrop-blur-sm transition-all active:scale-95"
               onTouchStart={handleAction}
               onMouseDown={handleAction}
@@ -304,12 +343,11 @@ export const HUD = () => {
         </div>
       </Show>
 
-
-
       {/* Version Desktop */}
       <Show when={!isPortrait()}>
         <div class="absolute top-6 left-6 pointer-events-auto z-40">
           <button
+            type="button"
             onClick={soundCtrl.toggleMute}
             class="bg-bg hover:border-primary hover:text-primary text-text rounded-lg px-3 py-2 flex items-center gap-2 border border-text backdrop-blur-sm transition-all active:scale-95"
             title={soundCtrl.isMuted() ? t().soundOn : t().soundOff}
@@ -324,8 +362,14 @@ export const HUD = () => {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                  aria-hidden="true"
                 >
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+                  />
                 </svg>
               }
             >
@@ -335,9 +379,20 @@ export const HUD = () => {
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                aria-hidden="true"
               >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"
+                />
               </svg>
             </Show>
           </button>
@@ -379,6 +434,7 @@ export const HUD = () => {
           <div class="">
             <div class="grid grid-cols-2 gap-2 pointer-events-auto">
               <button
+                type="button"
                 class="bg-bg hover:border-primary hover:text-primary text-text rounded-lg px-3 py-2 flex items-center justify-center border border-text backdrop-blur-sm transition-all active:scale-95 text-sm font-mono w-10 h-10"
                 onMouseDown={handleLeftDown}
                 onMouseUp={handleLeftUp}
@@ -392,11 +448,13 @@ export const HUD = () => {
                   class="h-4 w-4"
                   viewBox="0 0 24 24"
                   fill="currentColor"
+                  aria-hidden="true"
                 >
                   <path d="M15 19l-7-7 7-7v14z" />
                 </svg>
               </button>
               <button
+                type="button"
                 class="bg-bg hover:border-primary hover:text-primary text-text rounded-lg px-3 py-2 flex items-center justify-center border border-text backdrop-blur-sm transition-all active:scale-95 text-sm font-mono w-10 h-10"
                 onMouseDown={handleRightDown}
                 onMouseUp={handleRightUp}
@@ -410,12 +468,14 @@ export const HUD = () => {
                   class="h-4 w-4"
                   viewBox="0 0 24 24"
                   fill="currentColor"
+                  aria-hidden="true"
                 >
                   <path d="M9 5l7 7-7 7V5z" />
                 </svg>
               </button>
 
               <button
+                type="button"
                 class="bg-bg hover:border-primary hover:text-primary text-text rounded-lg px-3 py-2 flex items-center justify-center border border-text backdrop-blur-sm transition-all active:scale-95 text-sm font-mono w-10 h-10"
                 onMouseDown={handleJump}
                 title={t().altJump}
@@ -425,6 +485,7 @@ export const HUD = () => {
                 <span class="text-base font-bold">Σ</span>
               </button>
               <button
+                type="button"
                 class="bg-bg hover:border-primary hover:text-primary text-text rounded-lg px-3 py-2 flex items-center justify-center border border-text backdrop-blur-sm transition-all active:scale-95 text-sm font-mono w-10 h-10"
                 onMouseDown={handleAction}
                 title={t().altAction}
@@ -436,9 +497,7 @@ export const HUD = () => {
             </div>
           </div>
         </div>
-
       </Show>
     </>
   )
 }
-

@@ -1,4 +1,4 @@
-import type { JSX } from "solid-js"
+import type { JSX } from 'solid-js'
 
 type ChevronDirection = 'up' | 'down' | 'left' | 'right'
 
@@ -19,6 +19,7 @@ export const Chevron = (props: ChevronProps): JSX.Element => {
       stroke-width="2"
       class={`chevron data-[direction=up]:-rotate-90 data-[direction=down]:rotate-90 data-[direction=left]:rotate-180 data-[direction=right]:-rotate-0 ${props.class || ''}`}
       data-direction={props.direction}
+      aria-hidden="true"
     >
       <polyline points="9,18 15,12 9,6" />
     </svg>

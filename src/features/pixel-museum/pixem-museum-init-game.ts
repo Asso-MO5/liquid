@@ -1,11 +1,11 @@
-import type Kaplay from 'kaplay'
-import { CANVAS_ID, ROOM_NAME } from './pixel-museum.const'
-import { onMount } from 'solid-js'
-import { museumLevel } from './levels/museum.level'
-import { LEVELS } from './levels/levels.const'
-import { pixelMuseumRessources } from './pixel-museum-ressources'
 import type { Room } from 'colyseus.js'
+import type Kaplay from 'kaplay'
+import { onMount } from 'solid-js'
 import { clientEnv } from '~/env/client'
+import { LEVELS } from './levels/levels.const'
+import { museumLevel } from './levels/museum.level'
+import { CANVAS_ID, ROOM_NAME } from './pixel-museum.const'
+import { pixelMuseumRessources } from './pixel-museum-ressources'
 
 export let k: ReturnType<typeof Kaplay> | null = null
 
@@ -14,10 +14,7 @@ export let gameRoom: Room | null = null
 
 export const pixelMuseumInitGame = async () => {
   const ignition = async () => {
-
-    const containerRef = document.getElementById(
-      CANVAS_ID
-    ) as HTMLDivElement | null
+    const containerRef = document.getElementById(CANVAS_ID) as HTMLDivElement | null
 
     if (!containerRef) {
       console.error(`Container ${CANVAS_ID} non trouvé`)
@@ -28,7 +25,7 @@ export const pixelMuseumInitGame = async () => {
     const containerHeight = containerRef.clientHeight || 600
     const pixelHeight = Math.round(containerHeight / (32 * 6))
 
-    let kaplayModule
+    let kaplayModule: typeof import('kaplay')
     try {
       kaplayModule = await import('kaplay')
     } catch (error) {
@@ -38,7 +35,7 @@ export const pixelMuseumInitGame = async () => {
 
     const kaplay = kaplayModule?.default
     if (typeof kaplay !== 'function') {
-      console.error('kaplay n\'est pas une fonction valide')
+      console.error("kaplay n'est pas une fonction valide")
       return
     }
 
@@ -56,12 +53,12 @@ export const pixelMuseumInitGame = async () => {
       })
 
       if (!k || typeof k !== 'object' || !k.scene || !k.go) {
-        console.error('kaplay n\'a pas été correctement initialisé')
+        console.error("kaplay n'a pas été correctement initialisé")
         k = null
         return
       }
     } catch (error) {
-      console.error('Erreur lors de l\'initialisation de kaplay:', error)
+      console.error("Erreur lors de l'initialisation de kaplay:", error)
       k = null
       return
     }
@@ -99,7 +96,7 @@ export const pixelMuseumInitGame = async () => {
           return
         }
       },
-      { passive: true }
+      { passive: true },
     )
 
     // Mobile scroll
@@ -112,7 +109,7 @@ export const pixelMuseumInitGame = async () => {
           isScrolling = false
         }
       },
-      { passive: true }
+      { passive: true },
     )
 
     canvas.addEventListener(
@@ -133,7 +130,7 @@ export const pixelMuseumInitGame = async () => {
           }
         }
       },
-      { passive: true }
+      { passive: true },
     )
 
     canvas.addEventListener(
@@ -143,19 +140,18 @@ export const pixelMuseumInitGame = async () => {
         touchStartY = 0
         touchStartX = 0
       },
-      { passive: true }
+      { passive: true },
     )
 
     const BASE_URL = `${window.location.protocol}//${window.location.host}/pixel-museum`
 
     if (k) await pixelMuseumRessources(k, BASE_URL)
 
-
     k.scene(LEVELS.MUSEUM, async () => {
       museumLevel(k)
     })
 
-    let ColyseusClient
+    let ColyseusClient: typeof import('colyseus.js').Client | undefined
     try {
       const colyseusModule = await import('colyseus.js')
       ColyseusClient = colyseusModule?.Client
@@ -182,11 +178,7 @@ export const pixelMuseumInitGame = async () => {
       gameRoom = null
     }
 
-
-
     k.go(LEVELS.MUSEUM)
-
-
   }
 
   onMount(() => {

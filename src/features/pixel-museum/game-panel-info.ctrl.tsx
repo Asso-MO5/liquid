@@ -1,7 +1,7 @@
-import { createSignal } from "solid-js"
-import { clientEnv } from "~/env/client"
-import type { GamePanelItem } from "./game-panel-info.types"
-import { getTextFromBlock } from "~/utils/get-text-from-block"
+import { createSignal } from 'solid-js'
+import { clientEnv } from '~/env/client'
+import { getTextFromBlock } from '~/utils/get-text-from-block'
+import type { GamePanelItem } from './game-panel-info.types'
 
 const [open, setOpen] = createSignal<GamePanelItem | undefined>(undefined)
 const [position, setPosition] = createSignal({ x: 20, y: 20 })
@@ -22,12 +22,12 @@ export const openGamePanelInfo = async (id: string) => {
     }
 
     const contentType = response.headers.get('content-type')
-    if (!contentType || !contentType.includes('application/json')) {
-      console.error('La réponse n\'est pas du JSON:', contentType)
+    if (!contentType?.includes('application/json')) {
+      console.error("La réponse n'est pas du JSON:", contentType)
       return
     }
 
-    let data
+    let data: unknown
     try {
       data = await response.json()
     } catch (jsonError) {
@@ -45,7 +45,7 @@ export const openGamePanelInfo = async (id: string) => {
     setPosition({ x: 20, y: 85 })
     setOpen(item)
   } catch (error) {
-    console.error('Erreur lors du chargement de l\'item:', error)
+    console.error("Erreur lors du chargement de l'item:", error)
   }
 }
 
@@ -65,8 +65,14 @@ const handleMouseMove = (e: MouseEvent) => {
   e.preventDefault()
   const deltaX = (e?.clientX ?? 300) - dragStartPos.x
   const deltaY = (e?.clientY ?? 600) - dragStartPos.y
-  const newX = Math.max(0, Math.min(window.innerWidth - panelRef.offsetWidth, panelStartPos.x + deltaX))
-  const newY = Math.max(0, Math.min(window.innerHeight - panelRef.offsetHeight, panelStartPos.y + deltaY))
+  const newX = Math.max(
+    0,
+    Math.min(window.innerWidth - panelRef.offsetWidth, panelStartPos.x + deltaX),
+  )
+  const newY = Math.max(
+    0,
+    Math.min(window.innerHeight - panelRef.offsetHeight, panelStartPos.y + deltaY),
+  )
   setPosition({ x: newX, y: newY })
 }
 
@@ -76,8 +82,14 @@ const handleTouchMove = (e: TouchEvent) => {
   const touch = e.touches[0]
   const deltaX = (touch?.clientX ?? 300) - dragStartPos.x
   const deltaY = (touch?.clientY ?? 600) - dragStartPos.y
-  const newX = Math.max(0, Math.min(window.innerWidth - panelRef.offsetWidth, panelStartPos.x + deltaX))
-  const newY = Math.max(0, Math.min(window.innerHeight - panelRef.offsetHeight, panelStartPos.y + deltaY))
+  const newX = Math.max(
+    0,
+    Math.min(window.innerWidth - panelRef.offsetWidth, panelStartPos.x + deltaX),
+  )
+  const newY = Math.max(
+    0,
+    Math.min(window.innerHeight - panelRef.offsetHeight, panelStartPos.y + deltaY),
+  )
   setPosition({ x: newX, y: newY })
 }
 
@@ -127,21 +139,21 @@ export const GamePanelInfoCtrl = () => {
     const item = open()
     if (!item?.medias) return undefined
 
-    const cover = item.medias.find(media => media.relation_type === 'cover')
+    const cover = item.medias.find((media) => media.relation_type === 'cover')
     return cover?.url
   }
 
   const getAudio = (): string | undefined => {
     const item = open()
     if (!item?.medias) return undefined
-    const audio = item.medias.find(media => media.type?.startsWith('audio/'))
+    const audio = item.medias.find((media) => media.type?.startsWith('audio/'))
     return audio?.url
   }
 
   const getYouTubeVideo = (): string | undefined => {
     const item = open()
     if (!item?.medias) return undefined
-    const youtube = item.medias.find(media => media.type?.startsWith('youtube-video'))
+    const youtube = item.medias.find((media) => media.type?.startsWith('youtube-video'))
 
     if (!youtube) return undefined
 

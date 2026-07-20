@@ -1,4 +1,4 @@
-import { ToastCtrl } from "./Toast.ctrl"
+import { ToastCtrl } from './Toast.ctrl'
 
 // Instance globale du contrôleur de toast
 const globalToastCtrl = ToastCtrl()
@@ -15,5 +15,5 @@ export const toast = {
   info: globalToastCtrl.info,
   add: globalToastCtrl.addToast,
   remove: globalToastCtrl.removeToast,
-  clear: globalToastCtrl.clearAll
+  clear: globalToastCtrl.clearAll,
 }

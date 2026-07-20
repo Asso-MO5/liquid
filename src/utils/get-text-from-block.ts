@@ -23,10 +23,7 @@ type GetTextFromBlockProps = {
  * @param maxChars - Nombre maximum de caractères à afficher (optionnel)
  * @returns Chaîne HTML générée
  */
-export function getTextFromBlock({
-  blocks,
-  maxChars = Infinity,
-}: GetTextFromBlockProps): string {
+export function getTextFromBlock({ blocks, maxChars = Infinity }: GetTextFromBlockProps): string {
   if (!blocks || !Array.isArray(blocks)) return ''
 
   let currentCharsNum = 0
@@ -108,4 +105,3 @@ function escapeHtml(text: string): string {
   }
   return text.replace(/[&<>"']/g, (m) => map[m])
 }
-

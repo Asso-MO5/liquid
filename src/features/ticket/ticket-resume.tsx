@@ -1,10 +1,10 @@
-import { createMemo, For, Show } from "solid-js"
-import { langCtrl } from "~/features/lang-selector/lang.ctrl"
-import { ticketStore } from "~/features/ticket/ticket.store"
-import { ticketResumeCTRL } from "~/features/ticket/ticket-resume.ctrl"
-import { formatPrice } from "~/features/price/prices.utils"
-import { translate } from "~/utils/translate"
-import { txt } from "./ticket-resume.txt"
+import { createMemo, For, Show } from 'solid-js'
+import { langCtrl } from '~/features/lang-selector/lang.ctrl'
+import { formatPrice } from '~/features/price/prices.utils'
+import { ticketStore } from '~/features/ticket/ticket.store'
+import { ticketResumeCTRL } from '~/features/ticket/ticket-resume.ctrl'
+import { translate } from '~/utils/translate'
+import { txt } from './ticket-resume.txt'
 
 export const TicketResume = () => {
   const { t } = translate(txt)
@@ -25,7 +25,10 @@ export const TicketResume = () => {
       <Show when={ticketStore.slot_start_time && ticketStore.slot_end_time}>
         <div class="flex flex-col gap-1">
           <span class="font-bold text-primary">{t().slot}</span>
-          <span>{ctrl.formatTime(ticketStore.slot_start_time)} - {ctrl.formatTime(ticketStore.slot_end_time)}</span>
+          <span>
+            {ctrl.formatTime(ticketStore.slot_start_time)} -{' '}
+            {ctrl.formatTime(ticketStore.slot_end_time)}
+          </span>
         </div>
       </Show>
 
@@ -35,16 +38,17 @@ export const TicketResume = () => {
           <div class="flex flex-col gap-1 pl-2">
             <For each={ctrl.getUniqueTickets()}>
               {({ ticket, quantity }) => {
-                const price = ctrl.getTicketPrice(ticket);
-                const totalPrice = createMemo(() => ticketStore.is_half_price ? Math.round(price * quantity / 2) : price * quantity);
+                const price = ctrl.getTicketPrice(ticket)
+                const totalPrice = createMemo(() =>
+                  ticketStore.is_half_price ? Math.round((price * quantity) / 2) : price * quantity,
+                )
                 return (
                   <div class="flex justify-between items-center">
                     <p class="flex gap-2 p-0 m-0">
-                      <span class="text-secondary">
-                        {quantity}
-                      </span>
+                      <span class="text-secondary">{quantity}</span>
                       <span>
-                        {ticket.translations[lang() as keyof typeof ticket.translations]?.name || ''}
+                        {ticket.translations[lang() as keyof typeof ticket.translations]?.name ||
+                          ''}
                       </span>
                     </p>
 
@@ -52,12 +56,12 @@ export const TicketResume = () => {
                       {price === 0 ? t().free : formatPrice(totalPrice())}
                     </span>
                   </div>
-                );
+                )
               }}
             </For>
           </div>
-        </div >
-      </Show >
+        </div>
+      </Show>
 
       <Show when={ticketStore.donation_amount > 0}>
         <div class="flex justify-between items-center">
@@ -70,6 +74,6 @@ export const TicketResume = () => {
         <span class="font-bold text-lg">{t().total}</span>
         <span class="font-bold text-lg text-secondary">{formatPrice(ctrl.calculateTotal())}</span>
       </div>
-    </div >
+    </div>
   )
 }

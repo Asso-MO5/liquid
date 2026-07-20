@@ -21,11 +21,11 @@ export const ASEPRITES = {
   SPACE_INVADERS: 'space-invaders',
   VIRTUALBOY: 'virtualboy',
   '3DO': '3do',
-  "PS2": 'ps2',
+  PS2: 'ps2',
   NES: 'nes',
   GAMECUBE: 'gamecube',
   PONG: 'pong',
-  AMIGA_500: "amiga500",
+  AMIGA_500: 'amiga500',
   DREAMCAST: 'dreamcast',
   XBOX: 'xbox',
 } as const
@@ -56,4 +56,3 @@ export const TAGS = {
   MACHINE: 'machine',
   DOC: 'doc',
 } as const
-

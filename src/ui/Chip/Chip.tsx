@@ -1,9 +1,10 @@
-import { type JSX } from "solid-js"
+import type { JSX } from 'solid-js'
+import type { ChipVariant } from './Chip.types'
 
 interface ChipProps {
   children: JSX.Element
-  type?: "status" | "category" | "default"
-  variant?: "draft" | "published" | "cancelled" | "completed" | "video" | "expo" | "ag" | "live" | "meeting" | "training" | "conference" | "other"
+  type?: 'status' | 'category' | 'default'
+  variant?: ChipVariant
 }
 
 export const Chip = (props: ChipProps) => {
@@ -23,7 +24,7 @@ export const Chip = (props: ChipProps) => {
         data-[type=category]:data-[variant=conference]:bg-pink-100 data-[type=category]:data-[variant=conference]:text-pink-800
         data-[type=category]:data-[variant=other]:bg-gray-100 data-[type=category]:data-[variant=other]:text-gray-800
         data-[type=default]:bg-gray-100 data-[type=default]:text-gray-800"
-      data-type={props.type || "default"}
+      data-type={props.type || 'default'}
       data-variant={props.variant}
     >
       {props.children}

@@ -1,5 +1,5 @@
-import { createSignal } from 'solid-js'
 import type kaplay from 'kaplay'
+import { createSignal } from 'solid-js'
 import { pixelMuseumState } from './pixel-museum.state'
 
 export const [soundIsSupport, setSoundIsSupport] = createSignal<boolean>(false)
@@ -38,7 +38,7 @@ export const pixelMuseumSoundCtrl = () => {
 }
 
 export const playMusic = (k: ReturnType<typeof kaplay>, sound: string) => {
-  if (!k || !k.play) {
+  if (!k?.play) {
     console.error('kaplay non trouvé ou méthode play indisponible')
     return
   }
@@ -52,7 +52,7 @@ export const playMusic = (k: ReturnType<typeof kaplay>, sound: string) => {
 }
 
 export const playSound = (k: ReturnType<typeof kaplay>, sound: string) => {
-  if (!k || !k.play) {
+  if (!k?.play) {
     console.error('kaplay non trouvé ou méthode play indisponible')
     return
   }

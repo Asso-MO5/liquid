@@ -1,26 +1,26 @@
-import { createMemo, createSignal } from "solid-js";
-import { useNavigate } from "@solidjs/router";
-import { clientEnv } from "~/env/client";
-import { toast } from "~/ui/Toast";
-import { setTicketStore, ticketStore } from "~/features/ticket/ticket.store";
-import type { Ticket } from "~/features/ticket/ticket.type";
-import type { PreparePaymentTicket } from "~/features/ticket/payment.type";
-import { locales } from "~/utils/langs";
-import { langCtrl } from "~/features/lang-selector/lang.ctrl";
-import { guidedTourPrice } from "~/features/price/price.store";
+import { useNavigate } from '@solidjs/router'
+import { createMemo, createSignal } from 'solid-js'
+import { clientEnv } from '~/env/client'
+import { langCtrl } from '~/features/lang-selector/lang.ctrl'
+import { guidedTourPrice } from '~/features/price/price.store'
+import type { PreparePaymentTicket } from '~/features/ticket/payment.type'
+import { setTicketStore, ticketStore } from '~/features/ticket/ticket.store'
+import type { Ticket } from '~/features/ticket/ticket.type'
+import { toast } from '~/ui/Toast'
+import { locales } from '~/utils/langs'
 
 export const paymentCTRL = () => {
-  const navigate = useNavigate();
-  const lang = langCtrl();
-  const langStr = String(lang());
-  const [isLoading, setIsLoading] = createSignal(false);
-  const [IHaveReadTheTermsAndConditions, setIHaveReadTheTermsAndConditions] = createSignal(false);
+  const navigate = useNavigate()
+  const lang = langCtrl()
+  const langStr = String(lang())
+  const [isLoading, setIsLoading] = createSignal(false)
+  const [IHaveReadTheTermsAndConditions, setIHaveReadTheTermsAndConditions] = createSignal(false)
 
   const preparePayment = async () => {
-    setIsLoading(true);
-    const origin = window.location.origin;
-    const successUrl = `${origin}/${langStr}/ticket/thanks`;
-    const cancelUrl = `${origin}/${langStr}/ticket/error`;
+    setIsLoading(true)
+    const origin = window.location.origin
+    const successUrl = `${origin}/${langStr}/ticket/thanks`
+    const cancelUrl = `${origin}/${langStr}/ticket/error`
 
     const body = {
       email: ticketStore.email,
@@ -48,14 +48,14 @@ export const paymentCTRL = () => {
           ...ticket,
           price_amount: ticket.amount,
           price_name: ticket.translations[lang() as keyof typeof ticket.translations].name,
-          price_description: ticket.translations[lang() as keyof typeof ticket.translations].description,
+          price_description:
+            ticket.translations[lang() as keyof typeof ticket.translations].description,
           applied_at: new Date().toISOString(),
-
         },
 
         notes: '',
-      });
-    });
+      })
+    })
     try {
       const response = await fetch(`${clientEnv.VITE_API_URL}/museum/tickets/payment`, {
         method: 'POST',
@@ -63,11 +63,11 @@ export const paymentCTRL = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(body),
-      });
+      })
 
       if (!response.ok) {
         const errorText = await response.text()
-        let errorData
+        let errorData: unknown
         try {
           errorData = JSON.parse(errorText)
         } catch {
@@ -77,11 +77,17 @@ export const paymentCTRL = () => {
       }
 
       const contentType = response.headers.get('content-type')
-      if (!contentType || !contentType.includes('application/json')) {
+      if (!contentType?.includes('application/json')) {
         throw new Error(`Réponse invalide: ${contentType}`)
       }
 
-      let data: { checkout_id: string, checkout_url: string, checkout_reference: string, tickets: Ticket[], error: string }
+      let data: {
+        checkout_id: string
+        checkout_url: string
+        checkout_reference: string
+        tickets: Ticket[]
+        error: string
+      }
       try {
         data = await response.json()
       } catch (jsonError) {
@@ -90,36 +96,37 @@ export const paymentCTRL = () => {
       }
 
       if (!response.ok) {
-        throw new Error(data.error);
+        throw new Error(data.error)
       }
 
-      setTicketStore('checkout_id', data.checkout_id);
-      setTicketStore('checkout_reference', data.checkout_reference);
-      setTicketStore('gift_codes', []);
-      setTicketStore('guided_tour', false);
-      setTicketStore('total_amount', 0);
-      setTicketStore('reservation_date', '');
-      setTicketStore('slot_start_time', '');
-      setTicketStore('slot_end_time', '');
-      setTicketStore('tickets', []);
-      setTicketStore('donation_amount', 3);
+      setTicketStore('checkout_id', data.checkout_id)
+      setTicketStore('checkout_reference', data.checkout_reference)
+      setTicketStore('gift_codes', [])
+      setTicketStore('guided_tour', false)
+      setTicketStore('total_amount', 0)
+      setTicketStore('reservation_date', '')
+      setTicketStore('slot_start_time', '')
+      setTicketStore('slot_end_time', '')
+      setTicketStore('tickets', [])
+      setTicketStore('donation_amount', 3)
       if (data.checkout_url) {
         // Only Free places haven't  a checkout_url
-        window.location.href = data.checkout_url;
+        window.location.href = data.checkout_url
       } else {
-        navigate(`/${langStr}/ticket/thanks`);
+        navigate(`/${langStr}/ticket/thanks`)
       }
-
     } catch (error) {
-
       if (error instanceof Error) {
         if (error.message.startsWith('{')) {
-          const data = JSON.parse(error.message);
-          toast.error(data?.[lang() as keyof typeof data.error] || 'Une erreur est survenue lors de la préparation du paiement');
-          return;
+          const data = JSON.parse(error.message)
+          toast.error(
+            data?.[lang() as keyof typeof data.error] ||
+              'Une erreur est survenue lors de la préparation du paiement',
+          )
+          return
         }
-        toast.error(error.message);
-        return;
+        toast.error(error.message)
+        return
       }
 
       const err = {
@@ -127,64 +134,71 @@ export const paymentCTRL = () => {
         en: 'Error preparing payment',
       }
 
-      toast.error(err[lang() as keyof typeof err]);
-
+      toast.error(err[lang() as keyof typeof err])
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
 
   const paymentButtonDisabled = createMemo(() => {
-    const testEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ticketStore.email);
-    return ticketStore.first_name === '' || ticketStore.last_name === '' || !testEmail || ticketStore.tickets.length === 0 || ticketStore.reservation_date === '' || ticketStore.slot_start_time === '' || !IHaveReadTheTermsAndConditions();
-  });
+    const testEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ticketStore.email)
+    return (
+      ticketStore.first_name === '' ||
+      ticketStore.last_name === '' ||
+      !testEmail ||
+      ticketStore.tickets.length === 0 ||
+      ticketStore.reservation_date === '' ||
+      ticketStore.slot_start_time === '' ||
+      !IHaveReadTheTermsAndConditions()
+    )
+  })
 
   const paymentButtonErrorMessage = createMemo(() => {
     if (ticketStore.reservation_date === '') {
       return {
         fr: 'Veuillez sélectionner une date de visite',
-        en: 'Please select a visit date'
-      };
+        en: 'Please select a visit date',
+      }
     }
     if (ticketStore.slot_start_time === '') {
       return {
         fr: 'Veuillez sélectionner un créneau horaire',
-        en: 'Please select a time slot'
-      };
+        en: 'Please select a time slot',
+      }
     }
     if (ticketStore.tickets.length === 0) {
       return {
         fr: 'Veuillez sélectionner au moins un billet',
-        en: 'Please select at least one ticket'
-      };
+        en: 'Please select at least one ticket',
+      }
     }
     if (ticketStore.first_name === '') {
       return {
         fr: 'Veuillez renseigner votre prénom',
-        en: 'Please enter your first name'
-      };
+        en: 'Please enter your first name',
+      }
     }
     if (ticketStore.last_name === '') {
       return {
         fr: 'Veuillez renseigner votre nom',
-        en: 'Please enter your last name'
-      };
+        en: 'Please enter your last name',
+      }
     }
-    const testEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ticketStore.email);
+    const testEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ticketStore.email)
     if (!testEmail) {
       return {
         fr: 'Veuillez renseigner une adresse email valide',
-        en: 'Please enter a valid email address'
-      };
+        en: 'Please enter a valid email address',
+      }
     }
     if (!IHaveReadTheTermsAndConditions()) {
       return {
-        fr: 'Veuillez accepter les conditions d\'utilisation',
-        en: 'Please accept the terms of use'
-      };
+        fr: "Veuillez accepter les conditions d'utilisation",
+        en: 'Please accept the terms of use',
+      }
     }
-    return null;
-  });
+    return null
+  })
 
   return {
     isLoading,

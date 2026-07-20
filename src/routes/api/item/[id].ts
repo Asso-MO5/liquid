@@ -4,19 +4,16 @@ export async function GET({ params }: { params: { id: string } }) {
   const caveUrl = import.meta.env.VITE_CAVE_URL
 
   if (!caveUrl) {
-    return new Response(
-      JSON.stringify({ error: 'VITE_CAVE_URL is not defined' }),
-      {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    )
+    return new Response(JSON.stringify({ error: 'VITE_CAVE_URL is not defined' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    })
   }
 
   try {
     const response = await fetch(`${caveUrl}/item/public/${params.id}`, {
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
       },
     })
 
@@ -25,8 +22,8 @@ export async function GET({ params }: { params: { id: string } }) {
         JSON.stringify({ error: `Failed to fetch item: ${response.statusText}` }),
         {
           status: response.status,
-          headers: { 'Content-Type': 'application/json' }
-        }
+          headers: { 'Content-Type': 'application/json' },
+        },
       )
     }
 
@@ -40,13 +37,9 @@ export async function GET({ params }: { params: { id: string } }) {
     })
   } catch (error) {
     console.error('Error fetching item:', error)
-    return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
-      {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    )
+    return new Response(JSON.stringify({ error: 'Internal server error' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    })
   }
 }
-
