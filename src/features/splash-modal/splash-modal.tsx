@@ -1,12 +1,11 @@
-import { translate } from "~/utils/translate"
-import { breakModalTxt } from "./break-modal.const"
-import { breakModalCtrl } from "./break-modal.ctrl"
-import { Show } from "solid-js"
+import { Show } from 'solid-js'
+import { translate } from '~/utils/translate'
+import { splashModalTxt } from './splash-modal.const'
+import { splashModalCtrl } from './splash-modal.ctrl'
 
-
-export const BreakModal = () => {
-  const { t } = translate(breakModalTxt)
-  const { closeModal, show } = breakModalCtrl()
+export const SplashModal = () => {
+  const { t } = translate(splashModalTxt)
+  const { closeModal, show } = splashModalCtrl()
 
   return (
     <Show when={show()}>
@@ -28,12 +27,7 @@ export const BreakModal = () => {
           rather than on the button at the bottom on mobile devices.
           The title itself is not interactive so we use outline-0.
           */}
-          <h2
-            id="title-pause"
-            class="sr-only outline-0"
-            tabindex="0"
-            autofocus
-          >
+          <h2 id="title-pause" class="sr-only outline-0" tabindex="0" autofocus>
             {t().videoAria}
           </h2>
 
@@ -54,10 +48,13 @@ export const BreakModal = () => {
 
           <div class="text-center">
             <button
+              type="button"
               id="dialog-pause-close"
               onClick={closeModal}
               commandfor="dialog-pause"
-              command="close" title={t().closeAria}>
+              command="close"
+              title={t().closeAria}
+            >
               {t().close}
             </button>
           </div>

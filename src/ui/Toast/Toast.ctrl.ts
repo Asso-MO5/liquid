@@ -1,5 +1,5 @@
-import { createSignal, type Accessor } from "solid-js"
-import type { Toast, ToastOptions } from "./Toast.types"
+import { type Accessor, createSignal } from 'solid-js'
+import type { Toast, ToastOptions } from './Toast.types'
 
 const [toasts, setToasts] = createSignal<Toast[]>([])
 
@@ -12,10 +12,10 @@ export function ToastCtrl() {
       title: options.title,
       message: options.message,
       duration: options.duration || 5000,
-      closable: options.closable !== false
+      closable: options.closable !== false,
     }
 
-    setToasts(prev => [...prev, toast])
+    setToasts((prev) => [...prev, toast])
 
     // Auto-remove après la durée spécifiée
     if (toast.duration && toast.duration > 0) {
@@ -28,7 +28,7 @@ export function ToastCtrl() {
   }
 
   const removeToast = (id: string) => {
-    setToasts(prev => prev.filter(toast => toast.id !== id))
+    setToasts((prev) => prev.filter((toast) => toast.id !== id))
   }
 
   const clearAll = () => {
@@ -60,6 +60,6 @@ export function ToastCtrl() {
     success,
     error,
     warning,
-    info
+    info,
   }
 }

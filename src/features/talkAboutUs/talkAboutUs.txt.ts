@@ -18,4 +18,3 @@ export const txt = {
     newWindow: '(new window)',
   },
 }
-

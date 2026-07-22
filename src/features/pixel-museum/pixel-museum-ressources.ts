@@ -1,21 +1,13 @@
 import type kaplay from 'kaplay'
-import {
-  ASEPRITES,
-  FONTS,
-  IMAGES,
-  OBJECTS,
-  SOUNDS,
-  SPRITES,
-} from './pixel-museum.const'
+import { ASEPRITES, FONTS, IMAGES, OBJECTS, SOUNDS, SPRITES } from './pixel-museum.const'
 
 export const pixelMuseumRessources = async (k: ReturnType<typeof kaplay>, baseUrl: string) => {
-
   for (let i = 0; i < 50; i++) {
     const aseprite = `sagwa_composed_${i}`
     k.loadAseprite(
       aseprite,
       `${baseUrl}/entities/composed/${aseprite}.png`,
-      `${baseUrl}/entities/sagwa.json`
+      `${baseUrl}/entities/sagwa.json`,
     )
   }
 
@@ -23,7 +15,7 @@ export const pixelMuseumRessources = async (k: ReturnType<typeof kaplay>, baseUr
     await k.loadAseprite(
       aseprite,
       `${baseUrl}/entities/${aseprite}.png`,
-      `${baseUrl}/entities/${aseprite}.json`
+      `${baseUrl}/entities/${aseprite}.json`,
     )
   }
 
@@ -47,7 +39,4 @@ export const pixelMuseumRessources = async (k: ReturnType<typeof kaplay>, baseUr
     const fontName = font.split('/')[1].split('.')[0]
     await k.loadFont(fontName, `${baseUrl}/fonts/${font}`)
   }
-
-
-
 }

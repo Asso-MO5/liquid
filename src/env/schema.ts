@@ -1,9 +1,9 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 export const serverScheme = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   BLOG_URL: z.string(),
-});
+})
 
 export const clientScheme = z.object({
   MODE: z.enum(['development', 'production', 'test']).default('development'),
@@ -12,4 +12,4 @@ export const clientScheme = z.object({
   VITE_CAVE_URL: z.string(),
   VITE_STRIPE_PUBLISHABLE_KEY: z.string(),
   VITE_KITANA_URL: z.string(),
-});
+})

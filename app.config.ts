@@ -1,6 +1,6 @@
-import { defineConfig } from "@solidjs/start/config";
+import path from 'node:path'
+import { defineConfig } from '@solidjs/start/config'
 import tailwindcss from '@tailwindcss/vite'
-import path from "node:path";
 
 export default defineConfig({
   ssr: true,
@@ -18,4 +18,4 @@ export default defineConfig({
   alias: {
     '~': path.resolve(process.cwd(), 'src'),
   },
-});
+})

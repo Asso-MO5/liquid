@@ -1,9 +1,9 @@
-import { Show, createMemo } from "solid-js"
-import { translate } from "~/utils/translate"
-import { GamePanelInfoCtrl, closeGamePanelInfo } from "./game-panel-info.ctrl"
-import { gamePanelInfoTxt } from "./game-panel-info.texts"
-import { langCtrl } from "~/features/lang-selector/lang.ctrl"
-import { isMuted } from "./pixel-museum-sound.ctrl"
+import { createMemo, Show } from 'solid-js'
+import { langCtrl } from '~/features/lang-selector/lang.ctrl'
+import { translate } from '~/utils/translate'
+import { closeGamePanelInfo, GamePanelInfoCtrl } from './game-panel-info.ctrl'
+import { gamePanelInfoTxt } from './game-panel-info.texts'
+import { isMuted } from './pixel-museum-sound.ctrl'
 
 export const GamePanelInfo = () => {
   const { t } = translate(gamePanelInfoTxt)
@@ -35,14 +35,17 @@ export const GamePanelInfo = () => {
         }}
       >
         {/* Header */}
-        <div
+        <header
           ref={(el) => gamePanelInfo.setHeaderRef(el)}
           class="bg-primary text-white px-4 py-2 rounded-t-lg flex flex-row-reverse items-center justify-between cursor-grab active:cursor-grabbing select-none"
+          aria-roledescription="draggable panel header"
+          aria-label={t().closeTitle}
           onMouseDown={gamePanelInfo.handleMouseDown}
           onTouchStart={gamePanelInfo.handleTouchStart}
         >
           {/* Close button is placed first, so one can quickly close it if opened by mistake or after a focus loop */}
           <button
+            type="button"
             id="game-panel-info-close"
             onClick={closeGamePanelInfo}
             class="text-text bg-black/20 transition-colors p-1 rounded border-transparent hover:bg-white hover:text-secondary focus:border-secondary"
@@ -55,7 +58,10 @@ export const GamePanelInfo = () => {
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
+              role="img"
+              aria-label={t().closeLabel}
             >
+              <title>{t().closeLabel}</title>
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -64,8 +70,10 @@ export const GamePanelInfo = () => {
               />
             </svg>
           </button>
-          <h3 id="game-panel-info-title" class="text-xl m-0 text-white">{item()?.name || 'Information'}</h3>
-        </div>
+          <h3 id="game-panel-info-title" class="text-xl m-0 text-white">
+            {item()?.name || 'Information'}
+          </h3>
+        </header>
 
         {/* Content */}
         <div class="p-4 overflow-y-auto flex-1 flex flex-col gap-4">
@@ -76,7 +84,7 @@ export const GamePanelInfo = () => {
               alt={item()?.name || ''}
               class="w-full h-auto rounded-md object-cover"
               onError={(e) => {
-                console.error('Erreur lors du chargement de l\'image:', coverImage())
+                console.error("Erreur lors du chargement de l'image:", coverImage())
                 e.currentTarget.style.display = 'none'
               }}
             />
@@ -92,7 +100,7 @@ export const GamePanelInfo = () => {
                 autoplay={!isMuted()}
                 muted={isMuted()}
                 onError={(e) => {
-                  console.error('Erreur lors du chargement de l\'audio:', audioUrl())
+                  console.error("Erreur lors du chargement de l'audio:", audioUrl())
                   e.currentTarget.style.display = 'none'
                 }}
               >
@@ -103,9 +111,15 @@ export const GamePanelInfo = () => {
           </Show>
           <Show when={youTubeVideoUrl()}>
             <div class="w-full">
-              <iframe id="ytplayer" width="340" height="
-              240" allowfullscreen class="w-full aspect-video"
-                src={youTubeVideoUrl()} />
+              <iframe
+                id="ytplayer"
+                width="340"
+                height="240"
+                allowfullscreen
+                class="w-full aspect-video"
+                src={youTubeVideoUrl()}
+                title={item()?.name ?? 'YouTube video'}
+              />
             </div>
           </Show>
 
@@ -120,7 +134,14 @@ export const GamePanelInfo = () => {
         </div>
       </div>
       {/* Focus trap, when tabbing through the interactive elements in the modal, users should go back to the first element and not go outside the modal */}
-      <div id="game-info-panel-end" tabindex="0" class="sr-only" onFocus={() => document.getElementById('game-panel-info-close')?.focus()} />
+      <button
+        id="game-info-panel-end"
+        type="button"
+        tabIndex={0}
+        aria-label={t().closeTitle}
+        class="sr-only"
+        onFocus={() => document.getElementById('game-panel-info-close')?.focus()}
+      />
     </Show>
   )
 }

@@ -1,37 +1,34 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @font-face {
-  font-family: 'Stack Sans Text';
-  src: url('/fonts/Stack_Sans_Text/StackSansText-VariableFont_wght.ttf')
-    format('truetype');
+  font-family: "Stack Sans Text";
+  src: url("/fonts/Stack_Sans_Text/StackSansText-VariableFont_wght.ttf") format("truetype");
   font-weight: 200 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Stack Sans Text';
-  src: url('/fonts/Stack_Sans_Text/static/StackSansText-Regular.ttf')
-    format('truetype');
+  font-family: "Stack Sans Text";
+  src: url("/fonts/Stack_Sans_Text/static/StackSansText-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Stack Sans Text';
-  src: url('/fonts/Stack_Sans_Text/static/StackSansText-Bold.ttf')
-    format('truetype');
+  font-family: "Stack Sans Text";
+  src: url("/fonts/Stack_Sans_Text/static/StackSansText-Bold.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Bebas Neue';
-  src: url('/fonts/Bebas_Neue/BebasNeue-Regular.ttf') format('truetype');
+  font-family: "Bebas Neue";
+  src: url("/fonts/Bebas_Neue/BebasNeue-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -39,8 +36,8 @@
 
 @theme {
   /* Polices */
-  --font-family-sans: 'Stack Sans Text', sans-serif;
-  --font-family-display: 'Bebas Neue', sans-serif;
+  --font-family-sans: "Stack Sans Text", sans-serif;
+  --font-family-display: "Bebas Neue", sans-serif;
 
   --color-bg: #f2f2f2;
   --color-primary: rgb(64, 136, 207);
@@ -72,7 +69,7 @@
 @layer base {
   html {
     font-size: 16px;
-    font-family: 'Stack Sans Text', sans-serif;
+    font-family: "Stack Sans Text", sans-serif;
     background-color: var(--color-bg);
     color: var(--color-text);
   }
@@ -111,14 +108,14 @@
   }
 
   body {
-    font-family: 'Stack Sans Text', sans-serif;
+    font-family: "Stack Sans Text", sans-serif;
     background-color: var(--color-bg);
     color: var(--color-text);
     min-height: 100dvh;
   }
 
   body::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -155,6 +152,7 @@
     background: var(--color-secondary);
     border-radius: 4px;
   }
+
   button,
   .btn {
     @apply py-1 px-2 cursor-pointer outline-none bg-bg rounded p-1 text-primary hover:text-black border-2 border-primary font-bold focus:outline-none focus:ring-2 focus:ring-primary;
@@ -171,36 +169,36 @@
   }
 
   button.secondary,
-  .btn[data-theme='secondary'] {
+  .btn[data-theme="secondary"] {
     @apply bg-secondary hover:bg-[#c22d26] text-white border-2 border-black font-bold;
   }
 
   button.secondary:disabled,
-  .btn[data-theme='secondary']:disabled {
+  .btn[data-theme="secondary"]:disabled {
     @apply cursor-not-allowed opacity-50 bg-secondary;
   }
 
   button.cancel,
-  .btn[data-theme='cancel'] {
+  .btn[data-theme="cancel"] {
     @apply border-2 border-black bg-bg hover:border-secondary text-white hover:text-secondary font-bold;
   }
 
   button.cancel:disabled,
-  .btn[data-theme='cancel']:disabled {
+  .btn[data-theme="cancel"]:disabled {
     @apply cursor-not-allowed opacity-50 bg-gray-500;
   }
 
   button.headless,
-  .btn[data-theme='headless'] {
+  .btn[data-theme="headless"] {
     @apply border-none bg-transparent p-0 text-primary hover:text-secondary;
   }
 
   select,
-  input[type='datetime-local'],
-  input[type='date'],
-  input[type='time'] {
+  input[type="datetime-local"],
+  input[type="date"],
+  input[type="time"] {
     @apply border border-border focus:border-primary rounded p-1 cursor-pointer text-border bg-bg;
-    width: max-content !important;
+    width: max-content;
     min-width: fit-content;
   }
 
@@ -212,6 +210,7 @@
   select option::checkmark {
     @apply hidden;
   }
+
   select option {
     @apply cursor-pointer flex flex-col gap-2 items-start p-2 text-border;
   }
@@ -237,28 +236,29 @@
     @apply border outline-none border-border focus:border-primary rounded p-1 cursor-pointer text-primary bg-white min-w-full;
   }
 
-  input[type='checkbox'] {
+  input[type="checkbox"] {
     @apply w-5 h-5 appearance-none relative cursor-pointer rounded-none border-2 border-border focus:border-primary bg-white;
   }
 
-  input[type='checkbox']:checked::after {
-    content: '✓';
-    @apply absolute top-0 left-0 w-full h-full flex items-center justify-center text-white text-text font-bold;
+  input[type="checkbox"]:checked::after {
+    content: "✓";
+    @apply absolute top-0 left-0 w-full h-full flex items-center justify-center text-text font-bold;
     pointer-events: none;
   }
 
-  input[type='checkbox'] ~ label {
+  input[type="checkbox"] ~ label {
     @apply cursor-pointer;
   }
 
-  input[type='checkbox']:focus {
+  input[type="checkbox"]:focus {
     @apply outline-none;
   }
-  input[type='checkbox']:hover {
+
+  input[type="checkbox"]:hover {
     @apply border-primary;
   }
 
-  input[type='checkbox']:checked {
+  input[type="checkbox"]:checked {
     @apply bg-primary text-white border-primary;
   }
 
@@ -272,22 +272,22 @@
 
   h1 {
     @apply text-4xl mb-6 mt-4 text-primary;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: "Bebas Neue", sans-serif;
   }
 
   h2 {
     @apply text-3xl mb-6 mt-4 text-primary;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: "Bebas Neue", sans-serif;
   }
 
   h3 {
     @apply text-3xl mb-6 mt-4 text-secondary;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: "Bebas Neue", sans-serif;
   }
 
   h4 {
     @apply text-base mb-6 mt-4;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: "Bebas Neue", sans-serif;
   }
 
   p {
@@ -333,7 +333,7 @@
   }
 
   .font-display {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: "Bebas Neue", sans-serif;
   }
 }
 
@@ -342,18 +342,22 @@
     border-color: #e83f36;
     color: #e83f36;
   }
+
   25% {
     border-color: #ff2a83;
     color: #ff2a83;
   }
+
   50% {
     border-color: #e83f36;
     color: #e83f36;
   }
+
   75% {
     border-color: #ff2a83;
     color: #ff2a83;
   }
+
   100% {
     border-color: #e83f36;
     color: #e83f36;
@@ -364,9 +368,11 @@
   0% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
+
   100% {
     background-position: 0% 50%;
   }
@@ -380,10 +386,8 @@
   animation: gradient-x 3s ease infinite;
 }
 
-.ff_landing_page_body
-  .ff_landing_wrapper.ff_landing_design_modern
-  .ff_landing_form {
-  background-color: transparent !important;
+.ff_landing_page_body .ff_landing_wrapper.ff_landing_design_modern .ff_landing_form {
+  background-color: transparent;
 }
 
 /* WORDPRESS STYLES */
@@ -392,7 +396,7 @@
 }
 
 .wp-block-separator:before {
-  content: '';
+  content: "";
   display: block;
   width: 100%;
   height: 1px;
@@ -435,10 +439,10 @@
   height: 100%;
 }
 
-[data-page='partners'] img {
+[data-page="partners"] img {
   filter: invert(1);
 }
 
-.dark [data-page='partners'] img {
+.dark [data-page="partners"] img {
   filter: invert(0);
 }

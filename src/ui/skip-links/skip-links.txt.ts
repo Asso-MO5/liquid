@@ -6,4 +6,3 @@ export const txt = {
     main: 'Skip to content',
   },
 }
-

@@ -1,5 +1,5 @@
-import { translate } from "~/utils/translate"
-import { txt } from "./payment.btn.txt"
+import { translate } from '~/utils/translate'
+import { txt } from './payment.btn.txt'
 
 type PaymentBtnProps = {
   disabled: boolean
@@ -17,7 +17,8 @@ export const PaymentBtn = (props: PaymentBtnProps) => {
       type="button"
       aria-busy={props.isLoading}
       class="btn mt-4 disabled:opacity-50 disabled:cursor-not-allowed w-full"
-      onClick={() => props.onPayment()}>
+      onClick={() => props.onPayment()}
+    >
       {t().proceed_to_payment}
     </button>
   )

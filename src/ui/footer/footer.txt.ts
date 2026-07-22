@@ -8,6 +8,5 @@ export const footerTxt = {
     legalInfo: 'Legal information',
     resources: 'Resources',
     followUs: 'Follow us',
-  }
+  },
 }
-

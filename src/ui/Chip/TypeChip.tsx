@@ -1,26 +1,36 @@
-import { Chip } from "./Chip"
+import { Chip } from './Chip'
+import type { CategoryVariant } from './Chip.types'
 
 interface TypeChipProps {
-  category?: string
+  category?: CategoryVariant
 }
 
 export const TypeChip = (props: TypeChipProps) => {
-  const getCategoryText = (category?: string): string => {
+  const getCategoryText = (category?: CategoryVariant): string => {
     switch (category) {
-      case 'video': return 'Vidéo'
-      case 'expo': return 'Expo'
-      case 'ag': return 'AG'
-      case 'live': return 'Live'
-      case 'meeting': return 'Réunion'
-      case 'training': return 'Formation'
-      case 'conference': return 'Conférence'
-      case 'other': return 'Autre'
-      default: return 'Non défini'
+      case 'video':
+        return 'Vidéo'
+      case 'expo':
+        return 'Expo'
+      case 'ag':
+        return 'AG'
+      case 'live':
+        return 'Live'
+      case 'meeting':
+        return 'Réunion'
+      case 'training':
+        return 'Formation'
+      case 'conference':
+        return 'Conférence'
+      case 'other':
+        return 'Autre'
+      default:
+        return 'Non défini'
     }
   }
 
   return (
-    <Chip type="category" variant={props.category as any}>
+    <Chip type="category" variant={props.category}>
       {getCategoryText(props.category)}
     </Chip>
   )

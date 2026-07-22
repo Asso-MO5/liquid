@@ -1,7 +1,7 @@
 import type kaplay from 'kaplay'
+import { openGamePanelInfo } from '../game-panel-info.ctrl'
 import { CONTROLS, SOUNDS, TAGS } from '../pixel-museum.const'
 import { playSound } from '../pixel-museum-sound.ctrl'
-import { openGamePanelInfo } from '../game-panel-info.ctrl'
 
 type Options = {
   levelWidth: number
@@ -11,7 +11,7 @@ type Options = {
 
 export const createPlayer = async (
   k: ReturnType<typeof kaplay>,
-  { levelWidth, levelHeight, startPosition }: Options
+  { levelWidth, levelHeight, startPosition }: Options,
 ) => {
   if (!k) return console.error('kaplay non trouvé')
   const { Rect } = k
@@ -49,7 +49,11 @@ export const createPlayer = async (
   const BASE_URL = `${window.location.protocol}//${window.location.host}/pixel-museum`
 
   if (!k.getSprite(COMPOSED_NAME)) {
-    await k.loadAseprite(COMPOSED_NAME, `${BASE_URL}/entities/composed/${COMPOSED_NAME}.png`, `${BASE_URL}/entities/sagwa.json`)
+    await k.loadAseprite(
+      COMPOSED_NAME,
+      `${BASE_URL}/entities/composed/${COMPOSED_NAME}.png`,
+      `${BASE_URL}/entities/sagwa.json`,
+    )
   }
 
   k.wait(300)
@@ -98,9 +102,7 @@ export const createPlayer = async (
     moveRight = false
   })
 
-
   k.onKeyPress(CONTROLS.JUMP as unknown as string[], () => {
-
     if (player.isGrounded() && canJump) {
       canJump = false
       isInteracting = false
@@ -118,23 +120,25 @@ export const createPlayer = async (
   })
 
   k.onKeyPress(CONTROLS.INTERACT as unknown as string[], async () => {
-
-    const collisionsDoc = player.getCollisions().find(collision => collision.target.tags.includes(TAGS.DOC))
-    const collisionsMachine = player.getCollisions().find(collision => collision.target.tags.includes(TAGS.MACHINE))
+    const collisionsDoc = player
+      .getCollisions()
+      .find((collision) => collision.target.tags.includes(TAGS.DOC))
+    const collisionsMachine = player
+      .getCollisions()
+      .find((collision) => collision.target.tags.includes(TAGS.MACHINE))
 
     if (collisionsDoc) {
-      const id = collisionsDoc.target.tags.find(tag => tag.startsWith('id-'))?.replace('id-', '')
+      const id = collisionsDoc.target.tags.find((tag) => tag.startsWith('id-'))?.replace('id-', '')
       if (!id) return
       openGamePanelInfo(id)
     } else if (collisionsMachine) {
-      if (collisionsMachine.target.getCurAnim()?.name == 'ignition') return
+      if (collisionsMachine.target.getCurAnim()?.name === 'ignition') return
 
-      if (collisionsMachine.target.getCurAnim()?.name == 'on') {
+      if (collisionsMachine.target.getCurAnim()?.name === 'on') {
         collisionsMachine.target.play('off', {
-          loop: false
+          loop: false,
         })
       } else {
-
         collisionsMachine.target.play('ignition', {
           loop: false,
           onEnd() {
@@ -143,7 +147,7 @@ export const createPlayer = async (
                 loop: true,
               })
             })
-          }
+          },
         })
         playSound(k, SOUNDS.IGNITION)
       }
@@ -161,8 +165,6 @@ export const createPlayer = async (
     isPlayingWaitAnim = false
     resetIdleTimer()
 
-
-
     try {
       player.play(ANIMS.INTERACT, {
         loop: false,
@@ -171,12 +173,11 @@ export const createPlayer = async (
           isInteracting = false
         },
       })
-    } catch (e) {
+    } catch (_e) {
       isInteractingAnim = false
       isInteracting = false
     }
   })
-
 
   player.onUpdate(() => {
     if (!k || !player) return
@@ -185,14 +186,7 @@ export const createPlayer = async (
 
     canJump = isGrounded
 
-
-    if (
-      isGrounded &&
-      !wasGrounded &&
-      !isPlayingGroundedAnim &&
-      !isInteracting
-    ) {
-
+    if (isGrounded && !wasGrounded && !isPlayingGroundedAnim && !isInteracting) {
       try {
         player.play(ANIMS.GROUNDED, {
           loop: false,
@@ -201,7 +195,7 @@ export const createPlayer = async (
           },
         })
         isPlayingGroundedAnim = true
-      } catch (e) {
+      } catch (_e) {
         isPlayingGroundedAnim = false
       }
     }
@@ -229,12 +223,7 @@ export const createPlayer = async (
       moveRight
     ) {
       resetIdleTimer()
-    } else if (
-      isGrounded &&
-      !isActuallyMoving &&
-      !player.isJumping() &&
-      !isInteractingAnim
-    ) {
+    } else if (isGrounded && !isActuallyMoving && !player.isJumping() && !isInteractingAnim) {
       if (!isInIdleAnim && !isPlayingWaitAnim) {
         idleTimer += dt
 
@@ -257,14 +246,14 @@ export const createPlayer = async (
                         }
                       },
                     })
-                  } catch (e) {
+                  } catch (_e) {
                     isPlayingWaitAnim = false
                   }
                 }
                 playWaitLoop()
               },
             })
-          } catch (e) {
+          } catch (_e) {
             isInIdleAnim = false
           }
         }
@@ -275,19 +264,14 @@ export const createPlayer = async (
               loop: true,
             })
           }
-        } catch (e) {
+        } catch (_e) {
           isPlayingWaitAnim = false
         }
       }
     }
 
     try {
-      if (
-        !isPlayingGroundedAnim &&
-        !isInteractingAnim &&
-        !isInIdleAnim &&
-        !isPlayingWaitAnim
-      ) {
+      if (!isPlayingGroundedAnim && !isInteractingAnim && !isInIdleAnim && !isPlayingWaitAnim) {
         let targetAnim: string | null = null
 
         if (!isGrounded && player.vel.y > 0) {
@@ -302,7 +286,7 @@ export const createPlayer = async (
           player.play(targetAnim)
         }
       }
-    } catch (e) { }
+    } catch (_e) {}
 
     const gameHeight = k.height?.() || 0
     let camX = Math.round(player?.pos?.x || 0)

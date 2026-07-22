@@ -1,9 +1,10 @@
-import { useLocation } from "@solidjs/router"
-import { createEffect, createSignal, type JSX } from "solid-js"
-import { ToastContainer } from "../Toast"
-import { Header } from "~/ui/Header/Header"
-import { SkipLinks } from "~/ui/skip-links/skip-links"
-import { Footer } from "../footer/footer"
+import { useLocation } from '@solidjs/router'
+import { createEffect, createSignal, type JSX } from 'solid-js'
+import { Header } from '~/ui/Header/Header'
+import { SkipLinks } from '~/ui/skip-links/skip-links'
+import { Footer } from '../footer/footer'
+import ScrollBehavior from '../ScrollBehavior'
+import { ToastContainer } from '../Toast'
 
 type LayoutProps = {
   children: JSX.Element
@@ -14,6 +15,7 @@ export const Layout = (props: LayoutProps) => {
   const [withGame, setWithGame] = createSignal(false)
 
   const [page, setPage] = createSignal('')
+
   createEffect(() => {
     setPage(location.pathname.split('/')[2])
     setWithGame(!page() || page() === 'game')
@@ -21,16 +23,14 @@ export const Layout = (props: LayoutProps) => {
 
   return (
     <>
-      {/* <ScrollBehavior /> */}
+      <ScrollBehavior />
       <ToastContainer />
       <SkipLinks />
-      <div
-        data-with-game={withGame()}
-        class="m-0 p-0 h-[100dvh]">
+      <div data-with-game={withGame()} class="m-0 p-0 h-[100dvh]">
         <Header withGame={withGame()} page={page()} />
         {props.children}
         {page() !== 'game' && <Footer />}
-      </div >
+      </div>
     </>
   )
 }

@@ -1,3 +1,3 @@
 export type LangSelectorStore = {
-  lang: "fr" | "en";
-};
+  lang: 'fr' | 'en'
+}

@@ -1,132 +1,125 @@
-import { Show, createSignal, onMount } from "solid-js";
-import { Navigate, useLocation, useSearchParams } from "@solidjs/router";
-import { clientEnv } from "~/env/client";
-import { toast } from "~/ui/Toast";
-import { PurchaseGift as PurchaseGiftView } from "~/features/gift-codes/purchase-gift";
-import { translate } from "~/utils/translate";
+import { Navigate, useLocation, useParams, useSearchParams } from '@solidjs/router'
+import { createSignal, onMount, Show } from 'solid-js'
+import { clientEnv } from '~/env/client'
+import { PurchaseGift as PurchaseGiftView } from '~/features/gift-codes/purchase-gift'
+import { toast } from '~/ui/Toast'
+import { translate } from '~/utils/translate'
 
 const txt = {
   fr: {
-    successTitle: "Merci pour votre achat de cartes cadeaux",
+    successTitle: 'Merci pour votre achat de cartes cadeaux',
     successDescription:
       "Votre paiement a été confirmé. Les codes cadeaux ont été envoyés à l'adresse email indiquée.",
-    successToast: "Votre paiement a bien été confirmé.",
-    cancelTitle: "Paiement annulé",
+    successToast: 'Votre paiement a bien été confirmé.',
+    cancelTitle: 'Paiement annulé',
     cancelDescription:
-      "Le paiement des cartes cadeaux a été annulé. Vous pouvez réessayer si vous le souhaitez.",
-    confirming: "Confirmation de votre paiement en cours...",
+      'Le paiement des cartes cadeaux a été annulé. Vous pouvez réessayer si vous le souhaitez.',
+    confirming: 'Confirmation de votre paiement en cours...',
     confirmError:
-      "Une erreur est survenue lors de la confirmation du paiement. Si le problème persiste, contactez-nous.",
+      'Une erreur est survenue lors de la confirmation du paiement. Si le problème persiste, contactez-nous.',
     missingCheckout:
-      "Impossible de retrouver la session de paiement. Si vous avez été débité, contactez-nous.",
+      'Impossible de retrouver la session de paiement. Si vous avez été débité, contactez-nous.',
   },
   en: {
-    successTitle: "Thank you for your gift card purchase",
+    successTitle: 'Thank you for your gift card purchase',
     successDescription:
-      "Your payment has been confirmed. The gift codes have been sent to the email address you provided.",
-    successToast: "Your payment has been successfully confirmed.",
-    cancelTitle: "Payment cancelled",
-    cancelDescription:
-      "The gift card payment has been cancelled. You can try again if you wish.",
-    confirming: "Confirming your payment...",
+      'Your payment has been confirmed. The gift codes have been sent to the email address you provided.',
+    successToast: 'Your payment has been successfully confirmed.',
+    cancelTitle: 'Payment cancelled',
+    cancelDescription: 'The gift card payment has been cancelled. You can try again if you wish.',
+    confirming: 'Confirming your payment...',
     confirmError:
-      "An error occurred while confirming the payment. If the problem persists, please contact us.",
+      'An error occurred while confirming the payment. If the problem persists, please contact us.',
     missingCheckout:
-      "We could not find the payment session. If you have been charged, please contact us.",
+      'We could not find the payment session. If you have been charged, please contact us.',
   },
-};
+}
 
 const PurchaseGiftRoute = () => {
+  const params = useParams()
+
   // Redirection à retirer après la pause
   const location = useLocation()
   if (location.pathname.includes('purchase-gift')) {
-      <Navigate href={`/`} />
+    return <Navigate href={`/${params.lang}`} />
   }
 
   const { t } = translate(txt)
-  const [searchParams] = useSearchParams();
-  const [isConfirming, setIsConfirming] = createSignal(false);
-  const [confirmationError, setConfirmationError] = createSignal<string | null>(
-    null,
-  );
-  const [confirmationDone, setConfirmationDone] = createSignal(false);
+  const [searchParams] = useSearchParams()
+  const [isConfirming, setIsConfirming] = createSignal(false)
+  const [confirmationError, setConfirmationError] = createSignal<string | null>(null)
+  const [confirmationDone, setConfirmationDone] = createSignal(false)
 
-  const status = () =>
-    (searchParams.status as "success" | "cancel" | undefined) ?? undefined;
+  const status = () => (searchParams.status as 'success' | 'cancel' | undefined) ?? undefined
 
   const confirmPurchase = async () => {
     const checkoutId =
-      typeof window !== "undefined"
-        ? window.localStorage.getItem("museum_gift_codes_checkout_id")
-        : null;
+      typeof window !== 'undefined'
+        ? window.localStorage.getItem('museum_gift_codes_checkout_id')
+        : null
 
     if (!checkoutId) {
-      setConfirmationError(t().missingCheckout);
-      return;
+      setConfirmationError(t().missingCheckout)
+      return
     }
 
-    setIsConfirming(true);
+    setIsConfirming(true)
     try {
-      const response = await fetch(
-        `${clientEnv.VITE_API_URL}/museum/gift-codes/purchase/confirm`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify({ checkout_id: checkoutId }),
+      const response = await fetch(`${clientEnv.VITE_API_URL}/museum/gift-codes/purchase/confirm`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
-      );
+        body: JSON.stringify({ checkout_id: checkoutId }),
+      })
 
-      const data: { error?: string } = await response.json();
+      const data: { error?: string } = await response.json()
 
       if (!response.ok) {
-        throw new Error(data?.error || "FAILED_TO_CONFIRM_PURCHASE");
+        throw new Error(data?.error || 'FAILED_TO_CONFIRM_PURCHASE')
       }
 
-      setConfirmationDone(true);
+      setConfirmationDone(true)
       try {
-        window.localStorage.removeItem("museum_gift_codes_checkout_id");
+        window.localStorage.removeItem('museum_gift_codes_checkout_id')
       } catch {
         // ignore
       }
     } catch (error) {
-      console.error(
-        "Erreur lors de la confirmation d'achat de codes cadeaux",
-        error,
-      );
+      console.error("Erreur lors de la confirmation d'achat de codes cadeaux", error)
       if (error instanceof Error) {
-        toast.error(error.message);
+        toast.error(error.message)
       } else {
-        toast.error(t().confirmError);
+        toast.error(t().confirmError)
       }
-      setConfirmationError(t().confirmError);
+      setConfirmationError(t().confirmError)
     } finally {
-      setIsConfirming(false);
+      setIsConfirming(false)
     }
-  };
+  }
 
   onMount(() => {
-    if (status() === "success") {
-      void confirmPurchase();
+    if (status() === 'success') {
+      void confirmPurchase()
     }
-    if (status() === "cancel") {
+    if (status() === 'cancel') {
       try {
-        window.localStorage.removeItem("museum_gift_codes_checkout_id");
+        window.localStorage.removeItem('museum_gift_codes_checkout_id')
       } catch {
         // ignore
       }
     }
-  });
+  })
 
   return (
-    <main id="main" class="items-center justify-center relative overflow-y-auto flex flex-col gap-6 p-6 text-text">
-      <Show when={status() === "success"}>
+    <main
+      id="main"
+      class="items-center justify-center relative overflow-y-auto flex flex-col gap-6 p-6 text-text"
+    >
+      <Show when={status() === 'success'}>
         <section class="max-w-xl mx-auto mb-4 p-4 border border-secondary rounded-md bg-black/30">
-          <h2 class="text-xl font-bold text-secondary mb-2">
-            {t().successTitle}
-          </h2>
+          <h2 class="text-xl font-bold text-secondary mb-2">{t().successTitle}</h2>
           <Show when={isConfirming()}>
             <p class="text-sm text-text">{t().confirming}</p>
           </Show>
@@ -139,18 +132,16 @@ const PurchaseGiftRoute = () => {
         </section>
       </Show>
 
-      <Show when={status() === "cancel"}>
+      <Show when={status() === 'cancel'}>
         <section class="max-w-xl mx-auto mb-4 p-4 border border-error rounded-md bg-black/30">
-          <h2 class="text-xl font-bold text-error mb-2">
-            {t().cancelTitle}
-          </h2>
+          <h2 class="text-xl font-bold text-error mb-2">{t().cancelTitle}</h2>
           <p class="text-sm text-text">{t().cancelDescription}</p>
         </section>
       </Show>
 
       <PurchaseGiftView />
     </main>
-  );
-};
+  )
+}
 
-export default PurchaseGiftRoute;
+export default PurchaseGiftRoute

@@ -1,18 +1,18 @@
 export const LANGS = [
   {
-    value: "fr",
+    value: 'fr',
     label: {
-      fr: "FR",
-      en: "FR"
-    }
+      fr: 'FR',
+      en: 'FR',
+    },
   },
   {
-    value: "en",
+    value: 'en',
     label: {
-      fr: "EN",
-      en: "EN"
-    }
-  }
+      fr: 'EN',
+      en: 'EN',
+    },
+  },
 ]
 
 export const SELECT = {
@@ -21,5 +21,5 @@ export const SELECT = {
   },
   en: {
     selectLabel: 'Select language',
-  }
+  },
 }

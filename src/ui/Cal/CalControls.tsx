@@ -1,7 +1,7 @@
-import { calCTRL } from "./Cal.ctrl"
-import { Chevron } from "../Chevron/Chevron"
-import { CONTROLS_TEXT } from "./Cal.const"
-import { translate } from "~/utils/translate"
+import { translate } from '~/utils/translate'
+import { Chevron } from '../Chevron/Chevron'
+import { CONTROLS_TEXT } from './Cal.const'
+import { calCTRL } from './Cal.ctrl'
 
 export const CalControls = () => {
   const calendar = calCTRL()
@@ -10,6 +10,7 @@ export const CalControls = () => {
   return (
     <div class="flex items-center gap-2 text-text">
       <button
+        type="button"
         onClick={calendar.goToPrevious}
         class="headless"
         title={t().previous_month}
@@ -23,6 +24,7 @@ export const CalControls = () => {
       </div>
 
       <button
+        type="button"
         onClick={calendar.goToNext}
         class="headless"
         title={t().next_month}

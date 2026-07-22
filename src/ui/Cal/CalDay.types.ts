@@ -1,5 +1,5 @@
-import type { CalendarEvent } from "./Cal.types"
-import type { JSX } from "solid-js"
+import type { JSX } from 'solid-js'
+import type { CalendarEvent } from './Cal.types'
 
 export interface CalDayProps {
   selectedDate?: string

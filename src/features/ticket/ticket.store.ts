@@ -1,5 +1,5 @@
-import { createStore } from "solid-js/store";
-import type { TicketStore } from "./ticket.type";
+import { createStore } from 'solid-js/store'
+import type { TicketStore } from './ticket.type'
 
 export const [ticketStore, setTicketStore] = createStore<TicketStore>({
   first_name: '',
@@ -19,4 +19,4 @@ export const [ticketStore, setTicketStore] = createStore<TicketStore>({
   guided_tour: false,
   tickets: [],
   gift_codes: [],
-});
+})
