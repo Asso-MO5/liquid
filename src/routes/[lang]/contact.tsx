@@ -1,9 +1,10 @@
 export const Contact = () => (
+
   <main id="main" class="w-full max-w-2xl mx-auto text-text">
     <h1 class="text-4xl font-bold text-center m-0">Contact</h1>
     <div class="w-full flex justify-center items-center">
       <iframe
-        src="https://api.lemuseedujeuvideo.fr/?ff_landing=1"
+        src="https://musee-api-wordpress.mo5.fr/?ff_landing=1"
         class="w-full max-w-2xl h-[1200px]"
         title="Formulaire de contact"
       />
