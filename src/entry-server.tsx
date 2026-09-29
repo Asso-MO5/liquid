@@ -1,55 +1,34 @@
-import { createHandler, StartServer } from '@solidjs/start/server'
-import { serializePublicEnv } from './env/public'
+import { randomBytes } from "node:crypto";
+import { createHandler, StartServer } from "@solidjs/start/server";
+import { createContentSecurityPolicy } from "~/shared/security/security-headers";
 
-export default createHandler(() => (
-  <StartServer
-    document={({ assets, children, scripts }) => (
-      <html lang="fr">
-        <head>
-          <meta charset="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="icon" type="image/x-icon" href="https://museedujeuvideo.org/favicon.ico" />
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-            href="https://museedujeuvideo.org/favicon.ico"
-          />
-          <link
-            rel="icon"
-            type="image/png"
-            sizes="16x16"
-            href="https://museedujeuvideo.org/favicon.ico"
-          />
-          <link
-            rel="apple-touch-icon"
-            sizes="64x64"
-            href="https://museedujeuvideo.org/favicon.ico"
-          />
-          <script>{`window.__MO5_PUBLIC_ENV__ = ${serializePublicEnv(process.env)};`}</script>
-          <script>
-            {`(function() {
-              const stored = localStorage.getItem('darkMode');
-              const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-              const isDark = stored === 'dark' || (!stored && prefersDark);
-              if (isDark) {
-                document.documentElement.classList.add('dark');
-              }
-            })();`}
-          </script>
-          <script
-            defer
-            src="https://analytics.mo5.fr/script.js"
-            data-website-id="1754217f-f573-486a-9ffd-6457d62777b6"
-          />
-          {/* <script src="https://terrors.ben-to.fr/cdn/terrors.js" data-app-id="app_6051n9rr" /> */}
-          {assets}
-        </head>
-        <body>
-          <div id="app">{children}</div>
-          {scripts}
-        </body>
-      </html>
-    )}
-  />
-))
+export default createHandler(
+  () => (
+    <StartServer
+      document={({ assets, children, scripts }) => (
+        <html lang="fr">
+          <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <meta name="color-scheme" content="dark light" />
+            <link rel="icon" href="/favicon.ico" />
+            {assets}
+          </head>
+          <body>
+            <div id="app">{children}</div>
+            {scripts}
+          </body>
+        </html>
+      )}
+    />
+  ),
+  (context) => {
+    const nonce = randomBytes(16).toString("base64");
+    const development = process.env.NODE_ENV !== "production";
+    context.response.headers.set(
+      "Content-Security-Policy",
+      createContentSecurityPolicy({ nonce, development }),
+    );
+    return { nonce };
+  },
+);

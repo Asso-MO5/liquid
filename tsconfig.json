@@ -3,18 +3,22 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "strict": true,
+    "skipLibCheck": true,
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "bundler",
     "jsxImportSource": "solid-js",
     "jsx": "preserve",
-    "types": ["vite/client", "@solidjs/start/env"],
+    "types": [
+      "bun-types",
+      "vite/client",
+      "@solidjs/start/env"
+    ],
     "baseUrl": "./",
     "paths": {
-      "~/*": ["./src/*"],
-      "~": ["./src"]
-    },
-    "allowImportingTsExtensions": true,
-    "noEmit": true
+      "~/*": [
+        "./src/*"
+      ]
+    }
   }
 }

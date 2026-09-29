@@ -1,57 +1,34 @@
-import { Meta, MetaProvider, Title } from '@solidjs/meta'
-import { Router } from '@solidjs/router'
-import { FileRoutes } from '@solidjs/start/router'
-import { Suspense } from 'solid-js'
-import './app.css'
-import { priceCtrl } from '~/features/price/price.ctrl'
-import schedulesCtrl from '~/features/schedules/schedules.ctrl'
-import { Layout } from '~/ui/Layout/Layout'
-import { Modal } from '~/ui/Modal/Modal'
-import { SplashModal } from './features/splash-modal/splash-modal'
-import { Loader } from './ui/loader'
+// @refresh reload
+import { MetaProvider, Title } from "@solidjs/meta";
+import { Router } from "@solidjs/router";
+import { FileRoutes } from "@solidjs/start/router";
+import { ErrorBoundary, type ParentProps, Suspense } from "solid-js";
+import "./app.css";
+
+function RootLayout(props: ParentProps) {
+  return (
+    <MetaProvider>
+      <Title>Musée MO5</Title>
+      <ErrorBoundary
+        fallback={(error, reset) => (
+          <div class="error-fallback" role="alert">
+            <p>Une erreur inattendue est survenue.</p>
+            <button type="button" onClick={reset}>
+              Réessayer
+            </button>
+          </div>
+        )}
+      >
+        <Suspense>{props.children}</Suspense>
+      </ErrorBoundary>
+    </MetaProvider>
+  );
+}
 
 export default function App() {
-  schedulesCtrl()
-  priceCtrl()
-
   return (
-    <Router
-      root={(props) => (
-        <MetaProvider>
-          <Title>Le musée du jeu vidéo</Title>
-          <Meta
-            name="description"
-            content="Le musée du jeu vidéo, par l'association MO5 à Arcueil"
-          />
-          <Meta
-            name="keywords"
-            content="musée, jeu vidéo, jeux, jeux vidéo, console, consoles, consoles de jeu vidéo, consoles de jeu vidéo portables, arcade, bornes d'arcade, ordinateur, ordinateurs, informatique, exposition, histoire, histoire du jeu vidéo"
-          />
-          <Meta name="og:image" content="https://museedujeuvideo.org/og.png" />
-          <Meta name="favicon" content="https://museedujeuvideo.org/favicon.ico" />
-          <Meta
-            name="og:description"
-            content="Préserver, comprendre, transmettre : l'héritage du jeu vidéo"
-          />
-          <Meta name="og:title" content="Le musée du jeu vidéo" />
-          <Meta name="viewport" content="width=device-width, initial-scale=1" />
-          <Suspense
-            fallback={
-              <div class="flex items-center justify-center p-3 h-screen">
-                <Loader />
-              </div>
-            }
-          >
-            <Layout>
-              <SplashModal />
-              {props.children}
-            </Layout>
-            <Modal />
-          </Suspense>
-        </MetaProvider>
-      )}
-    >
+    <Router root={RootLayout}>
       <FileRoutes />
     </Router>
-  )
+  );
 }

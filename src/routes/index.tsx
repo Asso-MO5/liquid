@@ -1,7 +1,12 @@
-import { Navigate } from '@solidjs/router'
-import type { VoidComponent } from 'solid-js'
-import { getBrowserLang } from '~/utils/get-browser-lang'
+import { Title } from "@solidjs/meta";
+import { LayoutView } from "~/features/layout/layout.view";
 
-const Home: VoidComponent = () => <Navigate href={`/${getBrowserLang()}`} />
-
-export default Home
+export default function Home() {
+  return (
+    <LayoutView>
+      <Title>Musée MO5</Title>
+      <h1>Musée MO5</h1>
+      <p>Réservation de visites, événements et accès membres.</p>
+    </LayoutView>
+  );
+}

@@ -1,1 +1,0 @@
-// Stripe est chargé via @stripe/stripe-js, pas besoin de déclarations globales

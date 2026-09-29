@@ -1,29 +1,19 @@
-dist
-.wrangler
-.output
-.vercel
-.netlify
-.vinxi
-app.config.timestamp_*.js
+# Dépendances
+/node_modules
 
-# Environment
+# Build
+.output
+.vinxi
+dist
+
+# Environnement
 .env
 .env*.local
 
-# dependencies
-/node_modules
-/.yarn/install-state.gz
+# Tests
+test-results
+playwright-report
 
-# IDEs and editors
-/.idea
-.project
-.classpath
-*.launch
-.settings/
-
-# Temp
-gitignore
-
-# System Files
+# Système
 .DS_Store
 Thumbs.db
