@@ -1,4 +1,6 @@
+import { Navigate, useParams } from '@solidjs/router'
 import { onMount } from 'solid-js'
+import { featureFlag } from '~/features/feature-flag/feature-flag.const'
 import { setTicketStore } from '~/features/ticket/ticket.store'
 import { translate } from '~/utils/translate'
 
@@ -14,6 +16,12 @@ const errorTxt = {
 }
 
 export default function ErrorPage() {
+  const params = useParams()
+
+  if (!featureFlag.reservation) {
+    return <Navigate href={`/${params.lang}`} />
+  }
+
   const { t } = translate(errorTxt)
 
   onMount(() => {

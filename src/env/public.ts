@@ -4,6 +4,8 @@ const publicEnvKeys = [
   'VITE_CAVE_URL',
   'VITE_STRIPE_PUBLISHABLE_KEY',
   'VITE_KITANA_URL',
+  'FEAT_RESERVATION',
+  'FEAT_BREAK_MESSAGE',
 ] as const
 
 export type PublicEnv = Partial<Record<(typeof publicEnvKeys)[number], string>>
