@@ -397,7 +397,7 @@ export const HUD = () => {
             </Show>
           </button>
         </div>
-        <div class="absolute bottom-6 left-6 right-6 flex items-end justify-between pointer-events-none z-40">
+        <div id="game-hud" class="absolute bottom-6 left-6 right-6 flex items-end justify-between pointer-events-none z-40">
           {/* Section explications */}
           <div class="bg-bg/90 backdrop-blur-sm rounded-lg p-4 pointer-events-auto">
             <div class="grid grid-cols-2 gap-4 text-xs whitespace-nowrap">
