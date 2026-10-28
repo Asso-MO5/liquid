@@ -1,4 +1,5 @@
 import { createHandler, StartServer } from '@solidjs/start/server'
+import { serializePublicEnv } from './env/public'
 
 export default createHandler(() => (
   <StartServer
@@ -25,6 +26,7 @@ export default createHandler(() => (
             sizes="64x64"
             href="https://museedujeuvideo.org/favicon.ico"
           />
+          <script>{`window.__MO5_PUBLIC_ENV__ = ${serializePublicEnv(process.env)};`}</script>
           <script>
             {`(function() {
               const stored = localStorage.getItem('darkMode');
