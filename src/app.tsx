@@ -14,15 +14,6 @@ export default function App() {
   schedulesCtrl()
   priceCtrl()
 
-  if (import.meta.env.PROD) {
-    console.log('%c🎮 Le musée du jeu vidéo', 'font-size: 16px; font-weight: bold; color: #3b82f6;')
-    console.log(
-      '%cCe site est entièrement développé et maintenu par des bénévoles passionnés.',
-      'font-size: 12px; color: #64748b;',
-    )
-    console.log('%cMerci de votre visite ! 🙏', 'font-size: 12px; color: #64748b;')
-  }
-
   return (
     <Router
       root={(props) => (
