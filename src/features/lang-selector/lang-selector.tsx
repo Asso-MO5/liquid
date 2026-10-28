@@ -30,6 +30,7 @@ export const LangSelector = () => {
           id="lang-selector"
           value={selectedLang() || 'fr'}
           onInput={(e) => changeLang(e.currentTarget?.value as 'fr' | 'en')}
+          aria-label={SELECT[selectedLang() as keyof typeof SELECT].selectLabel}
           title={SELECT[selectedLang() as keyof typeof SELECT].selectLabel}
         >
           <For each={LANGS}>
@@ -47,6 +48,7 @@ export const LangSelector = () => {
           id="lang-selector"
           value={selectedLang() || 'fr'}
           onInput={(e) => changeLang(e.currentTarget?.value as 'fr' | 'en')}
+          aria-label={SELECT.fr.selectLabel}
         >
           <option value="fr" class="text-text">
             FR

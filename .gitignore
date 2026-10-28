@@ -5,6 +5,11 @@ dist
 .netlify
 .vinxi
 app.config.timestamp_*.js
+.lighthouseci
+playwright-report
+test-results
+quality-out
+coverage
 
 # Environment
 .env

@@ -67,19 +67,27 @@ export const HUD = () => {
   }
 
   const handleLeftDown = () => {
-    CONTROLS.MOVE_LEFT.forEach(triggerKeyEvent.bind(null, 'keydown'))
+    CONTROLS.MOVE_LEFT.forEach((key) => {
+      triggerKeyEvent(key, 'keydown')
+    })
   }
 
   const handleLeftUp = () => {
-    CONTROLS.MOVE_LEFT.forEach(triggerKeyEvent.bind(null, 'keyup'))
+    CONTROLS.MOVE_LEFT.forEach((key) => {
+      triggerKeyEvent(key, 'keyup')
+    })
   }
 
   const handleRightDown = () => {
-    CONTROLS.MOVE_RIGHT.forEach(triggerKeyEvent.bind(null, 'keydown'))
+    CONTROLS.MOVE_RIGHT.forEach((key) => {
+      triggerKeyEvent(key, 'keydown')
+    })
   }
 
   const handleRightUp = () => {
-    CONTROLS.MOVE_RIGHT.forEach(triggerKeyEvent.bind(null, 'keyup'))
+    CONTROLS.MOVE_RIGHT.forEach((key) => {
+      triggerKeyEvent(key, 'keyup')
+    })
   }
 
   const handleJump = () => {
