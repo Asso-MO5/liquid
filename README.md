@@ -87,6 +87,19 @@ yarn dev
 
 L'application sera accessible sur `http://localhost:5173` (ou le port indiqué dans la console).
 
+### Déploiement avec CapRover
+
+Le dépôt contient un `captain-definition` et une image Docker de production. Dans CapRover, créez une application Node.js, reliez ce dépôt puis choisissez la méthode de déploiement **Dockerfile**. CapRover utilisera le port interne `3000` indiqué dans `captain-definition`.
+
+Les variables publiques peuvent être fournies comme arguments de build, conformément au schéma `ARG VITE_*` / `ENV VITE_*` du `Dockerfile`. Elles sont alors intégrées au bundle Vite. Dans CapRover, déclarez-les aussi dans **App Configs > Environmental Variables** si vous voulez les modifier au redémarrage sans reconstruire l’image ; cette configuration d’exécution est prioritaire.
+
+- `VITE_API_URL`, `VITE_BLOG_URL`, `VITE_CAVE_URL`, `VITE_STRIPE_PUBLISHABLE_KEY`, `VITE_KITANA_URL` : configuration publique injectée à chaque démarrage et envoyée au navigateur. Ne jamais y placer un secret.
+- `BLOG_URL` : URL interne utilisée par le rendu côté serveur ; elle peut être différente de `VITE_BLOG_URL`.
+- `RESEND_API_KEY`, `CONTACT_EMAIL_FROM`, `CONTACT_EMAIL_TO`, `CONTACT_DISCORD_WEBHOOK_URL`, `ENCRYPTION_KEY` : secrets ou configuration exclusivement serveur. Ils ne sont jamais envoyés au navigateur.
+- `PORT` (optionnel) : port d’écoute, `3000` par défaut. Si vous le changez, adaptez également le port HTTP du conteneur dans CapRover.
+
+L’image n’embarque aucun fichier `.env`. Les valeurs `VITE_*` sont publiques et peuvent être fournies au build ; les valeurs de CapRover les remplacent au démarrage, ce qui permet aussi de promouvoir une même image entre recette et production sans reconstruction. Après toute modification de variable, redémarrez l’application CapRover.
+
 #### 5. Accéder au mini-jeu
 
 Le mini-jeu est accessible via la route `/game` une fois l'application lancée.

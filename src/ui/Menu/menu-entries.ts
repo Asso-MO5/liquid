@@ -49,7 +49,7 @@ export const menuEntries: {
       en: 'Your visit',
     },
     href: '/your-visit',
-    disabled: true,
+    disabled: !featureFlag.reservation,
   },
   {
     label: {

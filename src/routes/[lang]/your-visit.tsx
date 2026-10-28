@@ -1,14 +1,8 @@
 import { Meta, Title } from '@solidjs/meta'
-import {
-  createAsync,
-  Navigate,
-  query,
-  type RouteDefinition,
-  useLocation,
-  useParams,
-} from '@solidjs/router'
+import { createAsync, Navigate, query, type RouteDefinition, useParams } from '@solidjs/router'
 import { createMemo, ErrorBoundary, For, Show, Suspense } from 'solid-js'
 import { Address } from '~/features/address/address'
+import { featureFlag } from '~/features/feature-flag/feature-flag.const'
 import { prices } from '~/features/price/price.store'
 import { schedules } from '~/features/schedules/schedules.store'
 import { TakeATicket } from '~/features/ticket/take-a-ticket'
@@ -52,9 +46,7 @@ export const route = {
 export const Page = () => {
   const params = useParams<{ lang: string; slug: string }>()
 
-  // Redirection à retirer après la pause
-  const location = useLocation()
-  if (location.pathname.includes('your-visit')) {
+  if (!featureFlag.reservation) {
     return <Navigate href={`/${params.lang}`} />
   }
 

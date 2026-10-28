@@ -1,3 +1,5 @@
+import { Navigate, useParams } from '@solidjs/router'
+import { featureFlag } from '~/features/feature-flag/feature-flag.const'
 import { translate } from '~/utils/translate'
 
 const thanksTxt = {
@@ -20,6 +22,12 @@ const thanksTxt = {
 }
 
 export default function Thanks() {
+  const params = useParams()
+
+  if (!featureFlag.reservation) {
+    return <Navigate href={`/${params.lang}`} />
+  }
+
   const { t } = translate(thanksTxt)
 
   return (

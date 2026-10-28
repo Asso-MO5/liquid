@@ -8,6 +8,6 @@ type FeatureFlagProps = {
 }
 
 export const FeatureFlag = ({ name, children }: FeatureFlagProps) => {
-  if (featureFlag[name]) return null
+  if (!featureFlag[name]) return null
   return children
 }
