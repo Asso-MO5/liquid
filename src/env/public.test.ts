@@ -6,10 +6,12 @@ describe('public runtime environment', () => {
     expect(
       getPublicEnv({
         VITE_API_URL: 'https://api.example.org',
+        FEAT_RESERVATION: 'true',
         RESEND_API_KEY: 'secret',
       }),
     ).toEqual({
       VITE_API_URL: 'https://api.example.org',
+      FEAT_RESERVATION: 'true',
     })
   })
 

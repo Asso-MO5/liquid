@@ -1,7 +1,8 @@
 import { Meta, Title } from '@solidjs/meta'
-import { A, Navigate, useLocation, useParams } from '@solidjs/router'
+import { A, Navigate, useParams } from '@solidjs/router'
 import { Show } from 'solid-js'
 import { Address } from '~/features/address/address'
+import { featureFlag } from '~/features/feature-flag/feature-flag.const'
 import { GiftCodes } from '~/features/gift-codes/gift-codes'
 import type { LANGS } from '~/features/lang-selector/lang-selector.const'
 import { Prices } from '~/features/price/prices'
@@ -58,9 +59,7 @@ const txt = {
 export default function Ticket() {
   const params = useParams()
 
-  // Redirection à retirer après la pause
-  const location = useLocation()
-  if (location.pathname.includes('ticket')) {
+  if (!featureFlag.reservation) {
     return <Navigate href={`/${params.lang}`} />
   }
 

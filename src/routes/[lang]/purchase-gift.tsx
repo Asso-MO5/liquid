@@ -1,6 +1,7 @@
-import { Navigate, useLocation, useParams, useSearchParams } from '@solidjs/router'
+import { Navigate, useParams, useSearchParams } from '@solidjs/router'
 import { createSignal, onMount, Show } from 'solid-js'
 import { clientEnv } from '~/env/client'
+import { featureFlag } from '~/features/feature-flag/feature-flag.const'
 import { PurchaseGift as PurchaseGiftView } from '~/features/gift-codes/purchase-gift'
 import { toast } from '~/ui/Toast'
 import { translate } from '~/utils/translate'
@@ -38,9 +39,7 @@ const txt = {
 const PurchaseGiftRoute = () => {
   const params = useParams()
 
-  // Redirection à retirer après la pause
-  const location = useLocation()
-  if (location.pathname.includes('purchase-gift')) {
+  if (!featureFlag.reservation) {
     return <Navigate href={`/${params.lang}`} />
   }
 

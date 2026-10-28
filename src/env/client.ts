@@ -18,7 +18,7 @@ export const formatErrors = (errors: ZodFormattedError<Map<string, string>, stri
   return result
 }
 
-const runtimeEnv = typeof window === 'undefined' ? {} : window.__MO5_PUBLIC_ENV__
+const runtimeEnv = typeof window === 'undefined' ? process.env : window.__MO5_PUBLIC_ENV__
 const env = clientScheme.safeParse({ ...import.meta.env, ...runtimeEnv })
 
 if (env.success === false) {
