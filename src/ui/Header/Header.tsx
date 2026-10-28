@@ -17,10 +17,12 @@ type HeaderProps = {
 
 const txt = {
   fr: {
+    nav: 'Menu principal',
     logoMO5Alt: 'Association MO5',
     logoMJVLabel: 'Musée du Jeu Vidéo - Accueil',
   },
   en: {
+    nav: 'Main menu',
     logoMO5Alt: 'MO5 association',
     logoMJVLabel: 'Video Game Museum - Home',
   },
@@ -46,7 +48,6 @@ export const Header = (props: HeaderProps) => {
     e.preventDefault()
     handleHomeAction()
   }
-
   return (
     <div
       data-with-game={props.withGame}
@@ -66,7 +67,7 @@ export const Header = (props: HeaderProps) => {
             flex justify-between items-center p-2
             ease-in-out top-0 z-50 bg-bg"
         >
-          <nav class="flex items-center gap-4">
+          <nav aria-label={t().nav} class="flex items-center gap-4">
             <a
               href="/"
               onClick={handleHomeClick}
