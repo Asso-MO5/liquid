@@ -8,8 +8,8 @@ export const supportsTestimonials = [
     },
     image: '/supports/frederick-raynal.webp',
     link: {
-      fr: 'https://mo5.com/fr/artwork-artists/frederic-raynal/',
-      en: 'https://mo5.com/en/artwork-artists/frederic-raynal/',
+      fr: 'https://mo5.com/actualites?recherche=raynal',
+      en: 'https://mo5.com/en/actualites?recherche=raynal',
     },
   },
   {
@@ -32,8 +32,8 @@ export const supportsTestimonials = [
     },
     image: '/supports/jordan-mechner.webp',
     link: {
-      fr: 'https://mo5.com/fr/artwork-artists/jordan-mechner/',
-      en: 'https://mo5.com/en/artwork-artists/jordan-mechner/',
+      fr: 'https://mo5.com/actualites?recherche=jordan+mechner',
+      en: 'https://mo5.com/en/actualites?recherche=jordan+mechner',
     },
   },
   {
@@ -44,8 +44,8 @@ export const supportsTestimonials = [
     },
     image: '/supports/eric-chahi.webp',
     link: {
-      fr: 'https://mo5.com/fr/artwork-artists/eric-chahi/',
-      en: 'https://mo5.com/en/artwork-artists/eric-chahi/',
+      fr: 'https://mo5.com/actualites?recherche=eric+chahi',
+      en: 'https://mo5.com/en/actualites?recherche=eric+chahi',
     },
   },
   {
@@ -56,8 +56,8 @@ export const supportsTestimonials = [
     },
     image: '/supports/pierre-esteve.webp',
     link: {
-      fr: 'https://mo5.com/fr/artwork-artists/pierre-esteve/',
-      en: 'https://mo5.com/en/artwork-artists/pierre-esteve/',
+      fr: 'https://mo5.com/actualites?recherche=pierre+esteve',
+      en: 'https://mo5.com/en/actualites?recherche=pierre+esteve',
     },
   },
   {
@@ -68,8 +68,8 @@ export const supportsTestimonials = [
     },
     image: '/supports/paul-cuisset.webp',
     link: {
-      fr: 'https://mo5.com/fr/artwork-artists/paul-cuisset/',
-      en: 'https://mo5.com/en/artwork-artists/paul-cuisset/',
+      fr: 'https://mo5.com/actualites?recherche=paul+cuisset',
+      en: 'https://mo5.com/en/actualites?recherche=paul+cuisset',
     },
   },
   {
@@ -80,8 +80,8 @@ export const supportsTestimonials = [
     },
     image: '/supports/marcus.webp',
     link: {
-      fr: 'https://mo5.com/fr/artwork-artists/marc-lacombe/',
-      en: 'https://mo5.com/en/artwork-artists/marc-lacombe/',
+      fr: 'https://mo5.com/actualites?recherche=marc+lacombe',
+      en: 'https://mo5.com/en/actualites?recherche=marc+lacombe',
     },
   },
   {
@@ -92,8 +92,8 @@ export const supportsTestimonials = [
     },
     image: '/supports/philippe-dessoly.webp',
     link: {
-      fr: 'https://mo5.com/fr/artwork-artists/philippe-dessoly/',
-      en: 'https://mo5.com/en/artwork-artists/philippe-dessoly/',
+      fr: 'https://mo5.com/actualites?recherche=philippe+dessoly',
+      en: 'https://mo5.com/en/actualites?recherche=philippe+dessoly',
     },
   },
 ]
