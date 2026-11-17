@@ -105,7 +105,7 @@ export const GamePanelInfo = () => {
                 }}
               >
                 <source src={audioUrl()} />
-                Votre navigateur ne supporte pas l'élément audio.
+                {t().audioNotSupported}
               </audio>
             </div>
           </Show>
@@ -118,7 +118,7 @@ export const GamePanelInfo = () => {
                 allowfullscreen
                 class="w-full aspect-video"
                 src={youTubeVideoUrl()}
-                title={item()?.name ?? 'YouTube video'}
+                title={item()?.name ?? t().youTubeVideoTitle}
               />
             </div>
           </Show>
