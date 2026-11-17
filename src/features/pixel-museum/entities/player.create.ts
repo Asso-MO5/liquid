@@ -40,7 +40,7 @@ export const createPlayer = async (
     isInIdleAnim = false,
     isPlayingWaitAnim = false
 
-  const COMPOSED_MAX = 50
+  const COMPOSED_MAX = 49
   const COMPOSED_MIN = 1
   const COMPOSED_NUMBER =
     Math.floor(Math.random() * (COMPOSED_MAX - COMPOSED_MIN + 1)) + COMPOSED_MIN
@@ -286,7 +286,7 @@ export const createPlayer = async (
           player.play(targetAnim)
         }
       }
-    } catch (_e) {}
+    } catch (_e) { }
 
     const gameHeight = k.height?.() || 0
     let camX = Math.round(player?.pos?.x || 0)

@@ -7,7 +7,7 @@ type FeatureFlagProps = {
   children: JSX.Element
 }
 
-export const FeatureFlag = ({ name, children }: FeatureFlagProps) => {
-  if (!featureFlag[name]) return null
-  return children
+export const FeatureFlag = (props: FeatureFlagProps) => {
+  if (!featureFlag[props?.name]) return null
+  return props.children
 }
