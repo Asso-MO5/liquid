@@ -8,55 +8,55 @@ export const menuEntries: {
   green?: boolean
   disabled?: boolean
 }[] = [
-  {
-    label: {
-      fr: 'Réservation',
-      en: 'Reservation',
+    {
+      label: {
+        fr: 'Réservation',
+        en: 'Reservation',
+      },
+      href: '/ticket',
+      highlighted: true,
+      disabled: !featureFlag.reservation,
     },
-    href: '/ticket',
-    highlighted: true,
-    disabled: !featureFlag.reservation,
-  },
-  {
-    label: {
-      fr: 'Offrir un ticket',
-      en: 'Gift a ticket',
+    {
+      label: {
+        fr: 'Offrir un ticket',
+        en: 'Gift a ticket',
+      },
+      href: '/purchase-gift',
+      green: true,
+      disabled: !featureFlag.reservation,
     },
-    href: '/purchase-gift',
-    green: true,
-    disabled: !featureFlag.reservation,
-  },
-  {
-    label: {
-      fr: 'Faire un don',
-      en: 'Make a donation',
+    {
+      label: {
+        fr: 'Faire un don',
+        en: 'Make a donation',
+      },
+      external: true,
+      href: 'https://don.mo5.com',
     },
-    external: true,
-    href: 'https://don.mo5.com',
-  },
-  {
-    label: {
-      fr: 'Devenir membre',
-      en: 'Become a member',
+    {
+      label: {
+        fr: 'Devenir membre',
+        en: 'Become a member',
+      },
+      external: true,
+      href: 'https://mo5.com/soutenir',
+      green: true,
     },
-    external: true,
-    href: 'https://mo5.com/fr/adhesion/',
-    green: true,
-  },
-  {
-    label: {
-      fr: 'Votre visite',
-      en: 'Your visit',
+    {
+      label: {
+        fr: 'Votre visite',
+        en: 'Your visit',
+      },
+      href: '/your-visit',
+      disabled: !featureFlag.reservation,
     },
-    href: '/your-visit',
-    disabled: !featureFlag.reservation,
-  },
-  {
-    label: {
-      fr: 'Infos pratiques',
-      en: 'Practical information',
+    {
+      label: {
+        fr: 'Infos pratiques',
+        en: 'Practical information',
+      },
+      href: '/about',
+      disabled: !featureFlag.reservation,
     },
-    href: '/about',
-    disabled: !featureFlag.reservation,
-  },
-]
+  ]
